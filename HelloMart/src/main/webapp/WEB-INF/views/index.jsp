@@ -11,7 +11,7 @@
 <a href="member/page">member</a> -- MEMBER, SELLER 계정만 접근가능<br/>
 <a href="seller/page">seller</a> -- SELLER 계정만 접근가능<br/>
 <a href="admin/page">admin</a> -- ADMIN 계정만 접근가능<br/>
-<a href="authenticated/page?str=한글이여">authenticated</a> -- 로그인된 유저만 접근가능<br/>
+<a href="authenticated/page">authenticated</a> -- 로그인된 유저만 접근가능<br/>
 <a href="logout">logout</a> -- 로그아웃<br/>
 </body>
 </html>
