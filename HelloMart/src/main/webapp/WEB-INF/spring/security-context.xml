@@ -19,7 +19,7 @@
 		<intercept-url pattern="/seller/**" access="hasRole('ROLE_SELLER')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/authenticated/**" access="isAuthenticated()"/>
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/**"  access="permitAll" />
 
 		<form-login
 			login-page="/login"
