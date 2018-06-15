@@ -125,13 +125,13 @@ $(document).ready(function(){
 		});
 	});
 	$('#bar_menu1').on('click', function(){
-		window.open("http://pigeon.co.kr/cms/content.php?mCode=1074");
+		location.href="customerCenter.jsp";
 	});
 	$('#bar_menu2').on('click', function(){
-		location.href="notice.php";
+		location.href="login";
 	});
 	$('#bar_menu3').on('click', function(){
-		location.href="customer.php";
+		location.href="join";
 	});
 
 	$("#main_menu_1").on('click', function(){
@@ -372,7 +372,7 @@ $(document).ready(function(){
 										src=""
 										style="width: 510px; height: 221px; display: none;" />
 								</a>
-							</div>
+							</div>    
 							<div class="clear"></div>
 						</div>
 						<div class="BLOCK30"></div>
