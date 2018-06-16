@@ -110,7 +110,7 @@ $(document).ready(function(){
 	});
 
 	$("#main_menu_1").on('click', function(){
-		location.href="sub.php?menu=ct_001";
+		location.href="/product/appliances";
 	});
 	$("#main_menu_2").on('click', function(){
 		location.href="sub.php?menu=ct_002";
@@ -129,20 +129,21 @@ $(document).ready(function(){
 	});
 
 	$('#logo').on('click', function(){
-		location.href="index.php";
+		location.href="/";
 	});
 
 	$('.haeder_bar_menu_lanen').on('click', function(){
 		window.open('http://pigeon.co.kr/cms/content.php?mCode=1112');
 	});
+	
 	$('.haeder_bar_menu_lankr').on('click', function(){
 		window.open('http://pigeon.co.kr/cms/content.php?mCode=1074');
 	});
-		
+	
 });
 </script>
 <input type="hidden" id="headeron" />
-<div id="main_wrap" style="">
+<div id="main_wrap">
 	<div id="pigeon_header">
 		<div class="header_bar_wrap">
 			<div class="header_bar">
@@ -159,8 +160,8 @@ $(document).ready(function(){
 			</div>
 		</div>
 		<div class="header_bg_wrap A_center">
-			<div class="BLOCK40"></div>
-			<h3>로고이미지</h3>
+			<div class="BLOCK20"></div>
+			<h1 id="logo"><a href="/"><img src="/resources/images/logo.png"></a></h1>
 		</div>
 		<div class="header_menu_wrap">
 			<div class="header_menu">

@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<link rel="stylesheet" type="text/css" href="resources/css/pigeon.css" />
-<script src="resources/jQuery/jQuery-2.1.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
 <!-- 헤더 -->
