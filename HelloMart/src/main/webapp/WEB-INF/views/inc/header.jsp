@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
+<script src="/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href='/resources/bootstrap/css/bootstrap.min.css' rel="stylesheet" type="text/css">
+<!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
 <script type="text/javascript">
 $(document).ready(function(){
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

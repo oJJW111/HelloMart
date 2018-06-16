@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script src="/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<link href='/resources/bootstrap/css/bootstrap.min.css' rel="stylesheet" type="text/css">
 <div style="width: 100%; margin: 0 auto;">
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
@@ -15,19 +13,19 @@
 		<!-- slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img alt="" src="resources/images/1.png">
+				<img alt="" src="/resources/images/1.png">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="resources/images/2.png">
+				<img alt="" src="/resources/images/2.png">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="resources/images/3.png">
+				<img alt="" src="/resources/images/3.png">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="resources/images/4.png">
+				<img alt="" src="/resources/images/4.png">
 				<div class="carousel-caption"></div>
 			</div>
 			<a class="left carousel-control" href="#carousel-example-generic"
