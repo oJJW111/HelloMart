@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/owl.carousel.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/owl.theme.default.min.css" />
 
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
+<script type="text/javascript" src="resources/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="resources/js/jquery-ui.js"></script>

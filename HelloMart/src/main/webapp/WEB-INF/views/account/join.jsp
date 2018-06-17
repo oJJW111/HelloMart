@@ -6,19 +6,46 @@
 <!-- 다음 api js 파일 추가 -->
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/daum_postcode_v4.js"></script>
+<script src="resources/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="resources/css/join.css" />
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
 	document.f.submit();
 }
+//회원가입 input태그 클릭 함수
+(function($) {
+	$(function() {
+	    $('.input-label').keypress(function(){
+	        $(this).trigger('focusin');
+	    });
+	    $('.input-label').each(function() {
+	        if($(this).val().length) {
+	            $(this).trigger('focusin');
+	        }
+	    });
+	    
+		$('.input-label').focusin(function(){
+			$(this).css({'opacity':1, filter: 'alpha(enabled="false")'});
+		});
+		$('.input-label').focusout(function(){
+			if(!$(this).val()) {
+				$(this).animate({'opacity':0}, 500);
+			} else {
+				$(this).css({'opacity':1});
+			}
+		});
+	});
+})(jQuery);
+
 </script>
 </head>
 <body>
-<h2>회원가입</h2>
+<h2 align="center">회원가입</h2>
 <div id="join_test">
-	<form:form action="join" name="f" method="post" modelAttribute="account">
+	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
 			<ul class="join-form">
 				<li><label>이름</label> 

@@ -1,9 +1,19 @@
 @CHARSET "UTF-8";
 /* 회원 가입 */
+html, body, pre,
+dl, dt, dd, ul, li, ol,
+th, td, p, blockquote,
+form, fieldset, legend,
+menu, nav, section, article, header, aside, footer,
+input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
 #join_test { width:1300px; margin:0 auto; }
 #join_test h2 { margin:10px 0 30px 0; padding-bottom:5px; font-size:14px; font-weight:bold; color:#434343; border-bottom:3px solid #3a4452; }
 #join_test .box-wrap { width:70%; margin:0 auto; }
-#join_test .join-form { margin-bottom:12px; border-top:1px solid #dadada; border-left:1px solid #dadada; }
+#join_test .join-form { margin-bottom:12px; border-top:1px solid #dadada; border-left:1px solid #dadada; list-style:none; }
 #join_test .join-form li { position:relative; height:49px; line-height:49px; padding:0 23px; border-right:1px solid #dadada; border-bottom:1px solid #dadada; background:#fff; color:#000; }
 #join_test .join-form li label { font-size:14px; font-weight:bold; }
 #join_test .join-form li .txt-input { position:absolute; top:0; left:23px; width:300px; height: 49px; line-height:49px; padding:0; margin:0; font-size: 14px; font-weight: bold; color:#000; border: 0; opacity: 0; filter: alpha(opacity=0); }
@@ -12,7 +22,7 @@
 #join_test .join-form li.birth:after { clear:both; display:block; content:''; }
 #join_test .join-form li.birth { *z-index:2; line-height:51px; }
 #join_test .join-form li.birth .birth_txt { width:150px; margin-left:0px; font-size:13px; font-weight:bold; text-align:left; color: #0549bb; padding-bottom: 5px; } 
-#join_test .join-form li.birth dl dd { position:relative; float:left; width:100px; margin-left:10px; font-size:14px; font-weight:bold; }
+#join_test .join-form li.birth dl dd { position:relative; float:left; width:100px; margin-left:10px; font-size:14px; font-weight:bold;}
 #join_test .join-form li.birth dl dd:first-child { width:100px; margin-left:0; }
 #join_test .join-form li.birth dl.type2 ul li { margin:0; padding:0; border:0; }
 #join_test .join-form li.birth dl.type2 ul li .txt-input { left:0; width:90%; }
