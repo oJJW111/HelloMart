@@ -167,7 +167,9 @@ $(document).ready(function(){
 		</div>
 		<div class="header_bg_wrap A_center">
 			<div class="BLOCK20"></div>
-			<h1 id="logo"><a href="/"><img src="/resources/images/logo.png"></a></h1>
+			<div class="logo_wrap">
+				<h1 id="logo"><a href="/"><img src="/resources/images/logo.png"></a></h1>
+			</div>
 		</div>
 		<div class="header_menu_wrap">
 			<div class="header_menu">
