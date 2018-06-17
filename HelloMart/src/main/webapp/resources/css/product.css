@@ -113,8 +113,7 @@ hr.style14 {
 	margin: auto;
 }
 
-
-.category_detail:before, .category_detail:after {
+.category_detail_up:after {
 	content: "";
 	display: table;
 	clear: both;
@@ -125,19 +124,15 @@ hr.style14 {
 	border: 1px solid #ababab;
 }
 
-.category_major {
-	padding: 12px 16px;
-}
-
-.category_major h5, .category_small h5 {
-	font-size: 16px;
-	font-weight: bold;
-	margin-bottom: 20px;
+.category_detail_up {
+	height: 84%;
+	border-bottom: 1px solid #ababab;
 }
 
 .category_major {
 	float: left;
 	overflow-y: scroll;
+	padding: 12px 16px;
 	width: 220px;
 	height: 100%;
 }
@@ -148,15 +143,21 @@ hr.style14 {
 	height: 100%;
 }
 
+.category_major h5, .category_small h5 {
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
 .category_major > a {
 	display: table;
 	margin-bottom: 7px;
 }
 
-.category_major > a:link,
-.category_major > a:hover,
-.category_major > a:visited,
-.category_major > a:active {
+.article_wrap a:link,
+.article_wrap a:hover,
+.article_wrap a:visited,
+.article_wrap a:active {
 	color: black;
 }
 
@@ -177,6 +178,7 @@ hr.style14 {
 	float: left;
 	padding: 12px 16px;
 	width: 25%;
+	height: 100%;
 }
 
 .category_small > div:not(:first-child) {
@@ -185,7 +187,6 @@ hr.style14 {
 
 .category_small > div:not(:last-child) {
 	border-right: 1px solid #ababab;
-	height: 100%;
 }
 
 .product_list {
@@ -240,10 +241,11 @@ hr.style14 {
 
 .product_info .title {
 	display: block;
-	height: 34px;
+	height: 40px;
 	margin: 0;
 	font-size: 15px;
 	font-weight: lighter
+	border: 1px solid red;
 }
 
 .product_info .additional_info {
