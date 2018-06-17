@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/subpage.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 </head>
@@ -27,12 +27,47 @@
 	<div class="category_small">
 		<div class="category_one">
 			<h5>세부분류</h5>
+			<span>
+				<label class="ck_container">
+					<input type="checkbox" name="_category" value="washer">
+					<span class="checkmark"></span>
+					 세탁기
+				</label>
+			</span>
+			<span>
+				<label class="ck_container">
+					<input type="checkbox" name="_category" value="washer">
+					<span class="checkmark"></span>
+					 드럼 세탁기
+				</label>
+			</span>
 		</div>
 		<div class="category_two">
+			<span>
+				<label class="ck_container">
+					<input type="checkbox" name="_category" value="washer">
+					<span class="checkmark"></span>
+					 세탁기
+				</label>
+			</span>
 		</div>
 		<div class="category_three">
+			<span>
+				<label class="ck_container">
+					<input type="checkbox" name="_category" value="washer">
+					<span class="checkmark"></span>
+					 에어컨
+				</label>
+			</span>
 		</div>
 		<div class="category_four">
+			<span>
+				<label class="ck_container">
+					<input type="checkbox" name="_category" value="washer">
+					<span class="checkmark"></span>
+					 선풍기
+				</label>
+			</span>
 		</div>
 	</div>
 </div>
@@ -42,7 +77,7 @@
 <!-- 상품리스트 -->
 <div class="product_list">
 	<div class="product_list_content">
-		<div class="product_img"><img src="/resources/images/washing_machine01.jpg" style="width:100%; height:100%;"></div>
+		<div class="product_img"><img src="/resources/images/washing_machine01.jpg"></div>
 		<div class="product_info">
 			<h5 class="title">
 			제품 이름
@@ -59,12 +94,12 @@
 				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
 				<span class="review">상품평 1564</span>
 			</div>
-			<button class="add_to_cart btn_yellow">Add To Cart</button>
+			<button class="add_to_cart btn_yellow"></button>
 		</div>
 	</div>
 	<hr class="style14">
 	<div class="product_list_content">
-		<div class="product_img"><img src="/resources/images/washing_machine01.jpg" style="width:100%; height:100%;"></div>
+		<div class="product_img"><img src="/resources/images/washing_machine01.jpg"></div>
 		<div class="product_info">
 			<h5 class="title">
 			제품 이름
@@ -81,12 +116,12 @@
 				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
 				<span class="review">상품평 1564</span>
 			</div>
-			<button class="add_to_cart btn_yellow">Add To Cart</button>
+			<button class="add_to_cart btn_yellow"></button>
 		</div>
 	</div>
 	<hr class="style14">
 	<div class="product_list_content">
-		<div class="product_img"><img src="/resources/images/washing_machine01.jpg" style="width:100%; height:100%;"></div>
+		<div class="product_img"><img src="/resources/images/washing_machine01.jpg"></div>
 		<div class="product_info">
 			<h5 class="title">
 			제품 이름
@@ -103,7 +138,7 @@
 				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
 				<span class="review">상품평 1564</span>
 			</div>
-			<button class="add_to_cart btn_yellow">Add To Cart</button>
+			<button class="add_to_cart btn_yellow"></button>
 		</div>
 	</div>
 	<hr class="style14">
