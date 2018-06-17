@@ -23,51 +23,127 @@
 <div class="category_detail">
 	<div class="category_major">
 		<h5>카테고리</h5>
+		<a class="major" href="#">
+			가전제품
+		</a>
+		<a class="middle" href="#">
+			주방가전
+		</a>
+		<a class="middle" href="#">
+			오븐/전자레인지
+		</a>
+		<a class="major" href="#">
+			가전제품
+		</a>
+		<a class="middle" href="#">
+			주방가전
+		</a>
+		<a class="middle" href="#">
+			오븐/전자레인지
+		</a>
+		<a class="major" href="#">
+			가전제품
+		</a>
+		<a class="middle" href="#">
+			주방가전
+		</a>
+		<a class="middle" href="#">
+			오븐/전자레인지
+		</a>
+		<a class="major" href="#">
+			가전제품
+		</a>
+		<a class="middle" href="#">
+			주방가전
+		</a>
+		<a class="middle" href="#">
+			오븐/전자레인지
+		</a>
 	</div>
 	<div class="category_small">
 		<div class="category_one">
 			<h5>세부분류</h5>
-			<span>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 세탁기
-				</label>
-			</span>
-			<span>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-			</span>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 드럼 세탁기
+			</label>
 		</div>
 		<div class="category_two">
-			<span>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 세탁기
-				</label>
-			</span>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 세탁기
+			</label>
 		</div>
 		<div class="category_three">
-			<span>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 에어컨
-				</label>
-			</span>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 에어컨
+			</label>
 		</div>
 		<div class="category_four">
-			<span>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 선풍기
-				</label>
-			</span>
+			<label class="ck_container">
+				<input type="checkbox" name="_category" value="washer">
+				<span class="checkmark"></span>
+				 선풍기
+			</label>
 		</div>
 	</div>
 </div>
