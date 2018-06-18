@@ -43,7 +43,11 @@ function send(){
 </script>
 </head>
 <body>
-<h2 align="center">회원가입</h2>
+
+<!-- 헤더 -->
+<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
+<!-- 헤더 -->
+<div class="BLOCK80"></div>
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
@@ -65,7 +69,7 @@ function send(){
 					<input type="text" name="email" id="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
 					size="20" maxlength="35" id="email" value="" /></li>
 				<li class="birth">
-					<dl class="type1">
+					<dl class="type1" style="margin: 0;">
 						<dd>
 							<select name="birthyear" class="new-birth" style="width: 60px; height: 40px;">
 								<option value="">생년</option>
@@ -156,11 +160,11 @@ function send(){
 					<input type="text" name="phone" id="phone"
 					class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" /></li>
 				<li>
-					<input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호"> 
+					<input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly> 
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></li>
 				<li>
-					<input type="text" name="address" id="sample6_address" placeholder="주소"> 
-					<input type="text" name="address2" id="sample6_address2" placeholder="상세주소"></li>
+					<input type="text" name="address" id="sample6_address" placeholder="주소" readonly> 
+					<input type="text" name="address2" id="sample6_address2" placeholder="상세주소" ></li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >
 				<a href="javascript:send();"> 
@@ -170,5 +174,8 @@ function send(){
 		</div>
 	</form:form>
 </div>
+<!-- 푸터 -->
+<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
+<!-- 푸터 -->
 </body>
 </html>

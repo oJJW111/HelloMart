@@ -9,6 +9,11 @@
 <title>로그인 페이지</title>
 </head>
 <body>
+
+<!-- 헤더 -->
+<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
+<!-- 헤더 -->
+<div class="BLOCK80"></div>
 <div id="loginWrap">
 	<div class="page-body">
 		<div class="mlog-sign">
@@ -41,9 +46,15 @@
 			</div>
 		</div>
 	</div>
-</div>			
+</div>		
+<div class="BLOCK95"></div>
 <c:if test="${param.fail == 'true'}">
-<spring:message code="security.badCredentials"/>
+<script type="text/javascript">
+ alert('<spring:message code="security.badCredentials"/>');
+</script>
 </c:if>
+<!-- 푸터 -->
+<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
+<!-- 푸터 -->
 </body>
 </html>
