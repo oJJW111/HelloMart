@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
@@ -29,46 +30,15 @@ $(document).ready(function() {
 
 <div class=BLOCK70></div>
 
-<div class="category_detail">
+<div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
-			<h5>카테고리</h5>
-			<a class="major" href="#">
-				가전제품
-			</a>
-			<a class="middle" href="#">
-				주방가전
-			</a>
-			<a class="middle" href="#">
-				오븐/전자레인지
-			</a>
-			<a class="major" href="#">
-				가전제품
-			</a>
-			<a class="middle" href="#">
-				주방가전
-			</a>
-			<a class="middle" href="#">
-				오븐/전자레인지
-			</a>
-			<a class="major" href="#">
-				가전제품
-			</a>
-			<a class="middle" href="#">
-				주방가전
-			</a>
-			<a class="middle" href="#">
-				오븐/전자레인지
-			</a>
-			<a class="major" href="#">
-				가전제품
-			</a>
-			<a class="middle" href="#">
-				주방가전
-			</a>
-			<a class="middle" href="#">
-				오븐/전자레인지
-			</a>
+			<h5>상세검색</h5>
+			<ul>
+				<li>용량</li>
+				<li>충전시간</li>
+				<li>지속시간</li>
+			</ul>
 		</div>
 		<div class="category_small">
 			<div class="category_one">
@@ -77,61 +47,6 @@ $(document).ready(function() {
 					<input type="checkbox" name="_category" value="washer">
 					<span class="checkmark"></span>
 					 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
-				</label>
-				<label class="ck_container">
-					<input type="checkbox" name="_category" value="washer">
-					<span class="checkmark"></span>
-					 드럼 세탁기
 				</label>
 			</div>
 			<div class="category_two">
@@ -156,6 +71,14 @@ $(document).ready(function() {
 				</label>
 			</div>
 		</div>
+	</div>
+	<div class="category_detail_down">
+		<input type="text" placeholder="제품명 검색" name="search">
+		<input type="text" placeholder="0원" name="price_range1">
+		<div class="range">~</div>
+		<input type="text" placeholder="999,999,999원" name="price_range2">
+		<div class="currency">원</div>
+		<button type="submit"><i class="fa fa-search"></i></button>
 	</div>
 </div>
 
