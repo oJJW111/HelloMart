@@ -4,12 +4,12 @@
 <html>
 <head>
 <!-- 다음 api js 파일 추가 -->
-<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/daum_postcode_v4.js"></script>
-<script src="resources/jQuery/jQuery-2.1.3.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="/resources/js/daum_postcode_v6.js"></script>
+<script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/css/join.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
@@ -160,11 +160,12 @@ function send(){
 					<input type="text" name="phone" id="phone"
 					class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" /></li>
 				<li>
-					<input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" readonly> 
+					<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></li>
 				<li>
-					<input type="text" name="address" id="sample6_address" placeholder="주소" readonly> 
-					<input type="text" name="address2" id="sample6_address2" placeholder="상세주소" ></li>
+					<input type="text" id="sample6_address" placeholder="주소" readonly>
+					<input type="text" id="sample6_address2" placeholder="상세주소">
+				</li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >
 				<a href="javascript:send();"> 
