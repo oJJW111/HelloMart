@@ -1201,3 +1201,12 @@ input {
 .btn_m_board_more:ACTIVE{
 	background: url('../../fs/images/m/btn_morelist_press.png') no-repeat center center;
 }
+
+#logo a:focus {
+	outline:none;
+}
+
+.logo_wrap {
+	width: 1006px;
+	margin: auto;
+}
