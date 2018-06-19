@@ -27,7 +27,7 @@ public class XMLParser {
 	public Vector<String> getChildren(String tagName) throws Exception {
 		URL url = null;
 		try {
-			url = new URL("classpath:category.xml");
+			url = new URL("category.xml");
 		} catch (MalformedURLException e) {
 			logger.debug("XML url not found");
 		}

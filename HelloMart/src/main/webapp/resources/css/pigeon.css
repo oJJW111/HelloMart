@@ -461,7 +461,7 @@ input {
 }
 
 .mega_menu_wrap{
-	width: 100%; z-index: 1000;  background: #fff;
+	width: 100%; z-index: 1000;  background: #fff; border-bottom: 1px dotted #ababab;
 }
 .mega_menu{
 	width: 1006px; margin: 0 auto;

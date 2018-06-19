@@ -53,25 +53,24 @@ function send(){
 		<div class="box-wrap">
 			<ul class="join-form">
 				<li><label>이름</label> 
-					<input type="text" name="hname" id="hname" value=""
+					<input type="text" name="name" id="name" value=""
 					class="MS_input_txt w137 txt-input input-label" size="15" maxlength="30" /></li>
 				<li><label>아이디</label> 
 					<input type="text" name="id" id="id" value=""
 					class="MS_input_txt w137 txt-input input-label" size="10" maxlength="12" /></li>
 				<li><label>비밀번호</label> 
-					<input type="password" name="password1" id="password1"
+					<input type="password" name="password" id="password"
 					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
 				<li><label>비밀번호 확인</label> 
-					<input type="password" name="password2" id="password2"
+					<input type="password" name="re_password" id="re_password"
 					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
 				<li><label>이메일</label> 
-					<input type="hidden" name="oldemail" value="" /> 
 					<input type="text" name="email" id="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
 					size="20" maxlength="35" id="email" value="" /></li>
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
 						<dd>
-							<select name="birthyear" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthYear" class="new-birth" style="width: 60px; height: 40px;">
 								<option value="">생년</option>
 								<option value=2001>2001</option>
 								<option value=2000>2000</option>
@@ -98,7 +97,7 @@ function send(){
 							</select>
 						</dd>
 						<dd>
-							<select name="birthmonth" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthMonth" class="new-birth" style="width: 60px; height: 40px;">
 								<option value="">월</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
@@ -115,7 +114,7 @@ function send(){
 							</select>
 						</dd>
 						<dd>
-							<select name="birthdate" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthDay" class="new-birth" style="width: 60px; height: 40px;">
 								<option value="">일</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
@@ -153,18 +152,18 @@ function send(){
 					</dl>
 				</li>
 				<li class="gender">&nbsp;
-					<label><input type="radio" name="sex" value="1" class="input-radio" />남</label> 
-					<label><input type="radio" name="sex" value="2" class="input-radio" checked />여</label>
+					<label><input type="radio" name="gender" value="F" class="input-radio" />남</label> 
+					<label><input type="radio" name="gender" value="M" class="input-radio" checked />여</label>
 				</li>
 				<li><label>휴대폰번호</label> 
 					<input type="text" name="phone" id="phone"
 					class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" /></li>
 				<li>
-					<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
+					<input type="text" name="postCode" id="sample6_postcode" placeholder="우편번호" readonly>
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></li>
 				<li>
-					<input type="text" id="sample6_address" placeholder="주소" readonly>
-					<input type="text" id="sample6_address2" placeholder="상세주소">
+					<input type="text" name="roadAddress" id="sample6_address" placeholder="주소" readonly>
+					<input type="text" name="detailAddress" id="sample6_address2" placeholder="상세주소">
 				</li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >

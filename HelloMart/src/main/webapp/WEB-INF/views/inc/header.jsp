@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
@@ -15,10 +17,16 @@ $(document).ready(function(){
 		window.open("고객센터");
 	});
 	$('#bar_menu2').on('click', function(){
-		location.href="/login";
+		location.href="/join";
 	});
 	$('#bar_menu3').on('click', function(){
-		location.href="/join";
+		location.href="/login";
+	});
+	$('#bar_menu4').on('click', function(){
+		location.href="/logout";
+	});
+	$('#bar_menu5').on('click', function(){
+		location.href="/mypage";
 	});
 
 	$("#main_menu_1").on('click', function(){
@@ -96,12 +104,19 @@ $(document).ready(function(){
 		<div class="header_bar_wrap">
 			<div class="header_bar">
 				<div class="F_right haeder_bar_menu" id="bar_menu1">고객센터</div>
-
 				<div class="F_right haeder_bar_menu_line"></div>
-				<div class="F_right haeder_bar_menu" id="bar_menu3">회원가입</div>
-
-				<div class="F_right haeder_bar_menu_line"></div>
-				<div class="F_right haeder_bar_menu" id="bar_menu2">로그인</div>
+				
+				<sec:authorize access="isAnonymous()">
+					<div class="F_right haeder_bar_menu" id="bar_menu2">회원가입</div>
+					<div class="F_right haeder_bar_menu_line"></div>
+					<div class="F_right haeder_bar_menu" id="bar_menu3">로그인</div>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
+					<div class="F_right haeder_bar_menu_line"></div>
+					<div class="F_right haeder_bar_menu" id="bar_menu5">회원정보</div>
+				</sec:authorize>
+				
 				<div class="clear"></div>
 			</div>
 		</div>
