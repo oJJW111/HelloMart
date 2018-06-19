@@ -11,9 +11,6 @@ public class ProductListController {
 	public ModelAndView appliances() {
 		ModelAndView mav = new ModelAndView();
 		
-		
-		
-		
 		mav.setViewName("product/productList");
 		
 		return mav;
