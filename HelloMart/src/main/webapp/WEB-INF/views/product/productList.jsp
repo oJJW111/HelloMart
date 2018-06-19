@@ -10,16 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	var $scrollHeight = $('.category_one')[0].scrollHeight;
-	console.log("scrollHeight: " + $scrollHeight);
-
-	$('.category_two')[0].css({'height' : $scrollHeight});
-	$('.category_three')[0].css({'height' : $scrollHeight});
-	$('.category_four')[0].css({'height' : $scrollHeight});
-});
-</script>
 </head>
 <body>
 <!-- 헤더 -->

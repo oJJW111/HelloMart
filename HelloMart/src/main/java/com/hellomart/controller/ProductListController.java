@@ -5,24 +5,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "/product")
 public class ProductListController {
 	
-	@RequestMapping("/list")
-	public String productList() {
-		
-		
-		return "product/productList";
-	}
-	
-	@RequestMapping("/appliances")
+	@RequestMapping("/productList")
 	public ModelAndView appliances() {
 		ModelAndView mav = new ModelAndView();
 		
 		
 		
 		
-		mav.setViewName("redirect:list");
+		mav.setViewName("product/productList");
 		
 		return mav;
 	}
