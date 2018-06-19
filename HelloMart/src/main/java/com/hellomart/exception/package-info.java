@@ -5,4 +5,4 @@
  * @author ITWILL
  *
  */
-package com.hellomart.util;
+package com.hellomart.exception;
