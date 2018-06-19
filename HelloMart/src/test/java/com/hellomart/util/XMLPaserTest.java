@@ -24,7 +24,7 @@ public class XMLPaserTest {
 		
 		for(String tagName : category) {
 			String value = xmlParser.getValue(tagName);
-			logger.debug(value);
+			logger.debug(tagName + " : " + value);
 		}
 	}
 	

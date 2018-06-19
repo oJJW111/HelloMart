@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 public class XMLParser {
@@ -47,7 +46,7 @@ public class XMLParser {
 	public String getValue(String tagName) {
 		NodeList descNodes = doc.getElementsByTagName(tagName);
 		Node node = descNodes.item(0);
-		return node.getNodeValue();
+		return node.getTextContent();
 	}
 	
 	
