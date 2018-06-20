@@ -17,6 +17,7 @@ input, select, textarea, button {
 #join_test .join-form li { position:relative; height:49px; line-height:49px; padding:0 23px; border-right:1px solid #dadada; border-bottom:1px solid #dadada; background:#fff; color:#000; }
 #join_test .join-form li label { font-size:14px; font-weight:bold; }
 #join_test .join-form li .txt-input { position:absolute; top:0; left:23px; width:300px; height: 49px; line-height:49px; padding:0; margin:0; font-size: 14px; font-weight: bold; color:#000; border: 0; opacity: 0; filter: alpha(opacity=0); }
+#join_test .join-form li span { position:absolute; right:20px; color: red; }
 #join_test .join-form li .input-radio { width:14px; height:14px; margin:0; margin-top:-2px; padding:0; vertical-align:middle; }
 #join_test .join-form li .btn { display:block; position:absolute; top:6px; right:8px; width:83px; height:34px; line-height:36px; font-size:14px; font-weight:bold; color:#fff; text-align:center; }
 #join_test .join-form li.birth:after { clear:both; display:block; content:''; }

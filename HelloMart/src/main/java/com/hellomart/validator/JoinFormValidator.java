@@ -30,7 +30,9 @@ public class JoinFormValidator implements Validator {
 		
 		if(isNullOrEmpty(account.getPostCode())) {
 			errors.rejectValue("postCode", "form.error.required");
-		} else if(isNullOrEmpty(account.getRoadAddress())) {
+		} 
+		
+		if(isNullOrEmpty(account.getRoadAddress())) {
 			errors.rejectValue("roadAddress", "form.error.required");
 		} else if(isNullOrEmpty(account.getDetailAddress())) {
 			errors.rejectValue("detailAddress", "form.error.detailaddress.required");

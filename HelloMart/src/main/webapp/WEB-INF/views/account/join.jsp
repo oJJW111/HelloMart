@@ -52,21 +52,31 @@ function send(){
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
 			<ul class="join-form">
-				<li><label>이름</label> 
-					<input type="text" name="name" id="name" value=""
-					class="MS_input_txt w137 txt-input input-label" size="15" maxlength="30" /></li>
-				<li><label>아이디</label> 
-					<input type="text" name="id" id="id" value=""
-					class="MS_input_txt w137 txt-input input-label" size="10" maxlength="12" /></li>
-				<li><label>비밀번호</label> 
-					<input type="password" name="password" id="password"
-					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
-				<li><label>비밀번호 확인</label> 
-					<input type="password" name="re_password" id="re_password"
-					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
-				<li><label>이메일</label> 
-					<input type="text" name="email" id="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
-					size="20" maxlength="35" id="email" value="" /></li>
+				<li><form:label path="name">이름</form:label> 
+					<form:input path="name" value="" class="MS_input_txt w137 txt-input input-label" 
+								size="15" maxlength="30" />
+					<form:errors path="name"/>	
+				</li>
+				<li><form:label path="id">아이디</form:label> 
+					<form:input path="id" value="" class="MS_input_txt w137 txt-input input-label" 
+								   size="10" maxlength="12" />
+					<form:errors path="id"/>
+				</li>
+				<li><form:label path="password">비밀번호</form:label> 
+					<form:password path="password" class="MS_input_txt w137 txt-input input-label" 
+								   value="" size="15" maxlength="20" />
+					<form:errors path="password"/>
+				</li>
+				<li><form:label path="re_password">비밀번호 확인</form:label> 
+					<form:password path="re_password" class="MS_input_txt w137 txt-input input-label" 
+								   value="" size="15" maxlength="20" />
+					<form:errors path="re_password"/>
+				</li>
+				<li><form:label path="email">이메일</form:label> 
+					<form:input path="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
+								size="20" maxlength="35" id="email" value="" />
+					<form:errors path="email"/>
+				</li>
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
 						<dd>
@@ -152,18 +162,25 @@ function send(){
 					</dl>
 				</li>
 				<li class="gender">&nbsp;
-					<label><input type="radio" name="gender" value="F" class="input-radio" />남</label> 
-					<label><input type="radio" name="gender" value="M" class="input-radio" checked />여</label>
+					<form:label path="gender">성별</form:label>
+					<form:radiobutton path="gender" class="input-radio" value="F" label="남"/>
+					<form:radiobutton path="gender" class="input-radio" value="M" label="여" checked="checked"/>
+					<form:errors path="gender"/>
 				</li>
-				<li><label>휴대폰번호</label> 
-					<input type="text" name="phone" id="phone"
-					class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" /></li>
+				<li><form:label path="phone">연락처</form:label> 
+					<form:input path="phone" class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" />
+					<form:errors path="phone"/>
+				</li>
 				<li>
-					<input type="text" name="postCode" id="sample6_postcode" placeholder="우편번호" readonly>
-					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></li>
+					<form:input path="postCode" id="sample6_postcode" placeholder="우편번호" readonly="true"/>
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+					<form:errors path="postCode"/><br>
+				</li>
 				<li>
-					<input type="text" name="roadAddress" id="sample6_address" placeholder="주소" readonly>
-					<input type="text" name="detailAddress" id="sample6_address2" placeholder="상세주소">
+					<form:input path="roadAddress" id="sample6_address" placeholder="주소" readonly="true"/>
+					<form:input path="detailAddress" id="sample6_address2" placeholder="상세주소"/>
+					<form:errors path="roadAddress"/>
+					<form:errors path="detailAddress"/>
 				</li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >
