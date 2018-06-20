@@ -28,17 +28,19 @@ public class JoinFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "form.error.required");
 		
-//		if(isNullOrEmpty(account.getPostCode()) || 
-//		   isNullOrEmpty(account.getRoadAddress()) ||
-//		   isNullOrEmpty(account.getDetailAddress())) {
-//			errors.rejectValue("address", "form.error.required");
-//		}
-//		
-//		if(isNullOrEmpty(account.getBirthYear()) || 
-//		   isNullOrEmpty(account.getBirthMonth()) ||
-//		   isNullOrEmpty(account.getBirthDay())) {
-//			errors.rejectValue("birth", "form.error.required");
-//		}
+		if(isNullOrEmpty(account.getPostCode())) {
+			errors.rejectValue("postCode", "form.error.required");
+		} else if(isNullOrEmpty(account.getRoadAddress())) {
+			errors.rejectValue("roadAddress", "form.error.required");
+		} else if(isNullOrEmpty(account.getDetailAddress())) {
+			errors.rejectValue("detailAddress", "form.error.detailaddress.required");
+		}
+		
+		if(isNullOrEmpty(account.getBirthYear()) ||
+		   isNullOrEmpty(account.getBirthMonth()) ||
+		   isNullOrEmpty(account.getBirthDay())) {
+			errors.rejectValue("birthYear", "form.error.required");
+		}
 		
 	}
 	
