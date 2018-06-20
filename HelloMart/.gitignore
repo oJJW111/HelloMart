@@ -6,12 +6,12 @@
 .metadata
 bin/
 tmp/
+target/
 *.tmp
 *.bak
 *.swp
 *~.nib
 local.properties
-pom.properties
 .settings/
 .loadpath
 .recommenders
