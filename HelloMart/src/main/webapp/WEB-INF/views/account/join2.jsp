@@ -25,9 +25,9 @@
 		<li><form:label path="email">이메일</form:label>
 			<form:input path="email" size="100" maxlength="100"/></li>
 		<li>
-			<div><form:input path="postCode" id="sample4_postcode" placeholder="우편번호" readonly="readonly"/>
+			<div><form:input path="postCode" id="sample4_postcode" placeholder="우편번호" disabled="true"/>
 			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></div>
-			<div><form:input path="roadAddress" id="sample4_roadAddress" placeholder="도로명주소" readonly="readonly"/>
+			<div><form:input path="roadAddress" id="sample4_roadAddress" placeholder="도로명주소" disabled="true"/>
 			<form:input path="detailAddress" placeholder="상세주소" /></div>
 			<span id="guide" style="color:#999"></span>
 		</li>
