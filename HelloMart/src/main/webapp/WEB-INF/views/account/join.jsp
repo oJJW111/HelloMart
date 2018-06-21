@@ -177,5 +177,23 @@ function send(){
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->
+<script>
+(function() {
+		var a, b, c, d, e, f, g;
+		a = function() {
+			return "수정된 a입니다";
+		}
+		b = function() {
+			return "b입니다";
+		}
+		
+		this.z = function() {
+			return a;
+		}
+})();
+
+var val = z();
+console.log(val());
+</script>
 </body>
 </html>
