@@ -15,31 +15,6 @@
 function send(){
 	document.f.submit();
 }
-//회원가입 input태그 클릭 함수
-(function($) {
-	$(function() {
-	    $('.input-label').keypress(function(){
-	        $(this).trigger('focusin');
-	    });
-	    $('.input-label').each(function() {
-	        if($(this).val().length) {
-	            $(this).trigger('focusin');
-	        }
-	    });
-	    
-		$('.input-label').focusin(function(){
-			$(this).css({'opacity':1, filter: 'alpha(enabled="false")'});
-		});
-		$('.input-label').focusout(function(){
-			if(!$(this).val()) {
-				$(this).animate({'opacity':0}, 500);
-			} else {
-				$(this).css({'opacity':1});
-			}
-		});
-	});
-})(jQuery);
-
 </script>
 </head>
 <body>
@@ -51,37 +26,34 @@ function send(){
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
+	
 			<ul class="join-form">
-				<li><form:label path="name">이름</form:label> 
-					<form:input path="name" value="" class="MS_input_txt w137 txt-input input-label" 
-								size="15" maxlength="30" />
-					<form:errors path="name"/>	
-				</li>
-				<li><form:label path="id">아이디</form:label> 
-					<form:input path="id" value="" class="MS_input_txt w137 txt-input input-label" 
-								   size="10" maxlength="12" />
+			
+				<li>	
+					<form:input path="id" class="txt-input" maxlength="20" placeholder="아이디" />
 					<form:errors path="id"/>
 				</li>
-				<li><form:label path="password">비밀번호</form:label> 
-					<form:password path="password" class="MS_input_txt w137 txt-input input-label" 
-								   value="" size="15" maxlength="20" />
+				<li>
+					<form:password path="password" class="txt-input" maxlength="16" placeholder="비밀번호" />
 					<form:errors path="password"/>
 				</li>
-				<li><form:label path="re_password">비밀번호 확인</form:label> 
-					<form:password path="re_password" class="MS_input_txt w137 txt-input input-label" 
-								   value="" size="15" maxlength="20" />
+				<li>
+					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인" />
 					<form:errors path="re_password"/>
 				</li>
-				<li><form:label path="email">이메일</form:label> 
-					<form:input path="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
-								size="20" maxlength="35" id="email" value="" />
+				<li>
+					<form:input path="name" class="txt-input" maxlength="20" placeholder="이름" />
+					<form:errors path="name"/>	
+				</li>
+				<li>
+					<form:input path="email" class="txt-input" maxlength="100" placeholder="이메일" />
 					<form:errors path="email"/>
 				</li>
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
 						<dd>
 							<select name="birthYear" class="new-birth" style="width: 60px; height: 40px;">
-								<option value="">생년</option>
+								<option >생년</option>
 								<option value=2001>2001</option>
 								<option value=2000>2000</option>
 								<option value=1999>1999</option>
@@ -108,7 +80,7 @@ function send(){
 						</dd>
 						<dd>
 							<select name="birthMonth" class="new-birth" style="width: 60px; height: 40px;">
-								<option value="">월</option>
+								<option >월</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
 								<option value="03">3</option>
@@ -125,7 +97,7 @@ function send(){
 						</dd>
 						<dd>
 							<select name="birthDay" class="new-birth" style="width: 60px; height: 40px;">
-								<option value="">일</option>
+								<option >일</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
 								<option value="03">3</option>
@@ -162,13 +134,12 @@ function send(){
 					</dl>
 				</li>
 				<li class="gender">&nbsp;
-					<form:label path="gender">성별</form:label>
 					<form:radiobutton path="gender" class="input-radio" value="F" label="남"/>
 					<form:radiobutton path="gender" class="input-radio" value="M" label="여" checked="checked"/>
 					<form:errors path="gender"/>
 				</li>
-				<li><form:label path="phone">연락처</form:label> 
-					<form:input path="phone" class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" />
+				<li>
+					<form:input path="phone" class="txt-input" size="15" maxlength="30" placeholder="휴대폰번호" />
 					<form:errors path="phone"/>
 				</li>
 				<li>
