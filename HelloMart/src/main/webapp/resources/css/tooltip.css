@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+.joinTooltip{
+}
+
+.tooltiptext {
+	visibility: hidden;
+	min-height: 50px;
+	line-height: 14px;
+    width: 260px;
+    border:1px solid #ababab;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 0%;
+    left: -30%;
+    word-break: break-all;
+    padding: 10px;
+}
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    right: -5%;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #ababab;
+}
+
+.joinTooltip:FOCUS + .tooltiptext {
+    visibility: visible;
+}
