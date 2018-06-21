@@ -10,35 +10,12 @@
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
 	document.f.submit();
 }
-//회원가입 input태그 클릭 함수
-(function($) {
-	$(function() {
-	    $('.input-label').keypress(function(){
-	        $(this).trigger('focusin');
-	    });
-	    $('.input-label').each(function() {
-	        if($(this).val().length) {
-	            $(this).trigger('focusin');
-	        }
-	    });
-	    
-		$('.input-label').focusin(function(){
-			$(this).css({'opacity':1, filter: 'alpha(enabled="false")'});
-		});
-		$('.input-label').focusout(function(){
-			if(!$(this).val()) {
-				$(this).animate({'opacity':0}, 500);
-			} else {
-				$(this).css({'opacity':1});
-			}
-		});
-	});
-})(jQuery);
 
 </script>
 </head>
@@ -51,49 +28,38 @@ function send(){
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
+	
 			<ul class="join-form">
-				<li><label>이름</label> 
-					<input type="text" name="name" id="name" value=""
-					class="MS_input_txt w137 txt-input input-label" size="15" maxlength="30" /></li>
-				<li><label>아이디</label> 
-					<input type="text" name="id" id="id" value=""
-					class="MS_input_txt w137 txt-input input-label" size="10" maxlength="12" /></li>
-				<li><label>비밀번호</label> 
-					<input type="password" name="password" id="password"
-					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
-				<li><label>비밀번호 확인</label> 
-					<input type="password" name="re_password" id="re_password"
-					class="MS_input_txt w137 txt-input input-label" value="" size="15" maxlength="20" /></li>
-				<li><label>이메일</label> 
-					<input type="text" name="email" id="email" class="MS_input_txt MS_input_txt06 w137 txt-input input-label" 
-					size="20" maxlength="35" id="email" value="" /></li>
+			
+				<li>	
+					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
+						<span class="tooltiptext">아이디를 6~20자까지 입력해주세요.</span>
+					<form:errors path="id" class="errors"/>
+				</li>
+				<li>
+					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
+						<span class="tooltiptext">비밀번호를 4~16자까지 입력해주세요.</span>
+					<form:errors path="password" class="errors"/>
+				</li>
+				<li>
+					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인" />
+					<form:errors path="re_password" class="errors"/>
+				</li>
+				<li>
+					<form:input path="name" class="txt-input joinTooltip" maxlength="20" placeholder="이름" />
+						<span class="tooltiptext">이름은 한글만 입력 가능합니다.</span>
+					<form:errors path="name" class="errors"/>
+				</li>
+				<li>
+					<form:input path="email" class="txt-input" maxlength="100" placeholder="이메일" />
+					<form:errors path="email" class="errors"/>
+				</li>
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
 						<dd>
 							<select name="birthYear" class="new-birth" style="width: 60px; height: 40px;">
 								<option value="">생년</option>
 								<option value=2001>2001</option>
-								<option value=2000>2000</option>
-								<option value=1999>1999</option>
-								<option value=1998>1998</option>
-								<option value=1997>1997</option>
-								<option value=1996>1996</option>
-								<option value=1995>1995</option>
-								<option value=1994>1994</option>
-								<option value=1993>1993</option>
-								<option value=1992>1992</option>
-								<option value=1991>1991</option>
-								<option value=1990 selected>1990</option>
-								<option value=1989>1989</option>
-								<option value=1988>1988</option>
-								<option value=1987>1987</option>
-								<option value=1986>1986</option>
-								<option value=1985>1985</option>
-								<option value=1984>1984</option>
-								<option value=1983>1983</option>
-								<option value=1982>1982</option>
-								<option value=1981>1981</option>
-								<option value=1980>1980</option>
 							</select>
 						</dd>
 						<dd>
@@ -150,20 +116,27 @@ function send(){
 							</select>
 						</dd>
 					</dl>
+					<form:errors path="birthYear" class="errors"/>
 				</li>
 				<li class="gender">&nbsp;
-					<label><input type="radio" name="gender" value="F" class="input-radio" />남</label> 
-					<label><input type="radio" name="gender" value="M" class="input-radio" checked />여</label>
+					<form:radiobutton path="gender" class="input-radio" value="F" label="남"/>
+					<form:radiobutton path="gender" class="input-radio" value="M" label="여" checked="checked"/>
+					<form:errors path="gender" class="errors"/>
 				</li>
-				<li><label>휴대폰번호</label> 
-					<input type="text" name="phone" id="phone"
-					class="MS_input_tel w137 txt-input input-label" size="15" maxlength="30" value="" /></li>
 				<li>
-					<input type="text" name="postCode" id="sample6_postcode" placeholder="우편번호" readonly>
-					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></li>
+					<form:input path="phone" class="txt-input" size="15" maxlength="30" placeholder="휴대폰번호" />
+					<form:errors path="phone" class="errors"/>
+				</li>
 				<li>
-					<input type="text" name="roadAddress" id="sample6_address" placeholder="주소" readonly>
-					<input type="text" name="detailAddress" id="sample6_address2" placeholder="상세주소">
+					<form:input path="postCode" id="sample6_postcode" placeholder="우편번호" readonly="true"/>
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+					<form:errors path="postCode" class="errors"/><br>
+				</li>
+				<li>
+					<form:input path="roadAddress" id="sample6_address" placeholder="주소" readonly="true"/>
+					<form:input path="detailAddress" id="sample6_address2" placeholder="상세주소"/>
+					<form:errors path="roadAddress" class="errors"/>
+					<form:errors path="detailAddress" class="errors"/>
 				</li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >
