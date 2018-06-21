@@ -19,7 +19,7 @@ public class XMLPaserTest {
 	
 	@Test
 	public void getChildrenTest() throws Exception {
-		List<String> category = xmlParser.getChildren("냉장고");
+		List<String> category = xmlParser.getChildren("에어컨");
 		logger.debug(category.toString());
 		
 		for(String tagName : category) {

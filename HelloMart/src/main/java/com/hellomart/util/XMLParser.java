@@ -59,7 +59,8 @@ public class XMLParser {
         try{
             dcumentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilder = dcumentBuilderFactory.newDocumentBuilder();
- 
+            
+            
             doc = documentBuilder.parse(xmlFilePath);
         } catch (ParserConfigurationException e){
         	logger.debug("ParseConfigurationException");
