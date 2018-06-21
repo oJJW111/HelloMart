@@ -17,9 +17,6 @@ function send(){
 	document.f.submit();
 }
 
-function name() {
-	
-}
 </script>
 </head>
 <body>
@@ -42,20 +39,20 @@ function name() {
 				<li>
 					<form:password path="password" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
 						<span class="tooltiptext">비밀번호를 4~16자까지 입력해주세요.</span>
-					<form:errors path="password"/>
+					<form:errors path="password" class="errors"/>
 				</li>
 				<li>
 					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인" />
-					<form:errors path="re_password"/>
+					<form:errors path="re_password" class="errors"/>
 				</li>
 				<li>
 					<form:input path="name" class="txt-input joinTooltip" maxlength="20" placeholder="이름" />
 						<span class="tooltiptext">이름은 한글만 입력 가능합니다.</span>
-					<form:errors path="name"/>	
+					<form:errors path="name" class="errors"/>
 				</li>
 				<li>
 					<form:input path="email" class="txt-input" maxlength="100" placeholder="이메일" />
-					<form:errors path="email"/>
+					<form:errors path="email" class="errors"/>
 				</li>
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
@@ -123,22 +120,22 @@ function name() {
 				<li class="gender">&nbsp;
 					<form:radiobutton path="gender" class="input-radio" value="F" label="남"/>
 					<form:radiobutton path="gender" class="input-radio" value="M" label="여" checked="checked"/>
-					<form:errors path="gender"/>
+					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
 					<form:input path="phone" class="txt-input" size="15" maxlength="30" placeholder="휴대폰번호" />
-					<form:errors path="phone"/>
+					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>
 					<form:input path="postCode" id="sample6_postcode" placeholder="우편번호" readonly="true"/>
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-					<form:errors path="postCode"/><br>
+					<form:errors path="postCode" class="errors"/><br>
 				</li>
 				<li>
 					<form:input path="roadAddress" id="sample6_address" placeholder="주소" readonly="true"/>
 					<form:input path="detailAddress" id="sample6_address2" placeholder="상세주소"/>
-					<form:errors path="roadAddress"/>
-					<form:errors path="detailAddress"/>
+					<form:errors path="roadAddress" class="errors"/>
+					<form:errors path="detailAddress" class="errors"/>
 				</li>
 			</ul><br>
 			<div class="new-btn-area" style="height: 65px; margin-top: 10px;" >
