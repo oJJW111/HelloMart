@@ -13,7 +13,12 @@ public interface QABoardService {
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaBoard);
 	
+	/* 게시글 뷰화면 메소드 */
+	void viewQABoard(int idx);
+	
 	/* 게시글을 삭제하는 메소드 */
-	void deleteAccount(int idx);
+	void deleteQABoard(int idx);
+	
+
 	
 }

@@ -22,6 +22,7 @@
 	<div class="article_wrap">
 
 		<!-- 게시물 읽기 시작 { -->
+		<c:set var="view" items="${ }"></c:set>
 		<header>
 			<h1 id="bo_v_title">글제목 출력</h1>
 		</header>
@@ -30,18 +31,6 @@
 			<h2>페이지 정보</h2>
 			작성자 <strong>관리자</strong> &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span><strong>2018-06-21</strong>
 		</section>
-
-		<!-- 첨부파일 시작 { -->
-		<section id="bo_v_file">
-			<h2>첨부파일</h2>
-			<ul>
-				<li>
-				    <img src="/resources/images/qaboard/icon_img.gif" alt="첨부">파일이름.jpg
-				    &nbsp;&nbsp;&nbsp;<a href="#" class="view_file_download">다운로드</a>
-				</li> 
-			</ul>
-		</section>
-		<!-- } 첨부파일 끝 -->
 
 		<section id="bo_v_atc">
 			<h2 id="bo_v_atc_title">본문</h2>

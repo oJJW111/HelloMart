@@ -27,7 +27,6 @@
 				전체<span>5</span>건
 			</div>
 			<div class="tbl_head01 tbl_wrap">
-				<form action="#" name="fboardlist" id="fboardlist" method="post">
 					<table>
 						<thead>
 							<tr>
@@ -45,7 +44,8 @@
 									<td class="td_num">${list.idx }</td>
 									<td class="td_chk"><input type="checkbox" name="chk_wr_id"
 										value="wr_id" id="chk_wr_id"></td>
-									<td class="td_subject">${list.subject }</td>
+									<td class="td_subject">
+									<a href="/view?idx=${list.idx }">${list.subject }</a></td>
 									<td class="td_name sv_use">${list.id }</td>
 									<td class="td_date">
 										<fmt:formatDate value="${list.date}" pattern="yyyy-MM-dd"/>
@@ -69,7 +69,7 @@
 				</ul>
 				<ul class="btn_bo_user">
 					<li><a href="#" class="btn_b01">목 록</a></li>
-					<li><a href="qawrite" class="btn_b02">글쓰기</a></li>
+					<li><a href="/write" class="btn_b02">글쓰기</a></li>
 				</ul>
 			</div>
 

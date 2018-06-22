@@ -12,15 +12,23 @@
 	<insert id="insertQABoard">
 		INSERT INTO
 		
-		Account (Idx, Subject, Content, Id, ReRef,
-		ReLev, ReSeq, Count, Date)
+		QABoard (subject, content, id, reRef,
+		reLev, reSeq, count)
 		
-		VALUES (#{Idx}, #{Subject}, #{Content}, #{Id}, #{ReRef},
-		#{ReLev}, #{ReSeq}, #{Count}, #{Date});
+		VALUES (#{subject}, #{content}, #{id}, #{reRef},
+		#{reLev}, #{reSeq}, #{count});
 	</insert>
 	
-	<delete id="deleteAccount">
-		DELETE FROM QABoard WHERE Idx = #{Idx}
+	<update id="viewCount">
+		UPDATE QABoard SET count=+1 WHERE idx=#{idx}
+	</update>
+	<select id="viewQABoard" resultType="QABoard">
+		
+		SELECT * FROM QABoard WHERE idx = #{idx}
+	</select>
+	
+	<delete id="deleteQABoard">
+		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
 	
 	<select id="getCount">
