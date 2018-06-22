@@ -33,12 +33,12 @@ function send(){
 			
 				<li>	
 					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
-						<span class="tooltiptext">아이디를 6~20자까지 입력해주세요.</span>
+						<span class="tooltiptext">아이디를 8자 이상 20자 이하로 입력해주세요.</span>
 					<form:errors path="id" class="errors"/>
 				</li>
 				<li>
 					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
-						<span class="tooltiptext">비밀번호를 4~16자까지 입력해주세요.</span>
+						<span class="tooltiptext">비밀번호를 8자 이상 16자 이하로 입력해주세요.</span>
 					<form:errors path="password" class="errors"/>
 				</li>
 				<li>
@@ -47,7 +47,7 @@ function send(){
 				</li>
 				<li>
 					<form:input path="name" class="txt-input joinTooltip" maxlength="20" placeholder="이름" />
-						<span class="tooltiptext">이름은 한글만 입력 가능합니다.</span>
+						<span class="tooltiptext">이름은 20자이하로 작성하여 주십시오.</span>
 					<form:errors path="name" class="errors"/>
 				</li>
 				<li>

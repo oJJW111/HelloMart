@@ -52,14 +52,12 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
+		rejectIfNotMatch(errors, "form.error.password.notvalidate",
+				"password", account.getPassword(), "");
+		rejectIfNotEquals(errors, "form.error.password.notequal",
+				"password", "re_password", account.getPassword(), account.getRe_password());
 		rejectIfNotMatch(errors, "form.error.email.notvalidate", 
-				"email", account.getEmail(), "^[0-9a-zA-Z]+$");
-		//@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}$
-		if(!errors.hasFieldErrors("password")) {
-			if(!account.getPassword().equals(account.getRe_password())) {
-				errors.rejectValue("re_password", "form.error.password.notequal");
-			}
-		}
+				"email", account.getEmail(), "[0-9a-zA-Z]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}");
 	}
 	
 	private boolean isNullOrEmpty(String str) {
@@ -68,17 +66,31 @@ public class JoinFormValidator implements Validator {
 	
 	private void rejectIfNotMatch(Errors errors, String errorCode, 
 			String field, String value, String reg) {
-		logger.debug(field + " : " + value);
-		if(!errors.hasFieldErrors(field)) {
-			Pattern pattern = Pattern.compile(reg);
-			Matcher matcher = pattern.matcher(field);
-			
-			if(!matcher.matches()) {
-				logger.debug(field + "[" + value + "]" + " not match");
-				errors.rejectValue(field, errorCode);
-			}
-		}
+		rejectIfHasNotErrors(errors, errorCode, field, 
+				() -> {
+					Pattern pattern = Pattern.compile(reg);
+					Matcher matcher = pattern.matcher(value);
+					
+					if(!matcher.matches()) {
+						errors.rejectValue(field, errorCode);
+					}
+				});
 	}
 	
+	private void rejectIfNotEquals(Errors errors, String errorCode, 
+			String field, String field2, String str1, String str2) {
+		rejectIfHasNotErrors(errors, errorCode, field, 
+				() -> {
+					if(!str1.equals(str2)) {
+						errors.rejectValue(field2, errorCode);
+					}
+				});
+	}
+	
+	private void rejectIfHasNotErrors(Errors errors, String errorCode, String field, MatcherStatement mstmt) {
+		if(!errors.hasFieldErrors(field)) {
+			mstmt.rejectIfNot();
+		}
+	}
 	
 }
