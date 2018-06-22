@@ -18,88 +18,95 @@ function send(){
 	document.f.submit();
 }
 $(document).ready(function(){
-	$dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-	
-	$("#year").append('<option value="">생년</option>');
-	
-	for(i=1960; i<2001; i++){
-		$("#year").append('<option value='+i+'>'+i+'</option>');
-	}
-	
-	$("#month").append('<option value="">월</option>');
-	for(i=1; i<13; i++){
-		$("#month").append('<option value='+i+'>'+i+'</option>');
-	} 
-	
-	$("#day").append('<option value="">일</option>');
-	
-	$d = function(n) {
-		for(i=1; i<=n; i++){
-			$("#day").append('<option value='+i+'>'+i+'</option>');
-		} 
+
+var BIRTHDATEMAKER = function() {
+		var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		
+		var appendOption = function(id, value, valueAttr) {
+			$('#'+id).append('<option value=' + valueAttr + '>' + value + '</option>');
+		}
+		
+		var dayId = 'day';
+		
+		appendOption('year', '생년', '');
+		var y = function(n, m) { 
+			for(i=n; i<=m; i++){
+				appendOption('year', i, i);
+			}
+		}(1950, 2018);
+
+		appendOption('month', '월', '');
+		var m = function() {
+			for(i=1; i<=12; i++){
+				appendOption('month', i, i);
+			}
+		}();
+		
+		appendOption('day', '일', '');
+		var d = function(n) {
+			for(i=1; i<=n; i++){
+				appendOption('day', i, i);
+			} 
+		};
+		
+		var getSelectedVal = function(id) {
+			return $('#' + id + ' option:selected').attr("value");
+		}
+		
+		var dayEmpty = function() {
+			$('#' + dayId).empty();
+		}
+		
+		$("#month").on("change",function(){
+			var y = getSelectedVal('year');
+			
+			if(y != "") {
+				var m = getSelectedVal('month');
+				
+				calculateDay(m, y);
+			}
+		});
+		
+		$("#year").on("change",function(){
+			m = getSelectedVal('month');
+			
+			if(m != "") {
+				y = getSelectedVal('year');
+				
+				calculateDay(m, y);
+			}
+		});
+		
+		var dayOnChangeEvent = function() {
+			
+		}
+		
+		var calculateDay = function(m, y) {
+			dayEmpty();
+			
+			appendOption('day', '일', '');
+			
+			$tempOfDay = dayOfMonth[m-1];
+			
+			$day = $tempOfDay;
+			
+			$b = false;
+			if(m == 2) {
+				if((y % 400) == 0) {
+					$b = true;
+				} else if((y % 4) == 0 && (y % 100) != 0) {
+					$b = true;
+				}
+			}
+			
+			if($b) {
+				$day++;
+			}
+			
+			d($day);
+		}
 	};
-	
-	$("#month").on("change",function(){
-		$selectedYear = $("#year option:selected").attr("value");
-		
-		if($selectedYear != "") {
-			$selectedMonth = $("#month option:selected").attr("value");
-			
-			$("#day").empty();
-			
-			$("#day").append('<option value="">일</option>');
-			
-			$tempOfDay = $dayOfMonth[$selectedMonth-1];
-			
-			$day = $tempOfDay;
-			
-			$b = false;
-			if($selectedMonth == 2) {
-				if(($selectedYear % 400) == 0) {
-					$b = true;
-				} else if(($selectedYear % 4) == 0 && ($selectedYear % 100) != 0) {
-					$b = true;
-				}
-			}
-			
-			if($b) {
-				$day++;
-			}
-			
-			$d($day);
-		}
-	});
-	
-	$("#year").on("change",function(){
-		$selectedMonth = $("#month option:selected").attr("value");
-		
-		if($selectedMonth != "") {
-			$selectedYear = $("#year option:selected").attr("value");
-			
-			$("#day").empty();
-			
-			$("#day").append('<option value="">일</option>');
-			
-			$tempOfDay = $dayOfMonth[$selectedMonth-1];
-			
-			$day = $tempOfDay;
-			
-			$b = false;
-			if($selectedMonth == 2) {
-				if(($selectedYear % 400) == 0) {
-					$b = true;
-				} else if(($selectedYear % 4) == 0 && ($selectedYear % 100) != 0) {
-					$b = true;
-				}
-			}
-			
-			if($b) {
-				$day++;
-			}
-			
-			$d($day);
-		}
-	});
+	BIRTHDATEMAKER();
 });
 </script>
 </head>
