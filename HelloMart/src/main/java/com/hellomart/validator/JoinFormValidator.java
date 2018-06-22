@@ -52,8 +52,8 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
-		rejectIfNotMatch(errors, "form.error.password.notvalidate",
-				"password", account.getPassword(), "");
+//		rejectIfNotMatch(errors, "form.error.password.notvalidate",
+//				"password", account.getPassword(), "");
 		rejectIfNotEquals(errors, "form.error.password.notequal",
 				"password", "re_password", account.getPassword(), account.getRe_password());
 		rejectIfNotMatch(errors, "form.error.email.notvalidate", 
