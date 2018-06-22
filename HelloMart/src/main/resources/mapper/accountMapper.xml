@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hellomart.dao.AccountDAO">
+
+	<select id="findAccount" resultType="Account" parameterType="String">
+		SELECT Password, Role FROM Account WHERE ID = #{id}
+	</select>
+	
+	<insert id="insertAccount">
+		INSERT INTO
+		
+		Account (ID, Password, Email, PostCode, RoadAddress,
+		DetailAddress, Phone, Name, BirthYear, BirthMonth, BirthDay, Gender)
+		
+		VALUES (#{id}, #{password}, #{email},
+		#{postCode}, #{roadAddress}, #{detailAddress},
+		#{phone}, #{name}, #{birthYear}, #{birthMonth}, #{birthDay}, #{gender});
+	</insert>
+	
+	<delete id="deleteAccount">
+		DELETE FROM Account WHERE ID = #{id}
+	</delete>
+	
+	<!-- 테스트 목적으로 사용되는 SQL문 -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS cnt FROM Account
+	</select>
+	
+	<select id="get" resultType="Account">
+		SELECT ID, Password, Role, Points, Grade, Email,
+			   PostCode, RoadAddress, DetailAddress,
+			   Phone, Name, BirthYear, BirthMonth, BirthDay, Gender, Reliability, JoinDate
+		FROM Account WHERE ID = #{id};
+	</select>
+	
+	<delete id="truncate">
+		TRUNCATE Account
+	</delete>
+	<!-- 테스트 목적으로 사용되는 SQL문 -->
+	
+</mapper>
