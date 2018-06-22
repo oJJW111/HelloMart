@@ -72,6 +72,12 @@
 			</div>
 		</div>
 	</form>
+	<div class="pageNumberList">
+		<span>1&nbsp;&nbsp;&nbsp;</span>
+		<span>2&nbsp;&nbsp;&nbsp;</span>
+		<span>3&nbsp;&nbsp;&nbsp;</span>
+		<span>4&nbsp;&nbsp;&nbsp;</span>
+	</div>
 	<div class="adminButton">
 		<input type="button" id="deleteAccount" value="계정삭제"> <input
 			type="button" id="sellerApproval" value="판매자승인">

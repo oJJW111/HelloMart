@@ -33,8 +33,19 @@
 .divTableBody {
 	display: table-row-group;
 }
-.adminButton{
+.pageNumberList{
 	display: table;
+	width: 50%;
 	margin-left: auto; 
 	margin-right: auto;
+	text-align: center;
+	margin-top: 5px;
+}
+.adminButton{
+	display: table;
+	width: 50%;
+	margin-left: auto; 
+	margin-right: auto;
+	text-align: right;
+	margin-top: 5px;
 }
