@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +21,7 @@ function send(){
 $(document).ready(function(){
 	for(i=1960; i<2001; i++){
 		$("#year").append('<option value='+i+'>'+i+'</option>');
+			if()
 	}
 	for(i=1; i<13; i++){
 		$("#month").append('<option value='+i+'>'+i+'</option>');
@@ -52,12 +54,12 @@ $(document).ready(function(){
 			<ul class="join-form">
 				<li>	
 					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
-						<span class="tooltiptext">아이디를 6~20자까지 입력해주세요.</span>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.id"/></span>
 					<form:errors path="id" class="errors"/>
 				</li>
 				<li>
-					<form:password path="password" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
-						<span class="tooltiptext">비밀번호를 4~16자까지 입력해주세요.</span>
+					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.password"/></span>
 					<form:errors path="password" class="errors"/>
 				</li>
 				<li>
@@ -66,7 +68,7 @@ $(document).ready(function(){
 				</li>
 				<li>
 					<form:input path="name" class="txt-input joinTooltip" maxlength="20" placeholder="이름" />
-						<span class="tooltiptext">이름은 한글만 입력 가능합니다.</span>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.name"/></span>
 					<form:errors path="name" class="errors"/>
 				</li>
 				<li>
@@ -79,6 +81,7 @@ $(document).ready(function(){
 							<form:select path="birthYear" id="year">
 								<form:option value="">생년</form:option>
 							</form:select>
+
 						</dd>
 						<dd>
 							<form:select path="birthMonth" id="month">3
@@ -91,6 +94,7 @@ $(document).ready(function(){
 							</form:select>
 						</dd>
 					</dl>
+					<form:errors path="birthYear" class="errors"/>
 				</li>
 				<li class="gender">&nbsp;
 					<form:radiobutton path="gender" class="input-radio" value="F" label="남"/>
@@ -98,7 +102,7 @@ $(document).ready(function(){
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" size="15" maxlength="30" placeholder="휴대폰번호" />
+					<form:input path="phone" class="txt-input" maxlength="20" placeholder="휴대폰번호" />
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>

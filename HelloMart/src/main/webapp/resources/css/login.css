@@ -33,8 +33,7 @@
 .buttonlogin span a {width:100%;line-height:14px;padding:10px 0; text-align:center;margin:0;letter-spacing:1.5px;}
 .btnlogin { display:inline-block;border:1px solid #333; margin:0 2px;letter-spacing:-1px;  background:#333; color:#fff;  font-family: Tahoma, 'Roboto', arial; font-size:11px;  }
 .btnlogin:hover{background:#fff ; color:#333; cursor: pointer;}
-.buttonlogin1 { width:270px; margin:10px 0 0; } 
-.buttonlogin1 span a {width:100%;line-height:14px;padding:10px 0;font-size:11px;text-align:center;margin:0;letter-spacing:0.5px;}
+.buttonlogin1 span a {width:100%;line-height:14px;padding:10px 0;font-size:11px;text-align:center;margin:0;letter-spacing:0.5px; text-decoration: none;}
 .btnlogin1 { display:inline-block;border:1px solid #ddd; margin:0 2px;letter-spacing:-1px;font-size:11px; background:#f2f2f2; color:#333;  font-family: Tahoma, 'Roboto', 'arial'; font-size:11px; text-decoration: none; }
 .btnlogin1:hover{background:#333;border:1px solid #333; color:#fff;}
 
