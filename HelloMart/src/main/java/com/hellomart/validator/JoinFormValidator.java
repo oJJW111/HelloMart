@@ -13,6 +13,7 @@ import com.hellomart.dto.Account;
 
 public class JoinFormValidator implements Validator {
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(JoinFormValidator.class);
 	
 	@Override
@@ -52,11 +53,13 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
-//		rejectIfNotMatch(errors, "form.error.password.notvalidate",
-//				"password", account.getPassword(), "");
-		rejectIfNotEquals(errors, "form.error.password.notequal",
+		rejectIfNotMatch(errors, "form.error.notvalidate.id",
+				"id", account.getId(), "[a-zA-Z][0-9a-zA-Z]{5,19}");
+		rejectIfNotMatch(errors, "form.error.notvalidate.password",
+				"password", account.getPassword(), "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
+		rejectIfNotEquals(errors, "form.error.notequal.password",
 				"password", "re_password", account.getPassword(), account.getRe_password());
-		rejectIfNotMatch(errors, "form.error.email.notvalidate", 
+		rejectIfNotMatch(errors, "form.error.notvalidate.email", 
 				"email", account.getEmail(), "[0-9a-zA-Z]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}");
 	}
 	

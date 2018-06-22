@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +17,6 @@
 function send(){
 	document.f.submit();
 }
-
 </script>
 </head>
 <body>
@@ -28,17 +28,15 @@ function send(){
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
-	
 			<ul class="join-form">
-			
 				<li>	
 					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
-						<span class="tooltiptext">아이디를 8자 이상 20자 이하로 입력해주세요.</span>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.id"/></span>
 					<form:errors path="id" class="errors"/>
 				</li>
 				<li>
 					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
-						<span class="tooltiptext">비밀번호를 8자 이상 16자 이하로 입력해주세요.</span>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.password"/></span>
 					<form:errors path="password" class="errors"/>
 				</li>
 				<li>
@@ -47,7 +45,7 @@ function send(){
 				</li>
 				<li>
 					<form:input path="name" class="txt-input joinTooltip" maxlength="20" placeholder="이름" />
-						<span class="tooltiptext">이름은 20자이하로 작성하여 주십시오.</span>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.name"/></span>
 					<form:errors path="name" class="errors"/>
 				</li>
 				<li>
@@ -57,13 +55,13 @@ function send(){
 				<li class="birth">
 					<dl class="type1" style="margin: 0;">
 						<dd>
-							<select name="birthYear" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthYear" class="new-birth">
 								<option value="">생년</option>
 								<option value=2001>2001</option>
 							</select>
 						</dd>
 						<dd>
-							<select name="birthMonth" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthMonth" class="new-birth">
 								<option value="">월</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
@@ -80,7 +78,7 @@ function send(){
 							</select>
 						</dd>
 						<dd>
-							<select name="birthDay" class="new-birth" style="width: 60px; height: 40px;">
+							<select name="birthDay" class="new-birth">
 								<option value="">일</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
@@ -124,7 +122,7 @@ function send(){
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" size="15" maxlength="30" placeholder="휴대폰번호" />
+					<form:input path="phone" class="txt-input" maxlength="20" placeholder="휴대폰번호" />
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>
@@ -150,23 +148,5 @@ function send(){
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->
-<script>
-(function() {
-		var a, b, c, d, e, f, g;
-		a = function() {
-			return "수정된 a입니다";
-		}
-		b = function() {
-			return "b입니다";
-		}
-		
-		this.z = function() {
-			return a;
-		}
-})();
-
-var val = z();
-console.log(val());
-</script>
 </body>
 </html>

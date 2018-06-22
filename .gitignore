@@ -22,7 +22,7 @@ tomcat
 *.sar
 *.class
 
-# Maven 
+# Maven
 target/
 
 # eclipse project file

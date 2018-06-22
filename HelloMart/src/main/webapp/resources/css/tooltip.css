@@ -5,8 +5,8 @@
 .tooltiptext {
 	visibility: hidden;
 	min-height: 50px;
-	line-height: 14px;
-    width: 260px;
+	line-height: 20px;
+    width: 320px;
     border:1px solid #ababab;
     background-color: #fff;
     color: #000;
@@ -16,7 +16,7 @@
     position: absolute;
     z-index: 1;
     top: 0%;
-    left: -30%;
+    left: -38%;
     word-break: break-all;
     padding: 10px;
 }
@@ -24,8 +24,8 @@
 .tooltiptext::after {
     content: "";
     position: absolute;
-    top: 30%;
-    right: -5%;
+    top: 15px;
+    right: -4%;
     border-width: 6px;
     border-style: solid;
     border-color: transparent transparent transparent #ababab;
