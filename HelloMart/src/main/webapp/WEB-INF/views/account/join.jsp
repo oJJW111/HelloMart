@@ -7,7 +7,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- 다음 api js 파일 추가 -->
+<!-- 다음 api js 파일 추가 --> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
@@ -16,7 +16,6 @@
 function send(){
 	document.f.submit();
 }
-
 </script>
 </head>
 <body>
