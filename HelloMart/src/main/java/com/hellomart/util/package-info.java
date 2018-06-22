@@ -5,4 +5,4 @@
  * @author ITWILL
  *
  */
-package com.hellomart.validator;
+package com.hellomart.util;
