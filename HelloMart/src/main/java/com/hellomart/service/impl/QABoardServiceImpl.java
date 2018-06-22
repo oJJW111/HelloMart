@@ -34,17 +34,36 @@ public class QABoardServiceImpl implements QABoardService{
 		dao.insertQABoard(qaboard);
 	}
 	
-
 	@Override
-	public void viewQABoard(int idx) {
-		dao.viewQABoard(idx);
-		
+	public QABoard viewQABoard(int idx) {
+		return dao.viewQABoard(idx);
 	}
 
 	@Override
 	public void deleteQABoard(int idx) {
 		dao.deleteQABoard(idx);
 	}
+
+	@Override
+	public void viewCount(int idx) {
+		dao.viewCount(idx);	
+	}
+
+	
+
+	@Override
+	public void reReLv(QABoard qaboard) {
+		dao.reReLv(qaboard);		
+	}
+
+	@Override
+	public void reWrite(QABoard qaboard) {
+		dao.reWrite(qaboard);	
+	}
+
+
+	
+	
 	
 	
 	

@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
@@ -62,21 +63,36 @@ public class QABoardController {
 	public ModelAndView view(int idx) {
 		
 		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("view", service.viewQABoard(idx));
-		
+		service.viewCount(idx);
+		QABoard view = service.viewQABoard(idx);
+		mav.addObject("view",view);
 		mav.setViewName("qaboard/QAView");
 		
 		return mav;
 	}
 	
-	@RequestMapping("/qaview")
-	public ModelAndView qaBoardView() {
+	@RequestMapping(value = "/rewrite", method=RequestMethod.GET)
+	public ModelAndView reWrite(int idx) {
+		
 		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("qaboard/QAView");
-		
+		QABoard qaboard = service.viewQABoard(idx);
+		mav.addObject("qaboard", qaboard);
+		mav.setViewName("qaboard/reWrite");
 		return mav;
 	}
+		
+	
+	
+	@RequestMapping(value = "/rewriteOk", method=RequestMethod.POST)
+	public String rewriteOk(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "qaboard/reWrite";
+		}
+		service.reReLv(qaboard);
+		service.reWrite(qaboard);
+		return "redirect:/qaboard";
+	}
+	
+	
 	
 }

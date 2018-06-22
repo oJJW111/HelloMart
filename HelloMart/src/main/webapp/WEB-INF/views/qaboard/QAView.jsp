@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -22,14 +23,16 @@
 	<div class="article_wrap">
 
 		<!-- 게시물 읽기 시작 { -->
-		<c:set var="view" items="${ }"></c:set>
 		<header>
-			<h1 id="bo_v_title">글제목 출력</h1>
+			<h1 id="bo_v_title">${view.subject }</h1>
 		</header>
 
 		<section id="bo_v_info">
 			<h2>페이지 정보</h2>
-			작성자 <strong>관리자</strong> &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span><strong>2018-06-21</strong>
+			작성자 <strong>${view.id }</strong> &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span>
+			<strong>
+				<fmt:formatDate value="${view.date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+			</strong>
 		</section>
 
 		<section id="bo_v_atc">
@@ -38,7 +41,7 @@
 
 
 			<!-- 본문 내용 시작 { -->
-			<div id="bo_v_con">본문내용</div>
+			<div id="bo_v_con">${view.content }</div>
 
 			<!-- } 본문 내용 끝 -->
 
@@ -51,8 +54,8 @@
 				<ul class="bo_v_com">
 					<li><a href="#" class="btn_b01">수정</a></li>
 					<li><a href="#" class="btn_b01">삭제</a></li>
-					<li><a href="#" class="btn_b01">목록</a></li>
-					<li><a href="#" class="btn_b02">답변작성</a></li>
+					<li><a href="/qaboard" class="btn_b01">목록</a></li>
+					<li><a href="/rewrite?idx=${view.idx }" class="btn_b02">답변작성</a></li>
 				</ul>
 
 			</div>

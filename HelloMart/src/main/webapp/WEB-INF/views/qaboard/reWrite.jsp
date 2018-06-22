@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,10 +19,34 @@
 <!-- 헤더 -->
 
 <div class="article_wrap">
+	<!-- 게시물 읽기 시작 { -->
+		<header>
+			<h1 id="bo_v_title">${qaboard.subject }</h1>
+		</header>
+
+		<section id="bo_v_info">
+			<h2>페이지 정보</h2>
+			작성자 <strong>${qaboard.id }</strong> &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span>
+			<strong>
+				<fmt:formatDate value="${qaboard.date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+			</strong>
+		</section>
+
+		<section id="bo_v_atc">
+			<h2 id="bo_v_atc_title">본문</h2>
+
+
+
+			<!-- 본문 내용 시작 { -->
+			<div id="bo_v_con">${qaboard.content }</div>
+
+			<!-- } 본문 내용 끝 -->
+		</section>
+
 <section id="bo_w">
-    <h2 id="container_title">글 작성</h2>
-    
- <form:form action="write" method="post" modelAttribute="qaboard" id="qaboard_form">
+
+    <h2 id="container_title">답글 작성</h2>
+     <form:form action="rewrite" method="post" modelAttribute="qaboard" id="qaboard_form">
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>

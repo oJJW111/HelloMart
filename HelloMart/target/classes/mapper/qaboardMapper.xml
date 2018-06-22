@@ -6,7 +6,7 @@
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
 	<select id="listQABoard" resultType="QABoard">
-		SELECT * FROM QABoard
+		SELECT * FROM QABoard ORDER BY 1 DESC
 	</select>
 	
 	<insert id="insertQABoard">
@@ -20,8 +20,9 @@
 	</insert>
 	
 	<update id="viewCount">
-		UPDATE QABoard SET count=+1 WHERE idx=#{idx}
+		UPDATE QABoard SET count=count+1 WHERE idx=#{idx}
 	</update>
+	
 	<select id="viewQABoard" resultType="QABoard">
 		
 		SELECT * FROM QABoard WHERE idx = #{idx}
@@ -35,5 +36,22 @@
 		SELECT COUNT(*) FROM QABaord
 	</select>
 	
+	
+	<!-- 답변글로 인하여 기존에 답변글들의 레벨을 1씩 증가하는 쿼리 -->
+	<update id="reReLv">
+		 UPDATE QABoard SET reLev=reLev+1 WHERE reRef=#{reRef} AND reLev > #{reLev}
+	</update>
+	
+	<!-- 답글 추가 -->
+	<insert id="reWrite">
+		INSERT INTO 
+		
+		QABoard (subject, content, id, reRef,
+		reLev, reSeq, count)
+		
+		VALUES (#{subject}, #{content}, #{id}, #{reRef},
+		#{reLev}+1, #{reSeq}+1, #{count});
+	
+	</insert>
 	
 </mapper>
