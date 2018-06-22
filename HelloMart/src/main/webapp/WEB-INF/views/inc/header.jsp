@@ -28,6 +28,9 @@ $(document).ready(function(){
 	$('#bar_menu5').on('click', function(){
 		location.href="/mypage";
 	});
+	$('#bar_menu6').on('click', function(){
+		location.href="/admin/page";
+	});
 
 	$("#main_menu_1").on('click', function(){
 		location.href="/productList?main=가전제품";
@@ -115,6 +118,8 @@ $(document).ready(function(){
 					<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 					<div class="F_right haeder_bar_menu_line"></div>
 					<div class="F_right haeder_bar_menu" id="bar_menu5">회원정보</div>
+					<div class="F_right haeder_bar_menu_line"></div>
+					<div class="F_right haeder_bar_menu" id="bar_menu6">관리자페이지</div>
 				</sec:authorize>
 				
 				<div class="clear"></div>

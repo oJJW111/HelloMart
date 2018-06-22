@@ -1,5 +1,8 @@
 package com.hellomart.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +34,13 @@ public class AccountServiceImpl implements AccountService {
 		dao.insertAccount(account);
 	}
 
+
+	
 	@Override
-	public void deleteAccount(String id) {
-		dao.deleteAccount(id);
+	public void deleteAccount(List<String> idList) {
+		for(String id : idList){
+			dao.deleteAccount(id);
+		}
 	}
 
 	@Override
@@ -41,4 +48,17 @@ public class AccountServiceImpl implements AccountService {
 		return dao.count();
 	}
 
+	
+	@Override
+	public ArrayList<Account> accountList() {
+		return dao.accountList();
+	}
+
+	@Override
+	public void sellerApproval(List<String> idList) {
+		for(String id : idList){
+			dao.sellerApproval(id);
+		}
+		
+	}
 }

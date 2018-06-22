@@ -1,5 +1,7 @@
 package com.hellomart.dao;
 
+import java.util.ArrayList;
+
 import com.hellomart.dto.Account;
 
 public interface AccountDAO {
@@ -28,7 +30,23 @@ public interface AccountDAO {
 	 * @param id 삭제할 계정의 아이디
 	 */
 	void deleteAccount(String id);
-
+	
+	/**
+	 * 계정 테이블의 모든 계정을 가져온다.
+	 * 
+	 * 
+	 * @return 모든 계정 정보를 담고 있는 리스트
+	 */
+	ArrayList<Account> accountList();
+	
+	/**
+	 * 판매진행중인 권한을 가진 아이디들을 모두 판매자권한으로 바꾼다.
+	 * 
+	 * @param id 바꿀 id
+	 */
+	void sellerApproval(String id);
+	
+	//테스트용
 	/**
 	 * 계정 테이블의 총 행의 수를 반환한다.
 	 * 
@@ -48,4 +66,6 @@ public interface AccountDAO {
 	 * 테이블을 초기화한다. 테스트용으로 사용된다.
 	 */
 	void truncate();
+	//테스트용
+
 }

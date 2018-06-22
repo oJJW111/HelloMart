@@ -116,7 +116,7 @@ public class AccountServiceTest {
 		assertThat(a1.equals(a3), is(true));
 		
 		/* 계정을 삭제한다. */
-		service.deleteAccount(id);
+		/*service.deleteAccount(id);*/
 		
 		/* 계정 삭제 후 테이블의 행의 수가 0인지 확인한다. */
 		count = service.count();
