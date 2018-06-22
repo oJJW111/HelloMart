@@ -5,56 +5,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
 <title>로그인 페이지</title>
 </head>
 <body>
-
-<!-- 헤더 -->
-<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
-<!-- 헤더 -->
-<div class="BLOCK80"></div>
-<div id="loginWrap">
-	<div class="page-body">
-		<div class="mlog-sign">
-			<div class="mlog">
-				<form name='f' action='login' method='post'>
-					<ul class="frm-list">
-						<li class="id"><label>
-							<span class="name">ID(User name)</span>
-							<span><input type="text" name="id" maxlength="20" 
-										 onblur="document.f.focus();"class="MS_login_id" /></span></label>
-						</li>
-						<li class="pwd"><label>
-							<span class="name">Password</span>
-							<span><input type="password" name="pw" maxlength="20" 
-										 value="" class="MS_login_pw" /></span></label>
-						</li>
-					</ul>
-					<input class="buttonlogin btnlogin" style="height: 35px;" type="submit" value="LOGIN">
-				</form>
-			</div>
-			<div class="sign">
-				<p class="msg">회원가입</p>
-				<p class="buttonlogin1">
-					<span><a href="join" class="btnlogin1">JOIN US</a></span>
-				</p>
-				<p class="msg">아이디 비밀번호 찾기</p>
-				<p class="buttonlogin1">
-					<span><a href="javascript:findIdPw();" class="btnlogin1">ID/PW SEARCH</a></span>
-				</p>
-			</div>
-		</div>
-	</div>
-</div>		
-<div class="BLOCK95"></div>
+<form name='f' action='login' method='post'>
+	<table>
+		<tr>
+			<td width='50px'>User:</td>
+			<td>
+				<input type='text' name='id' value='' size=29>
+			</td>
+		</tr>
+		<tr>
+			<td>Password:</td>
+			<td>
+				<input type='password' name='pw' size=30/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='2'>
+				<input name='submit' type='submit' value='로그인'/>
+			</td>
+		</tr>
+	</table>
+</form>
 <c:if test="${param.fail == 'true'}">
-<script type="text/javascript">
- alert('<spring:message code="security.badCredentials"/>');
-</script>
+<spring:message code="security.badCredentials"/>
 </c:if>
-<!-- 푸터 -->
-<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
-<!-- 푸터 -->
 </body>
 </html>
