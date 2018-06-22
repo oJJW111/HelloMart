@@ -4,10 +4,11 @@ import java.util.Date;
 
 import lombok.Data;
 
-@Data
+@Data 
 public class Account {
 	private String id;
 	private String password;
+	private String re_password;
 	private String role;
 	private int points;
 	private int grade;
