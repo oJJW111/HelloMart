@@ -8,24 +8,18 @@
 <script src="${pageContext.request.contextPath}/resources/js/daum_postcode_v4.js"></script>
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<<<<<<< HEAD
-=======
+
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
+
 <title>회원가입</title>
-<<<<<<< HEAD
-=======
 <script type="text/javascript">
 function send(){
 	document.f.submit();
 }
-
 </script>
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 </head>
 <body>
-<<<<<<< HEAD
 <h2>회원가입</h2>
 <form:form action="join" method="post" modelAttribute="account">
 	<ul>
