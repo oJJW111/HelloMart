@@ -122,6 +122,13 @@
 		    <artifactId>spring-test</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- Spring : Expression -->
+		<dependency>
+  			<groupId>org.springframework</groupId>
+   			<artifactId>spring-expression</artifactId>
+   			<version>${org.springframework-version}</version>
+  		</dependency>
 
 		<!-- Spring : JDBC -->
 		<dependency>
@@ -140,7 +147,7 @@
 		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
+			<artifactId>lombok</artifactId> 
 			<version>1.16.8</version>
 			<scope>provided</scope>
 		</dependency>

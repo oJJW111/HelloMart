@@ -63,11 +63,11 @@ public class AccountServiceTest {
 	private Account getNewAccount() {
 		Account account = new Account();
 		
-		account.setId(id);
+		account.setId(id);  
 		account.setPassword(password);
 		account.setEmail(email);
 		account.setPostCode(postCode);
-		account.setRoadAddress(roadAddress);
+		account.setRoadAddress(roadAddress); 
 		account.setDetailAddress(detailAddress);
 		account.setPhone(phone);
 		account.setName(name);
