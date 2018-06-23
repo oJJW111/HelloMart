@@ -114,18 +114,17 @@ $(document).ready(function(){
 	$('#bar_menu3').on('click', function(){
 		location.href="/join";
 	});
-
 	$("#main_menu_1").on('click', function(){
-		location.href="/product/appliances";
+		location.href="/product/list?mainCategory=" + encodeURIComponent("가전제품");
 	});
 	$("#main_menu_2").on('click', function(){
-		location.href="sub.php?menu=ct_002";
+		location.href="/product/list?mainCategory=IT";
 	});
 	$("#main_menu_3").on('click', function(){
-		location.href="sub.php?menu=ct_003";
+		location.href="/product/list?mainCategory=" + encodeURIComponent("모바일");
 	});
 	$("#main_menu_4").on('click', function(){
-		location.href="sub.php?menu=ct_004";
+		location.href="/product/list?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
 		location.href="sub.php?menu=ct_005";
