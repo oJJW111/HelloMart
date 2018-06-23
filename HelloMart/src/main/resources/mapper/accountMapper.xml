@@ -24,6 +24,14 @@
 		DELETE FROM Account WHERE ID = #{id}
 	</delete>
 	
+	<select id="accountList" resultType="Account">
+		SELECT id, role FROM Account	
+	</select>
+	
+	<update id="sellerApproval">
+		UPDATE Account SET Role = 'SELLER' WHERE id = #{id}
+	</update>
+	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS cnt FROM Account
@@ -41,4 +49,5 @@
 	</delete>
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	
+
 </mapper>
