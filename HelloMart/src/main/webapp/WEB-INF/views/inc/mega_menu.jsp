@@ -67,6 +67,10 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
 	});
 	
+	$("#qaboard").on('click', function(){
+		location.href="/qaboard";
+	});
+	
 });
 </script>
 
@@ -161,10 +165,9 @@ $(document).ready(function(){
 					<div class="mega_menu_inner_menu mega_ct_005"
 						style="display: none;">
 						<div class="M_TOP9">
-							<div class="F_left megamenu_menu_title2">123</div>
+							<div class="F_left megamenu_menu_title2"></div>
 							<div class="clear"></div>
 						</div>
-
 						<div>
 							<div class="F_left megamenu_menu_title2 M_TOP3">
 								<div class="megamenu_menu_title2_1">aaaa</div>
@@ -177,7 +180,7 @@ $(document).ready(function(){
 					<div class="mega_menu_inner_menu mega_ct_006"
 						style="display: none;">
 						<div class="M_TOP9">
-							<div class="F_left megamenu_menu_title2">aaaa</div>
+							<div class="F_left megamenu_menu_title2" id="qaboard">Q&A 게시판</div>
 							<div class="clear"></div>
 						</div>
 						<div class="M_TOP9">
