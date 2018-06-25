@@ -67,15 +67,15 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void accountList(int pageNum, Model model) {
 		int totalCount = 0;
-		int pageSize = 10;// 한페이지에 보여줄 글의 갯수
-		int pageBlock = 5; //한 블럭당 보여줄 페이지 갯수
+		int pageSize = 5;// 한페이지에 보여줄 글의 갯수
+		int pageBlock = 10; //한 블럭당 보여줄 페이지 갯수
 		
 		totalCount = dao.count();
 		page.paging(pageNum, totalCount, pageSize, pageBlock);
 		paramMap = new HashMap<>();
 		paramMap.put("startRow", page.getStartRow());
 		paramMap.put("endRow", page.getEndRow());
-		accountList = dao.accountList();
+		accountList = dao.accountList(paramMap);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageCode", page.getSb().toString());
 		model.addAttribute("accountList", accountList);

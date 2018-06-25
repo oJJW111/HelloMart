@@ -18,9 +18,9 @@ public class Page {
 			
 		sb = new StringBuffer();
 		if(startPage < pageBlock) {
-			sb.append("<img src='images/admin/beforeArrow.png' width='30' height='9'>");			
+			sb.append("<img src='/resources/images/admin/beforeArrow.png' width='30' height='9'>");			
 		} else {
-			sb.append("<img src='images/admin/beforeArrow.png' width='30' height='9'");
+			sb.append("<img src='/resources/images/admin/beforeArrow.png' width='30' height='9'");
 			sb.append(" onclick='location.href=\"/admin/page/");
 			sb.append(startPage - pageBlock);
 			sb.append("\"' style='cursor:pointer'> ");
@@ -43,12 +43,12 @@ public class Page {
 		
 		sb.append("&nbsp;&nbsp;|");		
 		if(endPage < totalPage) {
-			sb.append("<img src='images/admin/nextArrow.png' width='30' height='9'");
+			sb.append("<img src='/resources/images/admin/nextArrow.png' width='30' height='9'");
 			sb.append(" onclick='location.href=\"/admin/page/");
 			sb.append(startPage + pageBlock);
 			sb.append("\"' style='cursor:pointer'> ");						
 		} else {
-			sb.append("<img src='images/admin/nextArrow.png' width='30' height='9'>");
+			sb.append("<img src='/resources/images/admin/nextArrow.png' width='30' height='9'>");
 		}		
 	}
 

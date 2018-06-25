@@ -19,7 +19,7 @@ public class AdminController {
 	@Autowired
 	AccountService accountService;
 	
-	@RequestMapping(value="/page/{pageNum}", method=RequestMethod.GET)
+	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.GET)
 	public String accountList(@PathVariable String pageNumString, Model model) {
 		int pageNum = Integer.parseInt(pageNumString);
 		accountService.accountList(pageNum, model);

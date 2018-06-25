@@ -77,14 +77,13 @@
 				<div class="divTableRow">
 					${pageCode}
 				</div>
+				<div class="divTableRow">
+					<input type="button" id="deleteAccount" value="계정삭제"> <input
+						type="button" id="sellerApproval" value="판매자승인">
+				</div>
 			</div>
 		</div>
 	</form>
-	<div class="adminButton">
-		<input type="button" id="deleteAccount" value="계정삭제"> <input
-			type="button" id="sellerApproval" value="판매자승인">
-	</div>
-
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 	<!-- 푸터 -->

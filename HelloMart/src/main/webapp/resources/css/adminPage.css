@@ -1,9 +1,10 @@
 @CHARSET "UTF-8";
 /* DivTable.com */
+
 .divTable{
 	display: table;
-	width: 70%;
-	margin-left: auto;
+	width: 50%;
+	margin-left: auto; 
 	margin-right: auto;
 }
 .divTableRow {
@@ -17,6 +18,7 @@
 	border: 1px solid #999999;
 	display: table-cell;
 	padding: 3px 10px;
+	text-align: center;
 }
 .divTableHeading {
 	background-color: #EEE;
@@ -31,15 +33,19 @@
 .divTableBody {
 	display: table-row-group;
 }
-
 .pageNumberList{
-	display : table;
-	width: 70%;
+	display: table;
+	width: 50%;
+	margin-left: auto; 
+	margin-right: auto;
 	text-align: center;
+	margin-top: 5px;
 }
-
 .adminButton{
-	display : table;
-	width: 70%;
-	text-align : right;
+	display: table;
+	width: 50%;
+	margin-left: auto; 
+	margin-right: auto;
+	text-align: right;
+	margin-top: 5px;
 }
