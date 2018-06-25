@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -21,25 +20,24 @@
 <section id="bo_w">
     <h2 id="container_title">글 작성</h2>
     
- <form:form action="write" method="post" modelAttribute="qaboard" id="qaboard_form">
+ <form action="write" method="post">
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>
         <tr>
             <td>
-            	<form:input path="id" name="wr_name" class="frm_input required" size="10" maxlength="20" placeholder="아이디"/>
-            	<form:errors path="id" class="errors"/>
+            	<input type="text" name="id" class="frm_input required" size="10" maxlength="20" value="${id }" readonly="readonly">
             </td>
         </tr>
         <tr>
-            <td class="wr_subject">
-            	<form:input path="subject" name="wr_subject" size="80" maxlength="100" placeholder="제목"/>
+            <td>
+            	<input type="text" name="subject" size="80" maxlength="100" placeholder="제목">
             </td>
         </tr>
 
         <tr>
-            <td class="wr_content">
-            	<form:textarea path="content" rows="10" cols="82" placeholder="5자 이상 입력하세요."/>
+            <td>
+            	<textarea name="content" rows="10" cols="82" placeholder="5자 이상 입력하세요"></textarea>
             </td>
         </tr>
         </tbody>
@@ -50,8 +48,7 @@
         <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
         <input type="reset" value="취소" class="btn_cancel">
     </div>
-    </form:form>
-
+	</form>
 </section>
 </div>
 

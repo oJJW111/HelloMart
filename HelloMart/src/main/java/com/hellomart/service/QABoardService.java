@@ -22,9 +22,6 @@ public interface QABoardService {
 	/* 게시글을 삭제하는 메소드 */
 	void deleteQABoard(int idx);
 	
-	/* 답글 기준글 값 증가 메소드 */
-	void reReLv(QABoard qaboard);
-	
 	/* 답변글 작성 메소드 */
 	void reWrite(QABoard qaboard);
 	

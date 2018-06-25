@@ -1,6 +1,5 @@
 package com.hellomart.dao;
 
-import java.awt.List;
 import java.util.Vector;
 
 import com.hellomart.dto.QABoard;
@@ -28,5 +27,6 @@ public interface QABoardDAO {
 	
 	/* 답변글 작성 메소드 */
 	void reWrite(QABoard qaboard);
+
 	
 }

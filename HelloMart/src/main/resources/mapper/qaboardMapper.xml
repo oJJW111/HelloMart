@@ -6,7 +6,9 @@
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
 	<select id="listQABoard" resultType="QABoard">
-		SELECT * FROM QABoard ORDER BY 1 DESC
+	
+		SELECT * FROM QABoard ORDER BY reRef DESC, reLev ASC 
+			
 	</select>
 	
 	<insert id="insertQABoard">
@@ -26,6 +28,7 @@
 	<select id="viewQABoard" resultType="QABoard">
 		
 		SELECT * FROM QABoard WHERE idx = #{idx}
+		
 	</select>
 	
 	<delete id="deleteQABoard">
@@ -39,7 +42,9 @@
 	
 	<!-- 답변글로 인하여 기존에 답변글들의 레벨을 1씩 증가하는 쿼리 -->
 	<update id="reReLv">
+			
 		 UPDATE QABoard SET reLev=reLev+1 WHERE reRef=#{reRef} AND reLev > #{reLev}
+		 
 	</update>
 	
 	<!-- 답글 추가 -->

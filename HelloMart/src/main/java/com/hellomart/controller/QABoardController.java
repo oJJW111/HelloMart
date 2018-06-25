@@ -1,17 +1,19 @@
 package com.hellomart.controller;
 
-import javax.validation.Valid;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hellomart.dto.Account;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
 
@@ -37,17 +39,21 @@ public class QABoardController {
 	
 	
 	@RequestMapping(value = "/write", method=RequestMethod.GET)
-	public ModelAndView write() {
-		return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+	public ModelAndView write(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+	
+		String id = session.setAttribute("id", id);
+		mav.addObject("id",req.getAttribute("id"));
+		mav.setViewName("qaboard/QAWrite");
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/write", method=RequestMethod.POST)
-	public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "qaboard/QAWrite";
-		}
+	public String writeProcess(QABoard qaboard){
 		
 		service.insertQABoard(qaboard);
+		
 		return "redirect:/qaboard";
 	}
 	
@@ -75,12 +81,8 @@ public class QABoardController {
 		
 	
 	
-	@RequestMapping(value = "/rewriteOk", method=RequestMethod.POST)
-	public String rewriteOk(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "qaboard/reWrite";
-		}
-		service.reReLv(qaboard);
+	@RequestMapping(value = "/rewrite", method=RequestMethod.POST)
+	public String rewriteProcess(QABoard qaboard) {
 		service.reWrite(qaboard);
 		return "redirect:/qaboard";
 	}
