@@ -30,6 +30,11 @@
 							<span><input type="password" name="pw" maxlength="20" 
 										 value="" class="MS_login_pw" /></span></label>
 						</li>
+						<c:if test="${param.fail == 'true'}">
+						<li class="error">
+							<span><spring:message code="security.badCredentials"/></span>
+						</li>
+						</c:if>
 					</ul>
 					<input class="buttonlogin btnlogin" style="height: 35px;" type="submit" value="LOGIN">
 				</form>
@@ -48,11 +53,6 @@
 	</div>
 </div>		
 <div class="BLOCK95"></div>
-<c:if test="${param.fail == 'true'}">
-<script type="text/javascript">
- alert('<spring:message code="security.badCredentials"/>');
-</script>
-</c:if>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

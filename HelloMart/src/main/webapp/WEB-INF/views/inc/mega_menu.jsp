@@ -5,66 +5,70 @@
 $(document).ready(function(){
 	
 	$("#main_menu_1").on('click', function(){
-		location.href="/productList?main=가전제품";
+		location.href="/productList?mainCategory=" + encodeURIComponent("가전제품");
 	});
 	$("#main_menu_2").on('click', function(){
-		location.href="/productList?main=IT";
+		location.href="/productList?mainCategory=IT";
 	});
 	$("#main_menu_3").on('click', function(){
-		location.href="/productList?main=모바일";
+		location.href="/productList?mainCategory=" + encodeURIComponent("모바일");
 	});
 	$("#main_menu_4").on('click', function(){
-		location.href="/productList?main=액세서리";
+		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
-		location.href="/productList?main=퍼스널케어";
+		location.href="/productList?mainCategory=퍼스널케어";
 	});
 	$("#main_menu_6").on('click', function(){
-		location.href="/productList?main=서비스";
+		location.href="/productList?mainCategory=서비스";
 	});
 
 	$("#refrigerator").on('click', function(){
-		location.href="/productList?main=가전제품&small=냉장고";
+		location.href="/productList?mainCategory=가전제품&smallCategory+=냉장고";
 	});
 	
 	$("#microwave").on('click', function(){
-		location.href="/productList?main=가전제품&small=오븐_전자레인지";
+		location.href="/productList?mainCategory=가전제품&smallCategory=오븐_전자레인지";
 	});
 	
 	$("#cleaner").on('click', function(){
-		location.href="/productList?main=가전제품&small=청소기";
+		location.href="/productList?mainCategory=가전제품&smallCategory=청소기";
 	});
 	
 	$("#airConditioner").on('click', function(){
-		location.href="/productList?main=가전제품&small=에어컨";
+		location.href="/productList?mainCategory=가전제품&smallCategory=에어컨";
 	});
 	
 	$("#washer").on('click', function(){
-		location.href="/productList?main=가전제품&small=세탁기";
+		location.href="/productList?mainCategory=가전제품&smallCategory=세탁기";
 	});
 	
 	$("#airPurifier").on('click', function(){
-		location.href="/productList?main=가전제품&small=공기청정기_제습기";
+		location.href="/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기";
 	});
 	
 	$("#notebook").on('click', function(){
-		location.href="/productList?main=IT&small=노트북";
+		location.href="/productList?mainCategory=IT&smallCategory=노트북";
 	});
 	
 	$("#monitor").on('click', function(){
-		location.href="/productList?main=IT&small=모니터";
+		location.href="/productList?mainCategory=IT&smallCategory=모니터";
 	});
 	
 	$("#printer").on('click', function(){
-		location.href="/productList?main=IT&small=프린터";
+		location.href="/productList?mainCategory=IT&smallCategory=프린터";
 	});
 	
 	$("#smartphone").on('click', function(){
-		location.href="/productList?main=모바일&small=스마트폰";
+		location.href="/productList?mainCategory=모바일&smallCategory=스마트폰";
 	});
 	
 	$("#tablet").on('click', function(){
-		location.href="/productList?main=모바일&small=태블릿";
+		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
+	});
+	
+	$("#qaboard").on('click', function(){
+		location.href="/qaboard";
 	});
 	
 });
@@ -161,10 +165,9 @@ $(document).ready(function(){
 					<div class="mega_menu_inner_menu mega_ct_005"
 						style="display: none;">
 						<div class="M_TOP9">
-							<div class="F_left megamenu_menu_title2">123</div>
+							<div class="F_left megamenu_menu_title2"></div>
 							<div class="clear"></div>
 						</div>
-
 						<div>
 							<div class="F_left megamenu_menu_title2 M_TOP3">
 								<div class="megamenu_menu_title2_1">aaaa</div>
@@ -177,7 +180,7 @@ $(document).ready(function(){
 					<div class="mega_menu_inner_menu mega_ct_006"
 						style="display: none;">
 						<div class="M_TOP9">
-							<div class="F_left megamenu_menu_title2">aaaa</div>
+							<div class="F_left megamenu_menu_title2" id="qaboard">Q&A 게시판</div>
 							<div class="clear"></div>
 						</div>
 						<div class="M_TOP9">

@@ -30,6 +30,12 @@ $(document).ready(function(){
 	$('#bar_menu5').on('click', function(){
 		location.href="/mypage";
 	});
+	$('#bar_menu6').on('click', function(){
+		location.href="/seller/page";
+	});
+	$('#bar_menu7').on('click', function(){
+		location.href="/admin/page";
+	});
 	
 });
 </script>
@@ -43,10 +49,23 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu3">로그인</div>
 		</sec:authorize>
-		<sec:authorize access="isAuthenticated()">
+		
+		<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu5">회원정보</div>
+		</sec:authorize>
+		
+		<sec:authorize access="hasAnyRole('ROLE_SELLER')">
+			<div class="F_right haeder_bar_menu_line"></div>
+			<div class="F_right haeder_bar_menu" id="bar_menu6">판매자 페이지</div>
+		</sec:authorize>
+		
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
+			<div class="F_right haeder_bar_menu_line"></div>
+			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
 		
 		<div class="clear"></div>

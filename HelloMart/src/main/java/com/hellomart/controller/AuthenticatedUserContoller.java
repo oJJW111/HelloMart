@@ -12,9 +12,4 @@ public class AuthenticatedUserContoller {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AuthenticatedUserContoller.class);
 	
-	@RequestMapping("/page")
-	public String authenticated() {
-		return "authenticated/page";
-	}
-	
 }

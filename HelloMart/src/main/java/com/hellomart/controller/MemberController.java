@@ -10,7 +10,7 @@ public class MemberController {
 
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String member() {
-		return "mypage/mypage";
+		return "mypage/main";
 	}
 	
 }

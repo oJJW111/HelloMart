@@ -23,7 +23,7 @@ public class JoinFormValidator implements Validator {
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Account.class.isAssignableFrom(clazz);
+		return Account.class.isAssignableFrom(clazz); 
 	}
 	
 	private void rejectIfEmptyOrWhitespace(Errors errors, Account account) {

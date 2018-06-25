@@ -7,6 +7,7 @@
 <!-- 다음 api js 파일 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
+<script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,95 +19,13 @@ function send(){
 	document.f.submit();
 }
 $(document).ready(function(){
-
-var BIRTHDATEMAKER = function() {
-		var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		
-		var appendOption = function(id, value, valueAttr) {
-			$('#'+id).append('<option value=' + valueAttr + '>' + value + '</option>');
-		}
-		
-		var dayId = 'day';
-		
-		appendOption('year', '생년', '');
-		var y = function(n, m) { 
-			for(i=n; i<=m; i++){
-				appendOption('year', i, i);
-			}
-		}(1950, 2018);
-
-		appendOption('month', '월', '');
-		var m = function() {
-			for(i=1; i<=12; i++){
-				appendOption('month', i, i);
-			}
-		}();
-		
-		appendOption('day', '일', '');
-		var d = function(n) {
-			for(i=1; i<=n; i++){
-				appendOption('day', i, i);
-			} 
-		};
-		
-		var getSelectedVal = function(id) {
-			return $('#' + id + ' option:selected').attr("value");
-		}
-		
-		var dayEmpty = function() {
-			$('#' + dayId).empty();
-		}
-		
-		$("#month").on("change",function(){
-			var y = getSelectedVal('year');
-			
-			if(y != "") {
-				var m = getSelectedVal('month');
-				
-				calculateDay(m, y);
-			}
-		});
-		
-		$("#year").on("change",function(){
-			m = getSelectedVal('month');
-			
-			if(m != "") {
-				y = getSelectedVal('year');
-				
-				calculateDay(m, y);
-			}
-		});
-		
-		var dayOnChangeEvent = function() {
-			
-		}
-		
-		var calculateDay = function(m, y) {
-			dayEmpty();
-			
-			appendOption('day', '일', '');
-			
-			$tempOfDay = dayOfMonth[m-1];
-			
-			$day = $tempOfDay;
-			
-			$b = false;
-			if(m == 2) {
-				if((y % 400) == 0) {
-					$b = true;
-				} else if((y % 4) == 0 && (y % 100) != 0) {
-					$b = true;
-				}
-			}
-			
-			if($b) {
-				$day++;
-			}
-			
-			d($day);
-		}
-	};
-	BIRTHDATEMAKER();
+	BIRTHDATEMAKER.make({
+		year: 'year',
+		month: 'month',
+		day: 'day',
+		begin: 1930,
+		end: 2018
+	});
 });
 </script>
 </head>

@@ -881,6 +881,12 @@ input {
 
 /* mobile */
 
+#m_main_wrap{
+	width: 720px; margin: 0 auto;
+}
+#m_pigeon_header{
+	width: 720px; height: 112px; border-bottom: 4px solid #0198f1; 
+}
 .btn_m_menu{
 	width: 72px; height: 72px;cursor: pointer;
 	background: url('../../fs/images/m/icon_gmenu_nor.png') no-repeat center center;
