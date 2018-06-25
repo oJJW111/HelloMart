@@ -26,6 +26,18 @@ $(document).ready(function(){
 		begin: 1930,
 		end: 2018
 	});
+
+		  $(this).toggleClass("fa-eye fa-eye-slash");
+		  var input = $($(this).attr("toggle"));
+		  console.log(input);
+		  console.log($($(this).attr("toggle")));
+		  if (input.attr("type") == "password") {
+		    input.attr("type", "text");
+		  } else {
+		    input.attr("type", "password");
+		  }
+	});
+	
 });
 </script>
 </head>
@@ -45,12 +57,15 @@ $(document).ready(function(){
 					<form:errors path="id" class="errors"/>
 				</li>
 				<li>
-					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
+					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" id="password"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.password"/></span>
 					<form:errors path="password" class="errors"/>
+					<div id="pwCheck">
+						<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+					</div>
 				</li>
 				<li>
-					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인" />
+					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인"/>
 					<form:errors path="re_password" class="errors"/>
 				</li>
 				<li>
@@ -63,7 +78,7 @@ $(document).ready(function(){
 					<form:errors path="email" class="errors"/>
 				</li>
 				<li class="birth">
-					<dl class="type1" style="margin: 0;">
+					<dl class="type1">
 						<dd>
 							<form:select path="birthYear" id="year">
 							</form:select>
