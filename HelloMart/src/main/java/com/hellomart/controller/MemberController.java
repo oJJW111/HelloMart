@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/member")
+@RequestMapping(value = "/mypage")
 public class MemberController {
 
-	@RequestMapping(value="/page", method=RequestMethod.GET)
+	@RequestMapping(value="", method=RequestMethod.GET)
 	public String member() {
-		return "member/page";
+		return "mypage/main";
 	}
 	
 }

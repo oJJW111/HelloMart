@@ -8,9 +8,4 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/seller")
 public class SellerController {
 
-	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public String seller() {
-		return "seller/page";
-	}
-	
 }

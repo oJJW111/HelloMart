@@ -33,11 +33,6 @@ public class AccountController {
 		binder.setValidator(new JoinFormValidator());
 	}
 	
-	@RequestMapping("/public")
-	public String index() {
-		return "public";
-	}
-	
 	@RequestMapping(value = "/join", method=RequestMethod.GET)
 	public ModelAndView join() {
 		return new ModelAndView("account/join", "account", new Account());

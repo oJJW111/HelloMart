@@ -94,3 +94,7 @@
 #simpleLogin .sns-login { margin-top: 50px; margin-bottom:100px; text-align: center; font-size: 0; line-height: 0; }
 #simpleLogin .sns-login p { margin-bottom: 30px; }
 #simpleLogin .sns-login a { display: inline-block; margin: 0 4px; }
+
+.error {
+	color: red;
+}
