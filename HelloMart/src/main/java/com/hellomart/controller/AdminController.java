@@ -1,16 +1,15 @@
 package com.hellomart.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
 
 @Controller
@@ -20,10 +19,10 @@ public class AdminController {
 	@Autowired
 	AccountService accountService;
 	
-	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public String admin(Model model) {
-		ArrayList<Account> accountList = accountService.accountList();
-		model.addAttribute("accountList", accountList);
+	@RequestMapping(value="/page/{pageNum}", method=RequestMethod.GET)
+	public String accountList(@PathVariable String pageNumString, Model model) {
+		int pageNum = Integer.parseInt(pageNumString);
+		accountService.accountList(pageNum, model);
 		return "admin/page";
 	}
 	

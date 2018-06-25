@@ -25,11 +25,29 @@
 	</delete>
 	
 	<select id="accountList" resultType="Account">
-		SELECT id, role FROM Account	
+		SELECT U.*
+		FROM
+		(
+				SELECT t.*
+				FROM
+				(
+					SELECT @rownum:=@rownum+1 as rownum, S.* 
+					FROM 
+		            (
+							SELECT a.id, a.role, COALESCE(a.apply, '없음') as apply   
+							FROM Account a
+					)S, (SELECT @rownum := 0) r
+				)t
+		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
+		)U	
 	</select>
 	
 	<update id="sellerApproval">
 		UPDATE Account SET Role = 'SELLER' WHERE id = #{id}
+	</update>
+	
+	<update id="sellerProgressDelete">
+		UPDATE Account SET Apply = null WHERE id = #{id}
 	</update>
 	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->

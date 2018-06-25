@@ -46,6 +46,14 @@ public interface AccountDAO {
 	 */
 	void sellerApproval(String id);
 	
+	/**
+	 * 판매자권한으로 바뀐 아이디들을 모두 판매자진행중에서 없음으로 변환한다.
+	 * 
+	 * @param id 바꿀 id
+	 */
+	void sellerProgressDelete(String id);
+	
+	
 	//테스트용
 	/**
 	 * 계정 테이블의 총 행의 수를 반환한다.

@@ -24,4 +24,5 @@ public class Account {
 	private char gender;
 	private int reliability;
 	private Date joinDate;
+	private String apply;
 }
