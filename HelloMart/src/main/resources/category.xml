@@ -61,7 +61,7 @@
 		<에어컨>
 			<사용면적>
 				<name>squaremeasure</name>
-				22.8m2, 32.5m2, 48.8m2, 52.8m2, 65.9m2, 75.5m2
+				22.8m², 32.5m², 48.8m², 52.8m², 65.9m², 75.5m²
 			</사용면적>
 			<냉방효율>
 				<name>cooling</name>
@@ -173,7 +173,7 @@
 			</저장소종류>
 			<저장소용량>
 				<name>hardcap</name>
-      			~200GB, 201~300GB. 301GB~500GB. 500GB이상
+      			~200GB, 201~300GB, 301GB~500GB, 500GB이상
    			</저장소용량>
        		<화면크기>
 				<name>screensize</name>
