@@ -46,6 +46,17 @@
 				document.adminForm.submit();
 			}
 		});
+		$('#searchAccount').on('click', function() {
+			var id = $('#id').val();
+			var accountRole = $('#accountRole option:selected').val();
+			var sellerApply = $('#sellerApply option:selected').val();
+			
+			document.adminForm.id.value = id;
+			document.adminForm.accountRole.value = accountRole;
+			document.adminForm.sellerApply.value = sellerApply;
+			document.adminForm.action = "/admin/page/1";
+			document.adminForm.submit();
+		});
 	});
 </script>
 </head>
@@ -53,37 +64,79 @@
 	<!-- 헤더 -->
 	<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 	<!-- 헤더 -->
+	<div class="container" style="margin-top: 1%;">
 	<form method="post" name="adminForm">
-		<div class="divTable">
-			<div class="divTableBody">
-				<div class="divTableRow">
-					<div class="divTableCell">아이디</div>
-					<div class="divTableCell">권한</div>
-					<div class="divTableCell">판매권한신청</div>
-					<div class="divTableCell">계정선택</div>
-				</div>
+		<table class="table table-striped table-responsive">
+			<colgroup>
+				<col width="20%">
+				<col width="20%">
+				<col width="20%">
+				<col width="10%">
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="4" style="text-align: center;">
+						<label for="id">아이디 : <input type="text" id="id"/></label>			
+						<label for="accountRole">권한 : 
+							<select  id='accountRole' 
+								title='accountRole' required="required">
+								<option value=''>선택</option>
+								<option value='ADMIN'>ADMIN</option>
+								<option value='SELLER'>SELLER</option>
+								<option value='MEMBER'>MEMBER</option>
+							</select>
+						</label>			
+						<label for="sellerApply">판매권한신청 : 
+							<select  id='sellerApply' 
+								title='sellerApply' required="required">
+								<option value=''>선택</option>
+								<option value='없음'>없음</option>
+								<option value='SELLER_READY'>SELLER_READY</option>
+							</select>
+						</label>
+						<label id="searchAccount">
+							<input type="button" id="searchAccount" value="검색">
+						</label>			
+					</th>
+				</tr>
+				<tr>
+					<th scope="col" style="text-align: center;">아이디</th>
+					<th scope="col" style="text-align: center;">권한</th>
+					<th scope="col" style="text-align: center;">판매권한신청</th>
+					<th scope="col" style="text-align: center;">계정선택</th>
+				</tr>
+			<thead>
+			<tbody>
 <c:forEach var="account" items="${accountList }">
-				<div class="divTableRow">
-					<div class="divTableCell">${account.id }</div>
-					<div class="divTableCell">${account.role }</div>
-					<div class="divTableCell">${account.apply }</div>
-					<div class="divTableCell">
+				<tr>
+					<td style="text-align: center;">${account.id }</td>
+					<td style="text-align: center;">${account.role }</td>
+					<td style="text-align: center;">${account.apply }</td>
+					<td style="text-align: center;">
 						<input type="checkbox" name="accountChoice" value="${account.id }">
 						<input type="hidden" id="sellerApply" value="${account.apply }">
-					</div>
-				</div>
+					</td>
+				</tr>
 </c:forEach>
-				<input type="hidden" name="accountList">
-				<div class="divTableRow">
-					${pageCode}
-				</div>
-				<div class="divTableRow">
-					<input type="button" id="deleteAccount" value="계정삭제"> <input
-						type="button" id="sellerApproval" value="판매자승인">
-				</div>
-			</div>
-		</div>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						${pageCode}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center;">
+						<input type="button" id="deleteAccount" value="계정삭제"> 
+						<input type="button" id="sellerApproval" value="판매자승인">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name='accountList'>
+		<input type="hidden" name='id'>
+		<input type="hidden" name='accountRole'>
+		<input type="hidden" name='sellerApply'>
 	</form>
+	</div>
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 	<!-- 푸터 -->
