@@ -17,7 +17,6 @@ var BIRTHDATEMAKER = function() {
 	}
 	var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	var appendOption = function(id, value, valueAttr) {
-		console.log('id:' + id + ', value:' + value + ', valueAttr:' + valueAttr);
 		$(id).append('<option value=' + valueAttr + '>' + value + '</option>');
 	}
 	var list = function(id, n, m) {
