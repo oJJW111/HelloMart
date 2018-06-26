@@ -17,6 +17,7 @@ var BIRTHDATEMAKER = function() {
 	}
 	var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	var appendOption = function(id, value, valueAttr) {
+		console.log('id:' + id + ', value:' + value + ', valueAttr:' + valueAttr);
 		$(id).append('<option value=' + valueAttr + '>' + value + '</option>');
 	}
 	var list = function(id, n, m) {
@@ -51,9 +52,10 @@ var BIRTHDATEMAKER = function() {
 		return b;
 	}
 	var calculateDay = function(y, m) {
-		if(y == attr.yearDefaultAttr || m == attr.monthDefaultAttr) return;
-		
 		dayEmpty();
+		appendOption(attr.day, attr.dayDefault, attr.dayDefaultAttr);
+		
+		if(y == attr.yearDefaultAttr || m == attr.monthDefaultAttr) return;
 		
 		var tempOfDay = dayOfMonth[m-1];
 		
@@ -68,7 +70,7 @@ var BIRTHDATEMAKER = function() {
 			n++;
 		}
 		
-		listWithTitle(attr.day, attr.dayDefault, attr.dayDefaultAttr, 1, n);
+		list(attr.day, 1, n);
 	}
 	var matchInitVal = function(z) {
 		initAddVal(attr, z.year, "year");
@@ -82,11 +84,11 @@ var BIRTHDATEMAKER = function() {
 		initVal(attr, z.yearDefaultAttr, "yearDefaultAttr");
 		initVal(attr, z.monthDefaultAttr, "monthDefaultAttr");
 		initVal(attr, z.dayDefaultAttr, "dayDefaultAttr");
-		initValNotEmpty(attr, z.selectedYear, "selectedYear");
-		initValNotEmpty(attr, z.selectedMonth, "selectedMonth");
-		initValNotEmpty(attr, z.selectedDay, "selectedDay");
+		initValIFNotEmpty(attr, z.selectedYear, "selectedYear");
+		initValIFNotEmpty(attr, z.selectedMonth, "selectedMonth");
+		initValIFNotEmpty(attr, z.selectedDay, "selectedDay");
 	}
-	var initValNotEmpty = function(x, y, z) {
+	var initValIFNotEmpty = function(x, y, z) {
 		if(y != '') {
 			x[z] = y;
 		}
@@ -101,6 +103,31 @@ var BIRTHDATEMAKER = function() {
 			x[z] += y;
 		}
 	}
+	var selecteSelectedValue = function() {
+		var isSelectedYear = !(attr.selectedYear === undefined);
+		var isSelectedMonth = !(attr.selectedMonth === undefined);
+		var isSelectedDay = !(attr.selectedDay === undefined);
+		
+		if(isSelectedYear) {
+			select(attr.year, attr.selectedYear);
+		}
+		
+		if(isSelectedMonth) {
+			select(attr.month, attr.selectedMonth);
+		}
+		
+		if(isSelectedYear && isSelectedMonth) {
+			calculateDay(attr.selectedYear, attr.selectedMonth);
+		}
+		
+		if(isSelectedDay) {
+			select(attr.day, attr.selectedDay);
+		}
+	};
+	var select = function(x, y) {
+		$(x).children("option[value='" + y + "']")
+		.attr('selected', 'selected');
+	}
 	return {
 		make : function(z) {
 			matchInitVal(z);
@@ -110,28 +137,10 @@ var BIRTHDATEMAKER = function() {
 			listWithTitle(attr.year, attr.yearDefault, attr.yearDefaultAttr, attr.begin, attr.end);
 			listWithTitle(attr.month, attr.monthDefault, attr.monthDefaultAttr, 1, 12);
 			
+			selecteSelectedValue();
+			
 			registerEvent(attr.year, attr.year, attr.month)
 			registerEvent(attr.month, attr.year, attr.month)
-			
-			if(!(attr.selectedYear === undefined)) {
-				$(attr.year).children("option[value='" + attr.selectedYear + "']")
-				.attr('selected', 'selected');
-			}
-			
-			if(!(attr.selectedMonth === undefined)) {
-				$(attr.month).children("option[value='" + attr.selectedMonth + "']")
-				.attr('selected', 'selected');
-			}
-			
-			if(!(attr.selectedYear === undefined) && !(attr.selectedMonth === undefined)) {
-				console.log('not undefined');
-				calculateDay(attr.selectedYear, attr.selectedMonth);
-			}
-			
-			if(!(attr.selectedDay === undefined)) {
-				$(attr.day).children("option[value='" + attr.selectedDay + "']")
-				.attr('selected', 'selected');
-			}
 		}
 	};
 }();
