@@ -61,7 +61,6 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu" id="bar_menu6">판매자 페이지</div>
 		</sec:authorize>
 		
-		
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>

@@ -13,6 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
@@ -24,20 +25,21 @@ $(document).ready(function(){
 		month: 'month',
 		day: 'day',
 		begin: 1930,
-		end: 2018
+		end: 2018,
+		selectedYear: '${birthdate.selectedYear}',
+		selectedMonth: '${birthdate.selectedMonth}',
+		selectedDay: '${birthdate.selectedDay}'
 	});
 
-	$(this).toggleClass("fa-eye fa-eye-slash");
+	$(".toggle-password").click(function() {
+		  $(this).toggleClass("fa-eye fa-eye-slash");
 		  var input = $($(this).attr("toggle"));
-		  console.log(input);
-		  console.log($($(this).attr("toggle")));
 		  if (input.attr("type") == "password") {
 		    input.attr("type", "text");
 		  } else {
 		    input.attr("type", "password");
 		  }
 	});
-	
 });
 </script>
 </head>
@@ -47,6 +49,7 @@ $(document).ready(function(){
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 <div class="BLOCK80"></div>
+
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">

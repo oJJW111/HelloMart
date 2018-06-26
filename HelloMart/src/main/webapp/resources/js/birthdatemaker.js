@@ -11,6 +11,9 @@ var BIRTHDATEMAKER = function() {
 		yearDefaultAttr : '',
 		monthDefaultAttr : '',
 		dayDefaultAttr : '',
+		selectedYear : '',
+		selectedMonth : '',
+		selectedDay : ''
 	}
 	var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	var appendOption = function(id, value, valueAttr) {
@@ -79,6 +82,13 @@ var BIRTHDATEMAKER = function() {
 		initVal(attr, z.yearDefaultAttr, "yearDefaultAttr");
 		initVal(attr, z.monthDefaultAttr, "monthDefaultAttr");
 		initVal(attr, z.dayDefaultAttr, "dayDefaultAttr");
+		initVal(attr, z.selectedYear, "selectedYear");
+		initVal(attr, z.selectedMonth, "selectedMonth");
+		initVal(attr, z.selectedDay, "selectedDay");
+		
+		console.log('selectedYear : ' + attr.selectedYear);
+		console.log('selectedMonth : ' + attr.selectedMonth);
+		console.log('selectedDay : ' + attr.selectedDay);
 	}
 	var initVal = function(x, y, z) {
 		if(!(y === undefined)) {
