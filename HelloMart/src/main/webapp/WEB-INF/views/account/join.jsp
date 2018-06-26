@@ -27,7 +27,7 @@ $(document).ready(function(){
 		end: 2018
 	});
 
-		  $(this).toggleClass("fa-eye fa-eye-slash");
+	$(this).toggleClass("fa-eye fa-eye-slash");
 		  var input = $($(this).attr("toggle"));
 		  console.log(input);
 		  console.log($($(this).attr("toggle")));
