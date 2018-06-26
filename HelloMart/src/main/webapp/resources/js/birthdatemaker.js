@@ -11,9 +11,9 @@ var BIRTHDATEMAKER = function() {
 		yearDefaultAttr : '',
 		monthDefaultAttr : '',
 		dayDefaultAttr : '',
-		selectedYear : '',
-		selectedMonth : '',
-		selectedDay : ''
+		selectedYear : undefined,
+		selectedMonth : undefined,
+		selectedDay : undefined
 	}
 	var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	var appendOption = function(id, value, valueAttr) {
@@ -82,13 +82,14 @@ var BIRTHDATEMAKER = function() {
 		initVal(attr, z.yearDefaultAttr, "yearDefaultAttr");
 		initVal(attr, z.monthDefaultAttr, "monthDefaultAttr");
 		initVal(attr, z.dayDefaultAttr, "dayDefaultAttr");
-		initVal(attr, z.selectedYear, "selectedYear");
-		initVal(attr, z.selectedMonth, "selectedMonth");
-		initVal(attr, z.selectedDay, "selectedDay");
-		
-		console.log('selectedYear : ' + attr.selectedYear);
-		console.log('selectedMonth : ' + attr.selectedMonth);
-		console.log('selectedDay : ' + attr.selectedDay);
+		initValNotEmpty(attr, z.selectedYear, "selectedYear");
+		initValNotEmpty(attr, z.selectedMonth, "selectedMonth");
+		initValNotEmpty(attr, z.selectedDay, "selectedDay");
+	}
+	var initValNotEmpty = function(x, y, z) {
+		if(y != '') {
+			x[z] = y;
+		}
 	}
 	var initVal = function(x, y, z) {
 		if(!(y === undefined)) {
@@ -111,6 +112,26 @@ var BIRTHDATEMAKER = function() {
 			
 			registerEvent(attr.year, attr.year, attr.month)
 			registerEvent(attr.month, attr.year, attr.month)
+			
+			if(!(attr.selectedYear === undefined)) {
+				$(attr.year).children("option[value='" + attr.selectedYear + "']")
+				.attr('selected', 'selected');
+			}
+			
+			if(!(attr.selectedMonth === undefined)) {
+				$(attr.month).children("option[value='" + attr.selectedMonth + "']")
+				.attr('selected', 'selected');
+			}
+			
+			if(!(attr.selectedYear === undefined) && !(attr.selectedMonth === undefined)) {
+				console.log('not undefined');
+				calculateDay(attr.selectedYear, attr.selectedMonth);
+			}
+			
+			if(!(attr.selectedDay === undefined)) {
+				$(attr.day).children("option[value='" + attr.selectedDay + "']")
+				.attr('selected', 'selected');
+			}
 		}
 	};
 }();
