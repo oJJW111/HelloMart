@@ -30,8 +30,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public void insertAccount(Account account) {
-		logger.debug(account.toString());
 		dao.insertAccount(account);
+	}
+	
+	@Override
+	public Account getInfo(String id) {
+		return dao.getInfo(id);
 	}
 
 	@Override
@@ -62,6 +66,6 @@ public class AccountServiceImpl implements AccountService {
 		for(String id : idList){
 			dao.sellerApproval(id);
 		}
-		
 	}
+	
 }

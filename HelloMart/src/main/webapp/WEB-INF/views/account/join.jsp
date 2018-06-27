@@ -4,16 +4,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- 다음 api js 파일 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- 다음 api js 파일 추가 -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
@@ -93,7 +92,7 @@ $(document).ready(function(){
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
 			<ul class="join-form">
-				<li>	
+				<li>
 					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.id"/></span>
 					<form:errors path="id" class="errors"/>
@@ -165,6 +164,7 @@ $(document).ready(function(){
 		</div>
 	</form:form>
 </div>
+
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

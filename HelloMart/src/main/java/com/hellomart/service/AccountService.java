@@ -25,6 +25,8 @@ public interface AccountService {
 	 */
 	void insertAccount(Account account);
 	
+	Account getInfo(String id);
+	
 	/**
 	 * id와 일치하는 계정들을 삭제한다.
 	 * 

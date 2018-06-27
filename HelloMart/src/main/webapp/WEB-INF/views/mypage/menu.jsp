@@ -12,6 +12,7 @@
 .mypage-container {
 	width: 400px;
 	margin: auto;
+	user-select: none;
 }
 
 .mypage-list {

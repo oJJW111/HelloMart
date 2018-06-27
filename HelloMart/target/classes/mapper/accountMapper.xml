@@ -20,6 +20,13 @@
 		#{phone}, #{name}, #{birthYear}, #{birthMonth}, #{birthDay}, #{gender});
 	</insert>
 	
+	<select id="getInfo" resultType="Account" parameterType="String">
+		SELECT Name, Email, BirthYear, BirthMonth, BirthDay, Gender, Phone,
+		PostCode, RoadAddress, DetailAddress
+		
+		FROM Account WHERE ID = #{id}; 
+	</select>
+	
 	<delete id="deleteAccount">
 		DELETE FROM Account WHERE ID = #{id}
 	</delete>

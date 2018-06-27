@@ -1209,4 +1209,5 @@ input {
 .logo_wrap {
 	width: 1006px;
 	margin: auto;
+	user-select: none;
 }

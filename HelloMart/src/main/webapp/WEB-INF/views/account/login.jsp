@@ -6,11 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
+
 <title>로그인 페이지</title>
 <script>
-window.onload = function() {
+ window.onload = function() {
 	 
-    if (getCookie("id")) { // getCookie함수로 id라는 이름의 쿠키를 불러와서 있을경우
+    if (getCookie("id")) { // getCookie함수로 id라는 이름의 쿠키를 불러와서 있을 경우
         document.f.id.value = getCookie("id"); //input 이름이 id인곳에 getCookie("id")값을 넣어줌
         document.f.idsave.checked = true; // 체크는 체크됨으로
     }
@@ -64,7 +65,6 @@ function sendit(f) {
 							<span class="name">ID(User name)</span>
 							<span><input type="text" name="id" maxlength="20" 
 										 onblur="document.f.focus();"class="MS_login_id"/></span></label>
-							<input type="checkbox" name="idsave">
 						</li>
 						<li class="pwd"><label>
 							<span class="name">Password</span>
@@ -77,6 +77,7 @@ function sendit(f) {
 						</li>
 						</c:if>
 					</ul>
+					<label id="check"><input type="checkbox" name="idsave"/> 아이디 기억하기</label>
 					<input class="buttonlogin btnlogin" type="button" value="LOGIN" onclick="sendit(this.form)">
 				</form>
 			</div>

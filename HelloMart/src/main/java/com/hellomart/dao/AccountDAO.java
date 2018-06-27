@@ -24,6 +24,9 @@ public interface AccountDAO {
 	 */
 	void insertAccount(Account account);
 	
+	
+	Account getInfo(String id);
+	
 	/**
 	 * id와 일치하는 계정을 삭제한다.
 	 * 
