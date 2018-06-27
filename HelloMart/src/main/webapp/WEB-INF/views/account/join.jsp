@@ -19,19 +19,21 @@
 function send(){
 	document.f.submit();
 }
-
 $(document).ready(function(){
-	
+	/* 생년월일 option 태그를 자동으로 생성해준다. */
 	BIRTHDATEMAKER.make({
 		year: 'year',
 		month: 'month',
 		day: 'day',
 		begin: 1930,
-		end: 2018
+		end: 2018,
+		selectedYear: '${birthdate.selectedYear}',
+		selectedMonth: '${birthdate.selectedMonth}',
+		selectedDay: '${birthdate.selectedDay}'
 	});
-	
-	$(".toggle-password").click(function() {
 
+	/* 비밀번호 값을 볼 수 있게 해주는 toggle 버튼에 이벤트를 생성한다. */
+	$(".toggle-password").click(function() {
 		  $(this).toggleClass("fa-eye fa-eye-slash");
 		  var input = $($(this).attr("toggle"));
 		  if (input.attr("type") == "password") {
@@ -41,6 +43,42 @@ $(document).ready(function(){
 		  }
 	});
 	
+	/* 휴대폰번호에는 숫자값만 입력가능하다. */
+	$("#phone").on("keydown keyup", function(evt) {
+		console.log(evt.which);
+		if(!(	
+				(evt.which >= 48 && evt.which <= 57) || // 상단 숫자키패드 0-9
+				(evt.which >= 96 && evt.which <= 105) ||// 우측 숫자키패드 0-9
+				(evt.which == 37 || evt.which == 39) || // 좌우 방향키
+				(evt.which == 8))) { // 백스페이스
+			return false;
+		}
+	});
+	
+	/* 하이픈(-)을 자동으로 추가하며 올바른 번호가 아닐 경우 경고창을 띄운다. */
+	$("#phone").on('blur', function(){
+	    if($(this).val() == '') return;
+	
+	    var trans_num = $(this).val().replace(/-/gi,'');
+	  
+		if(trans_num != null && trans_num != '') {
+			if(trans_num.length==11 || trans_num.length==10) {   
+				var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+				if(regExp_ctn.test(trans_num)) {
+				    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
+				}
+				$(this).val(trans_num);
+			} else {
+			    alert("유효하지 않은 전화번호 입니다.");
+			    $(this).val("");
+			    $(this).focus();
+			}
+		} else {
+	        alert("유효하지 않은 전화번호 입니다.");
+	        $(this).val("");
+	        $(this).focus();
+	    }
+	});
 });
 </script>
 </head>
@@ -50,6 +88,7 @@ $(document).ready(function(){
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 <div class="BLOCK80"></div>
+
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
@@ -103,7 +142,7 @@ $(document).ready(function(){
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" maxlength="20" placeholder="휴대폰번호" />
+					<form:input path="phone" class="txt-input" maxlength="13" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>

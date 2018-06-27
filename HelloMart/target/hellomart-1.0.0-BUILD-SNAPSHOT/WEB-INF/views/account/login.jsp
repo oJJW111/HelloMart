@@ -36,7 +36,7 @@
 						</li>
 						</c:if>
 					</ul>
-					<input class="buttonlogin btnlogin" style="height: 35px;" type="submit" value="LOGIN">
+					<input class="buttonlogin btnlogin" type="submit" value="LOGIN">
 				</form>
 			</div>
 			<div class="sign">

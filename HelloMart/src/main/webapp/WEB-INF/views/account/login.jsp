@@ -23,7 +23,7 @@
 						<li class="id"><label>
 							<span class="name">ID(User name)</span>
 							<span><input type="text" name="id" maxlength="20" 
-										 onblur="document.f.focus();"class="MS_login_id" /></span></label>
+										 onblur="document.f.focus();"class="MS_login_id"/></span></label>
 						</li>
 						<li class="pwd"><label>
 							<span class="name">Password</span>
@@ -36,6 +36,7 @@
 						</li>
 						</c:if>
 					</ul>
+					<label id="check"><input type="checkbox" checked="checked"/> 아이디 기억하기</label>
 					<input class="buttonlogin btnlogin" type="submit" value="LOGIN">
 				</form>
 			</div>

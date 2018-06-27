@@ -50,7 +50,7 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
-		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.id",
+		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.id", 
 				"id", account.getId(), "[a-zA-Z][0-9a-zA-Z]{5,19}");
 		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.password",
 				"password", account.getPassword(), "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
