@@ -47,10 +47,12 @@
 			}
 		});
 		$('#searchAccount').on('click', function() {
-			var id = $('#id').val();
-			var accountRole = $('#accountRole option:selected').val();
-			var sellerApply = $('#sellerApply option:selected').val();
-			
+			var id = $('#id1').val();
+			var accountRole = $('#accountRole1 option:selected').val();
+			var sellerApply = $('#sellerApply1 option:selected').val();
+			alert(id);
+			alert(accountRole);
+			alert(sellerApply);
 			document.adminForm.id.value = id;
 			document.adminForm.accountRole.value = accountRole;
 			document.adminForm.sellerApply.value = sellerApply;
@@ -76,19 +78,19 @@
 			<thead>
 				<tr>
 					<th colspan="4" style="text-align: center;">
-						<label for="id">아이디 : <input type="text" id="id"/></label>			
-						<label for="accountRole">권한 : 
-							<select  id='accountRole' 
-								title='accountRole' required="required">
+						<label for="id">아이디 : <input type="text" id="id1"/></label>			
+						<label for="accountRole1">권한 : 
+							<select  id='accountRole1' 
+								title='accountRole1' required="required">
 								<option value=''>선택</option>
 								<option value='ADMIN'>ADMIN</option>
 								<option value='SELLER'>SELLER</option>
 								<option value='MEMBER'>MEMBER</option>
 							</select>
 						</label>			
-						<label for="sellerApply">판매권한신청 : 
-							<select  id='sellerApply' 
-								title='sellerApply' required="required">
+						<label for="sellerApply1">판매권한신청 : 
+							<select  id='sellerApply1' 
+								title='sellerApply1' required="required">
 								<option value=''>선택</option>
 								<option value='없음'>없음</option>
 								<option value='SELLER_READY'>SELLER_READY</option>

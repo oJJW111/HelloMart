@@ -1,7 +1,7 @@
 package com.hellomart.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import com.hellomart.dto.Account;
 
@@ -39,7 +39,7 @@ public interface AccountDAO {
 	 * 
 	 * @return 모든 계정 정보를 담고 있는 리스트
 	 */
-	ArrayList<Account> accountList(HashMap<String, Object> paramMap);
+	ArrayList<Account> accountList(Map<String, Object> paramMap);
 	
 	/**
 	 * 판매진행중인 권한을 가진 아이디들을 모두 판매자권한으로 바꾼다.

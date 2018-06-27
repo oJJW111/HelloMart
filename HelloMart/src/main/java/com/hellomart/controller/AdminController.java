@@ -27,6 +27,8 @@ public class AdminController {
 	public String accountList(@PathVariable String pageNumString, 
 								Model model) {
 		int pageNum = Integer.parseInt(pageNumString);
+		System.out.println(searchData);
+		System.out.println("getAccountList");
 		accountService.accountList(pageNum, model, searchData);
 		return "admin/page";
 	}
@@ -42,6 +44,8 @@ public class AdminController {
 		searchData.put("id", id);
 		searchData.put("accountRole", accountRole);
 		searchData.put("sellerApply", sellerApply);
+		System.out.println(searchData);
+		System.out.println("postAccontList");
 		accountService.accountList(pageNum, model, searchData);
 		return "admin/page";
 	}

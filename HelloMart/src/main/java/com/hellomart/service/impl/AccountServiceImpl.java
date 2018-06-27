@@ -70,9 +70,10 @@ public class AccountServiceImpl implements AccountService {
 		int totalCount = 0;
 		int pageSize = 5;// 한페이지에 보여줄 글의 갯수
 		int pageBlock = 10; //한 블럭당 보여줄 페이지 갯수
-		
 		paramMap = new HashMap<>();
+		paramMap.put("flag", 0);
 		if(searchData != null){
+			paramMap.put("flag", 1);
 			String id = (String)searchData.get("id");
 			String accountRole = (String)searchData.get("accountRole");
 			String sellerApply = (String)searchData.get("sellerApply");
@@ -91,6 +92,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		
 		totalCount = dao.count();
+		System.out.println(totalCount);
 		page.paging(pageNum, totalCount, pageSize, pageBlock);
 		paramMap.put("startRow", page.getStartRow());
 		paramMap.put("endRow", page.getEndRow());

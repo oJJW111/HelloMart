@@ -36,6 +36,22 @@
 		            (
 							SELECT a.id, a.role, COALESCE(a.apply, '없음') as apply   
 							FROM Account a
+							<if test="flag == 1">
+							 	<where> 
+								  <if test="id != null">
+								       a.id like #{id}
+								  </if> 
+								  <if test="accountRole != null">
+								       AND a.role like #{accountRole}
+								   </if>
+								   <if test="sellerApply == null">
+								       AND a.apply is #{sellerApply}
+								   </if>
+								   <if test="sellerApply != null">
+								       AND a.apply like #{sellerApply}
+								   </if>
+	 							</where>
+ 							</if>
 					)S, (SELECT @rownum := 0) r
 				)t
 		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
