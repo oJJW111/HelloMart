@@ -17,11 +17,10 @@ window.onload = function() {
 
 }
 
-function setCookie(name, value, expiredays) //쿠키 저장함수
-{
+function setCookie(name, value, expiredays) {
     var todayDate = new Date();
     todayDate.setDate(todayDate.getDate() + expiredays);
-    document.cookie = name + "=" + escape(value) + "; path=/; expires="
+    document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; expires="
             + todayDate.toGMTString() + ";"
 }
 
@@ -34,7 +33,7 @@ function getCookie(Name) {
             end = document.cookie.indexOf(";", offset);
             if (end == -1)
                 end = document.cookie.length;
-            return unescape(document.cookie.substring(offset, end));
+            return decodeURIComponent(document.cookie.substring(offset, end));
         }
     }
 }
@@ -45,9 +44,7 @@ function sendit(f) {
     } else { // 아이디 저장을 체크 하지 않았을때
         setCookie("id", document.f.id.value, 0); //날짜를 0으로 저장하여 쿠키삭제
     }
-
     f.submit(); //유효성 검사가 통과되면 서버로 전송.
-
 }
 </script>
 </head>

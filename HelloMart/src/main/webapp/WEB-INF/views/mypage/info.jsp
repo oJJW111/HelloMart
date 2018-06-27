@@ -10,7 +10,7 @@
 }
 
 .info-container {
-	width: 
+	width: 1006px;
 }
 </style>
 
@@ -25,10 +25,11 @@
 <div class="BLOCK20"></div>
 
 <script>
+
 </script>
 
 <div class="info-container">
-
+	
 </div>
 
 <div class="BLOCK20"></div>
