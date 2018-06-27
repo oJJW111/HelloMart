@@ -23,7 +23,7 @@
 						<li class="id"><label>
 							<span class="name">ID(User name)</span>
 							<span><input type="text" name="id" maxlength="20" 
-										 onblur="document.f.focus();"class="MS_login_id" /></span></label>
+										 onblur="document.f.focus();"class="MS_login_id"/></span></label>
 						</li>
 						<li class="pwd"><label>
 							<span class="name">Password</span>

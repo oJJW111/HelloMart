@@ -61,28 +61,23 @@ $(document).ready(function(){
 	
 	    var trans_num = $(this).val().replace(/-/gi,'');
 	  
-	    if(trans_num != null && trans_num != '')
-	    {
-	        if(trans_num.length==11 || trans_num.length==10) 
-	        {   
-	            var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-	            if(regExp_ctn.test(trans_num))
-	                trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
-	                $(this).val(trans_num);
-	            }
-	            else
-	            {
-	                alert("유효하지 않은 전화번호 입니다.");
-	                $(this).val("");
-	                $(this).focus();
-	            }
-	        }
-	        else 
-	        {
-	            alert("유효하지 않은 전화번호 입니다.");
-	            $(this).val("");
-	            $(this).focus();
-	        }
+		if(trans_num != null && trans_num != '') {
+			if(trans_num.length==11 || trans_num.length==10) {   
+				var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+				if(regExp_ctn.test(trans_num)) {
+				    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
+				}
+				$(this).val(trans_num);
+			} else {
+			    alert("유효하지 않은 전화번호 입니다.");
+			    $(this).val("");
+			    $(this).focus();
+			}
+		} else {
+	        alert("유효하지 않은 전화번호 입니다.");
+	        $(this).val("");
+	        $(this).focus();
+	    }
 	});
 });
 </script>
@@ -147,7 +142,7 @@ $(document).ready(function(){
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" maxlength="11" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
+					<form:input path="phone" class="txt-input" maxlength="13" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>
