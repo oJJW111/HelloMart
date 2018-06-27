@@ -1,33 +1,43 @@
 package com.hellomart.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.service.ProductListService;
-import com.hellomart.service.impl.MainCategoryListServiceImpl;
-import com.hellomart.service.impl.SmallCategoryListServiceImpl;
 
 @Controller
+@RequestMapping("/productList")
 public class ProductListController {
+	
+	@Autowired
 	ProductListService service;
 	
-	@RequestMapping("/productList")
-	public String productList(HttpServletRequest request, Model model) {		
-		if(request.getParameter("selectedSmallCategory") == null){
-			service = new MainCategoryListServiceImpl();
-			model.addAttribute("request", request);
-			service.getAllList(model);
-		}
-		else{
-			service = new SmallCategoryListServiceImpl();
-			model.addAttribute("request", request);
-			service.getAllList(model);
-		}
+	@RequestMapping("/main")
+	public String productMainList(String mainCategory, Model model){
+		service.getMainList(mainCategory, model);
 		
 		return "product/productList";
-	}	
+	}
+	
+	@RequestMapping("/small")
+	public String productSmallList(String mainCategory, String smallCategory, Model model){
+		service.getSmallList(mainCategory, smallCategory, model);
+		
+		return "product/productList";
+	}
+	
+	@RequestMapping("/detail")
+	public String productSmallDetailList(HttpServletRequest request, Model model, HttpSession session){
+		model.addAttribute("request", request);
+		model.addAttribute("session", session);
+		service.getDetailList(model);
+	
+		return "product/productList";
+	}
 }

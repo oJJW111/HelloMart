@@ -1,0 +1,191 @@
+package com.hellomart.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+
+import com.hellomart.dao.ProductListDAO;
+import com.hellomart.service.ProductListService;
+import com.hellomart.util.XMLParser;
+
+public class ProductListServiceImpl implements ProductListService{
+	@Autowired
+	ProductListDAO dao;
+
+	@Override
+	public void getMainList(String mainCategory, Model model) {
+		XMLParser xmlParser = new XMLParser("category.xml");
+		
+		List<String> smallCategoryList = new ArrayList<>();
+		
+		try {
+			smallCategoryList = xmlParser.getChildren(mainCategory);
+		} catch (Exception e) {
+			System.out.println("MainCategoryListServiceImpl클래스 getAllList메소드 에러."); 
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("mainCategory", mainCategory);
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		model.addAttribute("productList", dao.getMainList(mainCategory)); 
+	}
+
+	@Override
+	public void getSmallList(String mainCategory, String smallCategory, Model model) {
+		// 세부분류에 보여줄 선택한 상위 카테고리 밑의 카테고리들
+		List<String> smallCategoryList = new ArrayList<>();
+		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(페이지에 보여줄 한글)
+		List<String> columnList = new ArrayList<>();
+		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(DB쿼리에 이용할 영어)
+		List<String> columnListEng = new ArrayList<>();
+		// 선택한 하위 카테고리의 컬럼 이름과 값을 매칭시켜둔 맵
+		HashMap<String, String> smallCategoryColumn = new HashMap<>();
+
+		XMLParser xmlParser = new XMLParser("category.xml");
+
+		try {
+			smallCategoryList = xmlParser.getChildren(mainCategory);
+			columnList = xmlParser.getChildren(smallCategory);
+
+			for (String column : columnList) {
+				String value = xmlParser.getValue(column);
+				columnListEng.add(xmlParser.getName(column));
+				// System.out.println(smallCategory + "의 " + column + "("
+				// + xmlParser.getName(column) + ")의 value : " + value.trim());
+
+				smallCategoryColumn.put(column, value);
+			}
+
+		} catch (Exception e) {
+			System.out.println("SmallCategoryListServiceImpl클래스 getAllList메소드 에러.");
+			e.printStackTrace();
+		}
+
+		model.addAttribute("mainCategory", mainCategory);
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		model.addAttribute("smallCategory", smallCategory);
+		model.addAttribute("smallCategoryColumn", smallCategoryColumn); 
+		model.addAttribute("columnList", columnList);
+		model.addAttribute("columnListEng", columnListEng);				
+		model.addAttribute("productList", dao.getSmallList(smallCategory)); 
+	}
+
+	@Override
+	public void getDetailList(Model model) {
+		Map<String, Object> map = model.asMap();
+		
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpSession session = (HttpSession) map.get("session");
+		
+		String mainCategory = request.getParameter("mainCategory");
+		String smallCategory = request.getParameter("smallCategory");
+		
+		// 세부분류에 보여줄 선택한 상위 카테고리 밑의 카테고리들
+		List<String> smallCategoryList = new ArrayList<>();
+		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(페이지에 보여줄 한글)
+		List<String> columnList = new ArrayList<>();
+		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(DB쿼리에 이용할 영어)
+		List<String> columnListEng = new ArrayList<>();
+		// 선택한 하위 카테고리의 컬럼 이름과 값을 매칭시켜둔 맵
+		HashMap<String, String> smallCategoryColumn = new HashMap<>();
+		
+		XMLParser xmlParser = new XMLParser("category.xml");
+
+		try {
+			smallCategoryList = xmlParser.getChildren(mainCategory);
+			columnList = xmlParser.getChildren(smallCategory);
+
+			for (String column : columnList) {
+				String value = xmlParser.getValue(column);
+				columnListEng.add(xmlParser.getName(column));
+				// System.out.println(smallCategory + "의 " + column + "("
+				// + xmlParser.getName(column) + ")의 value : " + value.trim());
+
+				smallCategoryColumn.put(column, value);
+			}
+
+		} catch (Exception e) {
+			System.out.println("SmallCategoryListServiceImpl클래스 getAllList메소드 에러.");
+			e.printStackTrace();
+		}
+		
+		String smallCategoryEng = "refrigerator";
+		// request.getParameter("smallCategoryEng")
+		
+		String sql = "select * from productlist natural join " + smallCategoryEng 
+				+ " where productlist.smallCategory = '" + smallCategory + "'";
+		System.out.println("sql 문장 : " + sql);
+
+		//System.out.println("페이지에게 받은 각 항목별 체크박스 갯수 : " 
+		//				+ session.getAttribute("smallCategoryColumnCount"));
+		
+		// 상세검색눌렀을때
+		if (request.getParameter("isDetailSearch") != null 
+					&& request.getParameter("isDetailSearch").equals("true")) { 
+			
+			HashMap<String, Integer> smallCategoryColumnCount = 
+					(HashMap<String, Integer>) session.getAttribute("smallCategoryColumnCount");
+			
+			// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
+			boolean isFirstAdd = true;
+			
+			for (int i = 0; i < columnListEng.size(); i++) {
+				for (int j = 0; j < smallCategoryColumnCount.get(columnListEng.get(i)); j++) {
+					// 체크박스의 이름
+					if (request.getParameter(columnListEng.get(i) + "_" + j) != null) {
+						String value = request.getParameter(columnListEng.get(i) + "_" + j);
+						
+						StringTokenizer tokenizer = new StringTokenizer(value, "~");
+						String firstValue = null;
+						String secondValue = null;
+
+						firstValue = tokenizer.nextToken();
+						while(tokenizer.hasMoreTokens()){ 
+							secondValue = tokenizer.nextToken();
+						}
+						
+						if(secondValue == null){ // 범위 조건이 아닐경우, 해당 값으로 검색
+							if(isFirstAdd){
+								sql += " and " + columnListEng.get(i) + " = '" + value + "'";	
+								isFirstAdd = false;
+							}
+							else{
+								sql += " or " + columnListEng.get(i) + " = '" + value + "'";	
+							}
+							System.out.println("sql 문장 : " + sql);							
+						}
+						else{  // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
+							if(isFirstAdd){
+								sql += " and (" + columnListEng.get(i) + " >= " + firstValue + " and "
+										+ columnListEng.get(i) + " <= " + secondValue + ")" ;	
+								isFirstAdd = false;
+							}
+							else{
+								sql += " or (" + columnListEng.get(i) + " >= " + firstValue + " and "
+										+ columnListEng.get(i) + " <= " + secondValue + ")" ;	
+							}							
+							System.out.println("sql 문장 : " + sql);								
+						}
+					}
+				}
+			}
+		}
+		
+		model.addAttribute("mainCategory", mainCategory);
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		model.addAttribute("smallCategory", smallCategory);
+		model.addAttribute("smallCategoryColumn", smallCategoryColumn); 
+		model.addAttribute("columnList", columnList);
+		model.addAttribute("columnListEng", columnListEng);				
+		model.addAttribute("productList", dao.getSmallList(smallCategory));
+		model.addAttribute("productList", "productList");  
+	}
+}

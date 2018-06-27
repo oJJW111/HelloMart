@@ -20,9 +20,9 @@
 
 <script type="text/javascript">
 function move(mainCategory, small){
-	location.href = "/productList"
+	location.href = "/productList/small"
 			+ "?mainCategory=" + encodeURIComponent(mainCategory)
-			+ "&selectedSmallCategory=" + encodeURIComponent(small);
+			+ "&smallCategory=" + encodeURIComponent(small);
 }
 </script>
 
@@ -36,13 +36,13 @@ function move(mainCategory, small){
 
 <div class=BLOCK70></div>
 
-<form action="/product/list" method="post"> 
+<form action="/productList" method="post"> 
 <div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
 			<h5>세부 분류</h5>
 			<ul>
-				<c:forEach var="small" items="${smallCategory}">
+				<c:forEach var="small" items="${smallCategoryList}">
 					<li>
 						<a href="#" onclick="move('${mainCategory}', '${small}'); return false;">${small}</a>
 					</li>
@@ -51,6 +51,29 @@ function move(mainCategory, small){
 		</div>
 		<div class="category_small">
 			<h5>상세검색</h5>
+			<%-- <c:if test="${smallCategoryColumn != null}">
+				<!-- 각 검색 조건의 이름과, 그에 해당하는 값 -->
+				<c:set var="smallCategoryColumn" value="${smallCategoryColumn}" />
+				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명) -->
+				<c:set var="columnList" value="${columnList}" />
+				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명) -->
+				<c:set var="columnListEng" value="${columnListEng}" />
+				
+				<c:forEach var="column" items="columnList">
+					<div>
+						<c:out value="${column}"/><br><br>
+						<c:set var="i" value="0"/> 
+						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
+							<label class="ck_container">
+								<input type="checkbox" name="${columnListEng.get(i)}_${i}" value="${value}">
+								<span class="checkmark"></span>
+								${value}
+							</label>	
+						</c:forTokens>
+						<c:set var="i" value="${i+1}"/>
+					</div>
+				</c:forEach>
+			</c:if> --%>
 			<%
 				if(request.getAttribute("smallCategoryColumn") != null){
 					// 각 검색 조건의 이름과, 그에 해당하는 값
@@ -85,6 +108,7 @@ function move(mainCategory, small){
 							<% 
 									i++;
 								} // while(tokenizer.hasMoreElements()) 종료
+								// System.out.println(columnEng + "의 체크박스 : " + i + "개");
 								smallCategoryColumnCount.put(columnEng, i);
 							%> 
 						</div>
@@ -95,6 +119,12 @@ function move(mainCategory, small){
 			<% 
 						}
 					} // for문 종료
+					// System.out.println("smallCategoryColumnCount : " + smallCategoryColumnCount);		
+					/* 
+						request.getRequestDispatcher("~.jsp").forward(request, response)가 아니라
+						form태그의 submit으로 넘겨주기 때문에, request.setAttribute() 로는 값이 넘어가지 않음 
+					*/
+					session.setAttribute("smallCategoryColumnCount", smallCategoryColumnCount);
 				} // smallCategoryColumn의 null여부 if문 종료
 			%>
 		</div> <!-- <div class="category_small"> -->
@@ -108,6 +138,10 @@ function move(mainCategory, small){
 		<button type="submit"><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
+
+<input type="hidden" name="mainCategory" value="${mainCategory}">
+<input type="hidden" name="smallCategory" value="${smallCategory}">
+<input type="hidden" name="isDetailSearch" value="true">
 </form>
 
 <!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
@@ -119,24 +153,27 @@ function move(mainCategory, small){
 
 <!-- 상품리스트 -->
 <div class="product_list">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
+	<c:forEach var="product" items="${productList}">
+		<div class="product_list_content">
+			<div class="product_img">
+				<a href="/product?no=${product.no}">
+					<img src="/resources/images/product/${product.imagePath}.jpg">
+				</a>
+			</div>
 		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
+			<a class="title" href="#">${product.productName}</a>
 			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
+				<span class="brand">${product.mfCompany}</span>
 				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
+					<a href="/productList/main?mainCategory=${mainCategory}">${mainCategory}</a> > 
+					<a href="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}">${smallCategory}</a>
+				</span>
 			</div>
 		</div>
 		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
+			<div class="price"><strong>${product.price}</strong></div>
 			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
+				<span class="satisfaction">만족도(신뢰도) : ${product.score}</span>
 				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
 				<span class="review">상품평 1564</span>
 			</div>
@@ -144,57 +181,9 @@ function move(mainCategory, small){
 		</div>
 	</div>
 	<hr class="style14">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
-		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
-			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
-				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
-		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
-			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
-				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
+	</c:forEach>
 </div>
+<!-- 상품리스트 -->
 
 <div class="BLOCK50"></div>
 
