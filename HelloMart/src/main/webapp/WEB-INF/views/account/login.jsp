@@ -7,6 +7,49 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
 <title>로그인 페이지</title>
+<script>
+ window.onload = function() {
+	 
+    if (getCookie("id")) { // getCookie함수로 id라는 이름의 쿠키를 불러와서 있을 경우
+        document.f.id.value = getCookie("id"); //input 이름이 id인곳에 getCookie("id")값을 넣어줌
+        document.f.idsave.checked = true; // 체크는 체크됨으로
+    }
+
+}
+
+function setCookie(name, value, expiredays) //쿠키 저장함수
+{
+    var todayDate = new Date();
+    todayDate.setDate(todayDate.getDate() + expiredays);
+    document.cookie = name + "=" + escape(value) + "; path=/; expires="
+            + todayDate.toGMTString() + ";"
+}
+
+function getCookie(Name) {
+    var search = Name + "=";
+    if (document.cookie.length > 0) {
+        offset = document.cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+            end = document.cookie.indexOf(";", offset);
+            if (end == -1)
+                end = document.cookie.length;
+            return unescape(document.cookie.substring(offset, end));
+        }
+    }
+}
+
+function sendit(f) {
+    if (document.f.idsave.checked == true) { // 아이디 저장을 체크 하였을때
+        setCookie("id", document.f.id.value, 7); //쿠키이름을 id로 아이디입력필드값을 7일동안 저장
+    } else { // 아이디 저장을 체크 하지 않았을때
+        setCookie("id", document.f.id.value, 0); //날짜를 0으로 저장하여 쿠키삭제
+    }
+
+    f.submit(); //유효성 검사가 통과되면 서버로 전송.
+
+} 
+</script>
 </head>
 <body>
 
@@ -36,8 +79,8 @@
 						</li>
 						</c:if>
 					</ul>
-					<label id="check"><input type="checkbox" checked="checked"/> 아이디 기억하기</label>
-					<input class="buttonlogin btnlogin" type="submit" value="LOGIN">
+					<label id="check"><input type="checkbox" name="idsave"/> 아이디 기억하기</label>
+					<input class="buttonlogin btnlogin" type="button" value="LOGIN" onclick="sendit(this.form)">
 				</form>
 			</div>
 			<div class="sign">

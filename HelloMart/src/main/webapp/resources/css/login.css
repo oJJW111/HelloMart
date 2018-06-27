@@ -29,13 +29,13 @@
 #loginWrap .mlog-sign .frm-list li label,
 #loginWrap .mlog-sign .frm-list li .txt-frm { float: left; }
 #loginWrap .mlog-sign .frm-list li { width: 100%; margin-bottom: 5px; }
-#loginWrap .mlog-sign .frm-list li label { width: 300px; padding-top: 2px;}
+#loginWrap .mlog-sign .frm-list li label { width: 300px; padding-top: 2px; font-weight:100; }
 #loginWrap .mlog-sign .btn-mlog { position: absolute; left: 316px; top: 110px; }
 #loginWrap .mlog-sign .frm-list .id .name {float:left;}
 #loginWrap .mlog-sign .frm-list .pwd .name {float:left;}
 
 /* sign */
-#loginWrap .mlog-sign .sign { position:absolute; left: 428px; top: 0px;  width: 280px;  text-align: center; border: 0px solid #000;   }
+#loginWrap .mlog-sign .sign { position:absolute; left: 428px; top: 17px;  width: 280px;  text-align: center; border: 0px solid #000;   }
 #loginWrap .mlog-sign .sign .msg { text-align:left;padding:5px 0; line-height:14px; color: #3F3F3F; text-decoration:none; font-size:10pt;font-family: 'Nanum Gothic',돋움;  }
 
 .error {
