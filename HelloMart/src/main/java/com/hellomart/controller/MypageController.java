@@ -44,8 +44,14 @@ public class MypageController {
 	
 	
 	@RequestMapping("/info/modify")
-	public ModelAndView infoModify() {
+	public ModelAndView infoModify(Principal principal) {
 		ModelAndView mav = new ModelAndView();
+		
+		String id = principal.getName();
+		Account account = service.getInfo(id);
+		account.setId(id);
+		
+		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
 		mav.addObject("viewPage", "modify");
 		return mav;

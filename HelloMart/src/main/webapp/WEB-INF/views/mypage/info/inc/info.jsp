@@ -63,4 +63,5 @@
 		<th>상세주소</th>
 		<td>${account.detailAddress}</td>
 	</tr>
+	
 </table>
