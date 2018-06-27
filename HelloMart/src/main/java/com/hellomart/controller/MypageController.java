@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
@@ -28,11 +29,42 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/info")
-	public void info(Model model, Principal principal) {
+	public ModelAndView info(Principal principal) {
+		ModelAndView mav = new ModelAndView();
+		
 		String id = principal.getName();
 		Account account = service.getInfo(id);
 		account.setId(id);
-		model.addAttribute("account", account);
+		
+		mav.addObject("account", account);
+		mav.setViewName("mypage/info/page");
+		mav.addObject("viewPage", "info");
+		return mav;
+	}
+	
+	
+	@RequestMapping("/info/modify")
+	public ModelAndView infoModify() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mypage/info/page");
+		mav.addObject("viewPage", "modify");
+		return mav;
+	}
+	
+	@RequestMapping("/info/modifyPwd")
+	public ModelAndView infoModifyPwd() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mypage/info/page");
+		mav.addObject("viewPage", "modifyPwd");
+		return mav;
+	}
+	
+	@RequestMapping("/info/delete")
+	public ModelAndView infoDelete() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mypage/info/page");
+		mav.addObject("viewPage", "delete");
+		return mav;
 	}
 	
 	@RequestMapping("/shoppingcart")
