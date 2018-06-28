@@ -84,15 +84,11 @@ public class AccountServiceImpl implements AccountService {
 				paramMap.put("accountRole", accountRole);
 			}
 			if(!sellerApply.equals("")){
-				if(sellerApply.equals("없음")){
-					sellerApply = null;
-				}
 				paramMap.put("sellerApply", sellerApply);
 			}
 		}
 		
-		totalCount = dao.count();
-		System.out.println(totalCount);
+		totalCount = dao.accountCount(paramMap);
 		page.paging(pageNum, totalCount, pageSize, pageBlock);
 		paramMap.put("startRow", page.getStartRow());
 		paramMap.put("endRow", page.getEndRow());

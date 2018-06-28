@@ -34,24 +34,21 @@
 					SELECT @rownum:=@rownum+1 as rownum, S.* 
 					FROM 
 		            (
-							SELECT a.id, a.role, COALESCE(a.apply, '없음') as apply   
+							SELECT a.id, a.role, a.apply   
 							FROM Account a
 							<if test="flag == 1">
 							 	<where> 
 								  <if test="id != null">
-								       a.id like #{id}
+								       id like #{id}
 								  </if> 
 								  <if test="accountRole != null">
-								       AND a.role like #{accountRole}
-								   </if>
-								   <if test="sellerApply == null">
-								       AND a.apply is #{sellerApply}
+								       AND role like #{accountRole}
 								   </if>
 								   <if test="sellerApply != null">
-								       AND a.apply like #{sellerApply}
+								       AND apply like #{sellerApply}
 								   </if>
-	 							</where>
- 							</if>
+								</where>
+							</if>
 					)S, (SELECT @rownum := 0) r
 				)t
 		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
@@ -63,8 +60,25 @@
 	</update>
 	
 	<update id="sellerProgressDelete">
-		UPDATE Account SET Apply = null WHERE id = #{id}
+		UPDATE Account SET Apply = 'NOTHING' WHERE id = #{id}
 	</update>
+	
+	<select id="accountCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS cnt FROM Account
+		<if test="flag == 1">
+		 	<where> 
+			  <if test="id != null">
+			       id like #{id}
+			  </if> 
+			  <if test="accountRole != null">
+			       AND role like #{accountRole}
+			   </if>
+			   <if test="sellerApply != null">
+			       AND apply like #{sellerApply}
+			   </if>
+			</where>
+		</if>
+	</select>
 	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	<select id="count" resultType="java.lang.Integer">

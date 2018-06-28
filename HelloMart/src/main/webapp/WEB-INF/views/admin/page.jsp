@@ -47,6 +47,9 @@
 			}
 		});
 		$('#searchAccount').on('click', function() {
+			document.adminForm.id.value = "";
+			document.adminForm.accountRole.value = "";
+			document.adminForm.sellerApply.value = "";
 			var id = $('#id1').val();
 			var accountRole = $('#accountRole1 option:selected').val();
 			var sellerApply = $('#sellerApply1 option:selected').val();
@@ -92,7 +95,7 @@
 							<select  id='sellerApply1' 
 								title='sellerApply1' required="required">
 								<option value=''>선택</option>
-								<option value='없음'>없음</option>
+								<option value='NOTHING'>NOTHING</option>
 								<option value='SELLER_READY'>SELLER_READY</option>
 							</select>
 						</label>
@@ -116,7 +119,7 @@
 					<td style="text-align: center;">${account.apply }</td>
 					<td style="text-align: center;">
 						<input type="checkbox" name="accountChoice" value="${account.id }">
-						<input type="hidden" id="sellerApply" value="${account.apply }">
+						<input type="hidden" id="sellerApply2" value="${account.apply }">
 					</td>
 				</tr>
 </c:forEach>
