@@ -30,19 +30,19 @@
 		<tr>
 			<th>기존 비밀번호</th>
 			<td>
-				<input type="password">
+				<input type="password" name="old_pw">
 			</td>
 		</tr>
 		<tr>
 			<th>신규 비밀번호</th>
 			<td>
-				<input type="password">
+				<input type="password" name="pw">
 			</td>
 		</tr>
 		<tr>
 			<th>신규 비밀번호 확인</th>
 			<td>
-				<input type="password">
+				<input type="password" name="re_pw">
 			</td>
 		</tr>
 	</table>

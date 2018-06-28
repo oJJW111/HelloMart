@@ -75,8 +75,11 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.POST)
-	public String ModifyPwd(@RequestParam("pw") String pw) {
-		service.modifyPw(pw);
+	public String ModifyPwd(@RequestParam("pw") String pw,Principal principal) {
+		String id = principal.getName();
+		Account account = service.getInfo(id);
+		account.setId(id);
+		service.modifyPw(pw,id);
 		return "redirect:/mypage/info";
 	}
 	

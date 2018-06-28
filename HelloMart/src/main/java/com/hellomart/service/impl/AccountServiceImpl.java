@@ -74,8 +74,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void modifyPw(String pw) {
-		dao.modifyPw(pw);
+	public void modifyPw(String pw,String id) {
+		dao.modifyPw(pw,id);
 	}
 	
 }

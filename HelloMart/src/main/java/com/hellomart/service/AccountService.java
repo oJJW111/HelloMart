@@ -7,7 +7,7 @@ import com.hellomart.dto.Account;
 
 public interface AccountService {
 	
-	void modifyPw(String pw);
+	void modifyPw(String pw,String id);
 	
 	void updateAccount(Account account);
 	
