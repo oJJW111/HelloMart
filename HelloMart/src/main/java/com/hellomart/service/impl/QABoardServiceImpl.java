@@ -49,15 +49,28 @@ public class QABoardServiceImpl implements QABoardService{
 		dao.viewCount(idx);	
 	}
 
-	
-
-
 	@Override
 	public void reWrite(QABoard qaboard) {
 		dao.reReLv(qaboard);	
 		dao.reWrite(qaboard);	
 	}
 
+	@Override
+	public String getCount() {
+		return dao.getCount();
+	}
+
+	@Override
+	public void modify(QABoard qaboard) {
+		dao.modify(qaboard);
+	}
+
+
+	
+
+
+
+	
 
 	
 	

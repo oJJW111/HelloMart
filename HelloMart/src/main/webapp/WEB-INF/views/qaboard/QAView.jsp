@@ -29,9 +29,15 @@
 
 		<section id="bo_v_info">
 			<h2>페이지 정보</h2>
-			작성자 <strong>${view.id }</strong> &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span>
+			작성자 <strong>${view.id }</strong> 
+			&nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span>
 			<strong>
 				<fmt:formatDate value="${view.date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+			</strong> 
+			&nbsp;&nbsp;&nbsp; 
+			<span class="sound_only">수정일</span>
+			<strong>
+				<fmt:formatDate value="${view.modate}" pattern="yyyy.MM.dd HH:mm:ss"/>
 			</strong>
 		</section>
 
@@ -52,8 +58,8 @@
 					<li><a href="#" class="btn_b01">다음글</a></li>
 				</ul>
 				<ul class="bo_v_com">
-					<li><a href="#" class="btn_b01">수정</a></li>
-					<li><a href="#" class="btn_b01">삭제</a></li>
+					<li><a href="/modify?idx=${view.idx }" class="btn_b01">수정</a></li>
+					<li><a href="/delete?idx=${view.idx }" class="btn_b01">삭제</a></li>
 					<li><a href="/qaboard" class="btn_b01">목록</a></li>
 					<li><a href="/rewrite?idx=${view.idx }" class="btn_b02">답변작성</a></li>
 				</ul>

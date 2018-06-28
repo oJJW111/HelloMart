@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -21,6 +22,7 @@
     <h2 id="container_title">글 작성</h2>
     
  <form action="write" method="post">
+ 	<sec:authentication var="id" property="principal"/>
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>

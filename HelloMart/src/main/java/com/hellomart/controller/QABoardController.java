@@ -1,8 +1,8 @@
 package com.hellomart.controller;
 
 
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hellomart.dto.Account;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
 
@@ -31,7 +29,7 @@ public class QABoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("list",  service.listQABoard());
-		
+		mav.addObject("count", service.getCount());
 		mav.setViewName("qaboard/QABoardList");
 		
 		return mav;
@@ -39,13 +37,9 @@ public class QABoardController {
 	
 	
 	@RequestMapping(value = "/write", method=RequestMethod.GET)
-	public ModelAndView write(HttpSession session) {
+	public ModelAndView write() {
 		ModelAndView mav = new ModelAndView();
-	
-		String id = session.setAttribute("id", id);
-		mav.addObject("id",req.getAttribute("id"));
 		mav.setViewName("qaboard/QAWrite");
-		
 		return mav;
 	}
 	
@@ -84,6 +78,22 @@ public class QABoardController {
 	@RequestMapping(value = "/rewrite", method=RequestMethod.POST)
 	public String rewriteProcess(QABoard qaboard) {
 		service.reWrite(qaboard);
+		return "redirect:/qaboard";
+	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.GET)
+	public ModelAndView modify(int idx) {
+		
+		ModelAndView mav = new ModelAndView();
+		QABoard qaboard = service.viewQABoard(idx);
+		mav.addObject("qaboard", qaboard);
+		mav.setViewName("qaboard/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.POST)
+	public String modifyProcess(QABoard qaboard) {
+		service.modify(qaboard);
 		return "redirect:/qaboard";
 	}
 	
