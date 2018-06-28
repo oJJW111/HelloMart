@@ -6,6 +6,9 @@ import java.util.List;
 import com.hellomart.dto.Account;
 
 public interface AccountService {
+	
+	void updateAccount(Account account);
+	
 	/**
 	 * <p>로그인 정보를 가져온다.
 	 * 

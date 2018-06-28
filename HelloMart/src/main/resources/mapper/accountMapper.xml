@@ -5,6 +5,16 @@
 
 <mapper namespace="com.hellomart.dao.AccountDAO">
 
+	<update id="updateAccount">
+		UPDATE Account 
+		
+		SET Email=#{email}, PostCode=#{postCode}, RoadAddress=#{roadAddress},
+			DetailAddress=#{detailAddress}, Phone=#{phone}, Name=#{name}, 
+			BirthYear=#{birthYear}, BirthMonth=#{birthMonth}, BirthDay=#{birthDay}, Gender=#{gender}
+			
+		WHERE ID = #{id}
+	</update>
+
 	<select id="findAccount" resultType="Account" parameterType="String">
 		SELECT Password, Role FROM Account WHERE ID = #{id}
 	</select>

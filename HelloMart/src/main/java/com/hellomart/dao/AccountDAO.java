@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import com.hellomart.dto.Account;
 
 public interface AccountDAO {
+	
+	void updateAccount(Account account);
+	
 	/**
 	 * <p>로그인 정보를 가져온다.
 	 * 
@@ -70,5 +73,7 @@ public interface AccountDAO {
 	 */
 	void truncate();
 	//테스트용
+	
+	
 
 }

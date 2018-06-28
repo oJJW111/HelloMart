@@ -1,11 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+	#info_container {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+	}
+	
+	#info_container td, #info_container th {
+	    border: 1px solid #ddd;
+	    padding: 8px;
+	}
+	
+	#info_container tr:nth-child(even){background-color: #f2f2f2;}
+	
+	#info_container th {
+	    padding-top: 12px;
+	    padding-bottom: 12px;
+	    text-align: center;
+	}
+</style>
+<form:form action="" name="f" method="post">
+	<table id="info_container">
+		<tr>
+			<th colspan=2>회원 탈퇴</th>
+		</tr>
+		<tr>
+			<th>기존 비밀번호</th>
+			<td>
+				<input type="password">
+			</td>
+		</tr>
+	</table>
+</form:form>

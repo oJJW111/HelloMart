@@ -20,7 +20,7 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=퍼스널케어";
 	});
 	$("#main_menu_6").on('click', function(){
-		location.href="/productList?mainCategory=서비스";
+		location.href="/qaboard";
 	});
 
 	$("#refrigerator").on('click', function(){
@@ -88,7 +88,7 @@ $(document).ready(function(){
 		<div class="F_left header_menu_item" id="main_menu_5"
 			cd_key="ct_005">퍼스널케어</div>
 		<div class="F_left header_menu_item" id="main_menu_6"
-			cd_key="ct_006" style="width: 167px;">서비스</div>
+			cd_key="ct_006" style="width: 167px;">게시판</div>
 		<div class="clear"></div>
 	</div>
 

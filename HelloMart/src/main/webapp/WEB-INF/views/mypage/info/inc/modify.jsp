@@ -24,9 +24,10 @@
 	    padding-bottom: 12px;
 	    text-align: center;
 	}
+	
 </style>
 
-<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
+<form:form action="" name="f" method="post" modelAttribute="account">
 	<table id="info_container">
 		<tr>
 			<th colspan=2>회원정보</th>
@@ -92,5 +93,5 @@
 			</td>
 		</tr>
 	</table>
-	<form:button value="modify"/>
+	<input type="submit" value="수정">
 </form:form>

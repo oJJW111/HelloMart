@@ -67,5 +67,10 @@ public class AccountServiceImpl implements AccountService {
 			dao.sellerApproval(id);
 		}
 	}
+
+	@Override
+	public void updateAccount(Account account) {
+		dao.updateAccount(account);
+	}
 	
 }
