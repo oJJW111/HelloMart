@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import com.hellomart.dto.QABoard;
 
-public interface QABoardService {
+public interface QABoardService extends PageService<QABoard> {
 
 	/* 게시글을 가져오는 메소드 */
 	Vector<QABoard> listQABoard();

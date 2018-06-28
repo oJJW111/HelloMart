@@ -48,8 +48,8 @@
     <h2 id="container_title">답글 작성</h2>
     <form action="rewrite" method="post">
     <sec:authentication var="id" property="principal"/>
-    <input type="hidden" name="reRef" value="${qaboard.reRef }">
-    <input type="hidden" name="reSeq" value="${qaboard.reSeq }">
+    <input type="hidden" name="reRef" value="${qaboard.reref }">
+    <input type="hidden" name="reSeq" value="${qaboard.reseq }">
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>
