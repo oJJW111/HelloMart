@@ -65,6 +65,13 @@ public class QABoardServiceImpl implements QABoardService{
 		dao.modify(qaboard);
 	}
 
+	@Override
+	public void delete(int idx) {
+		dao.delete(idx);		
+	}
+
+	
+	
 
 	
 

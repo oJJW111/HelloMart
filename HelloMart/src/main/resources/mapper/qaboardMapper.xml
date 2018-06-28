@@ -35,13 +35,13 @@
 	<update id="modify">
 		
 		UPDATE QABoard SET 
-		subject=#{subject}, content=#{content}, modate=now() 
+		subject=#{subject}, content=#{content}, modate=sysdate() 
 		WHERE idx=#{idx}
 		
 	</update>
 	
 	<!-- 글 삭제 쿼리 -->
-	<delete id="deleteQABoard">
+	<delete id="delete">
 		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
 	

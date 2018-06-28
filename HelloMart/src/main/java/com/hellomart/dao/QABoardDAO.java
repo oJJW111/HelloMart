@@ -34,5 +34,7 @@ public interface QABoardDAO {
 	/* 글 수정 하는 메소드 */
 	void modify(QABoard qaboard);
 
+	/* 글 삭제 하는 메소드 */
+	void delete(int idx);
 	
 }

@@ -22,8 +22,7 @@
     
  <form action="modify" method="post">
  	<sec:authentication var="id" property="principal"/>
- 	<input type="hidden" name="idx" value="${qaboard.idx }"/>
- 	
+ 	<input type="hidden" name="idx" value="${qaboard.idx}">
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>

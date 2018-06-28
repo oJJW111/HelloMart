@@ -2,7 +2,6 @@ package com.hellomart.controller;
 
 
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,6 +95,14 @@ public class QABoardController {
 		service.modify(qaboard);
 		return "redirect:/qaboard";
 	}
+	
+	@RequestMapping(value = "/delete", method=RequestMethod.GET)
+	public String deleteProcess(int idx) {
+		service.delete(idx);
+		return "redirect:/qaboard";
+	}
+	
+
 	
 	
 	

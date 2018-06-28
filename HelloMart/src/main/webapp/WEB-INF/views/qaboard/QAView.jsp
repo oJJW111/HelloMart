@@ -14,7 +14,20 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
+
+<script type="text/javascript">
+function delchk(){
+    if(confirm("삭제하시겠습니까?")){
+        location.href = "/delete?idx=${view.idx}";
+        return true;
+    } else {
+        return false;
+    }
+}
+</script>
+
 </head>
+
 <body>
 	<!-- 헤더 -->
 	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
@@ -53,16 +66,13 @@
 
 			<!-- 게시물 하단 버튼 시작 { -->
 			<div id="bo_v_top">
-				<ul class="bo_v_nb">
-					<li><a href="#" class="btn_b01">이전글</a></li>
-					<li><a href="#" class="btn_b01">다음글</a></li>
-				</ul>
 				<ul class="bo_v_com">
 					<li><a href="/modify?idx=${view.idx }" class="btn_b01">수정</a></li>
-					<li><a href="/delete?idx=${view.idx }" class="btn_b01">삭제</a></li>
+					<li><a href="#" class="btn_b01" onclick="delchk();">삭제</a></li>
 					<li><a href="/qaboard" class="btn_b01">목록</a></li>
 					<li><a href="/rewrite?idx=${view.idx }" class="btn_b02">답변작성</a></li>
 				</ul>
+				
 
 			</div>
 			<!-- } 게시물 하단 버튼 끝 -->
