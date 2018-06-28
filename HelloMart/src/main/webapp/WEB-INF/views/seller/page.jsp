@@ -3,10 +3,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>판매자페이지</title>
 </head>
 <body>
-<h2>seller.jsp 입니다.</h2>
-<a href="${pageContext.request.contextPath}/">메인으로</a>
+	<!-- 헤더 -->
+	<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
+	<!-- 헤더 -->
+	
+	
+	<!-- 푸터 -->
+	<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
+	<!-- 푸터 -->
 </body>
 </html>

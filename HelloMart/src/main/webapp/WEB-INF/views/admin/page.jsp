@@ -53,9 +53,6 @@
 			var id = $('#id1').val();
 			var accountRole = $('#accountRole1 option:selected').val();
 			var sellerApply = $('#sellerApply1 option:selected').val();
-			alert(id);
-			alert(accountRole);
-			alert(sellerApply);
 			document.adminForm.id.value = id;
 			document.adminForm.accountRole.value = accountRole;
 			document.adminForm.sellerApply.value = sellerApply;

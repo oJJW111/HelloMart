@@ -31,7 +31,7 @@ $(document).ready(function(){
 		location.href="/mypage";
 	});
 	$('#bar_menu6').on('click', function(){
-		location.href="/seller/page";
+		location.href="/seller/page/1";
 	});
 	$('#bar_menu7').on('click', function(){
 		location.href="/admin/page/1";
