@@ -36,7 +36,7 @@ function move(mainCategory, small){
 
 <div class=BLOCK70></div>
 
-<form action="/productList" method="post"> 
+<form action="/productList/detail" method="post"> 
 <div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
@@ -51,36 +51,33 @@ function move(mainCategory, small){
 		</div>
 		<div class="category_small">
 			<h5>상세검색</h5>
-			<%-- <c:if test="${smallCategoryColumn != null}">
+			<c:if test="${smallCategoryColumn != null}">
 				<!-- 각 검색 조건의 이름과, 그에 해당하는 값 -->
 				<c:set var="smallCategoryColumn" value="${smallCategoryColumn}" />
 				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명) -->
 				<c:set var="columnList" value="${columnList}" />
 				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명) -->
 				<c:set var="columnListEng" value="${columnListEng}" />
-				
-				<c:forEach var="column" items="columnList">
+ 				<c:forEach items="${columnList}" varStatus="status">
 					<div>
-						<c:out value="${column}"/><br><br>
-						<c:set var="i" value="0"/> 
-						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
-							<label class="ck_container">
-								<input type="checkbox" name="${columnListEng.get(i)}_${i}" value="${value}">
+						${columnList[status.index]} <br><br>
+						<c:out value="${columnList[status.index]}"/> <br><br> 
+						<c:forTokens var="value" items="${smallCategoryColumn[columnList[status.index]]}" delims=",">
+							<label class="ck_container"> 
+								<input type="checkbox" name="${columnListEng[status.index]}" value="${value}">
 								<span class="checkmark"></span>
 								${value}
 							</label>	
 						</c:forTokens>
-						<c:set var="i" value="${i+1}"/>
 					</div>
-				</c:forEach>
-			</c:if> --%>
-			<%
+					<c:if test="${!status.last}"><hr></c:if>
+				</c:forEach> 
+			</c:if>  
+			<%-- <%
 				if(request.getAttribute("smallCategoryColumn") != null){
 					// 각 검색 조건의 이름과, 그에 해당하는 값
 					HashMap<String,	String> smallCategoryColumn 
 									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
-					// 각 검색 조건이 몇개의 체크박스를 가지는지 저장할 변수
-					HashMap<String,	Integer> smallCategoryColumnCount = new HashMap<String, Integer>();
 					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
 					List<String> columnList = (List<String>) request.getAttribute("columnList");
 					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
@@ -96,20 +93,16 @@ function move(mainCategory, small){
 								String allValue = smallCategoryColumn.get(column).trim();
 								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
 						
-								int i = 0;
 								while(tokenizer.hasMoreTokens()){ 
 									String value = tokenizer.nextToken();
 							%>
 									<label class="ck_container">
-										<input type="checkbox" name="<%=columnEng%>_<%=i%>" value="<%=value%>">
+										<input type="checkbox" name="<%=columnEng%>" value="<%=value%>">
 										<span class="checkmark"></span>
 										<%=value%>
 									</label>
 							<% 
-									i++;
 								} // while(tokenizer.hasMoreElements()) 종료
-								// System.out.println(columnEng + "의 체크박스 : " + i + "개");
-								smallCategoryColumnCount.put(columnEng, i);
 							%> 
 						</div>
 			<% 
@@ -120,13 +113,8 @@ function move(mainCategory, small){
 						}
 					} // for문 종료
 					// System.out.println("smallCategoryColumnCount : " + smallCategoryColumnCount);		
-					/* 
-						request.getRequestDispatcher("~.jsp").forward(request, response)가 아니라
-						form태그의 submit으로 넘겨주기 때문에, request.setAttribute() 로는 값이 넘어가지 않음 
-					*/
-					session.setAttribute("smallCategoryColumnCount", smallCategoryColumnCount);
 				} // smallCategoryColumn의 null여부 if문 종료
-			%>
+			%>  --%>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
@@ -141,7 +129,6 @@ function move(mainCategory, small){
 
 <input type="hidden" name="mainCategory" value="${mainCategory}">
 <input type="hidden" name="smallCategory" value="${smallCategory}">
-<input type="hidden" name="isDetailSearch" value="true">
 </form>
 
 <!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->

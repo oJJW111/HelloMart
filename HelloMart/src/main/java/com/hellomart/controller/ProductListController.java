@@ -33,10 +33,9 @@ public class ProductListController {
 	}
 	
 	@RequestMapping("/detail")
-	public String productSmallDetailList(HttpServletRequest request, Model model, HttpSession session){
+	public String productSmallDetailList(HttpServletRequest request, Model model){
 		model.addAttribute("request", request);
-		model.addAttribute("session", session);
-		service.getDetailList(model);
+		service.getDetailList(model); 
 	
 		return "product/productList";
 	}
