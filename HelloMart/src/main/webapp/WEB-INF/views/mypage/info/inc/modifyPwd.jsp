@@ -22,7 +22,7 @@
 	    text-align: center;
 	}
 </style>
-<form:form action="" name="f" method="post">
+<form:form action="/mypage/info/modifyPwd" name="f" method="post">
 	<table id="info_container">
 		<tr>
 			<th colspan=2>비밀번호 변경</th>
@@ -46,4 +46,5 @@
 			</td>
 		</tr>
 	</table>
+	<input type="submit" value="수정">
 </form:form>

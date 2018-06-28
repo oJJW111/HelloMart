@@ -1,13 +1,12 @@
 package com.hellomart.controller;
 
-import javax.validation.Valid;
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +28,7 @@ public class QABoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("list",  service.listQABoard());
-		
+		mav.addObject("count", service.getCount());
 		mav.setViewName("qaboard/QABoardList");
 		
 		return mav;
@@ -38,16 +37,16 @@ public class QABoardController {
 	
 	@RequestMapping(value = "/write", method=RequestMethod.GET)
 	public ModelAndView write() {
-		return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("qaboard/QAWrite");
+		return mav;
 	}
 	
 	@RequestMapping(value = "/write", method=RequestMethod.POST)
-	public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "qaboard/QAWrite";
-		}
+	public String writeProcess(QABoard qaboard){
 		
 		service.insertQABoard(qaboard);
+		
 		return "redirect:/qaboard";
 	}
 	
@@ -75,15 +74,35 @@ public class QABoardController {
 		
 	
 	
-	@RequestMapping(value = "/rewriteOk", method=RequestMethod.POST)
-	public String rewriteOk(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "qaboard/reWrite";
-		}
-		service.reReLv(qaboard);
+	@RequestMapping(value = "/rewrite", method=RequestMethod.POST)
+	public String rewriteProcess(QABoard qaboard) {
 		service.reWrite(qaboard);
 		return "redirect:/qaboard";
 	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.GET)
+	public ModelAndView modify(int idx) {
+		
+		ModelAndView mav = new ModelAndView();
+		QABoard qaboard = service.viewQABoard(idx);
+		mav.addObject("qaboard", qaboard);
+		mav.setViewName("qaboard/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.POST)
+	public String modifyProcess(QABoard qaboard) {
+		service.modify(qaboard);
+		return "redirect:/qaboard";
+	}
+	
+	@RequestMapping(value = "/delete", method=RequestMethod.GET)
+	public String deleteProcess(int idx) {
+		service.delete(idx);
+		return "redirect:/qaboard";
+	}
+	
+
 	
 	
 	

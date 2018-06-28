@@ -7,6 +7,8 @@ import com.hellomart.dto.Account;
 
 public interface AccountService {
 	
+	void modifyPw(String pw);
+	
 	void updateAccount(Account account);
 	
 	/**
@@ -64,4 +66,5 @@ public interface AccountService {
 	 * @param sellerAc 권한을 바꿀 id 리스트
 	 */
 	void sellerApproval(List<String> idList);
+
 }

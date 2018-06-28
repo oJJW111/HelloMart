@@ -2,8 +2,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
+<script>
 
+$(document).ready(function(){
+	/* 생년월일 option 태그를 자동으로 생성해준다. */
+	BIRTHDATEMAKER.make({
+		year: 'year',
+		month: 'month',
+		day: 'day',
+		begin: 1930,
+		end: 2018,
+		selectedYear: '${account.birthYear}',
+		selectedMonth: '${account.birthMonth}',
+		selectedDay: '${account.birthDay}'
+	});
+});
+
+</script>
 <style>
 	#info_container {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -27,7 +44,7 @@
 	
 </style>
 
-<form:form action="" name="f" method="post" modelAttribute="account">
+<form:form action="/mypage/info/modify" method="post" modelAttribute="account">
 	<table id="info_container">
 		<tr>
 			<th colspan=2>회원정보</th>
@@ -35,7 +52,7 @@
 		<tr>
 			<th>아이디</th>
 			<td>
-				<form:input path="id" class="txt-input joinTooltip" maxlength="20" value="${account.id}" />
+				<form:input path="id" class="txt-input joinTooltip" maxlength="20" value="${account.id}" readonly="true"/>
 				<form:errors path="id" class="errors"/>
 			</td>
 		</tr>
@@ -55,13 +72,27 @@
 		</tr>
 		<tr>
 			<th>생년월일</th>
-			<td>${account.birthYear}년 ${account.birthMonth} 월
-				${account.birthDay} 일</td>
+			<td>
+				<form:select path="birthYear" id="year"/>
+				<form:select path="birthMonth" id="month"/>
+				<form:select path="birthDay" id="day"/>
+			</td>
 		</tr>
 		<tr>
 			<th>성별</th>
-			<td><c:if test="${account.gender eq 'F'.charAt(0)}">여성</c:if> <c:if
-					test="${account.gender eq 'M'.charAt(0)}">남성</c:if></td>
+			<td>
+				<c:choose>
+					<c:when test="${account.gender eq 'F'.charAt(0)}">
+						<form:radiobutton path="gender" class="input-radio" value="M" label="남"/>&nbsp;&nbsp;
+						<form:radiobutton path="gender" class="input-radio" value="F" label="여" checked="checked"/>
+					</c:when>
+					<c:otherwise>
+						<form:radiobutton path="gender" class="input-radio" value="M" label="남" checked="checked"/>&nbsp;&nbsp;
+						<form:radiobutton path="gender" class="input-radio" value="F" label="여"/>
+					</c:otherwise>
+				</c:choose>
+				
+			</td>
 		</tr>
 		<tr>
 			<th>휴대폰번호</th>

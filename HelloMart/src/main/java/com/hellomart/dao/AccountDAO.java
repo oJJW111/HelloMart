@@ -6,6 +6,8 @@ import com.hellomart.dto.Account;
 
 public interface AccountDAO {
 	
+	void modifyPw(String pw);
+	
 	void updateAccount(Account account);
 	
 	/**
