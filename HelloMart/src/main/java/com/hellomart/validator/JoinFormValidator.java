@@ -46,7 +46,6 @@ public class JoinFormValidator implements Validator {
 		   ValidationTools.isNullOrEmpty(account.getBirthDay())) {
 			errors.rejectValue("birthYear", "form.error.required");
 		}
-		
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {

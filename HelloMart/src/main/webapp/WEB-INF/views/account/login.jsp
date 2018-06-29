@@ -39,13 +39,25 @@ function getCookie(Name) {
     }
 }
 
-function sendit(f) {
+function login() {
     if (document.f.idsave.checked == true) { // 아이디 저장을 체크 하였을때
         setCookie("id", document.f.id.value, 7); //쿠키이름을 id로 아이디입력필드값을 7일동안 저장
     } else { // 아이디 저장을 체크 하지 않았을때
         setCookie("id", document.f.id.value, 0); //날짜를 0으로 저장하여 쿠키삭제
     }
-    f.submit(); //유효성 검사가 통과되면 서버로 전송.
+    $('#loginForm').submit(); //유효성 검사가 통과되면 서버로 전송.
+}
+
+function enterKeyTab() {
+	if (window.event.keyCode == 13) {
+		$('input[name="pw"]').focus();
+	}
+}
+
+function enterKey() {
+	if (window.event.keyCode == 13) {
+        login();
+   }
 }
 </script>
 </head>
@@ -59,17 +71,17 @@ function sendit(f) {
 	<div class="page-body">
 		<div class="mlog-sign">
 			<div class="mlog">
-				<form name='f' action='login' method='post'>
+				<form name='f' action='login' method='post' id="loginForm">
 					<ul class="frm-list">
 						<li class="id"><label>
 							<span class="name">ID(User name)</span>
 							<span><input type="text" name="id" maxlength="20" 
-										 onblur="document.f.focus();"class="MS_login_id"/></span></label>
+										 onblur="document.f.focus();"class="MS_login_id" onkeydown="enterKeyTab()"/></span></label>
 						</li>
 						<li class="pwd"><label>
 							<span class="name">Password</span>
 							<span><input type="password" name="pw" maxlength="20" 
-										 value="" class="MS_login_pw" /></span></label>
+										 value="" class="MS_login_pw" onkeydown="enterKey()"/></span></label>
 						</li>
 						<c:if test="${param.fail == 'true'}">
 						<li class="error">
@@ -78,7 +90,7 @@ function sendit(f) {
 						</c:if>
 					</ul>
 					<label id="check"><input type="checkbox" name="idsave"/> 아이디 기억하기</label>
-					<input class="buttonlogin btnlogin" type="button" value="LOGIN" onclick="sendit(this.form)">
+					<input class="buttonlogin btnlogin" type="button" value="LOGIN" onclick="login()">
 				</form>
 			</div>
 			<div class="sign">
