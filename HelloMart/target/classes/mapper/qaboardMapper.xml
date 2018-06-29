@@ -5,11 +5,15 @@
 
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
-	<select id="listQABoard" resultType="QABoard">
-	
-		SELECT * FROM QABoard ORDER BY reref DESC, relev ASC 
+
+	<select id="listQABoard" parameterType="java.lang.Integer" resultType="QABoard">
+			select * from 
+			(select A.*, @Rownum from 
+			(select * from qaboard order by reref desc, relev Asc) A) temp
+			where @Rownum &gt; #{param1} and @Rownum &lt;= #{param2}
 			
 	</select>
+	  
 	
 	<insert id="insertQABoard">
 		INSERT INTO
@@ -17,8 +21,8 @@
 		QABoard (subject, content, id, reRef,
 		reLev, reSeq, count)
 		
-		VALUES (#{subject}, #{content}, #{id}, #{reref},
-		#{relev}, #{reseq}, #{count});
+		VALUES (#{subject}, #{content}, #{id}, 1,
+		1, 1, #{count});
 	</insert>
 	
 	<update id="viewCount">
@@ -45,7 +49,7 @@
 		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
 	
-	<select id="getCount" resultType="String">
+	<select id="getCount" resultType="int">
 		SELECT count(*) FROM QABoard
 	</select>
 	

@@ -23,10 +23,14 @@ public class QABoardServiceImpl implements QABoardService{
 		
 	}
 
+
+
 	@Override
-	public Vector<QABoard> listQABoard() {
-		return dao.listQABoard();
+	public Vector<QABoard> listQABoard(int startRow, int endRow) {
+		return dao.listQABoard(startRow, endRow);
 	}
+
+
 
 	@Override
 	public void insertQABoard(QABoard qaboard) {
@@ -56,7 +60,7 @@ public class QABoardServiceImpl implements QABoardService{
 	}
 
 	@Override
-	public String getCount() {
+	public int getCount() {
 		return dao.getCount();
 	}
 
