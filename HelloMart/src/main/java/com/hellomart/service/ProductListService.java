@@ -7,5 +7,5 @@ public abstract class ProductListService {
 	public ProductListService(){ }
 	
     abstract public void getAllList(Model model);
-	
+    
 }

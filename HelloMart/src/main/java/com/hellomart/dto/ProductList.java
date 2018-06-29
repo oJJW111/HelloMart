@@ -19,5 +19,5 @@ public class ProductList {
 	private int Weight;        
 	private String RegisterID;     
 	private String Comment;     
-	private Date RegisterDate;    
+	private Date RegisterDate;
 }
