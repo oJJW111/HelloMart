@@ -7,21 +7,26 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.hellomart.dao.ProductListDAO;
+import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductListService;
+import com.hellomart.util.PageHandling;
 import com.hellomart.util.XMLParser;
 
 @Service
 public class ProductListServiceImpl implements ProductListService{
-	HashMap<String, String> smallCategoryNameKorToEng;
+	static HashMap<String, String> smallCategoryNameKorToEng;
+	
+	@Autowired
+	ProductListDAO dao;
 	
 	public ProductListServiceImpl() {
+		smallCategoryNameKorToEng = new HashMap<String, String>();
 		// category.xml의 태그 -> DB table명
 		smallCategoryNameKorToEng.put("냉장고", "Refrigerator");
 		smallCategoryNameKorToEng.put("오븐_전자레인지", "Microwave");
@@ -36,9 +41,6 @@ public class ProductListServiceImpl implements ProductListService{
 		smallCategoryNameKorToEng.put("스마트폰", "Smartphone");
 		smallCategoryNameKorToEng.put("태블릿", "Tablet");
 	}
-	
-	@Autowired
-	ProductListDAO dao;
 
 	// 상위 카테고리를 눌렀을 때
 	// 해당 상위 카테고리의 하위 카테고리 목록과 상품 목록을 넘겨주는 메소드
@@ -58,7 +60,9 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategoryList", smallCategoryList);
-		model.addAttribute("productList", dao.getMainList(mainCategory)); 
+		model.addAttribute("productList", dao.getMainList(mainCategory));
+		
+		pageSetting(dao.getMainList(mainCategory), model);
 	}
 
 	// 하위 카테고리를 눌렀을 때
@@ -99,6 +103,8 @@ public class ProductListServiceImpl implements ProductListService{
 		model.addAttribute("columnList", columnList);
 		model.addAttribute("columnListEng", columnListEng);	 
 		model.addAttribute("productList", dao.getSmallList(smallCategory)); 
+		
+		pageSetting(dao.getSmallList(smallCategory), model);
 	}
 	
 
@@ -111,19 +117,32 @@ public class ProductListServiceImpl implements ProductListService{
 		getSmallList(request.getParameter("mainCategory"), 
 						request.getParameter("smallCategory"), model);
 		
-		model.addAttribute("productList", "");
+		createSQL(request); 
+		model.addAttribute("productList", "dao.getDetailList()");
+
+		pageSetting(dao.getDetailList(), model);
 	}
 	
 	public void createSQL(HttpServletRequest request){
 		String smallCategory = request.getParameter("smallCategory");
 		String smallCategoryEng = smallCategoryNameKorToEng.get(smallCategory);
 		
-		// 세부분류에 보여줄 선택한 상위 카테고리 밑의 카테고리들
-		List<String> smallCategoryList = new ArrayList<>();
 		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(페이지에 보여줄 한글)
 		List<String> columnList = new ArrayList<>();
 		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(DB쿼리에 이용할 영어)
 		List<String> columnListEng = new ArrayList<>();
+		
+		XMLParser xmlParser = new XMLParser("category.xml");
+
+		try {
+			columnList = xmlParser.getChildren(smallCategory);
+
+			for (String column : columnList) {
+				columnListEng.add(xmlParser.getName(column));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		String sql = "select * from productlist natural join " + smallCategoryEng 
 				+ " where productlist.smallCategory = '" + smallCategory + "'";
@@ -169,5 +188,26 @@ public class ProductListServiceImpl implements ProductListService{
 				}
 			}
 		}
+	}
+	
+	public void pageSetting(List<ProductList> list, Model model){
+		int numPerPage = 10;
+		int pagePerBlock = 10;
+		
+		Map<String, Object> map = model.asMap();
+		
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		
+		int nowPage = (request.getParameter("nowPage") != null) ?
+				Integer.parseInt(request.getParameter("nowPage")) : 0;
+				
+		int nowBlock = (request.getParameter("nowBlock") != null) ?
+						Integer.parseInt(request.getParameter("nowBlock")) : 0;
+								
+				
+		PageHandling pageHandling =
+				new PageHandling(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
+		
+		pageHandling.setPageValue(model);
 	}
 }

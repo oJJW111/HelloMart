@@ -6,6 +6,7 @@
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -131,50 +132,99 @@ function move(mainCategory, small){
 <input type="hidden" name="smallCategory" value="${smallCategory}">
 </form>
 
-<!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
-<c:if test="${param.small ne null}">
-	<jsp:include page="/WEB-INF/views/product/inc/detail_search.jsp"/>
-</c:if>
-<!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
-
-
 <!-- 상품리스트 -->
 <div class="product_list">
-	<c:forEach var="product" items="${productList}">
-		<div class="product_list_content">
-			<div class="product_img">
-				<a href="/product?no=${product.no}">
-					<img src="/resources/images/product/${product.imagePath}.jpg">
-				</a>
-			</div>
-		<div class="product_info">
-			<a class="title" href="#">${product.productName}</a>
-			<div class="additional_info">
-				<span class="brand">${product.mfCompany}</span>
-				<span class="category">
-					<a href="/productList/main?mainCategory=${mainCategory}">${mainCategory}</a> > 
-					<a href="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}">${smallCategory}</a>
-				</span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>${product.price}</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도(신뢰도) : ${product.score}</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
-	</c:forEach>
-</div>
-<!-- 상품리스트 -->
+	<c:if test="${productList == null}">
+		<h4>해당되는 상품이 없습니다.</h4>
+	</c:if>
+	
+	<c:if test="${productList != null}">
+		<c:forEach items="${productList}" varStatus="product" 
+				step="1" begin="${beginPerPage}" end="${beginPerPage + numPerPage - 1}">
+			
+			<!-- 인덱스 값이 총 상품의 갯수와 같아지면 반복문 중지 -->
+			<c:if test="${product.index == totalRecord}">
+				<c:set var="isStop" value="stop" />
+			</c:if>
+			
+			<c:if test="${isStop != 'stop'}">
+				<div class="product_list_content">
+					<div class="product_img">
+						<a href="/productView?no=${productList[product.index].no}">
+							<img src="${productList[product.index].imagePath}">
+						</a>
+					</div>
+					<div class="product_info">
+						<a class="title" href="/productView?no=${productList[product.index].no}">${productList[product.index].productName}</a>
+						<div class="additional_info">
+							<span class="brand">${productList[product.index].mfCompany}</span>
+							<span class="category">
+								<a href="/productList/main?mainCategory=${mainCategory}">${mainCategory}</a> > 
+								<a href="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}">${smallCategory}</a>
+							</span>
+						</div>
+					</div>
+					<div class="product_addition">
+						<div class="price">
+							<strong>${productList[product.index].price} 원</strong>
+						</div>
+						<div class="additional_info">
+							<span class="satisfaction">만족도(신뢰도) : ${productList[product.index].score}</span>
+							<span class="buy">구  &nbsp;&nbsp;매 ${productList[product.index].orderCount}</span>  
+							<span class="review">상품평 ReviewService.getCount(${productList[product.index].no})</span>
+						</div>
+						<button class="add_to_cart btn_yellow"></button>
+					</div>
+				</div> <!-- <div class="product_list_content"> -->
+				<hr class="style14">
+			</c:if>
+		</c:forEach>
+	</c:if>
+</div> <!-- 상품리스트 -->
 
-<div class="BLOCK50"></div>
+<!-- <div class="BLOCK50"></div> -->
 
 </div> <!-- article_wrap 끝 -->
+
+<c:if test="${smallCategory == null}">
+	<c:set var="link" value="/productList/main?mainCategory=${mainCategory}"/>
+</c:if>
+<c:if test="${smallCategory != null}">
+	<c:set var="link" value="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}"/>
+</c:if>
+
+<br>
+<div align="center" id="divPageNumber">
+	Go to Page &nbsp;&nbsp;
+	
+	<!-- 상품 리스트에 상품이 하나 이상 존재하고 -->	
+	<c:if test="${totalRecord > 0}">
+		<!-- 현재블럭이 첫 번째 위치가 아니라면, 이전 링크가 나오도록 -->	
+		<c:if test="${nowBlock > 0}">
+			<!--  이전 링크를 눌렀을 때, 이전 블럭 번호와, 이전 블럭 번호에 속한 시작페이지번호 넘겨줌-->
+			<a href="${link}&nowBlock=${nowBlock - 1}&nowPage=${(nowBlock - 1) * pagePerBlock}">
+			◀◀◀이전 ${pagePerBlock}개</a> &nbsp;&nbsp;
+		</c:if>
+	</c:if>
+	
+	<!-- 페이지 번호 출력 -->
+	<c:forEach var="cnt" begin="1" end="${pagePerBlock}" step="1">		
+		<a href="${link}&nowBlock=${nowBlock}&nowPage=${(nowBlock * pagePerBlock + cnt - 1)}">
+		${nowBlock * pagePerBlock + cnt}</a> &nbsp;&nbsp;
+		
+		<!-- 마지막 페이지를 표시할 경우, 페이지를 더 이상 표시할 필요가 없으므로 반복문 종료 -->
+		<c:if test="${(nowBlock * pagePerBlock + cnt) == (totalPage-1)}">
+			<c:set var="cnt" value="${pagePerBlock}"/>
+		</c:if> 
+	</c:forEach>
+	
+	<!-- 다음으로 이동할 블럭이 있을 때, ▶▶▶ 다음 링크 나오게 하기  -->
+	<c:if test="${totalBlock > nowBlock + 1}">
+		<a href="${link}&nowBlock=${nowBlock + 1}&nowPage=${(nowBlock + 1) * pagePerBlock}">
+		▶▶▶다음 ${pagePerBlock}개</a>
+	</c:if>
+</div>
+<br>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
