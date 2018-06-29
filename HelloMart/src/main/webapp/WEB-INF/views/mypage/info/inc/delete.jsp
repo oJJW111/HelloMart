@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,12 +23,16 @@
 	    padding-bottom: 12px;
 	    text-align: center;
 	}
+	
+	.errors {
+		color: red;
+		float: right;
+	}
 </style>
 <script>
 
 </script>
-<form:form action="/mypage/info/delete" method="post">
-	<sec:authentication var="id" property="principal"/>
+<form action="/mypage/info/delete" method="post">
 	<table id="info_container">
 		<tr>
 			<th colspan=2>회원 탈퇴</th>
@@ -36,8 +41,11 @@
 			<th>비밀번호</th>
 			<td>
 				<input type="password" name="pw">
+				<c:if test="${param.fail eq 'true'}">
+					<span class="errors"><spring:message code="form.error.notequal.password"/></span>
+				</c:if>
 			</td>
 		</tr>
 	</table>
 	<input type="submit" value="탈퇴">
-</form:form>
+</form>

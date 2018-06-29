@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 	#info_container {
@@ -21,13 +22,14 @@
 	    text-align: center;
 	}
 </style>
+<sec:authentication var="id" property="principal"/>
 <table id="info_container">
 	<tr>
 		<th colspan=2>회원정보</th>
 	</tr>
 	<tr>
 		<th>아이디</th>
-		<td>${account.id}</td>
+		<td>${id}</td>
 	</tr>
 	<tr>
 		<th>이름</th>

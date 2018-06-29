@@ -142,7 +142,9 @@ $(document).ready(function(){
 		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
 	</div>
 	<div class="shopMain">
-		<span class="tit">USER EXIT<br>(회원탈퇴)</span>
+		<a href="/mypage/info/delete"> 
+			<span class="tit">USER EXIT<br>(회원탈퇴)</span>
+		</a>
 	</div>
 </div>
 

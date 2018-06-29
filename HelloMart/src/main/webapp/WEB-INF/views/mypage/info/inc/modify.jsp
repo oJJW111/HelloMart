@@ -4,6 +4,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
 <script>
 
 $(document).ready(function(){
@@ -41,10 +42,14 @@ $(document).ready(function(){
 	    padding-bottom: 12px;
 	    text-align: center;
 	}
-	
+	.errors {
+		color: red;
+		float: right;
+	}
 </style>
 
 <form:form action="/mypage/info/modify" method="post" modelAttribute="account">
+	<form:hidden path="id"/>
 	<table id="info_container">
 		<tr>
 			<th colspan=2>회원정보</th>
@@ -52,14 +57,13 @@ $(document).ready(function(){
 		<tr>
 			<th>아이디</th>
 			<td>
-				<form:input path="id" class="txt-input joinTooltip" maxlength="20" value="${account.id}" readonly="true"/>
-				<form:errors path="id" class="errors"/>
+				${account.id}
 			</td>
 		</tr>
 		<tr>
 			<th>이름</th>
 			<td>
-				<form:input path="name" class="txt-input joinTooltip" maxlength="20" value="${account.name}" />
+				<form:input path="name" class="txt-input joinTooltip" maxlength="20" value="${account.name}"/>
 				<form:errors path="name" class="errors"/>
 			</td>
 		</tr>
@@ -76,6 +80,7 @@ $(document).ready(function(){
 				<form:select path="birthYear" id="year"/>
 				<form:select path="birthMonth" id="month"/>
 				<form:select path="birthDay" id="day"/>
+				<form:errors path="birthYear" class="errors"/>
 			</td>
 		</tr>
 		<tr>

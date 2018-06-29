@@ -5,6 +5,10 @@
 
 <mapper namespace="com.hellomart.dao.AccountDAO">
 	
+	<select id="getPasswd" resultType="String">
+		SELECT password FROM Account WHERE id=#{param1}
+	</select>
+	
 	<update id="modifyPw">
 		UPDATE Account 
 		SET password = #{param1}

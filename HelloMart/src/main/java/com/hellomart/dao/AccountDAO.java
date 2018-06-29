@@ -6,7 +6,9 @@ import com.hellomart.dto.Account;
 
 public interface AccountDAO {
 	
-	void modifyPw(String pw,String id);
+	String getPasswd(String id);
+	
+	boolean modifyPw(String new_pw,String id);
 	
 	void updateAccount(Account account);
 	

@@ -2,12 +2,18 @@ package com.hellomart.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.SystemPropertyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
+import com.hellomart.validator.JoinFormValidator;
+import com.hellomart.validator.ModifyAccountInfoValidator;
 
 @Controller
 @RequestMapping(value = "/mypage")
@@ -25,6 +33,11 @@ public class MypageController {
 	
 	@Autowired
 	private AccountService service;
+
+	@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(new ModifyAccountInfoValidator());
+	}
 	
 	@RequestMapping("")
 	public String main() {
@@ -37,7 +50,6 @@ public class MypageController {
 		
 		String id = principal.getName();
 		Account account = service.getInfo(id);
-		account.setId(id);
 		
 		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
@@ -61,9 +73,16 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/info/modify",method=RequestMethod.POST)
-	public String Modify(Account account) {
+	public ModelAndView Modify(@ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
+		ModelAndView mav = new ModelAndView();
+		if(bindingResult.hasErrors()) {
+			mav.setViewName("mypage/info/page");
+			mav.addObject("viewPage", "modify");
+			return mav;
+		}
 		service.updateAccount(account);
-		return "redirect:/mypage/info";
+		mav.setViewName("redirect:/mypage/info");
+		return mav;
 	}
 	
 	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.GET)
@@ -75,14 +94,18 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.POST)
-	public String ModifyPwd(@RequestParam("pw") String pw,Principal principal) {
+	public String ModifyPwd(@RequestParam("pw") String pw,
+							@RequestParam("new_pw") String new_pw,
+							@RequestParam("re_pw") String re_pw,
+							Principal principal) {
 		String id = principal.getName();
-		Account account = service.getInfo(id);
-		account.setId(id);
-		service.modifyPw(pw,id);
-		return "redirect:/mypage/info";
+		boolean b = service.modifyPw(pw,new_pw,id);
+		if(b){
+			return "redirect:/mypage/info";
+		}else{
+			return "redirect:/mypage/info/modifyPwd";
+		}
 	}
-	
 	
 	@RequestMapping(value="/info/delete",method=RequestMethod.GET)
 	public ModelAndView infoDelete(String id) {
@@ -95,10 +118,13 @@ public class MypageController {
 	@RequestMapping(value="/info/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("pw") String pw, Principal principal) {
 		String id = principal.getName();
-		Account account = service.getInfo(id);
-		account.setId(id);
+		String oldpw = service.getPasswd(id);
+		
+		if(!oldpw.equals(pw)){
+			return "redirect:/mypage/info/delete?fail=true";
+		}
 		service.deleteAccount(id);
-		return "redirect:/";
+		return "redirect:/logout";
 	}
 	
 	@RequestMapping("/shoppingcart")

@@ -30,19 +30,22 @@
 		<tr>
 			<th>기존 비밀번호</th>
 			<td>
-				<input type="password" name="old_pw">
+				<form:password path="pw"/>
+				<form:errors path="pw" class="errors"/>
 			</td>
 		</tr>
 		<tr>
 			<th>신규 비밀번호</th>
 			<td>
-				<input type="password" name="pw">
+				<form:password path="new_pw" class="txt-input joinTooltip"/>
+				<form:errors path="new_pw" class="errors"/>
 			</td>
 		</tr>
 		<tr>
 			<th>신규 비밀번호 확인</th>
 			<td>
-				<input type="password" name="re_pw">
+				<form:password path="re_pw" class="txt-input joinTooltip"/>
+				<form:errors path="re_pw" class="errors"/>
 			</td>
 		</tr>
 	</table>
