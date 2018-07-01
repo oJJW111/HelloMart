@@ -1,8 +1,8 @@
 package com.hellomart.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.ui.Model;
 
 public interface SellerService {
-	public ArrayList<HashMap<String, Object>> getSellerProductList(String id);
+	public void getSellerProductList(int pageNum, Model model, 
+				String id, String servletPath);
 }

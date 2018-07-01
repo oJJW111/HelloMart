@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +27,12 @@ public class AdminController {
 	private Map<String, Object> searchData;
 		
 	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.GET)
-	public String accountList(@PathVariable String pageNumString, 
+	public String accountList(@PathVariable String pageNumString,
+								HttpServletRequest request,
 								Model model) {
 		int pageNum = Integer.parseInt(pageNumString);
-		accountService.accountList(pageNum, model, searchData);
+		String servletPath = request.getServletPath();
+		accountService.accountList(pageNum, model, searchData, servletPath);
 		return "admin/page";
 	}
 	
@@ -35,14 +40,16 @@ public class AdminController {
 	public String searchAccountList(@PathVariable String pageNumString, 
 										@RequestParam("id") String id, 
 										@RequestParam("accountRole") String accountRole, 
-										@RequestParam("sellerApply") String sellerApply, 
+										@RequestParam("sellerApply") String sellerApply,
+										HttpServletRequest request,
 										Model model) {
 		int pageNum = Integer.parseInt(pageNumString);
 		searchData = new HashMap<String, Object>();
 		searchData.put("id", id);
 		searchData.put("accountRole", accountRole);
 		searchData.put("sellerApply", sellerApply);
-		accountService.accountList(pageNum, model, searchData);
+		String servletPath = request.getServletPath();
+		accountService.accountList(pageNum, model, searchData, servletPath);
 		return "admin/page";
 	}
 	

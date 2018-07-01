@@ -12,6 +12,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/page.css">
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <script type="text/javascript">
@@ -21,11 +22,20 @@ $(document).ready(function() {
 	var mobile = ["스마트폰","태블릿"];
 	
 	$('#productRegister').on('click', function() {
-		location.href="/seller/productRegister";
+		var smallValue = $('#smallCategoryInput').val();
+		var mainValue = $("#mainCatogoryInput").val();
+		if(smallValue == ''){
+			alert("하위 카테고리 입력!!");
+			$('#smallCategoryInput').focus();
+			return false;
+		}
+		if(mainValue == ''){
+			alert("상위 카테고리 입력!!");
+			$("#mainCatogoryInput").focus();
+			return false;
+		}
 	});
-	$('#mainCatogoryInput').on('click', function() {
-		
-	});
+	
 	$("#mainCatogoryInput").on('change',function(){
 
         alert($(this).val());
@@ -45,37 +55,13 @@ $(document).ready(function() {
         
     	$('#smallCategoryInput').empty();
    	 
-    	for(var count = 0; count < changeItem.size(); count++){                
-        	var option = $("<option>"+changeItem[count]+"</option>");
+    	for(var count = 0; count < changeItem.length; count++){                
+        	var option = $("<option value='"+changeItem[count]+"'>"+changeItem[count]+"</option>");
             $('#smallCategoryInput').append(option);
     	}
 	});
 });
-function itemChange(){
-	alert("성공"); 
 
-	 
-	var mainCatogoryInputItem = $("#mainCatogoryInput").val();
-	 
-	var changeItem;
-	  
-	if(selectItem == "가전제품"){
-	  changeItem = domestic_appliances;
-	}
-	else if(selectItem == "IT"){
-	  changeItem = IT;
-	}
-	else if(selectItem == "모바일"){
-	  changeItem = mobile;
-	}
-	 
-	$('#smallCategoryInput').empty();
-	 
-	for(var count = 0; count < changeItem.size(); count++){                
-    	var option = $("<option>"+changeItem[count]+"</option>");
-        $('#smallCategoryInput').append(option);
-	}
-}
 </script>
 
 </head>
@@ -115,7 +101,10 @@ function itemChange(){
 			<hr class="style14">
 </c:forEach>
 		</div>
-		
+		<div class="BLOCK50"></div>
+		<div class="paginate">
+			${pageCode}
+		</div>
 		<div class="BLOCK50"></div>
 		
 		<form name="productRegisterForm" method="post">

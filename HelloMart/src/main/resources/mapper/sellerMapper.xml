@@ -5,11 +5,31 @@
 
 <mapper namespace="com.hellomart.dao.SellerDAO">
 
-	<select id="getSellerProductList" resultType="productList" parameterType="String">
-		SELECT * FROM ProductList WHERE RegisterID = #{id}
+	<select id="getSellerProductList" resultType="productList" parameterType="HashMap">
+		SELECT U.*
+		FROM
+		(
+				SELECT t.*
+				FROM
+				(
+					SELECT @rownum:=@rownum+1 as rownum, S.* 
+					FROM 
+		            (
+							SELECT *    
+							FROM ProductList 
+							WHERE RegisterID = #{id}
+					)S, (SELECT @rownum := 0) r
+				)t
+		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
+		)U
 	</select>
 	
 	<select id="reviewCount" resultType="Integer" parameterType="Integer">
 		SELECT COUNT(*) FROM Review WHERE No = #{no}
-	</select>	
+	</select>
+	
+	<select id="getSellerProductCount" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM ProductList WHERE RegisterID = #{id}
+	</select>
+		
 </mapper>

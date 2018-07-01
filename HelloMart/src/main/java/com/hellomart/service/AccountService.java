@@ -53,7 +53,8 @@ public interface AccountService {
 	 * 
 	 * @return 계정 테이블의 모든 계정 리스트
 	 */
-	void accountList(int pageNum, Model model, Map<String, Object> searchData);
+	void accountList(int pageNum, Model model, 
+				Map<String, Object> searchData, String servletPath);
 	
 	/**
 	 * SELLER_READY 권한을 가지고 있는 계정들을 모두 SELLER 권한으로 바꾼다.

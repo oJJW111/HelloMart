@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +24,22 @@ public class SellerController {
 	
 	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.GET)
 	public String sellerProductList(@PathVariable String pageNumString, 
-								Model model, Principal principal) {
+								Model model, Principal principal,
+								HttpServletRequest request) {
+		int pageNum = Integer.parseInt(pageNumString);
+		String servletPath = request.getServletPath();
+		String id = principal.getName();
+		sellerService.getSellerProductList(pageNum, model, id, servletPath);
+		return "seller/page";
+	}
+	
+	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.POST)
+	public String searchSellerProductList(@PathVariable String pageNumString, 
+			Model model, Principal principal, HttpServletRequest request) {
 		int pageNum = Integer.parseInt(pageNumString);
 		String id = principal.getName();
-		ArrayList<HashMap<String,Object>> sellerProductList = sellerService.getSellerProductList(id);
-		model.addAttribute("id", id);
-		model.addAttribute("mapList", sellerProductList);
+		String servletPath = request.getServletPath();
+		sellerService.getSellerProductList(pageNum, model, id, servletPath);
 		return "seller/page";
 	}
 	

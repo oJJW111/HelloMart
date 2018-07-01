@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>관리자 페이지</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/page.css">
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -17,10 +18,15 @@
 					deleteList[i++] = this.value;	
 				}
 			});
-			alert("계정이 삭제되었습니다.");
-			document.adminForm.accountList.value = deleteList;
-			document.adminForm.action = "/admin/deleteAccount";
-			document.adminForm.submit();
+			if(i == 0){
+				alert("계정을 선택하세요.");
+				return false;
+			}else{
+				alert("계정이 삭제되었습니다.");
+				document.adminForm.accountList.value = deleteList;
+				document.adminForm.action = "/admin/deleteAccount";
+				document.adminForm.submit();	
+			}
 		});
 		$('#sellerApproval').on('click', function() {
 			var sellerList = new Array;
@@ -28,20 +34,23 @@
 			var sellerApply = "";
 			$('input:checkbox[name="accountChoice"]').each(function() {
 				if (this.checked) {//checked 처리된 항목의 값
+					sellerList[i++] = this.value;
 					sellerApply = $(this).next().val();
 					if(sellerApply != 'SELLER_READY'){
 						alert("SELLER_READY 중인 권한만 판매승인가능합니다.");
 						failFlag = 1;
 						return false;
 					}
-					sellerList[i++] = this.value;	
 				}
 			});
-			if(failFlag != 1){
+			if(failFlag != 1 && i > 0){
 				alert("판매자 승인이 되었습니다.");
 				document.adminForm.accountList.value = sellerList;
 				document.adminForm.action = "/admin/sellerApproval";
 				document.adminForm.submit();
+			}else if(i == 0){
+				alert("계정을 선택하세요.");
+				return false;
 			}
 		});
 		$('#searchAccount').on('click', function() {
@@ -120,13 +129,19 @@
 </c:forEach>
 				<tr>
 					<td colspan="4" style="text-align: center;">
-						${pageCode}
+						<div class="paginate">
+							${pageCode}
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4" style="text-align: center;">
-						<input type="button" id="deleteAccount" value="계정삭제"> 
-						<input type="button" id="sellerApproval" value="판매자승인">
+						<span class="btn_pack">
+							<input type="button" id="deleteAccount" value="계정삭제">
+						</span>
+						<span class="btn_pack"> 
+							<input type="button" id="sellerApproval" value="판매자승인">
+						</span>
 					</td>
 				</tr>
 			</tbody>

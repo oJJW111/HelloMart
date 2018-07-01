@@ -30,9 +30,6 @@ public class AccountServiceImpl implements AccountService {
 	private Page page;
 	
 	
-	private ArrayList<Account> accountList;
-	private HashMap<String, Object> paramMap;
-	
 	public AccountServiceImpl() {
 	}
 	
@@ -66,10 +63,13 @@ public class AccountServiceImpl implements AccountService {
 
 	
 	@Override
-	public void accountList(int pageNum, Model model, Map<String, Object> searchData) {
+	public void accountList(int pageNum, Model model, 
+				Map<String, Object> searchData, String servletPath) {
 		int totalCount = 0;
 		int pageSize = 5;// 한페이지에 보여줄 글의 갯수
 		int pageBlock = 10; //한 블럭당 보여줄 페이지 갯수
+		ArrayList<Account> accountList;
+		HashMap<String, Object> paramMap;
 		paramMap = new HashMap<>();
 		paramMap.put("flag", 0);
 		if(searchData != null){
@@ -89,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		
 		totalCount = dao.accountCount(paramMap);
-		page.paging(pageNum, totalCount, pageSize, pageBlock);
+		page.paging(pageNum, totalCount, pageSize, pageBlock, servletPath);
 		paramMap.put("startRow", page.getStartRow());
 		paramMap.put("endRow", page.getEndRow());
 		accountList = dao.accountList(paramMap);
