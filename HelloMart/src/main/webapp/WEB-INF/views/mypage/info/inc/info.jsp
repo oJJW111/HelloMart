@@ -11,7 +11,7 @@
 	
 	#info_container td, #info_container th {
 	    border: 1px solid #ddd;
-	    padding: 8px;
+	    padding: 12px;
 	}
 	
 	#info_container tr:nth-child(even){background-color: #f2f2f2;}
@@ -20,6 +20,7 @@
 	    padding-top: 12px;
 	    padding-bottom: 12px;
 	    text-align: center;
+	    width: 25%;
 	}
 </style>
 <sec:authentication var="id" property="principal"/>

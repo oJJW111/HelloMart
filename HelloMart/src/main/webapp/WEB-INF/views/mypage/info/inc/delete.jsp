@@ -13,7 +13,7 @@
 	
 	#info_container td, #info_container th {
 	    border: 1px solid #ddd;
-	    padding: 8px;
+	    padding: 0 12px;
 	}
 	
 	#info_container tr:nth-child(even){background-color: #f2f2f2;}
@@ -22,17 +22,48 @@
 	    padding-top: 12px;
 	    padding-bottom: 12px;
 	    text-align: center;
+	    width: 25%;
 	}
 	
 	.errors {
 		color: red;
 		float: right;
 	}
+	.btnlogin1 { 
+		display:inline-block;
+		border:1px solid #ddd; 
+		background:#f2f2f2; 
+		color:#333;  
+		font-family: Tahoma, 'Roboto', 'arial'; 
+		font-size:11px; 
+		text-decoration: none; 
+	}
+	.btnlogin1:hover{ 
+		background:#333;
+		border:1px solid #333; 
+		color:#fff;
+	}
+	.buttonlogin1 { 
+		width:270px; 
+		margin:30px 250px;
+	}
+	.buttonlogin1 span a { 
+		width:100%;
+		line-height:14px;
+		padding:10px 0;
+		font-size:13px;
+		text-align:center;
+		margin:0;
+		letter-spacing:0.5px; 
+		text-decoration: none;
+	}
 </style>
 <script>
-
+function delSubmit() {
+	f.submit();
+}
 </script>
-<form action="/mypage/info/delete" method="post">
+<form action="/mypage/info/delete" method="post" name="f">
 	<table id="info_container">
 		<tr>
 			<th colspan=2>회원 탈퇴</th>
@@ -47,5 +78,7 @@
 			</td>
 		</tr>
 	</table>
-	<input type="submit" value="탈퇴">
+	<p class="buttonlogin1">
+		<span><a href="javascript:delSubmit();" class="btnlogin1">탈퇴하기</a></span>
+	</p>
 </form>
