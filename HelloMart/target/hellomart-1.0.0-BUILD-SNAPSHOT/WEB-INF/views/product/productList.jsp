@@ -109,6 +109,79 @@ function move(mainCategory, small){
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
 </form>
+<form action="/product/list" method="post"> 
+<div class="category_detail noselect">
+	<div class="category_detail_up">
+		<div class="category_major">
+			<h5>세부 분류</h5>
+			<ul>
+				<c:forEach var="small" items="${smallCategory}">
+					<li onclick="move('${mainCategory}', '${small}'); return false;"> 
+						${small}
+					</li>
+				</c:forEach> 
+			</ul>
+		</div>
+		<div class="category_small">
+			<h5>상세검색</h5>
+			<%
+				if(request.getAttribute("smallCategoryColumn") != null){
+					// 각 검색 조건의 이름과, 그에 해당하는 값
+					HashMap<String,	String> smallCategoryColumn 
+									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
+					// 각 검색 조건이 몇개의 체크박스를 가지는지 저장할 변수
+					HashMap<String,	Integer> smallCategoryColumnCount = new HashMap<String, Integer>();
+					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
+					List<String> columnList = (List<String>) request.getAttribute("columnList");
+					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
+					List<String> columnListEng = (List<String>) request.getAttribute("columnListEng");
+					
+					for(int index=0; index<columnList.size(); index++){
+						String column = columnList.get(index);
+						String columnEng = columnListEng.get(index);
+			%>
+						<div> 
+							<%=column%> <br><br> 
+							<% 
+								String allValue = smallCategoryColumn.get(column).trim();
+								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
+						
+								int i = 0;
+								while(tokenizer.hasMoreTokens()){ 
+									String value = tokenizer.nextToken();
+							%>
+									<label class="ck_container">
+										<input type="checkbox" name="<%=columnEng%>_<%=i%>" value="<%=value%>">
+										<span class="checkmark"></span>
+										<%=value%>
+									</label>
+							<% 
+									i++;
+								} // while(tokenizer.hasMoreElements()) 종료
+								smallCategoryColumnCount.put(columnEng, i);
+							%> 
+						</div>
+			<% 
+						if(index+1 < columnList.size()){
+			%>
+							<hr>
+			<% 
+						}
+					} // for문 종료
+				} // smallCategoryColumn의 null여부 if문 종료
+			%>
+		</div> <!-- <div class="category_small"> -->
+	</div> <!-- <div class="category_detail_up"> -->
+	<div class="category_detail_down">
+		<input type="text" placeholder="제품명 검색" name="search">
+		<input type="text" placeholder="0원" name="price_range1">
+		<div class="range">~</div>
+		<input type="text" placeholder="999,999,999원" name="price_range2">
+		<div class="currency">원</div>
+		<button type="submit"><i class="fa fa-search"></i></button>
+	</div>
+</div> <!-- <div class="category_detail noselect"> -->
+</form>
 
 <!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
 <c:if test="${param.small ne null}">

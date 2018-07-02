@@ -9,7 +9,6 @@ public interface QABoardService {
 	/* 게시글을 가져오는 메소드 */
 	Vector<QABoard> listQABoard(int startRow, int endRow);
 	
-	
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaBoard);
 	

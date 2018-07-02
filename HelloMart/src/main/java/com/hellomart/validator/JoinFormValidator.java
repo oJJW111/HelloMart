@@ -1,8 +1,5 @@
 package com.hellomart.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
@@ -38,62 +35,28 @@ public class JoinFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "form.error.required");
 		
-		if(isNullOrEmpty(account.getRoadAddress())) {
+		if(ValidationTools.isNullOrEmpty(account.getRoadAddress())) {
 			errors.rejectValue("roadAddress", "form.error.required");
-		} else if(isNullOrEmpty(account.getDetailAddress())) {
+		} else if(ValidationTools.isNullOrEmpty(account.getDetailAddress())) {
 			errors.rejectValue("detailAddress", "form.error.detailaddress.required");
 		}
 		
-		if(isNullOrEmpty(account.getBirthYear()) ||
-		   isNullOrEmpty(account.getBirthMonth()) ||
-		   isNullOrEmpty(account.getBirthDay())) {
+		if(ValidationTools.isNullOrEmpty(account.getBirthYear()) ||
+		   ValidationTools.isNullOrEmpty(account.getBirthMonth()) ||
+		   ValidationTools.isNullOrEmpty(account.getBirthDay())) {
 			errors.rejectValue("birthYear", "form.error.required");
 		}
-		
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
-		rejectIfNotMatch(errors, "form.error.notvalidate.id",
+		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.id", 
 				"id", account.getId(), "[a-zA-Z][0-9a-zA-Z]{5,19}");
-		rejectIfNotMatch(errors, "form.error.notvalidate.password",
+		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.password",
 				"password", account.getPassword(), "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
-		rejectIfNotEquals(errors, "form.error.notequal.password",
+		ValidationTools.rejectIfNotEquals(errors, "form.error.notequal.password",
 				"password", "re_password", account.getPassword(), account.getRe_password());
-		rejectIfNotMatch(errors, "form.error.notvalidate.email", 
+		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.email", 
 				"email", account.getEmail(), "[0-9a-zA-Z]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}");
-	}
-	
-	private boolean isNullOrEmpty(String str) {
-		return str == null || str.isEmpty();
-	}
-	
-	private void rejectIfNotMatch(Errors errors, String errorCode, 
-			String field, String value, String reg) {
-		rejectIfHasNotErrors(errors, errorCode, field, 
-				() -> {
-					Pattern pattern = Pattern.compile(reg);
-					Matcher matcher = pattern.matcher(value);
-					
-					if(!matcher.matches()) {
-						errors.rejectValue(field, errorCode);
-					}
-				});
-	}
-	
-	private void rejectIfNotEquals(Errors errors, String errorCode, 
-			String field, String field2, String str1, String str2) {
-		rejectIfHasNotErrors(errors, errorCode, field, 
-				() -> {
-					if(!str1.equals(str2)) {
-						errors.rejectValue(field2, errorCode);
-					}
-				});
-	}
-	
-	private void rejectIfHasNotErrors(Errors errors, String errorCode, String field, MatcherStatement mstmt) {
-		if(!errors.hasFieldErrors(field)) {
-			mstmt.rejectIfNot();
-		}
 	}
 	
 }

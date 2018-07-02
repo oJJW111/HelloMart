@@ -6,6 +6,13 @@ import java.util.List;
 import com.hellomart.dto.Account;
 
 public interface AccountService {
+	
+	String getPasswd(String id);
+	
+	boolean modifyPw(String pw,String new_pw,String id);
+	
+	void updateAccount(Account account);
+	
 	/**
 	 * <p>로그인 정보를 가져온다.
 	 * 
@@ -24,6 +31,8 @@ public interface AccountService {
 	 * @param account 계정 정보를 담고있는 객체
 	 */
 	void insertAccount(Account account);
+	
+	Account getInfo(String id);
 	
 	/**
 	 * id와 일치하는 계정들을 삭제한다.
@@ -59,4 +68,6 @@ public interface AccountService {
 	 * @param sellerAc 권한을 바꿀 id 리스트
 	 */
 	void sellerApproval(List<String> idList);
+
+
 }

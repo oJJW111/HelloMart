@@ -43,8 +43,8 @@ function move(mainCategory, small){
 			<h5>세부 분류</h5>
 			<ul>
 				<c:forEach var="small" items="${smallCategory}">
-					<li>
-						<a href="#" onclick="move('${mainCategory}', '${small}'); return false;">${small}</a>
+					<li onclick="move('${mainCategory}', '${small}'); return false;"> 
+						${small}
 					</li>
 				</c:forEach> 
 			</ul>

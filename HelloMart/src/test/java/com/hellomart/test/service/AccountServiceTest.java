@@ -2,6 +2,7 @@ package com.hellomart.test.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -121,6 +122,33 @@ public class AccountServiceTest {
 		/* 계정 삭제 후 테이블의 행의 수가 0인지 확인한다. */
 		count = service.count();
 		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void getInfoTest() {
+		Account a1 = getNewAccount();
+		
+		/* 계정을 등록시킨다. */
+		service.insertAccount(a1);
+		
+		/* 한 개의 행이 존재하는지 확인한다. */
+		int count = service.count();
+		assertEquals(count, 1);
+		
+		Account a2 = service.getInfo(a1.getId());
+		
+		assertThat(a2, is(notNullValue()));
+		
+		assertEquals(a1.getName(), a2.getName());
+		assertEquals(a1.getEmail(), a2.getEmail());
+		assertEquals(a1.getBirthYear(), a2.getBirthYear());
+		assertEquals(a1.getBirthMonth(), a2.getBirthMonth());
+		assertEquals(a1.getBirthDay(), a2.getBirthDay());
+		assertEquals(a1.getGender(), a2.getGender());
+		assertEquals(a1.getPhone(), a2.getPhone());
+		assertEquals(a1.getPostCode(), a2.getPostCode());
+		assertEquals(a1.getRoadAddress(), a2.getRoadAddress());
+		assertEquals(a1.getDetailAddress(), a2.getDetailAddress());
 	}
 	
 }

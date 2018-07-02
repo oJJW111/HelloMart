@@ -30,8 +30,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public void insertAccount(Account account) {
-		logger.debug(account.toString());
 		dao.insertAccount(account);
+	}
+	
+	@Override
+	public Account getInfo(String id) {
+		return dao.getInfo(id);
 	}
 
 	@Override
@@ -62,6 +66,28 @@ public class AccountServiceImpl implements AccountService {
 		for(String id : idList){
 			dao.sellerApproval(id);
 		}
+	}
+
+	@Override
+	public void updateAccount(Account account) {
+		dao.updateAccount(account);
+	}
+
+	@Override
+	public boolean modifyPw(String pw,String new_pw,String id) {
+		String oldPw = dao.getPasswd(id);
+		if(!oldPw.equals(pw)){
+			return false;
+		}else{
+			dao.modifyPw(new_pw,id);
+			return true;
+		}
 		
 	}
+
+	@Override
+	public String getPasswd(String id) {
+		return dao.getPasswd(id);
+	}
+
 }
