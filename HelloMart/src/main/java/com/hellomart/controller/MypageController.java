@@ -24,6 +24,7 @@ import com.hellomart.service.AccountService;
 import com.hellomart.validator.DeleteAccountValidator;
 import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
+import com.hellomart.validator.ModifyPasswordValidator;
 
 @Controller
 @RequestMapping(value = "/mypage")
@@ -37,6 +38,9 @@ public class MypageController {
 
 	@Autowired
 	private DeleteAccountValidator deleteAccountValidator;
+	
+	@Autowired
+	private ModifyPasswordValidator modifyPasswordValidator;
 	
 	@RequestMapping("")
 	public String main() {
@@ -91,25 +95,36 @@ public class MypageController {
 	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.GET)
 	public ModelAndView infoModifyPwd() {
 		ModelAndView mav = new ModelAndView();
+		Account account = new Account();
+		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
 		mav.addObject("viewPage", "modifyPwd");
 		return mav;
 	}
 	
 	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.POST)
-	public String ModifyPwd(@RequestParam("pw") String pw,
-							@RequestParam("new_pw") String new_pw,
-							@RequestParam("re_pw") String re_pw,
-							Principal principal) {
+	public ModelAndView ModifyPwd(@ModelAttribute("account") Account account,
+						  			Principal principal, 
+						  			BindingResult bindingResult) {
+		ModelAndView mav = new ModelAndView();
 		String id = principal.getName();
-		if(!new_pw.equals(re_pw)){
-			return "redirect:/mypage/info/modifyPwd?repwfail=true";
+		account.setId(id);
+		String new_pw = account.getNew_password();
+		
+		modifyPasswordValidator.validate(account, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			mav.setViewName("mypage/info/page");
+			mav.addObject("viewPage", "modifyPwd");
+			
+			return mav;
 		}
-		boolean b = service.modifyPw(id,pw,new_pw);
-		if(!b){	// 기존 비밀번호와 입력한 비밀번호가 일치하지 않을 경우
-			return "redirect:/mypage/info/modifyPwd?pwfail=true";
-		}
-		return "redirect:/mypage/info";
+		
+		service.modifyPw(id, new_pw);
+		
+		mav.setViewName("redirect:/mypage/info");
+		return mav;
+		
 	}
 	
 	@RequestMapping(value="/info/delete",method=RequestMethod.GET)

@@ -11,8 +11,8 @@
 	
 	<update id="modifyPw">
 		UPDATE Account 
-		SET password = #{param1}
-		WHERE ID = #{param2}
+		SET password = #{param2}
+		WHERE ID = #{param1}
 	</update>
 
 	<update id="updateAccount">

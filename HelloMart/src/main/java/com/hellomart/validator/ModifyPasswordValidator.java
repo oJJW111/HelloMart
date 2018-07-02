@@ -12,24 +12,36 @@ import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
 
 @Component
-public class DeleteAccountValidator implements Validator {
+public class ModifyPasswordValidator implements Validator {
 	
 	@Autowired
 	private AccountService service;
 	
 	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(DeleteAccountValidator.class);
+	private static final Logger logger = LoggerFactory.getLogger(ModifyPasswordValidator.class);
 	
 	@Override
 	public void validate(Object target, Errors errors) {
 		Account account = (Account) target;
+		
+		
 		String id = account.getId();
 		String pw = account.getPassword();
 		String pw_db = service.getPasswd(id);
+		String new_pw = account.getNew_password();
+		String re_pw = account.getRe_password();
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "form.error.required");
+		
 		ValidationTools.rejectIfNotEquals(errors, "form.error.notequal.password",
-				"password", pw, pw_db);
+					"password", pw, pw_db);
+		
+		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.password",
+					"new_password", new_pw, "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
+		
+		ValidationTools.rejectIfNotEquals(errors, "form.error.notequal.password",
+					"new_password","re_password", new_pw, re_pw);
+		
 	}
 	
 	@Override
