@@ -16,30 +16,30 @@
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
 <div class="article_wrap">
 <section id="bo_w">
-    <h2 id="container_title">글 작성</h2>
+    <h2 id="container_title">글 수정</h2>
     
- <form action="write" method="post">
+ <form action="modify" method="post">
  	<sec:authentication var="id" property="principal"/>
+ 	<input type="hidden" name="idx" value="${qaboard.idx}">
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>
         <tr>
             <td>
-            	<input type="text" name="id" class="frm_input required" size="10" maxlength="20" value="${id }" readonly="readonly">
+            	<input type="text" name="id" class="frm_input required" size="10" maxlength="20" value="${qaboard.id }" readonly="readonly">
             </td>
         </tr>
         <tr>
             <td>
-            	<input type="text" name="subject" size="80" maxlength="100" placeholder="제목">
+            	<input type="text" name="subject" size="80" maxlength="100" placeholder="제목" value="${qaboard.subject }">
             </td>
         </tr>
 
         <tr>
             <td>
-            	<textarea name="content" rows="10" cols="82" placeholder="5자 이상 입력하세요"></textarea>
+            	<textarea name="content" rows="10" cols="82" placeholder="5자 이상 입력하세요">${qaboard.content }</textarea>
             </td>
         </tr>
         </tbody>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="btn_confirm">
-        <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
+        <input type="submit" value="글수정" id="btn_submit" accesskey="s" class="btn_submit">
         <input type="reset" value="취소" class="btn_cancel">
     </div>
 	</form>

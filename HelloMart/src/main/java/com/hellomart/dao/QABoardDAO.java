@@ -1,6 +1,5 @@
 package com.hellomart.dao;
 
-import java.awt.List;
 import java.util.Vector;
 
 import com.hellomart.dto.QABoard;
@@ -9,7 +8,7 @@ public interface QABoardDAO {
 
 	
 	/* 게시글을 가져오는 메소드 */
-	Vector<QABoard> listQABoard();
+	Vector<QABoard> listQABoard(int startRow, int endRow);
 	
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaboard);
@@ -28,5 +27,14 @@ public interface QABoardDAO {
 	
 	/* 답변글 작성 메소드 */
 	void reWrite(QABoard qaboard);
+	
+	/* 게시글의 전체 개수 불러오는 메소드 */
+	int getCount();
+	
+	/* 글 수정 하는 메소드 */
+	void modify(QABoard qaboard);
+
+	/* 글 삭제 하는 메소드 */
+	void delete(int idx);
 	
 }
