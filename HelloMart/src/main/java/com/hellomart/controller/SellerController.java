@@ -1,8 +1,8 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hellomart.service.SellerService;
 
@@ -43,8 +44,16 @@ public class SellerController {
 		return "seller/page";
 	}
 	
-	@RequestMapping(value="/productRegister", method=RequestMethod.GET)
-	public String sellerProductRegister(){
+	@RequestMapping(value="/productRegister", method=RequestMethod.POST)
+	public String sellerProductRegister(@RequestParam("mainCategoryInput") 
+										String mainCategoryInput,
+										@RequestParam("smallCategoryInput")
+										String smallCategoryInput,
+										Model model){
+		Map<String, String> category = new HashMap<String, String>();
+		category.put("mainCategory", mainCategoryInput);
+		category.put("smallCategory", smallCategoryInput);
+		sellerService.productPartSpec(model, category);
 		return "seller/register";
 	}
 }

@@ -2,6 +2,9 @@ package com.hellomart.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 
@@ -13,6 +16,7 @@ import com.hellomart.dao.SellerDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
 import com.hellomart.util.Page;
+import com.hellomart.util.XMLParser;
 
 @Service
 public class SellerServiceImpl implements SellerService{
@@ -59,5 +63,45 @@ public class SellerServiceImpl implements SellerService{
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageCode", page.getSb().toString());
 		model.addAttribute("mapList", sellerProdReviewList);
+	}
+
+	@Override
+	public void productPartSpec(Model model, Map<String, String> category) {
+		String mainCategory = category.get("mainCategory");		
+		String smallCategory = category.get("smallCategory");
+		
+		List<String> productPartSpecList;
+		List<String> productPartSpecEngName = new ArrayList<String>();
+		Map<String, List<String>> productPartSpecMap = new HashMap<String, List<String>>();
+		List<String> productSpecValueList;
+		
+		StringTokenizer tokenizer;
+		XMLParser xmlParser = new XMLParser("category.xml");
+		
+		String specValue = null;
+		String specValueList = null;
+		try {
+			
+			productPartSpecList = xmlParser.getChildren(smallCategory);
+			for(String productSpec : productPartSpecList){
+				specValueList = xmlParser.getValue(productSpec); 
+				System.out.println(smallCategory + "의 " + productSpec + "("
+										+ xmlParser.getName(productSpec) + ")의 value : " + specValueList.trim());
+				productPartSpecEngName.add(xmlParser.getName(productSpec));
+				
+				productSpecValueList = new ArrayList<String>();
+				tokenizer = new StringTokenizer(specValueList.trim(), ",");
+				while(tokenizer.hasMoreTokens()){ 
+					specValue = tokenizer.nextToken();
+					productSpecValueList.add(specValue);	
+				}
+				
+				productPartSpecMap.put(productSpec, productSpecValueList); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("specMapList", productPartSpecMap);
+		model.addAttribute("specEngNameList", productPartSpecEngName);
 	}
 }

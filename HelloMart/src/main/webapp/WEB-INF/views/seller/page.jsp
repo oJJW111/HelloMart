@@ -23,7 +23,7 @@ $(document).ready(function() {
 	
 	$('#productRegister').on('click', function() {
 		var smallValue = $('#smallCategoryInput').val();
-		var mainValue = $("#mainCatogoryInput").val();
+		var mainValue = $("#mainCategoryInput").val();
 		if(smallValue == ''){
 			alert("하위 카테고리 입력!!");
 			$('#smallCategoryInput').focus();
@@ -31,25 +31,27 @@ $(document).ready(function() {
 		}
 		if(mainValue == ''){
 			alert("상위 카테고리 입력!!");
-			$("#mainCatogoryInput").focus();
+			$("#mainCategoryInput").focus();
 			return false;
 		}
+		document.productRegisterForm.action = "/seller/productRegister";
+		document.productRegisterForm.submit();
 	});
 	
-	$("#mainCatogoryInput").on('change',function(){
+	$("#mainCategoryInput").on('change',function(){
 
         alert($(this).val());
-        var mainCatogoryInputItem = $(this).val();
+        var mainCategoryInputItem = $(this).val();
         /* alert($(this).children("option:selected").text()); */
         var changeItem;
         
-        if(mainCatogoryInputItem == "가전제품"){
+        if(mainCategoryInputItem == "가전제품"){
       	  changeItem = domestic_appliances;
       	}
-      	else if(mainCatogoryInputItem == "IT"){
+      	else if(mainCategoryInputItem == "IT"){
       	  changeItem = IT;
       	}
-      	else if(mainCatogoryInputItem == "모바일"){
+      	else if(mainCategoryInputItem == "모바일"){
       	  changeItem = mobile;
       	}
         
@@ -108,9 +110,9 @@ $(document).ready(function() {
 		<div class="BLOCK50"></div>
 		
 		<form name="productRegisterForm" method="post">
-			<label for="mainCatogoryInput">메인카테고리 : 
-				<select  id='mainCatogoryInput' name='mainCatogoryInput' 
-					title='mainCatogoryInput' required="required">
+			<label for="mainCategoryInput">메인카테고리 : 
+				<select  id='mainCategoryInput' name='mainCategoryInput' 
+					title='mainCategoryInput' required="required">
 					<option value=''>선택</option>
 					<option value='가전제품'>가전제품</option>
 					<option value='IT'>IT</option>
