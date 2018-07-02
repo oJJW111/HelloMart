@@ -85,7 +85,7 @@
 
 					<c:set var="startPage" value="${result*10 +1 }" />
 
-				</c:if>
+				</c:if> 
 				<c:if test="${currentPage %10 == 0 }">
 					<c:set var="startPage" value="${(result-1)*10 +1 }" />
 				</c:if>
