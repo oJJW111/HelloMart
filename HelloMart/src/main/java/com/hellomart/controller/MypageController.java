@@ -99,12 +99,14 @@ public class MypageController {
 							@RequestParam("re_pw") String re_pw,
 							Principal principal) {
 		String id = principal.getName();
-		boolean b = service.modifyPw(pw,new_pw,id);
-		if(b){
-			return "redirect:/mypage/info";
-		}else{
-			return "redirect:/mypage/info/modifyPwd";
+		if(!new_pw.equals(re_pw)){
+			return "redirect:/mypage/info/modifyPwd?repwfail=true";
 		}
+		boolean b = service.modifyPw(id,pw,new_pw);
+		if(!b){	// 기존 비밀번호와 입력한 비밀번호가 일치하지 않을 경우
+			return "redirect:/mypage/info/modifyPwd?pwfail=true";
+		}
+		return "redirect:/mypage/info";
 	}
 	
 	@RequestMapping(value="/info/delete",method=RequestMethod.GET)

@@ -8,7 +8,7 @@ public interface AccountDAO {
 	
 	String getPasswd(String id);
 	
-	boolean modifyPw(String new_pw,String id);
+	void modifyPw(String id, String new_pw);
 	
 	void updateAccount(Account account);
 	

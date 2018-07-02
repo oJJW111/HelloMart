@@ -73,21 +73,24 @@ public class AccountServiceImpl implements AccountService {
 		dao.updateAccount(account);
 	}
 
-	@Override
-	public boolean modifyPw(String pw,String new_pw,String id) {
-		String oldPw = dao.getPasswd(id);
-		if(!oldPw.equals(pw)){
-			return false;
-		}else{
-			dao.modifyPw(new_pw,id);
-			return true;
-		}
-		
-	}
 
 	@Override
 	public String getPasswd(String id) {
 		return dao.getPasswd(id);
+	}
+
+	@Override
+	public boolean modifyPw(String id, String pw, String new_pw) {
+		
+		String oldPw = dao.getPasswd(id);
+	
+		if(!oldPw.equals(pw)){
+			return false;
+		}else{
+			dao.modifyPw(id,new_pw);
+			return true;
+		}
+	
 	}
 
 }
