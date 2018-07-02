@@ -85,11 +85,11 @@
 
 					<c:set var="startPage" value="${result*10 +1 }" />
 
-				</c:if>
+				</c:if> 
 				<c:if test="${currentPage %10 == 0 }">
 					<c:set var="startPage" value="${(result-1)*10 +1 }" />
 				</c:if>
-
+ 
 				<!-- 화면에 보여질 페이징 처리 숫자를 표현 [1][2]... -->
 				<c:set var="pageBlock" value="${10 }" />
 				<c:set var="endPage" value="${startPage+pageBlock-1 }" />
@@ -99,17 +99,17 @@
 				</c:if>
 				<!-- 이전이라는 링크를 걸지 파악  -->
 				<c:if test="${startPage > 10 }">
-					<a href="board.do?pageNum=${startPage-10 }"> [이전] </a>
+					<a href="qaboard?pageNum=${startPage-10 }"> [이전] </a>
 				</c:if>
 
 				<!-- 페이징 처리 -->
 				<c:forEach var="i" begin="${startPage }" end="${endPage }">
-					<a href="board.do?pageNum=${i }"> [${i }] </a>
+					<a href="qaboard?pageNum=${i }"> [${i }] </a>
 				</c:forEach>
 
 				<!-- 다음 이라는 링크를 걸지 파악 -->
 				<c:if test="${endPage < pageCount }">
-					<a href="board.do?pageNum=${startPage+10 }"> [다음] </a>
+					<a href="qaboard?pageNum=${startPage+10 }"> [다음] </a>
 				</c:if>
 			</c:if>
 

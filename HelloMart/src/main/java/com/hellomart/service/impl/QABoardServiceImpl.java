@@ -23,21 +23,17 @@ public class QABoardServiceImpl implements QABoardService{
 		
 	}
 
-
-
 	@Override
 	public Vector<QABoard> listQABoard(int startRow, int endRow) {
 		return dao.listQABoard(startRow, endRow);
 	}
-
-
 
 	@Override
 	public void insertQABoard(QABoard qaboard) {
 		dao.insertQABoard(qaboard);
 	}
 	
-	@Override
+	@Override 
 	public QABoard viewQABoard(int idx) {
 		return dao.viewQABoard(idx);
 	}
