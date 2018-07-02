@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -51,7 +52,12 @@
 			<td>${product.weight}</td>
 		</tr>
 		<tr>	
-			<td colspan="2">{detail}</td>
+			<td colspan="2">
+				<c:forEach items="${columnList}" varStatus="status">
+<!-- 상세정보 이름 -->	${columnList[status.index]} &nbsp;
+<!-- 상세정보 값 -->	${smallCategoryColumn[columnList[status.index]]} /	
+				</c:forEach> 
+			</td>
 		</tr>
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${product.comment}</td>

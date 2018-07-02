@@ -59,6 +59,7 @@ public class ProductServiceImpl implements ProductService{
 			columnValue.put(columnList.get(i), "dto.get~~"); 
 		}
 		
+		model.addAttribute("columnList", columnList);
 		model.addAttribute("detail", columnValue); 
 	}
 }
