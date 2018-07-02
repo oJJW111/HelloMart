@@ -73,45 +73,17 @@
 
 		</div>
 		<div align="center" id="page">
-			<!-- 페이지 타운터링 소스 작성 -->
-			<c:if test="${count >0 }">
-				<c:set var="pageCount"
-					value="${count/pageSize+(count%pageSize==0 ? 0 : 1) }" />
-				<!-- 시작 페이지 숫자를 설정 -->
-				<c:set var="startPage" value="${1 }" />
-				<c:if test="${currentPage %10 != 0 }">
-					<fmt:parseNumber var="result" value="${currentPage/10 }"
-						integerOnly="true" />
 
-					<c:set var="startPage" value="${result*10 +1 }" />
-
-				</c:if> 
-				<c:if test="${currentPage %10 == 0 }">
-					<c:set var="startPage" value="${(result-1)*10 +1 }" />
-				</c:if>
- 
-				<!-- 화면에 보여질 페이징 처리 숫자를 표현 [1][2]... -->
-				<c:set var="pageBlock" value="${10 }" />
-				<c:set var="endPage" value="${startPage+pageBlock-1 }" />
-
-				<c:if test="${endPage > pageCount }">
-					<c:set var="endPage" value="${pageCount }" />
-				</c:if>
-				<!-- 이전이라는 링크를 걸지 파악  -->
-				<c:if test="${startPage > 10 }">
-					<a href="qaboard?pageNum=${startPage-10 }"> [이전] </a>
-				</c:if>
-
-				<!-- 페이징 처리 -->
-				<c:forEach var="i" begin="${startPage }" end="${endPage }">
-					<a href="qaboard?pageNum=${i }"> [${i }] </a>
-				</c:forEach>
-
-				<!-- 다음 이라는 링크를 걸지 파악 -->
-				<c:if test="${endPage < pageCount }">
-					<a href="qaboard?pageNum=${startPage+10 }"> [다음] </a>
-				</c:if>
+			<c:if test="${startPage > pageBlock}">
+				<a href="qaboard?pageNum=${pageNum }">[이전]</a>
+			</c:if>			
+			<c:forEach var="i" begin="${startPage }" end="${endPage }">
+				<a href="qaboard?pageNum=${i }">[${i }]</a>
+			</c:forEach>
+			<c:if test="${endPage < pageCount }">
+				<a href="qaboard?pageNum=${startPage+pageBlock }">[다음]</a>
 			</c:if>
+			
 
 		</div>
 		<!-- 게시판 검색 시작 { -->

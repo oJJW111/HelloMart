@@ -23,18 +23,13 @@ public class QABoardServiceImpl implements QABoardService{
 		
 	}
 
-
-
 	@Override
-	public Vector<QABoard> listQABoard(int startRow, int endRow) {
-		return dao.listQABoard(startRow, endRow);
+	public Vector<QABoard> listQABoard(int startRow, int pageSize) {
+		return dao.listQABoard(startRow, pageSize);
 	}
-
-
 
 	@Override
 	public void insertQABoard(QABoard qaboard) {
-		logger.debug(qaboard.toString());
 		dao.insertQABoard(qaboard);
 	}
 	
@@ -43,20 +38,10 @@ public class QABoardServiceImpl implements QABoardService{
 		return dao.viewQABoard(idx);
 	}
 
-	@Override
-	public void deleteQABoard(int idx) {
-		dao.deleteQABoard(idx);
-	}
 
 	@Override
 	public void viewCount(int idx) {
 		dao.viewCount(idx);	
-	}
-
-	@Override
-	public void reWrite(QABoard qaboard) {
-		dao.reReLv(qaboard);	
-		dao.reWrite(qaboard);	
 	}
 
 	@Override
