@@ -67,5 +67,30 @@ public class AccountServiceImpl implements AccountService {
 			dao.sellerApproval(id);
 		}
 	}
+
+	@Override
+	public void updateAccount(Account account) {
+		dao.updateAccount(account);
+	}
+
+
+	@Override
+	public String getPasswd(String id) {
+		return dao.getPasswd(id);
+	}
+
+	@Override
+	public boolean modifyPw(String id, String pw, String new_pw) {
+		
+		String oldPw = dao.getPasswd(id);
 	
+		if(!oldPw.equals(pw)){
+			return false;
+		}else{
+			dao.modifyPw(id,new_pw);
+			return true;
+		}
+	
+	}
+
 }

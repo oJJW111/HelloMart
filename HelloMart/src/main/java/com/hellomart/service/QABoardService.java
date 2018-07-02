@@ -7,8 +7,7 @@ import com.hellomart.dto.QABoard;
 public interface QABoardService {
 
 	/* 게시글을 가져오는 메소드 */
-	Vector<QABoard> listQABoard();
-	
+	Vector<QABoard> listQABoard(int startRow, int endRow);
 	
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaBoard);
@@ -22,10 +21,16 @@ public interface QABoardService {
 	/* 게시글을 삭제하는 메소드 */
 	void deleteQABoard(int idx);
 	
-	/* 답글 기준글 값 증가 메소드 */
-	void reReLv(QABoard qaboard);
-	
 	/* 답변글 작성 메소드 */
 	void reWrite(QABoard qaboard);
+	
+	/* 게시글의 전체 개수 불러오는 메소드 */
+	int getCount();
+	
+	/* 글 수정 하는 메소드 */
+	void modify(QABoard qaboard);
+	
+	/* 글 삭제 하는 메소드 */
+	void delete(int idx);
 	
 }

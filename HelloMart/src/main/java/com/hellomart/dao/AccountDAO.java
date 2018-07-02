@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import com.hellomart.dto.Account;
 
 public interface AccountDAO {
+	
+	String getPasswd(String id);
+	
+	void modifyPw(String id, String new_pw);
+	
+	void updateAccount(Account account);
+	
 	/**
 	 * <p>로그인 정보를 가져온다.
 	 * 
@@ -70,5 +77,7 @@ public interface AccountDAO {
 	 */
 	void truncate();
 	//테스트용
+	
+	
 
 }

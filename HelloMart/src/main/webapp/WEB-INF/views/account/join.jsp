@@ -55,7 +55,7 @@ $(document).ready(function(){
 	});
 	
 	/* 하이픈(-)을 자동으로 추가하며 올바른 번호가 아닐 경우 경고창을 띄운다. */
-	$("#phone").on('blur', function(){
+/* 	$("#phone").on('blur', function(){
 	    if($(this).val() == '') return;
 	
 	    var trans_num = $(this).val().replace(/-/gi,'');
@@ -77,8 +77,8 @@ $(document).ready(function(){
 	        $(this).val("");
 	        $(this).focus();
 	    }
-	});
-});
+	});*/
+}); 
 </script>
 </head>
 <body>
@@ -141,7 +141,7 @@ $(document).ready(function(){
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" maxlength="13" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
+					<form:input path="phone" class="txt-input" maxlength="11" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>

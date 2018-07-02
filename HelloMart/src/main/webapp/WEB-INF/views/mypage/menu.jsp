@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
 <style type="text/css">
-* {
+/* * {
 	box-sizing: border-box;
 }
 
@@ -34,7 +34,44 @@
 .mypage-list-item:HOVER {
 	cursor: pointer;
 	background-color: #efefef;
+} */
+
+.myshopMain {
+	overflow: hidden;
+	width: 800px;
+	text-align: center;
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	margin: 0px auto;
+	margin-bottom: 70px;
 }
+
+.myshopMain .shopMain {
+	float: left;
+	width: 399px;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.myshopMain .shopMain:hover {
+	background: #E9E9E9;
+}
+
+.myshopMain .shopMain .tit {
+	color: #333;
+	display: block;
+	padding: 25px 20px;
+	font-size: 12px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.myshopMain .shopMain a {
+	display: block;
+	font-size: 10px;
+	text-decoration: none;
+}
+
 </style>
 
 </head>
@@ -72,13 +109,43 @@ $(document).ready(function(){
 <!-- 쇼핑카트 -->
 <!-- 포인트 관리 -->
 <!-- 구매이력 -->
-<div class="mypage-container">
+<!-- <div class="mypage-container">
 	<ul class="mypage-list">
 		<li class="mypage-list-item" id="info">회원정보 관리</li>
 		<li class="mypage-list-item" id="shoppingcart">쇼핑카트</li>
 		<li class="mypage-list-item" id="point">포인트 관리</li>
 		<li class="mypage-list-item" id="history">구매이력</li>
 	</ul>
+</div> -->
+<div class="myshopMain">
+	<div class="shopMain">
+		<a href="/mypage/info"> 
+			<span class="tit">MODIFY<br>(회원정보)</span>
+		</a>
+	</div>
+	<div class="shopMain">
+		<a href="/mypage/history"> 
+			<span class="tit">ORDER LIST<br>(주문내역)</span>
+		</a>
+	</div>
+	<div class="shopMain">
+		<a href="/mypage/shoppingcart"> 
+			<span class="tit">CART<br>(장바구니)</span>
+		</a>
+	</div>
+	<div class="shopMain">
+		<a href="/mypage/point"> 
+			<span class="tit">MY POINT<br>(적립금내역)</span>
+		</a>
+	</div>
+	<div class="shopMain">
+		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+	</div>
+	<div class="shopMain">
+		<a href="/mypage/info/delete"> 
+			<span class="tit">USER EXIT<br>(회원탈퇴)</span>
+		</a>
+	</div>
 </div>
 
 <div class="BLOCK60"></div>

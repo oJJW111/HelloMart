@@ -27,44 +27,44 @@
 				전체<span>5</span>건
 			</div>
 			<div class="tbl_head01 tbl_wrap">
-					<table>
-						<thead>
-							<tr>
-								<th scope="col">번호</th>
-								<th scope="col">삭제</th>
-								<th scope="col">제목</th>
-								<th scope="col">글쓴이</th>
-								<th scope="col">날짜</th>
-								<th scope="col">조회</th>
-							</tr>
-						</thead>
-						<tbody>
+				<table>
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col">삭제</th>
+							<th scope="col">제목</th>
+							<th scope="col">글쓴이</th>
+							<th scope="col">날짜</th>
+							<th scope="col">조회</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${list != null }">
 							<c:forEach var="list" items="${list}">
-							<c:set var="wid" value="0"/>
+								<c:set var="wid" value="0" />
 								<tr class="bo_notice">
 									<td class="td_num">${list.idx }</td>
-									<td class="td_chk"><input type="checkbox" name="chk_wr_id"
-										value="wr_id" id="chk_wr_id"></td>
+									<td class="td_chk"><input type="checkbox" name="chk_wr_id" value="wr_id" id="chk_wr_id"></td>
 									<td class="td_subject">
-									<c:forEach var="j" begin="1" end="${list.reSeq }" step="${j+1 }">
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			
-									</c:forEach>
-									<a href="/view?idx=${list.idx }">${list.subject }</a></td>
-									<td class="td_name sv_use">${list.id }</td>
-									<td class="td_date">
-										<fmt:formatDate value="${list.date}" pattern="yyyy-MM-dd"/>
+										<c:forEach var="j" begin="1" end="${list.reseq }" step="${j+1 }">
+										&nbsp;&nbsp;&nbsp;
+									    </c:forEach> 
+									    <a href="/view?idx=${list.idx }">${list.subject }</a>
 									</td>
+									<td class="td_name sv_use">${list.id }</td>
+									<td class="td_date"><fmt:formatDate value="${list.date}" pattern="yyyy-MM-dd" /></td>
 									<td class="td_num">${list.count }</td>
+									<c:set  var="number" value="${number-1 }" />
 								</tr>
 							</c:forEach>
-						</tbody>
-					</table>
+						</c:if>
+					</tbody>
+				</table>
 			</div>
 			<div class="bo_fx">
 				<ul class="btn_bo_adm">
-					<li>
-						<input type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">
-					</li>
+					<li><input type="submit" name="btn_submit" value="선택삭제"
+						onclick="document.pressed=this.value"></li>
 				</ul>
 				<ul class="btn_bo_user">
 					<li><a href="/write" class="btn_b02">글쓰기</a></li>
@@ -73,44 +73,46 @@
 
 		</div>
 		<div align="center" id="page">
-	<!-- 페이지 타운터링 소스 작성 -->
-	<c:if test="${count >0 }" >
-	<c:set var="pageCount" value="${count/pageSize+(count%pageSize==0 ? 0 : 1) }" />
-	<!-- 시작 페이지 숫자를 설정 -->
-	<c:set var="startPage" value="${1 }" />
-	<c:if test="${currentPage %10 != 0 }">
-		<fmt:parseNumber var="result" value="${currentPage/10 }"
-		integerOnly="true"	/>
-		
-		<c:set var="startPage" value="${result*10 +1 }" />
-		
-	</c:if>
-	<c:if test="${currentPage %10 == 0 }">
-		<c:set var="startPage" value="${(result-1)*10 +1 }" />	
-	</c:if>
-	
-	<!-- 화면에 보여질 페이징 처리 숫자를 표현 [1][2]... -->
-	<c:set var="pageBlock" value="${10 }" />
-	<c:set var="endPage"  value="${startPage+pageBlock-1 }" />
-	
-	<c:if test="${endPage > pageCount }">
-		<c:set var="endPage" value="${pageCount }" />	
-	</c:if>
-	<!-- 이전이라는 링크를 걸지 파악  -->
-	<c:if test="${startPage > 10 }">
-		<a href="board.do?pageNum=${startPage-10 }"> [이전] </a>
-	</c:if>
-	
-	<!-- 페이징 처리 -->
-	<c:forEach var="i" begin="${startPage }" end="${endPage }">
-		<a href="board.do?pageNum=${i }"> [${i }] </a>
-	</c:forEach>	
-	
-	<!-- 다음 이라는 링크를 걸지 파악 -->	
-	<c:if test="${endPage < pageCount }">
-		<a href="board.do?pageNum=${startPage+10 }"> [다음] </a>
-	</c:if>	
-	</c:if>	
+			<!-- 페이지 타운터링 소스 작성 -->
+			<c:if test="${count >0 }">
+				<c:set var="pageCount"
+					value="${count/pageSize+(count%pageSize==0 ? 0 : 1) }" />
+				<!-- 시작 페이지 숫자를 설정 -->
+				<c:set var="startPage" value="${1 }" />
+				<c:if test="${currentPage %10 != 0 }">
+					<fmt:parseNumber var="result" value="${currentPage/10 }"
+						integerOnly="true" />
+
+					<c:set var="startPage" value="${result*10 +1 }" />
+
+				</c:if> 
+				<c:if test="${currentPage %10 == 0 }">
+					<c:set var="startPage" value="${(result-1)*10 +1 }" />
+				</c:if>
+ 
+				<!-- 화면에 보여질 페이징 처리 숫자를 표현 [1][2]... -->
+				<c:set var="pageBlock" value="${10 }" />
+				<c:set var="endPage" value="${startPage+pageBlock-1 }" />
+
+				<c:if test="${endPage > pageCount }">
+					<c:set var="endPage" value="${pageCount }" />
+				</c:if>
+				<!-- 이전이라는 링크를 걸지 파악  -->
+				<c:if test="${startPage > 10 }">
+					<a href="qaboard?pageNum=${startPage-10 }"> [이전] </a>
+				</c:if>
+
+				<!-- 페이징 처리 -->
+				<c:forEach var="i" begin="${startPage }" end="${endPage }">
+					<a href="qaboard?pageNum=${i }"> [${i }] </a>
+				</c:forEach>
+
+				<!-- 다음 이라는 링크를 걸지 파악 -->
+				<c:if test="${endPage < pageCount }">
+					<a href="qaboard?pageNum=${startPage+10 }"> [다음] </a>
+				</c:if>
+			</c:if>
+
 		</div>
 		<!-- 게시판 검색 시작 { -->
 		<fieldset id="bo_sch">

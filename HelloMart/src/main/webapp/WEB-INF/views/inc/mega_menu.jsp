@@ -5,22 +5,22 @@
 $(document).ready(function(){
 	
 	$("#main_menu_1").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("가전제품");
+		location.href="/productList/main?mainCategory=" + encodeURIComponent("가전제품");
 	});
 	$("#main_menu_2").on('click', function(){
-		location.href="/productList?mainCategory=IT";
+		location.href="/productList/main?mainCategory=IT";
 	});
 	$("#main_menu_3").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("모바일");
+		location.href="/productList/main?mainCategory=" + encodeURIComponent("모바일");
 	});
 	$("#main_menu_4").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
+		location.href="/productList/main?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
 		location.href="/productList?mainCategory=퍼스널케어";
 	});
 	$("#main_menu_6").on('click', function(){
-		location.href="/productList?mainCategory=서비스";
+		location.href="/qaboard";
 	});
 
 	$("#refrigerator").on('click', function(){
@@ -88,7 +88,7 @@ $(document).ready(function(){
 		<div class="F_left header_menu_item" id="main_menu_5"
 			cd_key="ct_005">퍼스널케어</div>
 		<div class="F_left header_menu_item" id="main_menu_6"
-			cd_key="ct_006" style="width: 167px;">서비스</div>
+			cd_key="ct_006" style="width: 167px;">게시판</div>
 		<div class="clear"></div>
 	</div>
 

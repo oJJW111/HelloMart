@@ -98,7 +98,6 @@ var BIRTHDATEMAKER = function() {
 	}
 	var init = function(z) {
 		$.extend(attr, z);
-		print();
 	}
 	function print() {
 		for (var k in attr){

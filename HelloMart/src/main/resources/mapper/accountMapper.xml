@@ -4,6 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hellomart.dao.AccountDAO">
+	
+	<select id="getPasswd" resultType="String">
+		SELECT password FROM Account WHERE id=#{param1}
+	</select>
+	
+	<update id="modifyPw">
+		UPDATE Account 
+		SET password = #{param1}
+		WHERE ID = #{param2}
+	</update>
+
+	<update id="updateAccount">
+		UPDATE Account 
+		SET Email=#{email}, PostCode=#{postCode}, RoadAddress=#{roadAddress},
+			DetailAddress=#{detailAddress}, Phone=#{phone}, Name=#{name}, 
+			BirthYear=#{birthYear}, BirthMonth=#{birthMonth}, BirthDay=#{birthDay}, Gender=#{gender}
+		WHERE ID = #{id}
+	</update>
 
 	<select id="findAccount" resultType="Account" parameterType="String">
 		SELECT Password, Role FROM Account WHERE ID = #{id}

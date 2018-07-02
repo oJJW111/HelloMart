@@ -40,10 +40,10 @@ function getCookie(Name) {
 }
 
 function login() {
-    if (document.f.idsave.checked == true) { // 아이디 저장을 체크 하였을때
-        setCookie("id", document.f.id.value, 7); //쿠키이름을 id로 아이디입력필드값을 7일동안 저장
-    } else { // 아이디 저장을 체크 하지 않았을때
-        setCookie("id", document.f.id.value, 0); //날짜를 0으로 저장하여 쿠키삭제
+    if (document.f.idsave.checked == true) { // 아이디 저장을 체크 하였을 때
+        setCookie("id", document.f.id.value, 7); //쿠키 이름을 id로 아이디입력필드값을 7일 동안 저장
+    } else { // 아이디 저장을 체크 하지 않았을 때
+        setCookie("id", document.f.id.value, 0); //날짜를 0으로 저장하여 쿠키 삭제
     }
     $('#loginForm').submit(); //유효성 검사가 통과되면 서버로 전송.
 }

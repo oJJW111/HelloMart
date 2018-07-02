@@ -35,6 +35,7 @@
 
 .sidenav a:hover {
     color: #f1f1f1;
+    text-decoration: none;
 }
 
 .sidenav .closebtn {
@@ -84,7 +85,7 @@ function closeNav() {
 	<jsp:include page="/WEB-INF/views/mypage/info/inc/${viewPage}.jsp"/> 
 </div>
 
-<div class="BLOCK20"></div>
+<div class="BLOCK50"></div>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

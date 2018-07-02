@@ -8,6 +8,7 @@ import lombok.Data;
 public class Account {
 	private String id;
 	private String password;
+	private String new_password;
 	private String re_password;
 	private String role;
 	private int points;

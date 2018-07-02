@@ -70,6 +70,7 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
 		
+		
 		<div class="clear"></div>
 	</div>
 </div>
