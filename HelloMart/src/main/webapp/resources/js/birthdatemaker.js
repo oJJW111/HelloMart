@@ -1,8 +1,8 @@
 var BIRTHDATEMAKER = function() {
 	var attr = {
-		year : '#',
-		month : '#',
-		day : '#',
+		year : undefined,
+		month : undefined,
+		day : undefined,
 		begin : 0,
 		end : 0,
 		yearDefault : '생년',
@@ -17,7 +17,7 @@ var BIRTHDATEMAKER = function() {
 	}
 	var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	var appendOption = function(id, value, valueAttr) {
-		$(id).append('<option value=' + valueAttr + '>' + value + '</option>');
+		$('#' + id).append('<option value=' + valueAttr + '>' + value + '</option>');
 	}
 	var list = function(id, n, m) {
 		for(i=n; i<=m; i++){
@@ -29,13 +29,13 @@ var BIRTHDATEMAKER = function() {
 		list(id, n, m);
 	}
 	var getSelectedVal = function(id) {
-		return $(id + ' option:selected').attr("value");
+		return $('#' + id + ' option:selected').attr("value");
 	}
 	var dayEmpty = function() {
-		$(attr.day).empty();
+		$('#' + attr.day).empty();
 	}
  	var registerEvent = function(x, y, m) {
- 		$(x).on("change", function() {
+ 		$('#' + x).on("change", function() {
  			var a = getSelectedVal(y);
 			var b = getSelectedVal(m);
 			calculateDay(a, b);
@@ -71,37 +71,6 @@ var BIRTHDATEMAKER = function() {
 		
 		list(attr.day, 1, n);
 	}
-	var matchInitVal = function(z) {
-		initAddVal(attr, z.year, "year");
-		initAddVal(attr, z.month, "month");
-		initAddVal(attr, z.day, "day");
-		initVal(attr, z.begin, "begin");
-		initVal(attr, z.end, "end");
-		initVal(attr, z.yearDefault, "yearDefault");
-		initVal(attr, z.monthDefault, "monthDefault");
-		initVal(attr, z.dayDefault, "dayDefault");
-		initVal(attr, z.yearDefaultAttr, "yearDefaultAttr");
-		initVal(attr, z.monthDefaultAttr, "monthDefaultAttr");
-		initVal(attr, z.dayDefaultAttr, "dayDefaultAttr");
-		initValIFNotEmpty(attr, z.selectedYear, "selectedYear");
-		initValIFNotEmpty(attr, z.selectedMonth, "selectedMonth");
-		initValIFNotEmpty(attr, z.selectedDay, "selectedDay");
-	}
-	var initValIFNotEmpty = function(x, y, z) {
-		if(y != '') {
-			x[z] = y;
-		}
-	}
-	var initVal = function(x, y, z) {
-		if(!(y === undefined)) {
-			x[z] = y;
-		}
-	}
-	var initAddVal = function(x, y, z) {
-		if(!(y === undefined)) {
-			x[z] += y;
-		}
-	}
 	var selecteSelectedValue = function() {
 		var isSelectedYear = !(attr.selectedYear === undefined);
 		var isSelectedMonth = !(attr.selectedMonth === undefined);
@@ -124,12 +93,20 @@ var BIRTHDATEMAKER = function() {
 		}
 	};
 	var select = function(x, y) {
-		$(x).children("option[value='" + y + "']")
+		$('#' + x).children("option[value='" + y + "']")
 		.attr('selected', 'selected');
+	}
+	var init = function(z) {
+		$.extend(attr, z);
+	}
+	function print() {
+		for (var k in attr){
+		    console.log('key is ' + k + ' value is ' + attr[k]);
+		}
 	}
 	return {
 		make : function(z) {
-			matchInitVal(z);
+			init(z);
 			
 			appendOption(attr.day, attr.dayDefault, attr.dayDefaultAttr);
 			
