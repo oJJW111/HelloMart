@@ -51,7 +51,7 @@
 			<td>${product.weight}</td>
 		</tr>
 		<tr>	
-			<td colspan="2">냉장용량~ 냉동용량~</td>
+			<td colspan="2">{detail}</td>
 		</tr>
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${product.comment}</td>
@@ -59,17 +59,16 @@
 	</table>                       
 </div>
 
-<div>
-수량 &nbsp;&nbsp;
-<select name="count">
-	<option value="1">1개</option>
-	<option value="2">2개</option>
-	<option value="3">3개</option>
-	<option value="4">4개</option>
-	<option value="5">5개</option>
-</select>
-&nbsp;&nbsp;
-<input type="button" value="구매" onclick="">
+<div align="center"> 
+	수량 &nbsp;&nbsp;
+	<select name="count">
+		<option value="1">1개</option>
+		<option value="2">2개</option>
+		<option value="3">3개</option>	
+		<option value="4">4개</option>
+		<option value="5">5개</option>
+	</select>
+	&nbsp;&nbsp;<input type="button" value="구매" onclick="">
 </div>
 
 <div>

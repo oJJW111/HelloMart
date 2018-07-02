@@ -53,15 +53,8 @@ function move(mainCategory, small){
 		<div class="category_small">
 			<h5>상세검색</h5>
 			<c:if test="${smallCategoryColumn != null}">
-				<!-- 각 검색 조건의 이름과, 그에 해당하는 값 -->
-				<c:set var="smallCategoryColumn" value="${smallCategoryColumn}" />
-				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명) -->
-				<c:set var="columnList" value="${columnList}" />
-				<!-- 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명) -->
-				<c:set var="columnListEng" value="${columnListEng}" />
- 				<c:forEach items="${columnList}" varStatus="status">
+				<c:forEach items="${columnList}" varStatus="status">
 					<div>
-						${columnList[status.index]} <br><br>
 						<c:out value="${columnList[status.index]}"/> <br><br> 
 						<c:forTokens var="value" items="${smallCategoryColumn[columnList[status.index]]}" delims=",">
 							<label class="ck_container"> 

@@ -117,13 +117,13 @@ public class ProductListServiceImpl implements ProductListService{
 		getSmallList(request.getParameter("mainCategory"), 
 						request.getParameter("smallCategory"), model);
 		
-		createSQL(request); 
+		String sql = createSQL(request); 
 		model.addAttribute("productList", "dao.getDetailList()");
 
 		pageSetting(dao.getDetailList(), model);
 	}
 	
-	public void createSQL(HttpServletRequest request){
+	public String createSQL(HttpServletRequest request){
 		String smallCategory = request.getParameter("smallCategory");
 		String smallCategoryEng = smallCategoryNameKorToEng.get(smallCategory);
 		
@@ -147,6 +147,17 @@ public class ProductListServiceImpl implements ProductListService{
 		String sql = "select * from productlist natural join " + smallCategoryEng 
 				+ " where productlist.smallCategory = '" + smallCategory + "'";
 		System.out.println("sql 문장 : " + sql);
+		
+		if(request.getParameter("search") != null){
+			sql += " and productname = " + request.getParameter("search");
+		}
+		if(request.getParameter("price_range1") != null){
+			sql += " and price >= " + request.getParameter("price_range1");
+		}
+		if(request.getParameter("price_range2") != null){
+			sql += " and price <= " + request.getParameter("price_range2");
+		}
+		
 			
 		// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
 		boolean isFirstAdd = true;
@@ -188,7 +199,9 @@ public class ProductListServiceImpl implements ProductListService{
 				}
 			}
 		}
-	}
+		
+		return sql;
+	} // createSql 메소드 끝
 	
 	public void pageSetting(List<ProductList> list, Model model){
 		int numPerPage = 10;
