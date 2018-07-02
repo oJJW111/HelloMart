@@ -89,7 +89,7 @@
 				<c:if test="${currentPage %10 == 0 }">
 					<c:set var="startPage" value="${(result-1)*10 +1 }" />
 				</c:if>
-
+ 
 				<!-- 화면에 보여질 페이징 처리 숫자를 표현 [1][2]... -->
 				<c:set var="pageBlock" value="${10 }" />
 				<c:set var="endPage" value="${startPage+pageBlock-1 }" />
