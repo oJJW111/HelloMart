@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
+import com.hellomart.validator.DeleteAccountValidator;
 import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
 
@@ -34,10 +35,8 @@ public class MypageController {
 	@Autowired
 	private AccountService service;
 
-	@InitBinder
-	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(new ModifyAccountInfoValidator());
-	}
+	@Autowired
+	private DeleteAccountValidator deleteAccountValidator;
 	
 	@RequestMapping("")
 	public String main() {
@@ -60,6 +59,7 @@ public class MypageController {
 	
 	@RequestMapping(value="/info/modify",method=RequestMethod.GET)
 	public ModelAndView infoModify(Principal principal) {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		String id = principal.getName();
@@ -75,6 +75,9 @@ public class MypageController {
 	@RequestMapping(value="/info/modify",method=RequestMethod.POST)
 	public ModelAndView Modify(@ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
+		
+		new ModifyAccountInfoValidator().validate(account, bindingResult);
+		
 		if(bindingResult.hasErrors()) {
 			mav.setViewName("mypage/info/page");
 			mav.addObject("viewPage", "modify");
@@ -99,32 +102,44 @@ public class MypageController {
 							@RequestParam("re_pw") String re_pw,
 							Principal principal) {
 		String id = principal.getName();
-		boolean b = service.modifyPw(pw,new_pw,id);
-		if(b){
-			return "redirect:/mypage/info";
-		}else{
-			return "redirect:/mypage/info/modifyPwd";
+		if(!new_pw.equals(re_pw)){
+			return "redirect:/mypage/info/modifyPwd?repwfail=true";
 		}
+		boolean b = service.modifyPw(id,pw,new_pw);
+		if(!b){	// 기존 비밀번호와 입력한 비밀번호가 일치하지 않을 경우
+			return "redirect:/mypage/info/modifyPwd?pwfail=true";
+		}
+		return "redirect:/mypage/info";
 	}
 	
 	@RequestMapping(value="/info/delete",method=RequestMethod.GET)
-	public ModelAndView infoDelete(String id) {
+	public ModelAndView infoDelete() {
 		ModelAndView mav = new ModelAndView();
+		Account account = new Account();
+		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
 		mav.addObject("viewPage", "delete");
 		return mav;
 	}
 	
 	@RequestMapping(value="/info/delete", method=RequestMethod.POST)
-	public String delete(@RequestParam("pw") String pw, Principal principal) {
+	public ModelAndView delete(@ModelAttribute("account") Account account, Principal principal, BindingResult bindingResult) {
+		ModelAndView mav = new ModelAndView();
 		String id = principal.getName();
-		String oldpw = service.getPasswd(id);
+		account.setId(id);
 		
-		if(!oldpw.equals(pw)){
-			return "redirect:/mypage/info/delete?fail=true";
+		deleteAccountValidator.validate(account, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			mav.setViewName("mypage/info/page");
+			mav.addObject("viewPage", "delete");
+			return mav;
 		}
+		
 		service.deleteAccount(id);
-		return "redirect:/logout";
+		
+		mav.setViewName("redirect:/logout");
+		return mav;
 	}
 	
 	@RequestMapping("/shoppingcart")

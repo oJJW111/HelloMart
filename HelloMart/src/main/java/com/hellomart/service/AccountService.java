@@ -9,7 +9,7 @@ public interface AccountService {
 	
 	String getPasswd(String id);
 	
-	boolean modifyPw(String pw,String new_pw,String id);
+	boolean modifyPw(String id,String pw,String new_pw);
 	
 	void updateAccount(Account account);
 	

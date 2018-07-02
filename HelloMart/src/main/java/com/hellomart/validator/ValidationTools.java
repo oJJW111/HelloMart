@@ -25,13 +25,18 @@ public class ValidationTools {
 	}
 	
 	public static void rejectIfNotEquals(Errors errors, String errorCode, 
-			String field, String field2, String str1, String str2) {
-		rejectIfHasNotErrors(errors, errorCode, field, 
+			String checkField, String errorField, String str1, String str2) {
+		rejectIfHasNotErrors(errors, errorCode, checkField, 
 				() -> {
-					if(!str1.equals(str2)) {
-						errors.rejectValue(field2, errorCode);
+					if(str1 == null || !str1.equals(str2)) {
+						errors.rejectValue(errorField, errorCode);
 					}
 				});
+	}
+	
+	public static void rejectIfNotEquals(Errors errors, String errorCode, 
+			String errorField, String str1, String str2) {
+		rejectIfNotEquals(errors, errorCode, errorField, errorField, str1, str2);
 	}
 	
 	public static void rejectIfHasNotErrors(Errors errors, String errorCode, String field, MatcherStatement mstmt) {
