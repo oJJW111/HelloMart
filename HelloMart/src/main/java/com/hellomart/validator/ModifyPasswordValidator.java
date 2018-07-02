@@ -32,6 +32,7 @@ public class ModifyPasswordValidator implements Validator {
 		String re_pw = account.getRe_password();
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "form.error.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "new_password", "form.error.required");
 		
 		ValidationTools.rejectIfNotEquals(errors, "form.error.notequal.password",
 					"password", pw, pw_db);
