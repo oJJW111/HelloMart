@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService{
 
 		try {
 			columnList = xmlParser.getChildren(dto.getSmallCategory());
-  
+   
 			for (String column : columnList) {
 				columnListEng.add(xmlParser.getName(column));
 			}
