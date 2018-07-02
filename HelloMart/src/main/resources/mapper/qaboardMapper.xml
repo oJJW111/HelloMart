@@ -46,28 +46,10 @@
 		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
 	
+	
 	<select id="getCount" resultType="int">
 		SELECT count(*) FROM QABoard
 	</select>
 	
-	
-	<!-- 답변글로 인하여 기존에 답변글들의 레벨을 1씩 증가하는 쿼리 -->
-	<update id="reReLv">
-			
-		 UPDATE QABoard SET relev=relev+1 WHERE reref=#{reref} AND relev > #{relev}
-		 
-	</update>
-	
-	<!-- 답글 추가 -->
-	<insert id="reWrite">
-		INSERT INTO 
-		
-		QABoard (subject, content, id, reref,
-		relev, reseq, count)
-		
-		VALUES (#{subject}, #{content}, #{id}, #{reref},
-		#{relev}+1, #{reseq}+1, #{count});
-	
-	</insert>
 	
 </mapper>

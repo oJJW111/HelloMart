@@ -31,7 +31,6 @@
 					<thead>
 						<tr>
 							<th scope="col">번호</th>
-							<th scope="col">삭제</th>
 							<th scope="col">제목</th>
 							<th scope="col">글쓴이</th>
 							<th scope="col">날짜</th>
@@ -44,17 +43,12 @@
 								<c:set var="wid" value="0" />
 								<tr class="bo_notice">
 									<td class="td_num">${list.idx }</td>
-									<td class="td_chk"><input type="checkbox" name="chk_wr_id" value="wr_id" id="chk_wr_id"></td>
 									<td class="td_subject">
-										<c:forEach var="j" begin="1" end="${list.reseq }" step="${j+1 }">
-										&nbsp;&nbsp;&nbsp;
-									    </c:forEach> 
 									    <a href="/view?idx=${list.idx }">${list.subject }</a>
 									</td>
 									<td class="td_name sv_use">${list.id }</td>
 									<td class="td_date"><fmt:formatDate value="${list.date}" pattern="yyyy-MM-dd" /></td>
 									<td class="td_num">${list.count }</td>
-									<c:set  var="number" value="${number-1 }" />
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -75,16 +69,14 @@
 		<div align="center" id="page">
 
 			<c:if test="${startPage > pageBlock}">
-				<a href="qaboard?pageNum=${pageNum }">[이전]</a>
+				<a href="qaboard?pageNum=${startPage-1}">[이전]</a>
 			</c:if>			
 			<c:forEach var="i" begin="${startPage }" end="${endPage }">
 				<a href="qaboard?pageNum=${i }">[${i }]</a>
 			</c:forEach>
 			<c:if test="${endPage < pageCount }">
-				<a href="qaboard?pageNum=${startPage+pageBlock }">[다음]</a>
+				<a href="qaboard?pageNum=${startPage+pageBlock}">[다음]</a>
 			</c:if>
-			
-
 		</div>
 		<!-- 게시판 검색 시작 { -->
 		<fieldset id="bo_sch">
@@ -108,7 +100,8 @@
 			</form>
 		</fieldset>
 		<!-- 게시판 검색 끝 -->
-	</div>
+		
+
 
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />

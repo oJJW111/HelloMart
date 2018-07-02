@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -25,7 +26,6 @@ function delchk(){
     }
 }
 </script>
-
 </head>
 
 <body>
@@ -70,18 +70,63 @@ function delchk(){
 					<li><a href="/modify?idx=${view.idx }" class="btn_b01">수정</a></li>
 					<li><a href="#" class="btn_b01" onclick="delchk();">삭제</a></li>
 					<li><a href="/qaboard" class="btn_b01">목록</a></li>
-					<li><a href="/rewrite?idx=${view.idx }" class="btn_b02">답변작성</a></li>
 				</ul>
 				
 
 			</div>
 			<!-- } 게시물 하단 버튼 끝 -->
+			<sec:authentication property="principal" var="id"/>
+			<hr>
+			<h4>코멘트</h4>
+			<form action="cmtinsert" method="post">
+			<table style="width: 1130px">
+			<c:if test="${pageCount!=0 }">
+			<c:forEach var="cmtlist" items="${cmtlist}"> 
+			<tr>
+				<td>${cmtlist.id }</td>
+				<td style="width: 500px">${cmtlist.content }</td>
+				<td align="right">
+					<fmt:formatDate value="${cmtlist.date}" pattern="yyyy.MM.dd HH:mm:ss"/><br>
+				   <a href="#" class="btn_b01" onclick="delchk();">수정</a>
+					<a href="#" class="btn_b01" onclick="cmtdelchk();">삭제</a>
+				</td>
+			</tr>
+			</c:forEach>
+			</c:if>
+			<tr>
+				<td><input type="text" value="${id }" readonly="readonly" size="5"></td>
+				<td style="width: 500px"><textarea rows="2" cols="80" placeholder="5자이상 입력주세요"></textarea></td>
+				<td align="right"><input type="submit" value="글쓰기"></td>
+			</tr>		
+			</table>
+			</form>
+					<div align="center" id="page">
 
+			<c:if test="${startPage > pageBlock}">
+				<a href="qaboard?pageNum=${pageNum }">[이전]</a>
+			</c:if>			
+			<c:forEach var="i" begin="${startPage }" end="${endPage }">
+				<a href="qaboard?pageNum=${i }">[${i }]</a>
+			</c:forEach>
+			<c:if test="${endPage < pageCount }">
+				<a href="qaboard?pageNum=${startPage+pageBlock }">[다음]</a>
+			</c:if>
+		</div>
 		</section>
 
 		<!-- } 게시판 읽기 끝 -->
+	<table>
+		<tr>
+			<td>
+		</tr>
+		
+		
+	
+	</table>
+
 
 	</div>
+
 
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />

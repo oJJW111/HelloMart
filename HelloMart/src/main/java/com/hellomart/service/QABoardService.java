@@ -18,7 +18,6 @@ public interface QABoardService {
 	/* 게시글 뷰화면 메소드 */
 	QABoard viewQABoard(int idx);
 	
-	
 	/* 게시글의 전체 개수 불러오는 메소드 */
 	int getCount();
 	
