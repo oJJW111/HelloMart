@@ -7,10 +7,8 @@
 
 
 	<select id="listQABoard" parameterType="java.lang.Integer" resultType="QABoard">
-			select * from 
-			(select A.*, @Rownum from 
-			(select * from qaboard order by reref desc, relev Asc) A) temp
-			where @Rownum &gt; #{param1} and @Rownum &lt;= #{param2}
+	
+		select * from qaboard order by reref desc, relev asc limit #{param1} offset #{param2};
 			
 	</select>
 	  

@@ -31,7 +31,7 @@ public class QABoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		//화면에 보여질 게시글의갯수를 지정
-		int pageSize=10;
+		int pageSize=5;
 		
 		int count =0;//전체 글의 갯수
 		int number =0;//페이지 넘버링수(현재 화면에 보고있는 페이지 넘버 값)
@@ -44,6 +44,7 @@ public class QABoardController {
 		int currentPage  = Integer.parseInt(pageNum);
 		//게시글의 총 갯수 얻기
 		count = service.getCount();
+		System.out.println("currentPage" + currentPage);
 	
 		//현제 페이지에 보여줄 시작 번호를 설정 = 데이터 베이스에서 불러올 시작 번호를 의미
 		int startRow = (currentPage -1)*pageSize+1;
@@ -56,7 +57,7 @@ public class QABoardController {
 		//게시글이 존재한다면
 		if(count > 0 ){
 			//10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
-			list = service.listQABoard(startRow-1 , endRow);		
+			list = service.listQABoard(startRow, endRow);		
 			//테이블에 표시할 번호를 설정
 			number = count -(currentPage -1) * pageSize;
 			
