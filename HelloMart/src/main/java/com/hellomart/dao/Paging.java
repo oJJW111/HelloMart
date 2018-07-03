@@ -1,4 +1,4 @@
-package com.hellomart.service;
+package com.hellomart.dao;
 
 import java.util.Vector;
 

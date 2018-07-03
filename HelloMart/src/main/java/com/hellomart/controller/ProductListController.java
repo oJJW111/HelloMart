@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hellomart.service.ProductListService;
 
@@ -17,11 +18,10 @@ public class ProductListController {
 	ProductListService service;
 	
 	@RequestMapping("/main")
-	public String productMainList(String mainCategory, Model model, HttpServletRequest request){
-		model.addAttribute("request", request);
-		
-		service.getMainList(mainCategory, model);
-		
+	public String productMainList(Model model,
+			@RequestParam(value="main") String main,
+			@RequestParam(value="page", required=false) Integer page){
+		service.getMainList(main, page, model);
 		return "product/productList";
 	}
 	

@@ -66,7 +66,7 @@
 			</div>
 
 		</div>
-		<div align="center" id="page">
+		<div align="center">
 			<c:if test="${paging.nowBlock gt 0}">
 				<a href="qaboard?page=${paging.beginPage - 1}">[이전]</a>
 			</c:if>			

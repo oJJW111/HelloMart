@@ -19,9 +19,9 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <script type="text/javascript">
-function move(mainCategory, small){
+function move(main, small){
 	location.href = "/productList/small"
-			+ "?mainCategory=" + encodeURIComponent(mainCategory)
+			+ "?main=" + encodeURIComponent(main)
 			+ "&smallCategory=" + encodeURIComponent(small);
 }
 </script>
@@ -43,8 +43,8 @@ function move(mainCategory, small){
 			<h5>세부 분류</h5>
 			<ul>
 				<c:forEach var="small" items="${smallCategoryList}">
-					<li>
-						<a href="#" onclick="move('${mainCategory}', '${small}'); return false;">${small}</a>
+					<li onclick="move('${mainCategory}', '${small}'); return false;">
+						${small}
 					</li>
 				</c:forEach> 
 			</ul>
@@ -66,48 +66,6 @@ function move(mainCategory, small){
 					<c:if test="${!status.last}"><hr></c:if>
 				</c:forEach> 
 			</c:if>  
-			<%-- <%
-				if(request.getAttribute("smallCategoryColumn") != null){
-					// 각 검색 조건의 이름과, 그에 해당하는 값
-					HashMap<String,	String> smallCategoryColumn 
-									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
-					List<String> columnList = (List<String>) request.getAttribute("columnList");
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
-					List<String> columnListEng = (List<String>) request.getAttribute("columnListEng");
-					
-					for(int index=0; index<columnList.size(); index++){
-						String column = columnList.get(index);
-						String columnEng = columnListEng.get(index);
-			%>
-						<div> 
-							<%=column%> <br><br> 
-							<% 
-								String allValue = smallCategoryColumn.get(column).trim();
-								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
-						
-								while(tokenizer.hasMoreTokens()){ 
-									String value = tokenizer.nextToken();
-							%>
-									<label class="ck_container">
-										<input type="checkbox" name="<%=columnEng%>" value="<%=value%>">
-										<span class="checkmark"></span>
-										<%=value%>
-									</label>
-							<% 
-								} // while(tokenizer.hasMoreElements()) 종료
-							%> 
-						</div>
-			<% 
-						if(index+1 < columnList.size()){
-			%>
-							<hr>
-			<% 
-						}
-					} // for문 종료
-					// System.out.println("smallCategoryColumnCount : " + smallCategoryColumnCount);		
-				} // smallCategoryColumn의 null여부 if문 종료
-			%>  --%>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
@@ -126,30 +84,22 @@ function move(mainCategory, small){
 
 <!-- 상품리스트 -->
 <div class="product_list">
-	<c:if test="${productList == null}">
+	<c:if test="${paging.list eq null}">
 		<h4>해당되는 상품이 없습니다.</h4>
 	</c:if>
 	
-	<c:if test="${productList != null}">
-		<c:forEach items="${productList}" varStatus="product" 
-				step="1" begin="${beginPerPage}" end="${beginPerPage + numPerPage - 1}">
-			
-			<!-- 인덱스 값이 총 상품의 갯수와 같아지면 반복문 중지 -->
-			<c:if test="${product.index == totalRecord}">
-				<c:set var="isStop" value="stop" />
-			</c:if>
-			
-			<c:if test="${isStop != 'stop'}">
+	<c:if test="${paging.list ne null}">
+		<c:forEach var="board" items="${paging.list}">
 				<div class="product_list_content">
 					<div class="product_img">
-						<a href="/productView?no=${productList[product.index].no}">
-							<img src="${productList[product.index].imagePath}">
+						<a href="/productView?no=${board.no}">
+							<img src="${board.imagePath}">
 						</a>
 					</div>
 					<div class="product_info">
-						<a class="title" href="/productView?no=${productList[product.index].no}">${productList[product.index].productName}</a>
+						<a class="title" href="/productView?no=${board.no}">${board.productName}</a>
 						<div class="additional_info">
-							<span class="brand">${productList[product.index].mfCompany}</span>
+							<span class="brand">${board.mfCompany}</span>
 							<span class="category">
 								<a href="/productList/main?mainCategory=${mainCategory}">${mainCategory}</a> > 
 								<a href="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}">${smallCategory}</a>
@@ -158,18 +108,17 @@ function move(mainCategory, small){
 					</div>
 					<div class="product_addition">
 						<div class="price">
-							<strong>${productList[product.index].price} 원</strong>
+							<strong>${board.price} 원</strong>
 						</div>
 						<div class="additional_info">
-							<span class="satisfaction">만족도(신뢰도) : ${productList[product.index].score}</span>
-							<span class="buy">구  &nbsp;&nbsp;매 ${productList[product.index].orderCount}</span>  
-							<span class="review">상품평 ReviewService.getCount(${productList[product.index].no})</span>
+							<span class="satisfaction">만족도(신뢰도) : ${board.score}</span>
+							<span class="buy">구  &nbsp;&nbsp;매 ${board.orderCount}</span>  
+							<span class="review">상품평 ReviewService.getCount(${board.no})</span>
 						</div>
 						<button class="add_to_cart btn_yellow"></button>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">
-			</c:if>
 		</c:forEach>
 	</c:if>
 </div> <!-- 상품리스트 -->
@@ -179,42 +128,25 @@ function move(mainCategory, small){
 </div> <!-- article_wrap 끝 -->
 
 <c:if test="${smallCategory == null}">
-	<c:set var="link" value="/productList/main?mainCategory=${mainCategory}"/>
+	<c:set var="link" value="/productList/main?main=${main}"/>
 </c:if>
 <c:if test="${smallCategory != null}">
-	<c:set var="link" value="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}"/>
+	<c:set var="link" value="/productList/small?main=${main}&smallCategory=${smallCategory}"/>
 </c:if>
 
 <br>
-<div align="center" id="divPageNumber">
-	Go to Page &nbsp;&nbsp;
-	
-	<!-- 상품 리스트에 상품이 하나 이상 존재하고 -->	
-	<c:if test="${totalRecord > 0}">
-		<!-- 현재블럭이 첫 번째 위치가 아니라면, 이전 링크가 나오도록 -->	
-		<c:if test="${nowBlock > 0}">
-			<!--  이전 링크를 눌렀을 때, 이전 블럭 번호와, 이전 블럭 번호에 속한 시작페이지번호 넘겨줌-->
-			<a href="${link}&nowBlock=${nowBlock - 1}&nowPage=${(nowBlock - 1) * pagePerBlock}">
-			◀◀◀이전 ${pagePerBlock}개</a> &nbsp;&nbsp;
+<div align="center">
+		<c:if test="${paging.nowBlock gt 0}">
+			<a href="qaboard?page=${paging.beginPage - 1}">[이전]</a>
+		</c:if>			
+		<c:forEach 	var="i" 
+					begin="${paging.beginPage}"
+					end="${paging.endPage}">
+			<a href="qaboard?page=${i}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${paging.nowBlock lt paging.totalBlock}">
+			<a href="qaboard?page=${paging.endPage + 1}">[다음]</a>
 		</c:if>
-	</c:if>
-	
-	<!-- 페이지 번호 출력 -->
-	<c:forEach var="cnt" begin="1" end="${pagePerBlock}" step="1">		
-		<a href="${link}&nowBlock=${nowBlock}&nowPage=${(nowBlock * pagePerBlock + cnt - 1)}">
-		${nowBlock * pagePerBlock + cnt}</a> &nbsp;&nbsp;
-		
-		<!-- 마지막 페이지를 표시할 경우, 페이지를 더 이상 표시할 필요가 없으므로 반복문 종료 -->
-		<c:if test="${(nowBlock * pagePerBlock + cnt) == (totalPage-1)}">
-			<c:set var="cnt" value="${pagePerBlock}"/>
-		</c:if> 
-	</c:forEach>
-	
-	<!-- 다음으로 이동할 블럭이 있을 때, ▶▶▶ 다음 링크 나오게 하기  -->
-	<c:if test="${totalBlock > nowBlock + 1}">
-		<a href="${link}&nowBlock=${nowBlock + 1}&nowPage=${(nowBlock + 1) * pagePerBlock}">
-		▶▶▶다음 ${pagePerBlock}개</a>
-	</c:if>
 </div>
 <br>
 

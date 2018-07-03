@@ -1,7 +1,5 @@
 package com.hellomart.service.impl;
 
-import java.util.Vector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hellomart.dao.QABoardDAO;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
+import com.hellomart.util.PaginationResult;
 
 @Service
 public class QABoardServiceImpl implements QABoardService {
@@ -25,8 +24,8 @@ public class QABoardServiceImpl implements QABoardService {
 	}
 
 	@Override
-	public Vector<QABoard> list(int offset, int limit) {
-		return dao.listQABoard(offset, limit);
+	public PaginationResult<QABoard> list(int page) {
+		return new PaginationResult<>(dao, page, 5, 5);
 	}
 	
 	@Override

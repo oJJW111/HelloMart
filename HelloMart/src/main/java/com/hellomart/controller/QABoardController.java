@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.CmtBoard;
@@ -33,19 +34,15 @@ public class QABoardController {
 	private CmtBoardService service2;
 	
 	@RequestMapping("/qaboard")
-	public ModelAndView qaBoardList(@Param("page") Integer page) {
+	public ModelAndView qaBoardList(
+			@RequestParam(value="page", required=false) Integer page) {
 		ModelAndView mav = new ModelAndView();
 		
 		if(page == null){
 			page = 1;
 		}
 		
-		PaginationResult<QABoard> paging = 
-				new PaginationResult<>(
-							service, 
-							page, 
-							5,
-							5);
+		PaginationResult<QABoard> paging = service.list(page);
 		
 		mav.addObject("paging", paging);
 		mav.setViewName("qaboard/QABoardList");

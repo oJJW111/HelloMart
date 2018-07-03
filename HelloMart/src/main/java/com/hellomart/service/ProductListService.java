@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 public interface ProductListService {
 
 	// 상위 카테고리만 선택했을 때
-	public void getMainList(String mainCategory, Model model);
+	public void getMainList(String main, Integer page, Model model);
 
 	// 하위 카테고리를 선택했을 때
 	public void getSmallList(String mainCategory, String smallCategory, Model model);

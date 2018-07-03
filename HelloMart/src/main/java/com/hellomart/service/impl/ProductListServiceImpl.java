@@ -18,11 +18,13 @@ import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductListService;
 import com.hellomart.util.PageHandling;
+import com.hellomart.util.PaginationResult;
 import com.hellomart.util.XMLParser;
 
 @Service
 public class ProductListServiceImpl implements ProductListService{
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
 	@Autowired
@@ -36,15 +38,15 @@ public class ProductListServiceImpl implements ProductListService{
 	// 상위 카테고리를 눌렀을 때
 	// 해당 상위 카테고리의 하위 카테고리 목록과 상품 목록을 넘겨주는 메소드
 	@Override
-	public void getMainList(String mainCategory, Model model) {
+	public void getMainList(String main, Integer page, Model model) {
 		// 세부분류에 보여줄 선택한 상위 카테고리 밑의 카테고리들
-		List<String> smallCategoryList = xmlParser.getChildren(mainCategory);
+		List<String> smallCategoryList = xmlParser.getChildren(main);
 		
-		model.addAttribute("mainCategory", mainCategory);
+		page = page == null ? 1 : page;
+		
+		model.addAttribute("main", main);
 		model.addAttribute("smallCategoryList", smallCategoryList);
-		model.addAttribute("productList", dao.getMainList(mainCategory));
-		
-		pageSetting(dao.getMainList(mainCategory), model);
+		model.addAttribute("paging", new PaginationResult<ProductList>(dao, page, 10, 10));
 	}
 
 	// 하위 카테고리를 눌렀을 때

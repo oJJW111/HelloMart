@@ -4,11 +4,13 @@ import java.util.Vector;
 
 import com.hellomart.dto.QABoard;
 
-public interface QABoardDAO {
+public interface QABoardDAO extends Paging<QABoard> {
 
 	
 	/* 게시글을 가져오는 메소드 */
-	Vector<QABoard> listQABoard(int startRow, int pageSize);
+	Vector<QABoard> list(int offset, int limit);
+	
+	int getTotal();
 	
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaboard);

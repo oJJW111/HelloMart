@@ -2,7 +2,7 @@ package com.hellomart.util;
 
 import java.util.Vector;
 
-import com.hellomart.service.Paging;
+import com.hellomart.dao.Paging;
 
 public class PaginationResult<T> { 
 	
@@ -34,7 +34,7 @@ public class PaginationResult<T> {
 		// 전체 글 수와 beginIndex부터 endIndex까지의 인덱스에 해당하는 데이터를
 		// DB에서 가져와 멤버 변수 list에 저장한다.
 		this.totalRecord = paging.getTotal();
-		
+
 		// 총 페이지수를 구한다.
 		this.totalPage = (int) Math.ceil((double) totalRecord / maxResult);
 		
@@ -49,9 +49,9 @@ public class PaginationResult<T> {
 		
 		
 		int offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
-		
+
 		this.list = paging.list(offset, maxResult);
-		
+
 		if (this.list == null) {
 			currentPage = 0;
 		}

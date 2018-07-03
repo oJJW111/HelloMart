@@ -5,7 +5,6 @@
 
 <mapper namespace="com.hellomart.dao.CmtBoardDAO">
 
-	
 	<select id="cmtlist" resultType="CmtBoard">
 	
 		select * from cmtboard where cmtpar=#{cmtpar} order by 1 desc limit #{param1},#{param2}

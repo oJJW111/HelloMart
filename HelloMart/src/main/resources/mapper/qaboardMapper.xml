@@ -6,12 +6,13 @@
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
 	
-	<select id="listQABoard" resultType="QABoard">
-	
-		select * from qaboard order by 1 desc limit #{param1},#{param2}
-			
+	<select id="list" resultType="QABoard">
+		select * from qaboard order by 1 desc limit #{param1}, #{param2}
 	</select>
 
+	<select id="getTotal" resultType="java.lang.Integer">
+		select count(*) from qaboard
+	</select>
 	
 	<insert id="insertQABoard">
 		INSERT INTO

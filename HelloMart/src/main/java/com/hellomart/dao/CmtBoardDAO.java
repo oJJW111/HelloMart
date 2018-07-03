@@ -15,12 +15,10 @@ public interface CmtBoardDAO {
 	/* 코멘트를 삭제하는 메소드 */
 	void cmtdelete(int cmtidx);
 	
-	
 	/* 코멘트의 전체 개수 불러오는 메소드 */
 	int cmtCount(int idx);
 	
 	/* 코멘트를 수정 하는 메소드 */
 	void cmtmodify(CmtBoard cmtboard);
-
 
 }
