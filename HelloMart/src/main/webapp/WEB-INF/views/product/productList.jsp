@@ -46,17 +46,17 @@ function move(mainCategory, small){
 					<li>
 						<a href="#" onclick="move('${mainCategory}', '${small}'); return false;">${small}</a>
 					</li>
-				</c:forEach>
+				</c:forEach> 
 			</ul>
 		</div>
 		<div class="category_small">
 			<h5>상세검색</h5>
 			<c:if test="${smallCategoryColumn != null}">
- 				<c:forEach var="column" items="${columnList}" varStatus="status">
+				<c:forEach items="${columnList}" varStatus="status">
 					<div>
-						<c:out value="${column}"/><br><br>
-						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
-							<label class="ck_container">
+						<c:out value="${columnList[status.index]}"/> <br><br> 
+						<c:forTokens var="value" items="${smallCategoryColumn[columnList[status.index]]}" delims=",">
+							<label class="ck_container"> 
 								<input type="checkbox" name="${columnListEng[status.index]}" value="${value}">
 								<span class="checkmark"></span>
 								${value}
@@ -66,6 +66,48 @@ function move(mainCategory, small){
 					<c:if test="${!status.last}"><hr></c:if>
 				</c:forEach> 
 			</c:if>  
+			<%-- <%
+				if(request.getAttribute("smallCategoryColumn") != null){
+					// 각 검색 조건의 이름과, 그에 해당하는 값
+					HashMap<String,	String> smallCategoryColumn 
+									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
+					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
+					List<String> columnList = (List<String>) request.getAttribute("columnList");
+					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
+					List<String> columnListEng = (List<String>) request.getAttribute("columnListEng");
+					
+					for(int index=0; index<columnList.size(); index++){
+						String column = columnList.get(index);
+						String columnEng = columnListEng.get(index);
+			%>
+						<div> 
+							<%=column%> <br><br> 
+							<% 
+								String allValue = smallCategoryColumn.get(column).trim();
+								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
+						
+								while(tokenizer.hasMoreTokens()){ 
+									String value = tokenizer.nextToken();
+							%>
+									<label class="ck_container">
+										<input type="checkbox" name="<%=columnEng%>" value="<%=value%>">
+										<span class="checkmark"></span>
+										<%=value%>
+									</label>
+							<% 
+								} // while(tokenizer.hasMoreElements()) 종료
+							%> 
+						</div>
+			<% 
+						if(index+1 < columnList.size()){
+			%>
+							<hr>
+			<% 
+						}
+					} // for문 종료
+					// System.out.println("smallCategoryColumnCount : " + smallCategoryColumnCount);		
+				} // smallCategoryColumn의 null여부 if문 종료
+			%>  --%>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
@@ -119,9 +161,9 @@ function move(mainCategory, small){
 							<strong>${productList[product.index].price} 원</strong>
 						</div>
 						<div class="additional_info">
-							<span class="satisfaction">만족도 : ${productList[product.index].score}</span>
-							<span class="buy">구  &nbsp;&nbsp;매 : ${productList[product.index].orderCount}</span>  
-							<span class="review">상품평 : ${productList[product.index].no}</span>
+							<span class="satisfaction">만족도(신뢰도) : ${productList[product.index].score}</span>
+							<span class="buy">구  &nbsp;&nbsp;매 ${productList[product.index].orderCount}</span>  
+							<span class="review">상품평 ReviewService.getCount(${productList[product.index].no})</span>
 						</div>
 						<button class="add_to_cart btn_yellow"></button>
 					</div>

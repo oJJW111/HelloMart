@@ -1,5 +1,6 @@
 package com.hellomart.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.ui.Model;
@@ -15,5 +16,5 @@ public interface ProductListDAO {
 	public List<ProductList> getSmallList(String smallCategory);
 
 	// 상세조건을 입력하고 검색했을 때
-	public List<ProductList> getDetailList();	
+	public List<ProductList> getDetailList(HashMap<String, String> map);	
 }
