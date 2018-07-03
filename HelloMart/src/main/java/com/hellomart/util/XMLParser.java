@@ -9,8 +9,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -19,9 +19,6 @@ import java.io.InputStream;
 
 public class XMLParser {
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
-	final static int SEARCH_VALUE = 1000;
-	final static int SEARCH_NAME = 1001;
-	
 	
 	private Document doc;
 	
@@ -43,7 +40,7 @@ public class XMLParser {
 			doc = documentBuilder.parse(is); 
 		}
 		catch (ParserConfigurationException e){ 
-			logger.debug("ParseConfigurationException"); 
+			logger.debug(e.getMessage()); 
 		} 
 		catch (SAXException | IOException e) { 
 			logger.debug("XML File not found / " + xmlFilePath + " 파일 경로 확인"); 
@@ -54,75 +51,23 @@ public class XMLParser {
 	
 	public String getValue(String tagName) { 
 		NodeList descNodes = doc.getElementsByTagName(tagName); 
-		Node node = descNodes.item(0); 
-		return getTextContent(node, SEARCH_VALUE); 
-	} 
-	
-	public String getName(String tagName) { 
-		NodeList descNodes = doc.getElementsByTagName(tagName); 
-		Node node = descNodes.item(0); 
-		return getTextContent(node, SEARCH_NAME); 
-	} 
-	
-	public static String getTextContent(Node node, int whatSearch) throws DOMException {
-		String textContent = "";
-		//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent1 : " + textContent.trim());
-		
-		if (node.getNodeType() == Node.ATTRIBUTE_NODE){
-			textContent = node.getNodeValue(); 
-			//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent2 : " + textContent.trim());
-		}
-		else{
-			Node child = node.getFirstChild();
-			
-			if (child != null){
-				Node sibling = child.getNextSibling();
-				
-				if (sibling != null){
-					StringBuffer sb = new StringBuffer();
-					getTextContent(node, sb, whatSearch);
-					textContent = sb.toString();
-					//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent3 : " + textContent.trim());
-				}
-				else{ 
-					if (child.getNodeType() == Node.TEXT_NODE) {
-						textContent = child.getNodeValue();
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent4 : " + textContent.trim());
-					}
-					else{
-						textContent = getTextContent(child, whatSearch);
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent5 : " + textContent.trim());
-					}
-				}
-			}
-		}
-		return textContent;
+		Node node = descNodes.item(0);
+		return node.getTextContent();
 	}
-
-	private static void getTextContent(Node node, StringBuffer sb, int whatSearch) throws DOMException {
-		Node child = node.getFirstChild();
-		while (child != null) {
-			if (child.getNodeType() == Node.TEXT_NODE) {
-				if(whatSearch == SEARCH_NAME){
-					if(node.getNodeName() == "name"){
-						sb.append(child.getNodeValue());
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent6 : " + sb.toString().trim());
-					}
-				}
-				else if(whatSearch == SEARCH_VALUE){
-					if(node.getNodeName() != "name"){
-						sb.append(child.getNodeValue());		
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent7 : " + sb.toString().trim());				
-					}
-				}
+	
+	public String getAttributeValue(String tagName, String attr) {
+		NodeList descNodes = doc.getElementsByTagName(tagName);
+		Node node = descNodes.item(0);
+		NamedNodeMap nnm = node.getAttributes();
+		if(nnm != null) {
+			Node p = nnm.getNamedItem(attr);
+			if(p != null) {
+				return p.getTextContent();
 			}
-			else {
-				getTextContent(child, sb, whatSearch);
-			}
-			child = child.getNextSibling();
 		}
+		return null;
 	}
-
+	
 	public Vector<String> getChildren(String tagName) throws Exception {
 		NodeList descNodes = doc.getElementsByTagName(tagName);
 

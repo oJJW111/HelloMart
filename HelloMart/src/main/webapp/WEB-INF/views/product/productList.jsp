@@ -67,48 +67,6 @@ function move(mainCategory, small){
 					<c:if test="${!status.last}"><hr></c:if>
 				</c:forEach> 
 			</c:if>  
-			<%-- <%
-				if(request.getAttribute("smallCategoryColumn") != null){
-					// 각 검색 조건의 이름과, 그에 해당하는 값
-					HashMap<String,	String> smallCategoryColumn 
-									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
-					List<String> columnList = (List<String>) request.getAttribute("columnList");
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
-					List<String> columnListEng = (List<String>) request.getAttribute("columnListEng");
-					
-					for(int index=0; index<columnList.size(); index++){
-						String column = columnList.get(index);
-						String columnEng = columnListEng.get(index);
-			%>
-						<div> 
-							<%=column%> <br><br> 
-							<% 
-								String allValue = smallCategoryColumn.get(column).trim();
-								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
-						
-								while(tokenizer.hasMoreTokens()){ 
-									String value = tokenizer.nextToken();
-							%>
-									<label class="ck_container">
-										<input type="checkbox" name="<%=columnEng%>" value="<%=value%>">
-										<span class="checkmark"></span>
-										<%=value%>
-									</label>
-							<% 
-								} // while(tokenizer.hasMoreElements()) 종료
-							%> 
-						</div>
-			<% 
-						if(index+1 < columnList.size()){
-			%>
-							<hr>
-			<% 
-						}
-					} // for문 종료
-					// System.out.println("smallCategoryColumnCount : " + smallCategoryColumnCount);		
-				} // smallCategoryColumn의 null여부 if문 종료
-			%>  --%>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">

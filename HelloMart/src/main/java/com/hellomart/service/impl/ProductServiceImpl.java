@@ -3,9 +3,6 @@ package com.hellomart.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,6 @@ import com.hellomart.dao.ProductDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductService;
 import com.hellomart.util.XMLParser;
-import com.mysql.cj.jdbc.PreparedStatement;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -29,19 +25,18 @@ public class ProductServiceImpl implements ProductService{
 		
 		model.addAttribute("product", dto); 
 		
-		String smallCategoryEng 
-			= ProductListServiceImpl.smallCategoryNameKorToEng.get(dto.getSmallCategory());
+		XMLParser xmlParser = new XMLParser("category.xml");
+		
+		String smallCategoryEng = xmlParser.getAttributeValue(dto.getSmallCategory(), "table"); 
 		
 		List<String> columnList = new ArrayList<>();
 		List<String> columnListEng = new ArrayList<>();
 		
-		XMLParser xmlParser = new XMLParser("category.xml");
-
 		try {
 			columnList = xmlParser.getChildren(dto.getSmallCategory());
    
 			for (String column : columnList) {
-				columnListEng.add(xmlParser.getName(column));
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
