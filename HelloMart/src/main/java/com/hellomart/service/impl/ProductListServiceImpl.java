@@ -52,8 +52,6 @@ public class ProductListServiceImpl implements ProductListService{
 	// 선택한 하위 카테고리에 해당하는 상품 목록을 넘겨주는 메소드 
 	@Override
 	public void getSmallList(String mainCategory, String smallCategory, Model model) {
-		getMainList(mainCategory, model);
-		
 		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(페이지에 보여줄 한글)
 		List<String> columnList = new ArrayList<>();
 		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(DB쿼리에 이용할 영어)
@@ -75,7 +73,7 @@ public class ProductListServiceImpl implements ProductListService{
 			System.out.println("ProductListServiceImpl클래스 getSmallList메소드 에러.");
 			e.printStackTrace();
 		}
-
+		
 		model.addAttribute("smallCategory", smallCategory);
 		model.addAttribute("smallCategoryColumn", smallCategoryColumn); 
 		model.addAttribute("columnList", columnList);
