@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -51,7 +52,12 @@
 			<td>${product.weight}</td>
 		</tr>
 		<tr>	
-			<td colspan="2">냉장용량~ 냉동용량~</td>
+			<td colspan="2">
+				<c:forEach items="${columnList}" varStatus="status">
+<!-- 상세정보 이름 -->	${columnList[status.index]} &nbsp;
+<!-- 상세정보 값 -->	${smallCategoryColumn[columnList[status.index]]} /	
+				</c:forEach> 
+			</td>
 		</tr>
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${product.comment}</td>
@@ -59,17 +65,16 @@
 	</table>                       
 </div>
 
-<div>
-수량 &nbsp;&nbsp;
-<select name="count">
-	<option value="1">1개</option>
-	<option value="2">2개</option>
-	<option value="3">3개</option>
-	<option value="4">4개</option>
-	<option value="5">5개</option>
-</select>
-&nbsp;&nbsp;
-<input type="button" value="구매" onclick="">
+<div align="center"> 
+	수량 &nbsp;&nbsp;
+	<select name="count">
+		<option value="1">1개</option>
+		<option value="2">2개</option>
+		<option value="3">3개</option>	
+		<option value="4">4개</option>
+		<option value="5">5개</option>
+	</select>
+	&nbsp;&nbsp;<input type="button" value="구매" onclick="">
 </div>
 
 <div>

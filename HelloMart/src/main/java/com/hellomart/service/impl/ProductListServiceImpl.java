@@ -117,13 +117,28 @@ public class ProductListServiceImpl implements ProductListService{
 		getSmallList(request.getParameter("mainCategory"), 
 						request.getParameter("smallCategory"), model);
 		
-		createSQL(request); 
-		model.addAttribute("productList", "dao.getDetailList()");
+		String sql = createSQL(request); 
+		HashMap<String, String> sqlMap = new HashMap<>();
+		sqlMap.put("sql", sql);
+		model.addAttribute("productList", dao.getDetailList(sqlMap));
 
-		pageSetting(dao.getDetailList(), model);
+		pageSetting(dao.getDetailList(sqlMap), model);
 	}
 	
-	public void createSQL(HttpServletRequest request){
+	public String findNumber(String str){
+		String number = "";
+		
+		for(int i=0; i<str.length(); i++){
+			// 아스키코드, 0 -> 48, 9 -> 57
+			if( ((48 <= str.charAt(i)) && (str.charAt(i) <= 57)) || (str.charAt(i) == '.') ){
+				number += str.charAt(i); 
+			}
+		}
+		
+		return number;
+	}
+	
+	public String createSQL(HttpServletRequest request){
 		String smallCategory = request.getParameter("smallCategory");
 		String smallCategoryEng = smallCategoryNameKorToEng.get(smallCategory);
 		
@@ -147,48 +162,62 @@ public class ProductListServiceImpl implements ProductListService{
 		String sql = "select * from productlist natural join " + smallCategoryEng 
 				+ " where productlist.smallCategory = '" + smallCategory + "'";
 		System.out.println("sql 문장 : " + sql);
+		
+		// 상품 이름으로 검색
+		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
+			sql += " and productname = " + request.getParameter("search");
+		}
+		// 최저 가격 검색
+		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
+			sql += " and price >= " + request.getParameter("price_range1");
+		}
+		// 최고 가격 검색
+		if(request.getParameter("price_range2") != null && !request.getParameter("price_range2").equals("")){
+			sql += " and price <= " + request.getParameter("price_range2");
+		}
 			
 		// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
 		boolean isFirstAdd = true;
 			
 		for (int i = 0; i < columnListEng.size(); i++) {
-			String value[] = request.getParameterValues(columnListEng.get(i));
-			
-			for (int j = 0; j < value.length; j++) {
-				StringTokenizer tokenizer = new StringTokenizer(value[j], "~");
-				String firstValue = null;
-				String secondValue = null;
+			if (request.getParameterValues(columnListEng.get(i)) != null) {
+				String[] value = request.getParameterValues(columnListEng.get(i));
 
-				firstValue = tokenizer.nextToken();
-				while(tokenizer.hasMoreTokens()){ 
-					secondValue = tokenizer.nextToken();
-				}
-						
-				if(secondValue == null){ // 범위 조건이 아닐경우, 해당 값으로 검색
-					if(isFirstAdd){
-						sql += " and " + columnListEng.get(i) + " = '" + value + "'";	
-						isFirstAdd = false;
+				for (int j = 0; j < value.length; j++) {
+					StringTokenizer tokenizer = new StringTokenizer(value[j], "~");
+					String firstValue = null;
+					String secondValue = null;
+
+					firstValue = findNumber(tokenizer.nextToken());
+					while (tokenizer.hasMoreTokens()) {
+						secondValue = findNumber(tokenizer.nextToken());
 					}
-					else{
-						sql += " or " + columnListEng.get(i) + " = '" + value + "'";	
+
+					if (secondValue == null) { // 범위 조건이 아닐경우, 해당 값으로 검색
+						if (isFirstAdd) {
+							sql += " and " + columnListEng.get(i) + " = '" + value + "'";
+							isFirstAdd = false;
+						} else {
+							sql += " or " + columnListEng.get(i) + " = '" + value + "'";
+						}
+						System.out.println("sql 문장 : " + sql);
+					} else { // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
+						if (isFirstAdd) {
+							sql += " and (" + columnListEng.get(i) + " >= " + firstValue + " and "
+									+ columnListEng.get(i) + " <= " + secondValue + ")";
+							isFirstAdd = false;
+						} else {
+							sql += " or (" + columnListEng.get(i) + " >= " + firstValue + " and " + columnListEng.get(i)
+									+ " <= " + secondValue + ")";
+						}
+						System.out.println("sql 문장 : " + sql);
 					}
-					System.out.println("sql 문장 : " + sql);							
-				}
-				else{  // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
-					if(isFirstAdd){
-						sql += " and (" + columnListEng.get(i) + " >= " + firstValue + " and "
-										+ columnListEng.get(i) + " <= " + secondValue + ")" ;	
-						isFirstAdd = false;
-					}
-					else{
-						sql += " or ("  + columnListEng.get(i) + " >= " + firstValue + " and "
-										+ columnListEng.get(i) + " <= " + secondValue + ")" ;	
-					}							
-					System.out.println("sql 문장 : " + sql);								
 				}
 			}
 		}
-	}
+		
+		return sql;
+	} // createSql 메소드 끝
 	
 	public void pageSetting(List<ProductList> list, Model model){
 		int numPerPage = 10;
