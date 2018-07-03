@@ -101,6 +101,8 @@ public class SellerServiceImpl implements SellerService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("mainCategory", mainCategory);
+		model.addAttribute("smallCategory", smallCategory);
 		model.addAttribute("specMapList", productPartSpecMap);
 		model.addAttribute("specEngNameList", productPartSpecEngName);
 	}

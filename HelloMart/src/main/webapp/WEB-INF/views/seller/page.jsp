@@ -40,7 +40,6 @@ $(document).ready(function() {
 	
 	$("#mainCategoryInput").on('change',function(){
 
-        alert($(this).val());
         var mainCategoryInputItem = $(this).val();
         /* alert($(this).children("option:selected").text()); */
         var changeItem;
