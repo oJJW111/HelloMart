@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <카테고리>
 	<가전제품>
-		<냉장고>
+		<냉장고 db="Refrigerator">
 			<냉장용량>
 				<name>ColdStorageCapacity</name>
 				951L~1000L, 901L~950L, 851L~900L, 801L~850L, 701L~800L,
@@ -26,7 +26,7 @@
 			</에너지효율>
 		</냉장고>
 		
-		<오븐_전자레인지>
+		<오븐_전자레인지 db="Microwave">
 			<용량>
 				<name>capacity</name>
 				25L, 24L, 23L, 22L, 21L, 20L
@@ -45,7 +45,7 @@
 			</출력>
 		</오븐_전자레인지>
 
-		<청소기>
+		<청소기 db="Cleaner">
 			<유무선여부>
 				<name>wireless</name>
 				유선, 무선
@@ -56,7 +56,7 @@
 			</충전시간>
 		</청소기>
 
-		<에어컨>
+		<에어컨 db="AirConditioner">
 			<사용면적>
 				<name>squaremeasure</name>
 				22.8m², 32.5m², 48.8m², 52.8m², 65.9m², 75.5m²
@@ -83,7 +83,7 @@
 			</타입>
 		</에어컨>
 
-		<세탁기>
+		<세탁기 db="Washer">
 			<세탁용량>
 				<name>washingcapacity</name>
 				14kg,15kg,16kg,17kg,19kg
@@ -98,7 +98,7 @@
 			</세탁방식>
 		</세탁기>
 		
-		<공기청정기>
+		<공기청정기 db="AirPurifier">
 			<공기청정방식>
 				<name>method</name>
 				필터식청정, 복합식청정, 음이온식청정 ,산림욕식청정
@@ -119,7 +119,7 @@
 	</가전제품>
 	
 	<IT>
-		<노트북>
+		<노트북 db="Notebook">
 			<CPU브랜드>
 				<name>cpumfcompany</name>
 				Intel, AMD
@@ -153,7 +153,7 @@
     		</해상도>
 		</노트북>
 		
-		<데스크탑>
+		<데스크탑 db="Desktop">
 			<데스크탑형태>
 				<name>shape</name>
 				AllInOne, WorkStation, BareBones
@@ -192,7 +192,7 @@
        		</해상도>		
 		</데스크탑>
 
-		<모니터>
+		<모니터 db="Monitor">
 			<화면크기>
 				<name>screensize</name>
 				0~40.0, 40.1~60.0, 60.1~80.0, 80.1~100.0, 100.1~120.0,
@@ -213,7 +213,7 @@
 			</해상도>
 		</모니터>
 
-		<프린터>
+		<프린터 db="Printer">
 			<인쇄방식>
 				<name>method</name>
 				잉크젯, 레이저
@@ -246,7 +246,7 @@
 	</IT>
 
 	<모바일>
-		<스마트폰>
+		<스마트폰 db="Smartphone">
 			<모델>
 				<name>model</name>
     			갤럭시S, 갤럭시노트 , 갤럭시A/J, 아이폰, LG 시리즈 
@@ -271,8 +271,8 @@
 			</화면크기>
 		</스마트폰>
 
-		<태블릿>
-			<모델>
+		<태블릿 db="Tablet">
+			<모델> 
 				<name>model</name>
 				APPLE, 삼성전자, 레노버, LG전자,  Microsoft
 			</모델>

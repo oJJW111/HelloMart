@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductListService;
-import com.hellomart.util.PagenationResult;
 import com.hellomart.util.XMLParser;
 
 @Service
@@ -234,9 +233,9 @@ public class ProductListServiceImpl implements ProductListService{
 						Integer.parseInt(request.getParameter("nowBlock")) : 0;
 								
 				
-		PagenationResult pageHandling =
-				new PagenationResult(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
-		
-		pageHandling.setPageValue(model);
+//		PagenationResult pageHandling =
+//				new PagenationResult(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
+//		
+//		pageHandling.setPageValue(model);
 	}
 }

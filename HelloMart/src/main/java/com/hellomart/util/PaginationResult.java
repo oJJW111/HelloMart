@@ -1,13 +1,15 @@
 package com.hellomart.util;
 
-import java.util.List;
+import java.util.Vector;
+
+import com.hellomart.service.Paging;
 
 public class PaginationResult<T> { 
 	
 	private int currentPage;					// 현재 페이지
 	private int totalRecord;					// 전체 글 수
 	private int totalPage;						// 전체 페이지수
-	private List<T> boardList;					// 글 데이터를 저장할 변수
+	private Vector<T> list;				// 글 데이터를 저장할 변수
 	
 	private int nowBlock;						// 현재 페이지 블럭
 	private int totalBlock;						// 총 페이지 블럭
@@ -21,17 +23,17 @@ public class PaginationResult<T> {
 	 * <p>화면에 출력할 글 목록 리스트를 DB에서 가져와서 멤버 변수에 저장하고,
 	 * 글 페이지 목록에 출력할 글 페이지 시작 번호와 끝 번호를 구하여 멤버 변수에 저장한다.
 	 * 
-	 * @param dao			DB관련 처리를 할 DAOIMPL 객체
+	 * @param paging		DB관련 처리 할 객체
 	 * @param page			선택된 페이지
 	 * @param maxResult		한 페이지에 출력할 최대 글 개수
 	 * @param pagePerBlock	하단 페이지 목록에 출력할 최대 페이지 수
 	 */
-	public PaginationResult(BoardDao<T> dao, int page,
+	public PaginationResult(Paging<T> paging, int page,
 			int maxResult, int pagePerBlock) {
 		
 		// 전체 글 수와 beginIndex부터 endIndex까지의 인덱스에 해당하는 데이터를
 		// DB에서 가져와 멤버 변수 list에 저장한다.
-		this.totalRecord = dao.getCountRows();
+		this.totalRecord = paging.getTotal();
 		
 		// 총 페이지수를 구한다.
 		this.totalPage = (int) Math.ceil((double) totalRecord / maxResult);
@@ -48,21 +50,17 @@ public class PaginationResult<T> {
 		
 		int offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
 		
+		this.list = paging.list(offset, maxResult);
 		
-		try {
-			this.boardList = (List<T>) dao.getBoardList(offset, maxResult);
-		} catch (NoQueryDataException e) {
-			// 글 목록에 글이 하나도 없더라도 상관없이 진행한다.
+		if (this.list == null) {
 			currentPage = 0;
-			this.boardList = null;
 		}
-		
 		
 		// 현재 페이지 블럭을 구한다.
 		this.nowBlock = pageIndex / pagePerBlock;
+		
 		// 총 페이지 블럭을 구한다.
 		this.totalBlock = (totalPage - 1) / pagePerBlock;
-		
 		
 		// 화면에 출력할 시작 페이지와 끝 페이지를 구한다.
 		this.beginPage = nowBlock * pagePerBlock + 1;
@@ -76,10 +74,7 @@ public class PaginationResult<T> {
 		
 	}
 
-
 	
-	
-
 	public int getCurrentPage() {
 		return currentPage;
 	}
@@ -95,8 +90,8 @@ public class PaginationResult<T> {
 	}
 
 	
-	public List<T> getBoardList() {
-		return boardList;
+	public Vector<T> getlist() {
+		return list;
 	}
 
 

@@ -43,7 +43,7 @@ public class XMLParser {
 			doc = documentBuilder.parse(is); 
 		}
 		catch (ParserConfigurationException e){ 
-			logger.debug("ParseConfigurationException"); 
+			logger.debug(e.getMessage()); 
 		} 
 		catch (SAXException | IOException e) { 
 			logger.debug("XML File not found / " + xmlFilePath + " 파일 경로 확인"); 
@@ -66,11 +66,9 @@ public class XMLParser {
 	
 	public static String getTextContent(Node node, int whatSearch) throws DOMException {
 		String textContent = "";
-		//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent1 : " + textContent.trim());
 		
 		if (node.getNodeType() == Node.ATTRIBUTE_NODE){
 			textContent = node.getNodeValue(); 
-			//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent2 : " + textContent.trim());
 		}
 		else{
 			Node child = node.getFirstChild();
@@ -82,16 +80,13 @@ public class XMLParser {
 					StringBuffer sb = new StringBuffer();
 					getTextContent(node, sb, whatSearch);
 					textContent = sb.toString();
-					//System.out.println("노드 이름 : " + node.getNodeName() + " / textContent3 : " + textContent.trim());
 				}
 				else{ 
 					if (child.getNodeType() == Node.TEXT_NODE) {
 						textContent = child.getNodeValue();
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent4 : " + textContent.trim());
 					}
 					else{
 						textContent = getTextContent(child, whatSearch);
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent5 : " + textContent.trim());
 					}
 				}
 			}
@@ -103,16 +98,14 @@ public class XMLParser {
 		Node child = node.getFirstChild();
 		while (child != null) {
 			if (child.getNodeType() == Node.TEXT_NODE) {
-				if(whatSearch == SEARCH_NAME){
-					if(node.getNodeName() == "name"){
+				if(whatSearch == SEARCH_NAME) {
+					if(node.getNodeName() == "name") {
 						sb.append(child.getNodeValue());
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent6 : " + sb.toString().trim());
 					}
 				}
-				else if(whatSearch == SEARCH_VALUE){
-					if(node.getNodeName() != "name"){
+				else if(whatSearch == SEARCH_VALUE) {
+					if(node.getNodeName() != "name") {
 						sb.append(child.getNodeValue());		
-						//System.out.println("노드 이름 : " + child.getNodeName() + " / textContent7 : " + sb.toString().trim());				
 					}
 				}
 			}

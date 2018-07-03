@@ -5,22 +5,21 @@
 
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
-
-	<select id="listQABoard" parameterType="java.lang.Integer" resultType="QABoard">
 	
-		select * from qaboard order by reref desc, relev asc limit #{param1} offset #{param2};
+	<select id="listQABoard" resultType="QABoard">
+	
+		select * from qaboard order by 1 desc limit #{param1},#{param2}
 			
 	</select>
-	  
+
 	
 	<insert id="insertQABoard">
 		INSERT INTO
 		
-		QABoard (subject, content, id, reRef,
-		reLev, reSeq, count)
+		QABoard (subject, content, id,  count)
 		
-		VALUES (#{subject}, #{content}, #{id}, 1,
-		1, 1, #{count});
+		VALUES (#{subject}, #{content}, #{id}, 0);
+		
 	</insert>
 	
 	<update id="viewCount">
@@ -47,28 +46,10 @@
 		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
 	
+	
 	<select id="getCount" resultType="int">
 		SELECT count(*) FROM QABoard
 	</select>
 	
-	
-	<!-- 답변글로 인하여 기존에 답변글들의 레벨을 1씩 증가하는 쿼리 -->
-	<update id="reReLv">
-			
-		 UPDATE QABoard SET relev=relev+1 WHERE reref=#{reref} AND relev > #{relev}
-		 
-	</update>
-	
-	<!-- 답글 추가 -->
-	<insert id="reWrite">
-		INSERT INTO 
-		
-		QABoard (subject, content, id, reref,
-		relev, reseq, count)
-		
-		VALUES (#{subject}, #{content}, #{id}, #{reref},
-		#{relev}+1, #{reseq}+1, #{count});
-	
-	</insert>
 	
 </mapper>
