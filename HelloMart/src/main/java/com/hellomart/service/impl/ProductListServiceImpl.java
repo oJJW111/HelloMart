@@ -15,30 +15,16 @@ import org.springframework.ui.Model;
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductListService;
+import com.hellomart.util.PageHandling;
 import com.hellomart.util.XMLParser;
 
 @Service
 public class ProductListServiceImpl implements ProductListService{
-	static HashMap<String, String> smallCategoryNameKorToEng;
 	
 	@Autowired
 	ProductListDAO dao;
 	
 	public ProductListServiceImpl() {
-		smallCategoryNameKorToEng = new HashMap<String, String>();
-		// category.xml의 태그 -> DB table명
-		smallCategoryNameKorToEng.put("냉장고", "Refrigerator");
-		smallCategoryNameKorToEng.put("오븐_전자레인지", "Microwave");
-		smallCategoryNameKorToEng.put("청소기", "Cleaner");
-		smallCategoryNameKorToEng.put("에어컨", "AirConditioner");
-		smallCategoryNameKorToEng.put("세탁기", "Washer");
-		smallCategoryNameKorToEng.put("공기청정기", "AirPurifier");
-		smallCategoryNameKorToEng.put("노트북", "Notebook");
-		smallCategoryNameKorToEng.put("데스크탑", "Desktop");
-		smallCategoryNameKorToEng.put("모니터", "Monitor");
-		smallCategoryNameKorToEng.put("프린터", "Printer");
-		smallCategoryNameKorToEng.put("스마트폰", "Smartphone");
-		smallCategoryNameKorToEng.put("태블릿", "Tablet");
 	}
 
 	// 상위 카테고리를 눌렀을 때
@@ -160,21 +146,14 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		String sql = "select * from productlist natural join " + smallCategoryEng 
 				+ " where productlist.smallCategory = '" + smallCategory + "'";
+		
 		System.out.println("sql 문장 : " + sql);
 		
 		// 상품 이름으로 검색
 		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
 			sql += " and productname = " + request.getParameter("search");
 		}
-		// 최저 가격 검색
-		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
-			sql += " and price >= " + request.getParameter("price_range1");
-		}
-		// 최고 가격 검색
-		if(request.getParameter("price_range2") != null && !request.getParameter("price_range2").equals("")){
-			sql += " and price <= " + request.getParameter("price_range2");
-		}
-			
+		
 		// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
 		boolean isFirstAdd = true;
 			
@@ -233,9 +212,9 @@ public class ProductListServiceImpl implements ProductListService{
 						Integer.parseInt(request.getParameter("nowBlock")) : 0;
 								
 				
-//		PagenationResult pageHandling =
-//				new PagenationResult(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
-//		
-//		pageHandling.setPageValue(model);
+		PageHandling pageHandling =
+				new PageHandling(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
+		
+		pageHandling.setPageValue(model);
 	}
 }

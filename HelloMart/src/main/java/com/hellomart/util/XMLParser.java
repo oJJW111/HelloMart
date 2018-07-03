@@ -9,8 +9,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -19,9 +19,6 @@ import java.io.InputStream;
 
 public class XMLParser {
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
-	final static int SEARCH_VALUE = 1000;
-	final static int SEARCH_NAME = 1001;
-	
 	
 	private Document doc;
 	
@@ -52,70 +49,25 @@ public class XMLParser {
 		return doc;
 	}
 	
+	private Node getFirstNode(String tagName) {
+		return doc.getElementsByTagName(tagName).item(0);
+	}
+	
 	public String getValue(String tagName) { 
-		NodeList descNodes = doc.getElementsByTagName(tagName); 
-		Node node = descNodes.item(0); 
-		return getTextContent(node, SEARCH_VALUE); 
-	} 
-	
-	public String getName(String tagName) { 
-		NodeList descNodes = doc.getElementsByTagName(tagName); 
-		Node node = descNodes.item(0); 
-		return getTextContent(node, SEARCH_NAME); 
-	} 
-	
-	public static String getTextContent(Node node, int whatSearch) throws DOMException {
-		String textContent = "";
-		
-		if (node.getNodeType() == Node.ATTRIBUTE_NODE){
-			textContent = node.getNodeValue(); 
-		}
-		else{
-			Node child = node.getFirstChild();
-			
-			if (child != null){
-				Node sibling = child.getNextSibling();
-				
-				if (sibling != null){
-					StringBuffer sb = new StringBuffer();
-					getTextContent(node, sb, whatSearch);
-					textContent = sb.toString();
-				}
-				else{ 
-					if (child.getNodeType() == Node.TEXT_NODE) {
-						textContent = child.getNodeValue();
-					}
-					else{
-						textContent = getTextContent(child, whatSearch);
-					}
-				}
-			}
-		}
-		return textContent;
+		return getFirstNode(tagName).getTextContent();
 	}
-
-	private static void getTextContent(Node node, StringBuffer sb, int whatSearch) throws DOMException {
-		Node child = node.getFirstChild();
-		while (child != null) {
-			if (child.getNodeType() == Node.TEXT_NODE) {
-				if(whatSearch == SEARCH_NAME) {
-					if(node.getNodeName() == "name") {
-						sb.append(child.getNodeValue());
-					}
-				}
-				else if(whatSearch == SEARCH_VALUE) {
-					if(node.getNodeName() != "name") {
-						sb.append(child.getNodeValue());		
-					}
-				}
+	
+	public String getAttributeValue(String tagName, String attr) {
+		NamedNodeMap nnm = getFirstNode(tagName).getAttributes();
+		if(nnm != null) {
+			Node p = nnm.getNamedItem(attr);
+			if(p != null) {
+				return p.getTextContent();
 			}
-			else {
-				getTextContent(child, sb, whatSearch);
-			}
-			child = child.getNextSibling();
 		}
+		return null;
 	}
-
+	
 	public Vector<String> getChildren(String tagName) throws Exception {
 		NodeList descNodes = doc.getElementsByTagName(tagName);
 
