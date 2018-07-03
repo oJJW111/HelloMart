@@ -18,14 +18,19 @@ import org.xml.sax.SAXException;
 import java.io.InputStream;
 
 public class XMLParser {
+	
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
 	private Document doc;
+	
+	
 	
 	public XMLParser(String xmlFilePath){
 		doc = parseXML(xmlFilePath);
 	}
 
+	
+	
 	private Document parseXML(String xmlFilePath) {
 		DocumentBuilderFactory documentBuilderFactory = null;
 		DocumentBuilder documentBuilder = null;
@@ -49,13 +54,13 @@ public class XMLParser {
 		return doc;
 	}
 	
-	private Node getFirstNode(String tagName) {
-		return doc.getElementsByTagName(tagName).item(0);
-	}
+	
 	
 	public String getValue(String tagName) { 
 		return getFirstNode(tagName).getTextContent();
 	}
+	
+	
 	
 	public String getAttributeValue(String tagName, String attr) {
 		NamedNodeMap nnm = getFirstNode(tagName).getAttributes();
@@ -68,10 +73,12 @@ public class XMLParser {
 		return null;
 	}
 	
-	public Vector<String> getChildren(String tagName) throws Exception {
-		NodeList descNodes = doc.getElementsByTagName(tagName);
+	
+	
+	public Vector<String> getChildren(String tagName) {
+		NodeList descNodes = getNodeList(tagName);
 
-		Vector<String> children = new Vector<String>();
+		Vector<String> children = new Vector<>();
 
 		for (int i = 0; i < descNodes.getLength(); i++) {
 			for (Node node = descNodes.item(i).getFirstChild(); node != null; node = node.getNextSibling()) {
@@ -83,4 +90,17 @@ public class XMLParser {
 
 		return children;
 	}
+	
+	
+	
+	private NodeList getNodeList(String tagName) {
+		return doc.getElementsByTagName(tagName);
+	}
+	
+	
+	
+	private Node getFirstNode(String tagName) {
+		return getNodeList(tagName).item(0);
+	}
+	
 }

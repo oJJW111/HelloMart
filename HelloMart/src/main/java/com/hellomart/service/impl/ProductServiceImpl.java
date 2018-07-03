@@ -19,6 +19,8 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
 	ProductDAO dao;
 	
+	private XMLParser xmlParser = new XMLParser("category.xml");
+	
 	@Override
 	public void getProductInfo(String no, Model model) {
 		ProductList dto = dao.getProductInfo(no);
@@ -26,18 +28,16 @@ public class ProductServiceImpl implements ProductService{
 		model.addAttribute("product", dto); 
 		
 		String smallCategoryEng 
-			= ProductListServiceImpl.smallCategoryNameKorToEng.get(dto.getSmallCategory());
+			= xmlParser.getAttributeValue(dto.getSmallCategory(), "table");
 		
 		List<String> columnList = new ArrayList<>();
 		List<String> columnListEng = new ArrayList<>();
 		
-		XMLParser xmlParser = new XMLParser("category.xml");
-
 		try {
 			columnList = xmlParser.getChildren(dto.getSmallCategory());
    
 			for (String column : columnList) {
-				columnListEng.add(xmlParser.getName(column));
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

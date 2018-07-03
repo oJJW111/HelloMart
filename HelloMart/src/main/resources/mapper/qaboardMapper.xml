@@ -34,11 +34,9 @@
 	
 	<!-- 글 수정 쿼리 -->
 	<update id="modify">
-		
 		UPDATE QABoard SET 
 		subject=#{subject}, content=#{content}, modate=sysdate() 
 		WHERE idx=#{idx}
-		
 	</update>
 	
 	<!-- 글 삭제 쿼리 -->

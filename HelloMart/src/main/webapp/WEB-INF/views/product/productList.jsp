@@ -52,10 +52,10 @@ function move(mainCategory, small){
 		<div class="category_small">
 			<h5>상세검색</h5>
 			<c:if test="${smallCategoryColumn != null}">
-				<c:forEach items="${columnList}" varStatus="status">
+				<c:forEach var="column" items="${columnList}">
 					<div>
-						<c:out value="${columnList[status.index]}"/> <br><br> 
-						<c:forTokens var="value" items="${smallCategoryColumn[columnList[status.index]]}" delims=",">
+						<c:out value="${column}"/> <br><br> 
+						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
 							<label class="ck_container"> 
 								<input type="checkbox" name="${columnListEng[status.index]}" value="${value}">
 								<span class="checkmark"></span>
