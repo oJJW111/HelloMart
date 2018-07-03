@@ -55,10 +55,11 @@
 			<td colspan="2">
 				<c:forEach items="${columnList}" varStatus="status">
 <!-- 상세정보 이름 -->	${columnList[status.index]} &nbsp;
-<!-- 상세정보 값 -->	${smallCategoryColumn[columnList[status.index]]} /	
+<!-- 상세정보 값 -->	${detail[columnListEng[status.index]]}
+					<c:if test="${!status.last}"> / &nbsp; </c:if>
 				</c:forEach> 
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${product.comment}</td>
 		</tr>

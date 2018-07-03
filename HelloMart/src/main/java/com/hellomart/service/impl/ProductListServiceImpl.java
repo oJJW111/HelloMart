@@ -165,7 +165,7 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		// 상품 이름으로 검색
 		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
-			sql += " and productname = " + request.getParameter("search");
+			sql += " and productname = '" + request.getParameter("search") + "'";
 		}
 		// 최저 가격 검색
 		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
