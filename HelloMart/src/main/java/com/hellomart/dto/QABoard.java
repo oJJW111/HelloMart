@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.hellomart.dto;
 
 import java.util.Date;
@@ -41,4 +40,3 @@ public class QABoard {
 	private Date modate;
 
 }
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git

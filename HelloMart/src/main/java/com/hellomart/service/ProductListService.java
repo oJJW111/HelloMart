@@ -1,21 +1,6 @@
-<<<<<<< HEAD
-package com.hellomart.service;
-
-import org.springframework.ui.Model;
-
-public abstract class ProductListService {
-	
-	public ProductListService(){ }
-	
-    abstract public void getAllList(Model model);
-    
-}
-=======
 package com.hellomart.service;
 
 import java.util.Map;
-
-import org.springframework.ui.Model;
 
 public interface ProductListService {
 
@@ -28,4 +13,3 @@ public interface ProductListService {
 	// 상세조건을 입력하고 검색했을 때
 	Map<String, Object> getDetailList(String mainCategory, String smallCategory, Integer page);	
 }
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git

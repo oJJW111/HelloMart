@@ -51,8 +51,5 @@ public class ModifyAccountInfoValidator implements Validator {
 				"email", account.getEmail(), "[0-9a-zA-Z]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}");
 	}
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
+

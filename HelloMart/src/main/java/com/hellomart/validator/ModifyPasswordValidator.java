@@ -49,9 +49,5 @@ public class ModifyPasswordValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Account.class.isAssignableFrom(clazz); 
 	}
-	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
+

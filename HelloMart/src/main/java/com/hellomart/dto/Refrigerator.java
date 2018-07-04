@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package com.hellomart.dto;
 
 import lombok.Data;
@@ -26,4 +26,4 @@ public class Refrigerator {
 	private int powerConsumption;
 	private int energyEfficiency;
 }
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
+

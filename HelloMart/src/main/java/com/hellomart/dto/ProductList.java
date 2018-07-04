@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.hellomart.dto;
 
 import java.util.Date;
@@ -46,4 +45,3 @@ public class ProductList {
 	private String comment;     
 	private Date registerDate;    
 }
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git

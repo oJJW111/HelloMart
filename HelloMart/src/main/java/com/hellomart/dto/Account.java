@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.hellomart.dto;
 
 import java.util.Date;
@@ -56,4 +55,3 @@ public class Account {
 	private int reliability;
 	private Date joinDate;
 }
->>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
