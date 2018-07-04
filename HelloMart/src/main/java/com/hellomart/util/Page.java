@@ -1,5 +1,8 @@
 package com.hellomart.util;
 
+import org.springframework.stereotype.Component;
+
+@Component("bbsPage")
 public class Page {
 	private int startRow, endRow;
 	private StringBuffer sb;	

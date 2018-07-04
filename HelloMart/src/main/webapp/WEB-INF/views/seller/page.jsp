@@ -108,7 +108,7 @@ $(document).ready(function() {
 		</div>
 		<div class="BLOCK50"></div>
 		
-		<form name="productRegisterForm" method="post">
+		<form name="productRegisterForm" method="get">
 			<label for="mainCategoryInput">메인카테고리 : 
 				<select  id='mainCategoryInput' name='mainCategoryInput' 
 					title='mainCategoryInput' required="required">

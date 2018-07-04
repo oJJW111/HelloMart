@@ -41,10 +41,10 @@ public class SmallCategoryListServiceImpl extends ProductListService{
 			columnList = xmlParser.getChildren(selectedSmallCategory);
 			
 			for(String column : columnList){
-				String value = xmlParser.getValue(column); 
-				columnListEng.add(xmlParser.getName(column));
+				String value = xmlParser.getValue(selectedSmallCategory, column); 
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 				System.out.println(selectedSmallCategory + "의 " + column + "("
-										+ xmlParser.getName(column) + ")의 value : " + value.trim());
+										+ xmlParser.getAttributeValue(column, "column") + ")의 value : " + value.trim());
 					
 					smallCategoryColumn.put(column, value); 
 				}

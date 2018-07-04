@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.service.SellerService;
 
@@ -44,7 +46,7 @@ public class SellerController {
 		return "seller/page";
 	}
 	
-	@RequestMapping(value="/productRegister", method=RequestMethod.POST)
+	@RequestMapping(value="/productRegister", method=RequestMethod.GET)
 	public String sellerProductRegister(@RequestParam("mainCategoryInput") 
 										String mainCategoryInput,
 										@RequestParam("smallCategoryInput")
@@ -56,4 +58,12 @@ public class SellerController {
 		sellerService.productPartSpec(model, category);
 		return "seller/register";
 	}
+	
+	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
+	public String sellerProductRegister(MultipartHttpServletRequest mRequest, Model model){
+		
+		sellerService.sellerProductRegister(mRequest);
+		return "redirect:/seller/page/1";
+	}
+	
 }

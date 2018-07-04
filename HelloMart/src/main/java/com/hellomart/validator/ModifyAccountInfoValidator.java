@@ -8,10 +8,10 @@ import org.springframework.validation.Validator;
 
 import com.hellomart.dto.Account;
 
-public class JoinFormValidator implements Validator {
+public class ModifyAccountInfoValidator implements Validator {
 	
 	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(JoinFormValidator.class);
+	private static final Logger logger = LoggerFactory.getLogger(ModifyAccountInfoValidator.class);
 	
 	@Override
 	public void validate(Object target, Errors errors) {
@@ -27,8 +27,6 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfEmptyOrWhitespace(Errors errors, Account account) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "form.error.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "postCode", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "form.error.required");
@@ -49,12 +47,6 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfNotMatch(Errors errors, Account account) {
-		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.id", 
-				"id", account.getId(), "[a-zA-Z][0-9a-zA-Z]{5,19}");
-		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.password",
-				"password", account.getPassword(), "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
-		ValidationTools.rejectIfNotEquals(errors, "form.error.notequal.password",
-				"password", "re_password", account.getPassword(), account.getRe_password());
 		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.email", 
 				"email", account.getEmail(), "[0-9a-zA-Z]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,3}");
 	}

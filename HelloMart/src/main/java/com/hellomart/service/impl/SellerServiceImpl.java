@@ -11,11 +11,13 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hellomart.dao.SellerDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
 import com.hellomart.util.Page;
+import com.hellomart.util.Upload;
 import com.hellomart.util.XMLParser;
 
 @Service
@@ -26,6 +28,11 @@ public class SellerServiceImpl implements SellerService{
 	
 	@Resource(name = "bbsPage")
 	private Page page;
+	
+	@Autowired
+	private Upload upload;
+	
+	List<String> productPartSpecEngName;
 	
 	@Override
 	public void getSellerProductList(int pageNum, Model model, 
@@ -71,32 +78,36 @@ public class SellerServiceImpl implements SellerService{
 		String smallCategory = category.get("smallCategory");
 		
 		List<String> productPartSpecList;
-		List<String> productPartSpecEngName = new ArrayList<String>();
+		
+		productPartSpecEngName = new ArrayList<String>();
+		List<String> productPartSpecKorName = new ArrayList<String>();
 		Map<String, List<String>> productPartSpecMap = new HashMap<String, List<String>>();
-		List<String> productSpecValueList;
 		
 		StringTokenizer tokenizer;
 		XMLParser xmlParser = new XMLParser("category.xml");
-		
 		String specValue = null;
 		String specValueList = null;
+		List<String> tokenResultValueList;
+		
 		try {
 			
 			productPartSpecList = xmlParser.getChildren(smallCategory);
 			for(String productSpec : productPartSpecList){
-				specValueList = xmlParser.getValue(productSpec); 
+				specValueList = xmlParser.getValue(smallCategory, productSpec); 
 				System.out.println(smallCategory + "의 " + productSpec + "("
-										+ xmlParser.getName(productSpec) + ")의 value : " + specValueList.trim());
-				productPartSpecEngName.add(xmlParser.getName(productSpec));
+										+ xmlParser.getAttributeValue(productSpec, "column") + ")의 value : " + specValueList.trim());
 				
-				productSpecValueList = new ArrayList<String>();
+				productPartSpecEngName.add(xmlParser.getAttributeValue(productSpec, "column"));
+				productPartSpecKorName.add(productSpec);
+				
+				tokenResultValueList = new ArrayList<String>();
 				tokenizer = new StringTokenizer(specValueList.trim(), ",");
 				while(tokenizer.hasMoreTokens()){ 
 					specValue = tokenizer.nextToken();
-					productSpecValueList.add(specValue);	
+					tokenResultValueList.add(specValue);	
 				}
 				
-				productPartSpecMap.put(productSpec, productSpecValueList); 
+				productPartSpecMap.put(productSpec, tokenResultValueList); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,5 +116,16 @@ public class SellerServiceImpl implements SellerService{
 		model.addAttribute("smallCategory", smallCategory);
 		model.addAttribute("specMapList", productPartSpecMap);
 		model.addAttribute("specEngNameList", productPartSpecEngName);
+		model.addAttribute("specKorNameList", productPartSpecKorName);
+	}
+
+	@Override
+	public void sellerProductRegister(MultipartHttpServletRequest mRequest) {
+		
+		if(upload.fileUpload(mRequest)){
+			System.out.println("성공");
+		}else{
+			System.out.println("실패");
+		}
 	}
 }
