@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductListService;
-import com.hellomart.util.PageHandling;
 import com.hellomart.util.Paging;
 import com.hellomart.util.XMLParser;
 
@@ -44,10 +43,8 @@ public class ProductListServiceImpl implements ProductListService{
 	public Map<String, Object> getMainList(String mainCategory, Integer page) {
 		page = page == null ? 1 : page;
 		
-		int total = dao.getTotal();
-		logger.debug("total : " + total);
+		int total = dao.getTotal(mainCategory);
 		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
-		logger.debug("offset : " + paging.getOffset());
 		Vector<ProductList> list = dao.listMain(mainCategory, paging.getOffset(), maxResult);
 		
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
@@ -80,7 +77,11 @@ public class ProductListServiceImpl implements ProductListService{
 			smallCategoryColumn.put(column, value);
 		}
 		
-		int total = dao.getTotal();
+		Map<String, String> categories = new HashMap<>();
+		categories.put("mainCategory", mainCategory);
+		categories.put("smallCategory", smallCategory);
+		
+		int total = dao.getTotal(categories);
 		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
 		Vector<ProductList> list = dao.listSmall(mainCategory, smallCategory, paging.getOffset(), maxResult);
 		
@@ -199,26 +200,5 @@ public class ProductListServiceImpl implements ProductListService{
 //		
 //		return sql;
 //	} // createSql 메소드 끝
-	
-	public void pageSetting(List<ProductList> list, Model model){
-		int numPerPage = 10;
-		int pagePerBlock = 10;
-		
-		Map<String, Object> map = model.asMap();
-		
-		HttpServletRequest request = (HttpServletRequest) map.get("request");
-		
-		int nowPage = (request.getParameter("nowPage") != null) ?
-				Integer.parseInt(request.getParameter("nowPage")) : 0;
-				
-		int nowBlock = (request.getParameter("nowBlock") != null) ?
-						Integer.parseInt(request.getParameter("nowBlock")) : 0;
-								
-				
-		PageHandling pageHandling =
-				new PageHandling(list.size(), nowPage, nowBlock, numPerPage, pagePerBlock);
-		
-		pageHandling.setPageValue(model);
-	}
 	
 }

@@ -35,8 +35,6 @@ public class Paging {
 		
 		// 총 페이지수를 구한다.
 		this.totalPage = (int) Math.ceil((double) totalRecord / maxResult);
-		System.out.println("page : " + page);
-		System.out.println("totalPage : " + totalPage);
 		// 현재 페이지가 총 페이지수를 넘는다면 총 페이지수를 현재페이지로 지정한다.
 		this.currentPage = page > totalPage ? totalPage : page;
 		
@@ -58,7 +56,8 @@ public class Paging {
 		this.beginPage = nowBlock * pagePerBlock + 1;
 		this.endPage = beginPage + pagePerBlock - 1;
 		
-		
+		System.out.println("nowBlock : " + nowBlock);
+		System.out.println("totalBlock : " + totalBlock);
 		// 마지막 페이지가 총 페이지수를 넘었다면 마지막 페이지를 총 페이지수로 지정한다.
 		if(endPage > totalPage) { 
 			endPage = totalPage;

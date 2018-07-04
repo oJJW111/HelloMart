@@ -6,8 +6,17 @@
 <mapper namespace="com.hellomart.dao.ProductListDAO">
 	
 
-	<select id="getTotal" resultType="java.lang.Integer">
+	<select id="getTotal" parameterType="HashMap" resultType="Integer">
 		select count(*) from productlist
+		
+		<where>
+			<if test="mainCategory != null">
+				mainCategory = #{mainCategory}
+				<if test="smallCategory != null">
+				and smallCategory = #{smallCategory}
+				</if>
+			</if>
+		</where>
 	</select>
 	
 	<select id="listMain" 

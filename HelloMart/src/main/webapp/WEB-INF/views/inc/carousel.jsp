@@ -12,19 +12,19 @@
 		<!-- slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img alt="" src="/resources/images/1.png">
+				<img alt="" src="/resources/images/main_hero_aircon.jpg">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="/resources/images/2.png">
+				<img alt="" src="/resources/images/main_hero_dry.jpg">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="/resources/images/3.png">
+				<img alt="" src="/resources/images/main_hero_r9.jpg">
 				<div class="carousel-caption"></div>
 			</div>
 			<div class="item">
-				<img alt="" src="/resources/images/4.png">
+				<img alt="" src="/resources/images/main_hero_whisen.jpg">
 				<div class="carousel-caption"></div>
 			</div>
 			<a class="left carousel-control" href="#carousel-example-generic"

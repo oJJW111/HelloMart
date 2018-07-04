@@ -32,7 +32,7 @@ public class ProductListController {
 		ModelAndView mav = new ModelAndView();
 		
 		Map<String, Object> attributes = null;
-		System.out.println("controller page : " + page);
+		
 		if(mainCategory != null) {
 			if(smallCategory == null) {
 				attributes = service.getMainList(mainCategory, page);
