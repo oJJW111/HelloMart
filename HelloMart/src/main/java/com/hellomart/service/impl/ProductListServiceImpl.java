@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
@@ -24,6 +21,9 @@ import com.hellomart.util.XMLParser;
 @Service
 public class ProductListServiceImpl implements ProductListService{
 	
+	public static final int MAX_RESULT = 10;
+	public static final int PAGE_PER_BLOCK = 10;
+	
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(ProductListServiceImpl.class);
 	
@@ -31,41 +31,51 @@ public class ProductListServiceImpl implements ProductListService{
 	ProductListDAO dao;
 	
 	private XMLParser xmlParser = new XMLParser("category.xml");
-	private int maxResult = 10;
-	private int pagePerBlock = 10;
 	
 	public ProductListServiceImpl() {
 	}
 
-	@Override
-	public Map<String, Object> getMainList(String mainCategory, Integer page) {
+	private Map<String, Object> putDefault(String mainCategory, String smallCategory, Integer page) {
+		Map<String, Object> model = new HashMap<>(); 
+		
 		page = page == null ? 1 : page;
 		
 		Map<String, String> categories = new HashMap<>();
 		categories.put("mainCategory", mainCategory);
-		
+		categories.put("smallCategory", smallCategory);
 		int total = dao.getTotal(categories);
-		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
+		
+		Paging paging = new Paging(total, page, MAX_RESULT, PAGE_PER_BLOCK);
+
 		int offset = paging.getOffset();
 		Vector<ProductList> list = null;
+		
+		Map<String, Object> parametersMap = new HashMap<>();
+		parametersMap.put("mainCategory", mainCategory);
+		parametersMap.put("smallCategory", smallCategory);
+		parametersMap.put("offset", offset);
+		parametersMap.put("limit", MAX_RESULT);
 		if(offset != -1) {
-			list = dao.listMain(mainCategory, offset, maxResult);
+			list = dao.list(parametersMap);
 		}
 		
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		
-		Map<String, Object> map = new HashMap<>();
+		model.put("smallCategoryList", smallCategoryList);
+		model.put("paging", paging);
+		model.put("list", list);
 		
-		map.put("smallCategoryList", smallCategoryList);
-		map.put("paging", paging);
-		map.put("list", list);
-		
-		return map;
+		return model;
+	}
+	
+	@Override
+	public Map<String, Object> getMainList(String mainCategory, Integer page) {
+		return putDefault(mainCategory, null, page);
 	}
 	
 	@Override
 	public Map<String, Object> getSmallList(String mainCategory, String smallCategory, Integer page) {
-		page = page == null ? 1 : page;
+		Map<String, Object> model = putDefault(mainCategory, smallCategory, page);
 		
 		List<String> columnList = null;
 		List<String> columnListEng = new ArrayList<>();
@@ -79,33 +89,14 @@ public class ProductListServiceImpl implements ProductListService{
 			smallCategoryColumn.put(column, value);
 		}
 		
-		Map<String, String> categories = new HashMap<>();
-		categories.put("mainCategory", mainCategory);
-		categories.put("smallCategory", smallCategory);
+		model.put("smallCategoryColumn", smallCategoryColumn);
+		model.put("columnList", columnList);
+		model.put("columnListEng", columnListEng);
 		
-		int total = dao.getTotal(categories);
-		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
-		int offset = paging.getOffset();
-		Vector<ProductList> list = null;
-		
-		if(offset != -1) {
-			list = dao.listSmall(mainCategory, smallCategory, offset, maxResult);
-		}
-		
-		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("smallCategoryColumn", smallCategoryColumn);
-		map.put("columnList", columnList);
-		map.put("columnListEng", columnListEng);
-		
-		map.put("smallCategoryList", smallCategoryList);
-		map.put("paging", paging);
-		map.put("list", list);
-		
-		return map;
+		return model;
 	}
+	
+	
 	
 	@Override
 	public Map<String, Object> getDetailList(String mainCategory, String smallCategory, Integer page) {
