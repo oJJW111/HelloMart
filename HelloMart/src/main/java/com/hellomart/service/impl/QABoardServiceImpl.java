@@ -12,8 +12,9 @@ import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
 
 @Service
-public class QABoardServiceImpl implements QABoardService{
+public class QABoardServiceImpl implements QABoardService {
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(QABoardService.class);
 	
 	@Autowired
@@ -24,8 +25,13 @@ public class QABoardServiceImpl implements QABoardService{
 	}
 
 	@Override
-	public Vector<QABoard> listQABoard(int startRow, int endRow) {
-		return dao.listQABoard(startRow, endRow);
+	public Vector<QABoard> list(int offset, int limit) {
+		return dao.listQABoard(offset, limit);
+	}
+	
+	@Override
+	public int getTotal() {
+		return dao.getCount();
 	}
 
 	@Override
@@ -38,25 +44,10 @@ public class QABoardServiceImpl implements QABoardService{
 		return dao.viewQABoard(idx);
 	}
 
-	@Override
-	public void deleteQABoard(int idx) {
-		dao.deleteQABoard(idx);
-	}
 
 	@Override
 	public void viewCount(int idx) {
 		dao.viewCount(idx);	
-	}
-
-	@Override
-	public void reWrite(QABoard qaboard) {
-		dao.reReLv(qaboard);	
-		dao.reWrite(qaboard);	
-	}
-
-	@Override
-	public int getCount() {
-		return dao.getCount();
 	}
 
 	@Override
@@ -68,20 +59,5 @@ public class QABoardServiceImpl implements QABoardService{
 	public void delete(int idx) {
 		dao.delete(idx);		
 	}
-
-	
-	
-
-	
-
-
-
-	
-
-	
-	
-	
-	
-	
 
 }

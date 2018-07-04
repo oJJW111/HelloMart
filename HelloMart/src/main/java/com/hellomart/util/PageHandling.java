@@ -46,5 +46,3 @@ public class PageHandling {
 //		System.out.println("beginPerPage : " + beginPerPage);
 	}
 }
-
-

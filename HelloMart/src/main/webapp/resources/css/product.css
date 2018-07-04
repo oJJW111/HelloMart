@@ -107,7 +107,7 @@ hr.style14 {
 }
 
 .article_wrap {
-	width: 1026px;	
+	width: 1006px;	
 	margin: auto;
 }
 
@@ -203,7 +203,7 @@ hr.style14 {
     float: right;
     width: 20%;
     height: 100%;
-    background: #2196F3;
+    background: #015299;
     color: white;
     font-size: 17px;
     border: none;
@@ -212,7 +212,7 @@ hr.style14 {
 }
 
 .category_detail_down button:hover {
-    background: #0b7dda;
+    background: #003768;
 }
 
 .category_detail_down input[name=search] {

@@ -24,7 +24,7 @@ $(document).ready(function(){
 	});
 
 	$("#refrigerator").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory+=냉장고";
+		location.href="/productList?mainCategory=가전제품&smallCategory=냉장고";
 	});
 	
 	$("#microwave").on('click', function(){
@@ -86,112 +86,52 @@ $(document).ready(function(){
 		<div class="F_left header_menu_item" id="main_menu_4"
 			cd_key="ct_004">액세서리</div>
 		<div class="F_left header_menu_item" id="main_menu_5"
-			cd_key="ct_005">퍼스널케어</div>
+			cd_key="ct_005">☆★☆</div>
 		<div class="F_left header_menu_item" id="main_menu_6"
 			cd_key="ct_006" style="width: 167px;">게시판</div>
 		<div class="clear"></div>
 	</div>
 
-<!-- 	<div class="absolute mega_menu_wrap" style="display: none;"> -->
-<!-- 		<div class="mega_menu" style="height: 319px;"> -->
-<!-- 			<div class="BLOCK30"></div> -->
-<!-- 			<div class="mega_menu_contents"> -->
+	 <div class="absolute mega_menu_wrap" style="display: none;"> 
+		<div class="mega_menu">
+			<div class="mega_menu_contents">
+				<div class="F_left mega_menu_contents_part2">
+					<div class="mega_menu_inner_menu mega_ct_001" style="display: none;">
+							<div class="F_left megamenu_menu_title1" id="refrigerator">냉장고</div>
+							<div class="F_left megamenu_menu_title1" id="microwave">오븐/전자레인지</div>
+							<div class="F_left megamenu_menu_title1" id="cleaner">청소기</div>
+							<div class="F_left megamenu_menu_title1" id="airConditioner">에어컨</div>
+							<div class="F_left megamenu_menu_title1" id="washer">세탁기</div>
+							<div class="F_left megamenu_menu_title1" id="airPurifier">공기청정기/제습기</div>
+					</div>
+				</div>
 
-<!-- 				<div class="F_left mega_menu_contents_part2"> -->
-<!-- 					<div class="mega_menu_inner_menu mega_ct_001" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="refrigerator">냉장고</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="microwave">오븐/전자레인지</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="cleaner">청소기</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="airConditioner">에어컨</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="washer">세탁기</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="airPurifier">공기청정기/제습기</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-
-<!-- 					<div class="mega_menu_inner_menu mega_ct_002" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="notebook">노트북</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2">데스크탑</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="monitor">모니터</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="printer">프린터</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+					<div class="mega_menu_inner_menu mega_ct_002" style="display: none;">
+							<div class="F_left megamenu_menu_title2" id="notebook" style="margin-left: 230px">노트북</div>
+							<div class="F_left megamenu_menu_title2">데스크탑</div>
+							<div class="F_left megamenu_menu_title2" id="monitor">모니터</div>
+							<div class="F_left megamenu_menu_title2" id="printer">프린터</div>
+					</div>
 
 
-<!-- 					<div class="mega_menu_inner_menu mega_ct_003" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="smartphone">스마트폰</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="tablet">태블릿</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
+					<div class="mega_menu_inner_menu mega_ct_003" style="display: none;">
+							<div class="F_left megamenu_menu_title2" id="smartphone" style="margin-left: 385px">스마트폰</div>
+							<div class="F_left megamenu_menu_title2" id="tablet">태블릿</div>
+					</div>
 
-<!-- 					</div> -->
-<!-- 					<div class="mega_menu_inner_menu mega_ct_004" -->
-<!-- 						style="display: none;"></div> -->
+					<div class="mega_menu_inner_menu mega_ct_004" style="display: none;">
+							<div class="F_right megamenu_menu_title2" style="margin-right: 160px">모바일 액세서리</div>
+							<div class="F_right megamenu_menu_title2">PC 액세서리</div>
+					</div>
 
-<!-- 					<div class="mega_menu_inner_menu mega_ct_005" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2"></div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div> -->
-<!-- 							<div class="F_left megamenu_menu_title2 M_TOP3"> -->
-<!-- 								<div class="megamenu_menu_title2_1">aaaa</div> -->
-<!-- 							</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-
-
-<!-- 					</div> -->
-<!-- 					<div class="mega_menu_inner_menu mega_ct_006" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2" id="qaboard">Q&A 게시판</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="M_TOP9"> -->
-<!-- 							<div class="F_left megamenu_menu_title2">bbbb</div> -->
-<!-- 							<div class="clear"></div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class="BLOCK30"></div> -->
-<!-- 	</div> -->
-<!-- 	<div class="BLOCK2 BG_DCDDDD"></div> -->
-</div>
+					<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
+							<div class="F_right megamenu_menu_title2">???</div>
+					</div>
+					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
+							<div class="F_right megamenu_menu_title2">문의하기</div>
+							<div class="F_right megamenu_menu_title2">Q&A게시판</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>		

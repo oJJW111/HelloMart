@@ -8,6 +8,8 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -20,43 +22,23 @@ import com.hellomart.util.XMLParser;
 
 @Service
 public class ProductListServiceImpl implements ProductListService{
-	static HashMap<String, String> smallCategoryNameKorToEng;
+	
+	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
 	@Autowired
 	ProductListDAO dao;
 	
+	private XMLParser xmlParser = new XMLParser("category.xml");
+	
 	public ProductListServiceImpl() {
-		smallCategoryNameKorToEng = new HashMap<String, String>();
-		// category.xml의 태그 -> DB table명
-		smallCategoryNameKorToEng.put("냉장고", "Refrigerator");
-		smallCategoryNameKorToEng.put("오븐_전자레인지", "Microwave");
-		smallCategoryNameKorToEng.put("청소기", "Cleaner");
-		smallCategoryNameKorToEng.put("에어컨", "AirConditioner");
-		smallCategoryNameKorToEng.put("세탁기", "Washer");
-		smallCategoryNameKorToEng.put("공기청정기", "AirPurifier");
-		smallCategoryNameKorToEng.put("노트북", "Notebook");
-		smallCategoryNameKorToEng.put("데스크탑", "Desktop");
-		smallCategoryNameKorToEng.put("모니터", "Monitor");
-		smallCategoryNameKorToEng.put("프린터", "Printer");
-		smallCategoryNameKorToEng.put("스마트폰", "Smartphone");
-		smallCategoryNameKorToEng.put("태블릿", "Tablet");
 	}
 
 	// 상위 카테고리를 눌렀을 때
 	// 해당 상위 카테고리의 하위 카테고리 목록과 상품 목록을 넘겨주는 메소드
 	@Override
 	public void getMainList(String mainCategory, Model model) {
-		XMLParser xmlParser = new XMLParser("category.xml");
-		
 		// 세부분류에 보여줄 선택한 상위 카테고리 밑의 카테고리들
-		List<String> smallCategoryList = new ArrayList<>();
-		
-		try {
-			smallCategoryList = xmlParser.getChildren(mainCategory);
-		} catch (Exception e) {
-			System.out.println("ProductListServiceImpl클래스 getMainList메소드 에러."); 
-			e.printStackTrace();
-		}
+		List<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategoryList", smallCategoryList);
@@ -79,16 +61,12 @@ public class ProductListServiceImpl implements ProductListService{
 		// 선택한 하위 카테고리의 컬럼 이름과 값을 매칭시켜둔 맵
 		HashMap<String, String> smallCategoryColumn = new HashMap<>();
 
-		XMLParser xmlParser = new XMLParser("category.xml");
-
 		try {
 			columnList = xmlParser.getChildren(smallCategory);
 
 			for (String column : columnList) {
 				String value = xmlParser.getValue(column);
-				columnListEng.add(xmlParser.getName(column));
-				// System.out.println(smallCategory + "의 " + column + "("
-				// + xmlParser.getName(column) + ")의 value : " + value.trim());
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 
 				smallCategoryColumn.put(column, value);
 			}
@@ -140,7 +118,7 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	public String createSQL(HttpServletRequest request){
 		String smallCategory = request.getParameter("smallCategory");
-		String smallCategoryEng = smallCategoryNameKorToEng.get(smallCategory);
+		String smallCategoryEng =  xmlParser.getAttributeValue(smallCategory, "table");
 		
 		// 상세검색에서 보여줄 선택한 하위 카테고리의 컬럼 이름들(페이지에 보여줄 한글)
 		List<String> columnList = new ArrayList<>();
@@ -153,7 +131,7 @@ public class ProductListServiceImpl implements ProductListService{
 			columnList = xmlParser.getChildren(smallCategory);
 
 			for (String column : columnList) {
-				columnListEng.add(xmlParser.getName(column));
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,21 +139,14 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		String sql = "select * from productlist natural join " + smallCategoryEng 
 				+ " where productlist.smallCategory = '" + smallCategory + "'";
+		
 		System.out.println("sql 문장 : " + sql);
 		
 		// 상품 이름으로 검색
 		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
 			sql += " and productname = " + request.getParameter("search");
 		}
-		// 최저 가격 검색
-		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
-			sql += " and price >= " + request.getParameter("price_range1");
-		}
-		// 최고 가격 검색
-		if(request.getParameter("price_range2") != null && !request.getParameter("price_range2").equals("")){
-			sql += " and price <= " + request.getParameter("price_range2");
-		}
-			
+		
 		// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
 		boolean isFirstAdd = true;
 			
