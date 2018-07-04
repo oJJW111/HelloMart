@@ -37,15 +37,20 @@ public class ProductListServiceImpl implements ProductListService{
 	public ProductListServiceImpl() {
 	}
 
-	// 상위 카테고리를 눌렀을 때
-	// 해당 상위 카테고리의 하위 카테고리 목록과 상품 목록을 넘겨주는 메소드
 	@Override
 	public Map<String, Object> getMainList(String mainCategory, Integer page) {
 		page = page == null ? 1 : page;
 		
-		int total = dao.getTotal(mainCategory);
+		Map<String, String> categories = new HashMap<>();
+		categories.put("mainCategory", mainCategory);
+		
+		int total = dao.getTotal(categories);
 		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
-		Vector<ProductList> list = dao.listMain(mainCategory, paging.getOffset(), maxResult);
+		int offset = paging.getOffset();
+		Vector<ProductList> list = null;
+		if(offset != -1) {
+			list = dao.listMain(mainCategory, offset, maxResult);
+		}
 		
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		
@@ -58,9 +63,6 @@ public class ProductListServiceImpl implements ProductListService{
 		return map;
 	}
 	
-	// 하위 카테고리를 눌렀을 때
-	// 상세 검색 체크 박스로 보여줄 컬럼(=상세 검색 조건) 이름과 예시 값들을 넘겨주고
-	// 선택한 하위 카테고리에 해당하는 상품 목록을 넘겨주는 메소드 
 	@Override
 	public Map<String, Object> getSmallList(String mainCategory, String smallCategory, Integer page) {
 		page = page == null ? 1 : page;
@@ -83,7 +85,12 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		int total = dao.getTotal(categories);
 		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
-		Vector<ProductList> list = dao.listSmall(mainCategory, smallCategory, paging.getOffset(), maxResult);
+		int offset = paging.getOffset();
+		Vector<ProductList> list = null;
+		
+		if(offset != -1) {
+			list = dao.listSmall(mainCategory, smallCategory, offset, maxResult);
+		}
 		
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		
@@ -100,7 +107,6 @@ public class ProductListServiceImpl implements ProductListService{
 		return map;
 	}
 	
-
 	@Override
 	public Map<String, Object> getDetailList(String mainCategory, String smallCategory, Integer page) {
 		
