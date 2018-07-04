@@ -1,11 +1,8 @@
 package com.hellomart.controller;
 
-
-
-
+import java.util.Map;
 import java.util.Vector;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import com.hellomart.dto.CmtBoard;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.CmtBoardService;
 import com.hellomart.service.QABoardService;
-import com.hellomart.util.PaginationResult;
 
 @Controller
 public class QABoardController {
@@ -38,13 +34,9 @@ public class QABoardController {
 			@RequestParam(value="page", required=false) Integer page) {
 		ModelAndView mav = new ModelAndView();
 		
-		if(page == null){
-			page = 1;
-		}
+		Map<String, Object> map = service.list(page);
 		
-		PaginationResult<QABoard> paging = service.list(page);
-		
-		mav.addObject("paging", paging);
+		mav.addAllObjects(map);
 		mav.setViewName("qaboard/QABoardList");
 		
 		return mav;

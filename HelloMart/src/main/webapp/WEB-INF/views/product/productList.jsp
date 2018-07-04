@@ -20,8 +20,8 @@
 
 <script type="text/javascript">
 function move(main, small){
-	location.href = "/productList/small"
-			+ "?main=" + encodeURIComponent(main)
+	location.href = "/productList"
+			+ "?mainCategory=" + encodeURIComponent(main)
 			+ "&smallCategory=" + encodeURIComponent(small);
 }
 </script>
@@ -36,35 +36,37 @@ function move(main, small){
 
 <div class=BLOCK70></div>
 
-<form action="/productList/detail" method="post"> 
+<form action="/productList" method="post"> 
 <div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
 			<h5>세부 분류</h5>
 			<ul>
-				<c:forEach var="small" items="${smallCategoryList}">
-					<li onclick="move('${mainCategory}', '${small}'); return false;">
-						${small}
+			<c:if test="${smallCategoryList ne null}">
+				<c:forEach var="smallCategory" items="${smallCategoryList}">
+					<li onclick="move('${param.mainCategory}', '${smallCategory}'); return false;">
+						${smallCategory}
 					</li>
 				</c:forEach> 
+			</c:if>
 			</ul>
 		</div>
 		<div class="category_small">
 			<h5>상세검색</h5>
-			<c:if test="${smallCategoryColumn != null}">
-				<c:forEach var="column" items="${columnList}">
+			<c:if test="${smallCategoryColumn ne null}">
+				<c:forEach var="column" items="${columnList}" varStatus="status">
 					<div>
-						<c:out value="${column}"/> <br><br> 
+						<c:out value="${column}"/> <br><br>
 						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
-							<label class="ck_container"> 
+							<label class="ck_container">
 								<input type="checkbox" name="${columnListEng[status.index]}" value="${value}">
 								<span class="checkmark"></span>
-								${value}
-							</label>	
+								<c:out value="${value}"/>
+							</label>
 						</c:forTokens>
 					</div>
 					<c:if test="${!status.last}"><hr></c:if>
-				</c:forEach> 
+				</c:forEach>
 			</c:if>  
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
@@ -84,12 +86,9 @@ function move(main, small){
 
 <!-- 상품리스트 -->
 <div class="product_list">
-	<c:if test="${paging.list eq null}">
-		<h4>해당되는 상품이 없습니다.</h4>
-	</c:if>
-	
-	<c:if test="${paging.list ne null}">
-		<c:forEach var="board" items="${paging.list}">
+<c:choose>
+	<c:when test="${list ne null}">
+		<c:forEach var="board" items="${list}">
 				<div class="product_list_content">
 					<div class="product_img">
 						<a href="/productView?no=${board.no}">
@@ -120,33 +119,72 @@ function move(main, small){
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">
 		</c:forEach>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+		<h4>해당되는 상품이 없습니다.</h4>
+	</c:otherwise>
+</c:choose>
 </div> <!-- 상품리스트 -->
 
 <!-- <div class="BLOCK50"></div> -->
 
 </div> <!-- article_wrap 끝 -->
 
-<c:if test="${smallCategory == null}">
-	<c:set var="link" value="/productList/main?main=${main}"/>
-</c:if>
-<c:if test="${smallCategory != null}">
-	<c:set var="link" value="/productList/small?main=${main}&smallCategory=${smallCategory}"/>
-</c:if>
-
 <br>
+<script>
+	function createURL(page) {
+		var helper = (function() {
+			var isFirst = true;
+			var isLastAmp = function() {
+				return url.lastIndexOf("&") != -1;
+			}
+			var addFirst = function() {
+				if(isFirst) {
+					url += "?";
+					isFirst = false;
+				}
+			}
+			var removeLast = function() {
+				if(isLastAmp) {
+					url = url.substr(0, url.length - 1);
+				}
+			}
+			return {
+				addFirst : addFirst,
+				removeLast : removeLast
+			}
+		})();
+		var url = "productList";
+		if('${param.mainCategory}' != '') {
+			helper.addFirst();
+			url += "mainCategory=" + '${param.mainCategory}' + "&";
+		}
+		if('${param.smallCategory}' != '') {
+			helper.addFirst();
+			url += "smallCategory=" + '${param.smallCategory}' + "&";
+		}
+		if(page != '') {
+			helper.addFirst();
+			url += "page=" + page + "&";
+		}
+		helper.removeLast();
+		location.href = url;
+	}
+</script>
 <div align="center">
+	<c:if test="${paging.totalRecord gt 0}">
 		<c:if test="${paging.nowBlock gt 0}">
-			<a href="qaboard?page=${paging.beginPage - 1}">[이전]</a>
-		</c:if>			
-		<c:forEach 	var="i" 
+			<a href="javascript:void(0);" onclick="createURL(${paging.beginPage - 1});">[이전]</a>
+		</c:if>
+		<c:forEach 	var="i"
 					begin="${paging.beginPage}"
 					end="${paging.endPage}">
-			<a href="qaboard?page=${i}">[${i}]</a>
+			<a href="javascript:void(0);" onclick="createURL(${i});">[${i}]</a>
 		</c:forEach>
 		<c:if test="${paging.nowBlock lt paging.totalBlock}">
-			<a href="qaboard?page=${paging.endPage + 1}">[다음]</a>
+			<a href="javascript:void(0);" onclick="createURL(${paging.endPage + 1});">[다음]</a>
 		</c:if>
+	</c:if>
 </div>
 <br>
 

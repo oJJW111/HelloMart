@@ -1,15 +1,12 @@
 package com.hellomart.service;
 
+import java.util.Map;
+
 import com.hellomart.dto.QABoard;
-import com.hellomart.util.PaginationResult;
 
 public interface QABoardService {
 
-	/* 게시글을 가져오는 메소드 */
-	PaginationResult<QABoard> list(int page);
-	
-	/* 게시글의 전체 개수 불러오는 메소드 */
-	int getTotal();
+	Map<String, Object> list(Integer page);
 	
 	/* 게시글을 삽입하는 메소드 */
 	void insertQABoard(QABoard qaboard);

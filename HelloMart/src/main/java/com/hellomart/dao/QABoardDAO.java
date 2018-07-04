@@ -4,9 +4,8 @@ import java.util.Vector;
 
 import com.hellomart.dto.QABoard;
 
-public interface QABoardDAO extends Paging<QABoard> {
+public interface QABoardDAO {
 
-	
 	/* 게시글을 가져오는 메소드 */
 	Vector<QABoard> list(int offset, int limit);
 	

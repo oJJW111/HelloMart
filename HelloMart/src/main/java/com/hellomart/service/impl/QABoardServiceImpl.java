@@ -1,5 +1,9 @@
 package com.hellomart.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hellomart.dao.QABoardDAO;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
-import com.hellomart.util.PaginationResult;
+import com.hellomart.util.Paging;
 
 @Service
 public class QABoardServiceImpl implements QABoardService {
@@ -19,20 +23,29 @@ public class QABoardServiceImpl implements QABoardService {
 	@Autowired
 	private QABoardDAO dao;
 	
+	private int maxResult = 5;
+	private int pagePerBlock = 5;
+	
 	public QABoardServiceImpl() {
 		
 	}
 
 	@Override
-	public PaginationResult<QABoard> list(int page) {
-		return new PaginationResult<>(dao, page, 5, 5);
+	public Map<String, Object>  list(Integer page) {
+		page = page == null ? 1 : page;
+		
+		int total = dao.getTotal();
+		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
+		Vector<QABoard> list = dao.list(paging.getOffset(), maxResult);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("paging", paging);
+		map.put("list", list);
+		
+		return map;
 	}
 	
-	@Override
-	public int getTotal() {
-		return dao.getCount();
-	}
-
 	@Override
 	public void insertQABoard(QABoard qaboard) {
 		dao.insertQABoard(qaboard);

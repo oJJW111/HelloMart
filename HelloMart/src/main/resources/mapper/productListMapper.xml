@@ -6,21 +6,24 @@
 <mapper namespace="com.hellomart.dao.ProductListDAO">
 	
 
-	<select id="list" parameterType="java.lang.Integer" 
-			resultType="com.hellomart.dto.ProductList">
-		select * from productlist order by no desc limit #{param1}, #{param2}
-	</select>
-	
 	<select id="getTotal" resultType="java.lang.Integer">
 		select count(*) from productlist
 	</select>
 	
-	<select id="getSmallList" parameterType="String"
+	<select id="listMain" 
 			resultType="com.hellomart.dto.ProductList">
-		select * from productlist where smallcategory = #{smallCategory} order by no desc
+		select * from productlist 
+		where maincategory = #{param1} order by no desc limit #{param2}, #{param3}
 	</select>
 	
-	<select id="getDetailList" parameterType="HashMap"
+	<select id="listSmall"
+			resultType="com.hellomart.dto.ProductList">
+		select * from productlist 
+		where maincategory = #{param1} and smallcategory = #{param2} 
+		order by no desc limit #{param3}, #{param4}
+	</select>
+	
+	<select id="listDetail"
 			resultType="com.hellomart.dto.ProductList">
 		${sql}
 	</select>

@@ -1,15 +1,11 @@
 package com.hellomart.util;
 
-import java.util.Vector;
-
-import com.hellomart.dao.Paging;
-
-public class PaginationResult<T> { 
+public class Paging { 
 	
-	private int currentPage;					// 현재 페이지
+	private int currentPage = 0;				// 현재 페이지
 	private int totalRecord;					// 전체 글 수
 	private int totalPage;						// 전체 페이지수
-	private Vector<T> list;				// 글 데이터를 저장할 변수
+	private int offset = -1;
 	
 	private int nowBlock;						// 현재 페이지 블럭
 	private int totalBlock;						// 총 페이지 블럭
@@ -23,21 +19,24 @@ public class PaginationResult<T> {
 	 * <p>화면에 출력할 글 목록 리스트를 DB에서 가져와서 멤버 변수에 저장하고,
 	 * 글 페이지 목록에 출력할 글 페이지 시작 번호와 끝 번호를 구하여 멤버 변수에 저장한다.
 	 * 
-	 * @param paging		DB관련 처리 할 객체
+	 * @param total			
 	 * @param page			선택된 페이지
 	 * @param maxResult		한 페이지에 출력할 최대 글 개수
 	 * @param pagePerBlock	하단 페이지 목록에 출력할 최대 페이지 수
 	 */
-	public PaginationResult(Paging<T> paging, int page,
+	public Paging(int total, int page,
 			int maxResult, int pagePerBlock) {
 		
 		// 전체 글 수와 beginIndex부터 endIndex까지의 인덱스에 해당하는 데이터를
 		// DB에서 가져와 멤버 변수 list에 저장한다.
-		this.totalRecord = paging.getTotal();
-
+		if(total == 0) return;
+		
+		this.totalRecord = total;
+		
 		// 총 페이지수를 구한다.
 		this.totalPage = (int) Math.ceil((double) totalRecord / maxResult);
-		
+		System.out.println("page : " + page);
+		System.out.println("totalPage : " + totalPage);
 		// 현재 페이지가 총 페이지수를 넘는다면 총 페이지수를 현재페이지로 지정한다.
 		this.currentPage = page > totalPage ? totalPage : page;
 		
@@ -46,16 +45,9 @@ public class PaginationResult<T> {
 		
 		// 페이지의 인덱스를 얻는다.
 		int pageIndex = currentPage - 1;
-		
-		
-		int offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
+		System.out.println("pageIndex : " + pageIndex);
+		this.offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
 
-		this.list = paging.list(offset, maxResult);
-
-		if (this.list == null) {
-			currentPage = 0;
-		}
-		
 		// 현재 페이지 블럭을 구한다.
 		this.nowBlock = pageIndex / pagePerBlock;
 		
@@ -89,12 +81,6 @@ public class PaginationResult<T> {
 		return totalPage;
 	}
 
-	
-	public Vector<T> getlist() {
-		return list;
-	}
-
-
 	public int getNowBlock() {
 		return nowBlock;
 	}
@@ -114,4 +100,9 @@ public class PaginationResult<T> {
 		return endPage;
 	}
 
+	
+	public int getOffset() {
+		return offset;
+	}
+	
 }

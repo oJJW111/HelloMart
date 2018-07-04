@@ -5,19 +5,19 @@
 $(document).ready(function(){
 	
 	$("#main_menu_1").on('click', function(){
-		location.href="/productList/main?main=" + encodeURIComponent("가전제품");
+		location.href="/productList?mainCategory=" + encodeURIComponent("가전제품");
 	});
 	$("#main_menu_2").on('click', function(){
-		location.href="/productList/main?main=IT";
+		location.href="/productList?mainCategory=IT";
 	});
 	$("#main_menu_3").on('click', function(){
-		location.href="/productList/main?main=" + encodeURIComponent("모바일");
+		location.href="/productList?mainCategory=" + encodeURIComponent("모바일");
 	});
 	$("#main_menu_4").on('click', function(){
-		location.href="/productList/main?main=" + encodeURIComponent("액세서리");
+		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
-		location.href="/productList?main=퍼스널케어";
+		location.href="/productList?mainCategory=퍼스널케어";
 	});
 	$("#main_menu_6").on('click', function(){
 		location.href="/qaboard";

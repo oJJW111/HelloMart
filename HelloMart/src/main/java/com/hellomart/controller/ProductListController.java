@@ -1,44 +1,50 @@
 package com.hellomart.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.service.ProductListService;
+import com.hellomart.util.Creator;
 
 @Controller
 @RequestMapping("/productList")
 public class ProductListController {
 	
+	@SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(ProductListController.class);
+	
 	@Autowired
 	ProductListService service;
 	
-	@RequestMapping("/main")
-	public String productMainList(Model model,
-			@RequestParam(value="main") String main,
+	@RequestMapping("")
+	public ModelAndView productMainList(
+			@RequestParam(value="mainCategory", required=false) String mainCategory,
+			@RequestParam(value="smallCategory", required=false) String smallCategory,
 			@RequestParam(value="page", required=false) Integer page){
-		service.getMainList(main, page, model);
-		return "product/productList";
-	}
-	
-	@RequestMapping("/small")
-	public String productSmallList(String mainCategory, String smallCategory, Model model, HttpServletRequest request){
-		model.addAttribute("request", request);
+		ModelAndView mav = new ModelAndView();
 		
-		service.getSmallList(mainCategory, smallCategory, model);
+		Map<String, Object> attributes = null;
+		System.out.println("controller page : " + page);
+		if(mainCategory != null) {
+			if(smallCategory == null) {
+				attributes = service.getMainList(mainCategory, page);
+			} else {
+				attributes = service.getSmallList(mainCategory, smallCategory, page);
+			}
+		}
+
+		mav.addAllObjects(attributes);
+		mav.setViewName("product/productList");
 		
-		return "product/productList";
+		return mav;
 	}
 	
-	@RequestMapping("/detail")
-	public String productSmallDetailList(HttpServletRequest request, Model model){
-		model.addAttribute("request", request);
-		service.getDetailList(model); 
-	
-		return "product/productList";
-	}
 }

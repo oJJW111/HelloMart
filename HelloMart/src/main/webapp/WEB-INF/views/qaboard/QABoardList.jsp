@@ -38,8 +38,8 @@
 						</tr>
 					</thead>
 					<tbody> 
-						<c:if test="${paging.list ne null}">
-							<c:forEach var="board" items="${paging.list}">
+						<c:if test="${list ne null}">
+							<c:forEach var="board" items="${list}">
 								<c:set var="wid" value="0" />
 								<tr class="bo_notice">
 									<td class="td_num">${board.idx}</td>
@@ -66,6 +66,7 @@
 			</div>
 
 		</div>
+		<c:if test="${paging.totalRecord gt 0}">
 		<div align="center">
 			<c:if test="${paging.nowBlock gt 0}">
 				<a href="qaboard?page=${paging.beginPage - 1}">[이전]</a>
@@ -79,6 +80,7 @@
 				<a href="qaboard?page=${paging.endPage + 1}">[다음]</a>
 			</c:if>
 		</div>
+		</c:if>
 		<!-- 게시판 검색 시작 { -->
 		<fieldset id="bo_sch">
 			<legend>게시물 검색</legend>
