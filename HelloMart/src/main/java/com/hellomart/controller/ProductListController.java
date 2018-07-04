@@ -1,33 +1,50 @@
 package com.hellomart.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.service.ProductListService;
-import com.hellomart.service.impl.MainCategoryListServiceImpl;
-import com.hellomart.service.impl.SmallCategoryListServiceImpl;
+import com.hellomart.util.Creator;
 
 @Controller
+@RequestMapping("/productList")
 public class ProductListController {
+	
+	@SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(ProductListController.class);
+	
+	@Autowired
 	ProductListService service;
 	
-	@RequestMapping("/productList")
-	public String productList(HttpServletRequest request, Model model) {		
-		if(request.getParameter("selectedSmallCategory") == null){
-			service = new MainCategoryListServiceImpl();
-			model.addAttribute("request", request);
-			service.getAllList(model);
-		}
-		else{
-			service = new SmallCategoryListServiceImpl();
-			model.addAttribute("request", request);
-			service.getAllList(model);
-		}
+	@RequestMapping("")
+	public ModelAndView productMainList(
+			@RequestParam(value="mainCategory", required=false) String mainCategory,
+			@RequestParam(value="smallCategory", required=false) String smallCategory,
+			@RequestParam(value="page", required=false) Integer page){
+		ModelAndView mav = new ModelAndView();
 		
-		return "product/productList";
-	}	
+		Map<String, Object> attributes = null;
+		System.out.println("controller page : " + page);
+		if(mainCategory != null) {
+			if(smallCategory == null) {
+				attributes = service.getMainList(mainCategory, page);
+			} else {
+				attributes = service.getSmallList(mainCategory, smallCategory, page);
+			}
+		}
+
+		mav.addAllObjects(attributes);
+		mav.setViewName("product/productList");
+		
+		return mav;
+	}
+	
 }

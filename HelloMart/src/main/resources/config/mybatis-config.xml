@@ -5,9 +5,10 @@
 <configuration>
  		
  	<typeAliases>
-		<typeAlias type="com.hellomart.dto.Account" alias="account"/> 
-		<typeAlias type="com.hellomart.dto.ProductList" alias="productList"/> 
-		<typeAlias type="com.hellomart.dto.QABoard" alias="qaboard"/>
+		<typeAlias type="com.hellomart.dto.Account" alias="Account"/> 
+		<typeAlias type="com.hellomart.dto.QABoard" alias="QABoard"/>
+		<typeAlias type="com.hellomart.dto.CmtBoard" alias="CmtBoard"/>
+		<typeAlias type="com.hellomart.dto.ProductList" alias="ProductList"/>
     </typeAliases>		
  
 </configuration>

@@ -4,108 +4,80 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- 다음 api js 파일 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
+<script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- 다음 api js 파일 추가 -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <link rel="stylesheet" type="text/css" href="/resources/css/join.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
 <script type="text/javascript">
 function send(){
 	document.f.submit();
 }
 $(document).ready(function(){
-var BIRTHDATEMAKER = function() {
-		var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		
-		var appendOption = function(id, value, valueAttr) {
-			$('#'+id).append('<option value=' + valueAttr + '>' + value + '</option>');
+	/* 생년월일 option 태그를 자동으로 생성해준다. */
+	BIRTHDATEMAKER.make({
+		year: 'year',
+		month: 'month',
+		day: 'day',
+		begin: 1930,
+		end: 2018,
+		selectedYear: '${birthdate.selectedYear}',
+		selectedMonth: '${birthdate.selectedMonth}',
+		selectedDay: '${birthdate.selectedDay}'
+	});
+	/* 비밀번호 값을 볼 수 있게 해주는 toggle 버튼에 이벤트를 생성한다. */
+	$(".toggle-password").click(function() {
+		  $(this).toggleClass("fa-eye fa-eye-slash");
+		  var input = $($(this).attr("toggle"));
+		  if (input.attr("type") == "password") {
+		    input.attr("type", "text");
+		  } else {
+		    input.attr("type", "password");
+		  }
+	});
+	
+	/* 휴대폰번호에는 숫자값만 입력가능하다. */
+	$("#phone").on("keydown keyup", function(evt) {
+		console.log(evt.which);
+		if(!(	
+				(evt.which >= 48 && evt.which <= 57) || // 상단 숫자키패드 0-9
+				(evt.which >= 96 && evt.which <= 105) ||// 우측 숫자키패드 0-9
+				(evt.which == 37 || evt.which == 39) || // 좌우 방향키
+				(evt.which == 8))) { // 백스페이스
+			return false;
 		}
-		
-		var dayId = 'day';
-		
-		appendOption('year', '생년', '');
-		var y = function(n, m) { 
-			for(i=n; i<=m; i++){
-				appendOption('year', i, i);
-			}
-		}(1950, 2018);
-		appendOption('month', '월', '');
-		var m = function() {
-			for(i=1; i<=12; i++){
-				appendOption('month', i, i);
-			}
-		}();
-		
-		appendOption('day', '일', '');
-		var d = function(n) {
-			for(i=1; i<=n; i++){
-				appendOption('day', i, i);
-			} 
-		};
-		
-		var getSelectedVal = function(id) {
-			return $('#' + id + ' option:selected').attr("value");
-		}
-		
-		var dayEmpty = function() {
-			$('#' + dayId).empty();
-		}
-		
-		$("#month").on("change",function(){
-			var y = getSelectedVal('year');
-			
-			if(y != "") {
-				var m = getSelectedVal('month');
-				
-				calculateDay(m, y);
-			}
-		});
-		
-		$("#year").on("change",function(){
-			m = getSelectedVal('month');
-			
-			if(m != "") {
-				y = getSelectedVal('year');
-				
-				calculateDay(m, y);
-			}
-		});
-		
-		var dayOnChangeEvent = function() {
-			
-		}
-		
-		var calculateDay = function(m, y) {
-			dayEmpty();
-			
-			appendOption('day', '일', '');
-			
-			$tempOfDay = dayOfMonth[m-1];
-			
-			$day = $tempOfDay;
-			
-			$b = false;
-			if(m == 2) {
-				if((y % 400) == 0) {
-					$b = true;
-				} else if((y % 4) == 0 && (y % 100) != 0) {
-					$b = true;
+	});
+	
+	/* 하이픈(-)을 자동으로 추가하며 올바른 번호가 아닐 경우 경고창을 띄운다. */
+/* 	$("#phone").on('blur', function(){
+	    if($(this).val() == '') return;
+	
+	    var trans_num = $(this).val().replace(/-/gi,'');
+	  
+		if(trans_num != null && trans_num != '') {
+			if(trans_num.length==11 || trans_num.length==10) {   
+				var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+				if(regExp_ctn.test(trans_num)) {
+				    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
 				}
+				$(this).val(trans_num);
+			} else {
+			    alert("유효하지 않은 전화번호 입니다.");
+			    $(this).val("");
+			    $(this).focus();
 			}
-			
-			if($b) {
-				$day++;
-			}
-			
-			d($day);
-		}
-	};
-	BIRTHDATEMAKER();
-});
+		} else {
+	        alert("유효하지 않은 전화번호 입니다.");
+	        $(this).val("");
+	        $(this).focus();
+	    }
+	});*/
+}); 
 </script>
 </head>
 <body>
@@ -114,22 +86,26 @@ var BIRTHDATEMAKER = function() {
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 <div class="BLOCK80"></div>
+
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
 			<ul class="join-form">
-				<li>	
+				<li>
 					<form:input path="id" class="txt-input joinTooltip" maxlength="20" placeholder="아이디" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.id"/></span>
 					<form:errors path="id" class="errors"/>
 				</li>
 				<li>
-					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" />
+					<form:password path="password" value="${account.password}" class="txt-input joinTooltip" maxlength="16" placeholder="비밀번호" id="password"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.password"/></span>
 					<form:errors path="password" class="errors"/>
+					<div id="pwCheck">
+						<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+					</div>
 				</li>
 				<li>
-					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인" />
+					<form:password path="re_password" class="txt-input" maxlength="16" placeholder="비밀번호 확인"/>
 					<form:errors path="re_password" class="errors"/>
 				</li>
 				<li>
@@ -142,7 +118,7 @@ var BIRTHDATEMAKER = function() {
 					<form:errors path="email" class="errors"/>
 				</li>
 				<li class="birth">
-					<dl class="type1" style="margin: 0;">
+					<dl class="type1">
 						<dd>
 							<form:select path="birthYear" id="year">
 							</form:select>
@@ -164,7 +140,7 @@ var BIRTHDATEMAKER = function() {
 					<form:errors path="gender" class="errors"/>
 				</li>
 				<li>
-					<form:input path="phone" class="txt-input" maxlength="20" placeholder="휴대폰번호" />
+					<form:input path="phone" class="txt-input" maxlength="11" placeholder="휴대폰번호" id="phone" style="ime-mode:disabled;"/>
 					<form:errors path="phone" class="errors"/>
 				</li>
 				<li>
@@ -187,6 +163,7 @@ var BIRTHDATEMAKER = function() {
 		</div>
 	</form:form>
 </div>
+
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

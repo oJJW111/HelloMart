@@ -46,10 +46,10 @@
         <property name="maxUploadSize" value="100000000" />
         <property name="maxInMemorySize" value="100000000" />
     </bean>
-
 	<!-- bean 등록 -->
 	<mybatis-spring:scan base-package="com.hellomart.dao"/>
 	<context:component-scan base-package="com.hellomart.service.impl"/>
 	<context:component-scan base-package="com.hellomart.util"/>
 	<context:component-scan base-package="com.hellomart.validator"/>
+		
 </beans>

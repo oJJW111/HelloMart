@@ -19,10 +19,10 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <script type="text/javascript">
-function move(mainCategory, small){
+function move(main, small){
 	location.href = "/productList"
-			+ "?mainCategory=" + encodeURIComponent(mainCategory)
-			+ "&selectedSmallCategory=" + encodeURIComponent(small);
+			+ "?mainCategory=" + encodeURIComponent(main)
+			+ "&smallCategory=" + encodeURIComponent(small);
 }
 </script>
 
@@ -36,67 +36,38 @@ function move(mainCategory, small){
 
 <div class=BLOCK70></div>
 
-<form action="/product/list" method="post"> 
+<form action="/productList" method="post"> 
 <div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
 			<h5>세부 분류</h5>
 			<ul>
-				<c:forEach var="small" items="${smallCategory}">
-					<li>
-						<a href="#" onclick="move('${mainCategory}', '${small}'); return false;">${small}</a>
+			<c:if test="${smallCategoryList ne null}">
+				<c:forEach var="smallCategory" items="${smallCategoryList}">
+					<li onclick="move('${param.mainCategory}', '${smallCategory}'); return false;">
+						${smallCategory}
 					</li>
 				</c:forEach> 
+			</c:if>
 			</ul>
 		</div>
 		<div class="category_small">
 			<h5>상세검색</h5>
-			<%
-				if(request.getAttribute("smallCategoryColumn") != null){
-					// 각 검색 조건의 이름과, 그에 해당하는 값
-					HashMap<String,	String> smallCategoryColumn 
-									= (HashMap<String, String>)request.getAttribute("smallCategoryColumn");
-					// 각 검색 조건이 몇개의 체크박스를 가지는지 저장할 변수
-					HashMap<String,	Integer> smallCategoryColumnCount = new HashMap<String, Integer>();
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(페이지에 보여줄 한글명)
-					List<String> columnList = (List<String>) request.getAttribute("columnList");
-					// 선택된 하위 카테고리에 해당하는 검색 조건들(db검색용 영어명)
-					List<String> columnListEng = (List<String>) request.getAttribute("columnListEng");
-					
-					for(int index=0; index<columnList.size(); index++){
-						String column = columnList.get(index);
-						String columnEng = columnListEng.get(index);
-			%>
-						<div> 
-							<%=column%> <br><br> 
-							<% 
-								String allValue = smallCategoryColumn.get(column).trim();
-								StringTokenizer tokenizer = new StringTokenizer(allValue, ",");
-						
-								int i = 0;
-								while(tokenizer.hasMoreTokens()){ 
-									String value = tokenizer.nextToken();
-							%>
-									<label class="ck_container">
-										<input type="checkbox" name="<%=columnEng%>_<%=i%>" value="<%=value%>">
-										<span class="checkmark"></span>
-										<%=value%>
-									</label>
-							<% 
-									i++;
-								} // while(tokenizer.hasMoreElements()) 종료
-								smallCategoryColumnCount.put(columnEng, i);
-							%> 
-						</div>
-			<% 
-						if(index+1 < columnList.size()){
-			%>
-							<hr>
-			<% 
-						}
-					} // for문 종료
-				} // smallCategoryColumn의 null여부 if문 종료
-			%>
+			<c:if test="${smallCategoryColumn ne null}">
+				<c:forEach var="column" items="${columnList}" varStatus="status">
+					<div>
+						<c:out value="${column}"/> <br><br>
+						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
+							<label class="ck_container">
+								<input type="checkbox" name="${columnListEng[status.index]}" value="${value}">
+								<span class="checkmark"></span>
+								<c:out value="${value}"/>
+							</label>
+						</c:forTokens>
+					</div>
+					<c:if test="${!status.last}"><hr></c:if>
+				</c:forEach>
+			</c:if>  
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
@@ -108,97 +79,114 @@ function move(mainCategory, small){
 		<button type="submit"><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
+
+<input type="hidden" name="mainCategory" value="${mainCategory}">
+<input type="hidden" name="smallCategory" value="${smallCategory}">
 </form>
-
-<!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
-<c:if test="${param.small ne null}">
-	<jsp:include page="/WEB-INF/views/product/inc/detail_search.jsp"/>
-</c:if>
-<!-- small 카테고리가 null이 아니라면 상세검색 기능을 제공한다. -->
-
 
 <!-- 상품리스트 -->
 <div class="product_list">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
-		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
-			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
-				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
-		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
-			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
-				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
-	<div class="product_list_content">
-		<div class="product_img"><a href="#"><img src="/resources/images/product/washing_machine01.jpg"></a></div>
-		<div class="product_info">
-			<a class="title" href="#">
-			제품 이름
-			</a>
-			<div class="additional_info">
-				<span class="brand">[LG전자]</span>
-				<span class="category">
-					<a href="#">가전제품</a> > 
-					<a href="#">주방가전</a> > 
-					<a href="#">냉장고</a></span>
-			</div>
-		</div>
-		<div class="product_addition">
-			<div class="price"><strong>600,000원</strong></div>
-			<div class="additional_info">
-				<span class="satisfaction">만족도 98%</span>
-				<span class="buy">구  &nbsp;&nbsp;매 1285</span>
-				<span class="review">상품평 1564</span>
-			</div>
-			<button class="add_to_cart btn_yellow"></button>
-		</div>
-	</div>
-	<hr class="style14">
-</div>
+<c:choose>
+	<c:when test="${list ne null}">
+		<c:forEach var="board" items="${list}">
+				<div class="product_list_content">
+					<div class="product_img">
+						<a href="/productView?no=${board.no}">
+							<img src="${board.imagePath}">
+						</a>
+					</div>
+					<div class="product_info">
+						<a class="title" href="/productView?no=${board.no}">${board.productName}</a>
+						<div class="additional_info">
+							<span class="brand">${board.mfCompany}</span>
+							<span class="category">
+								<a href="/productList/main?mainCategory=${mainCategory}">${mainCategory}</a> > 
+								<a href="/productList/small?mainCategory=${mainCategory}&smallCategory=${smallCategory}">${smallCategory}</a>
+							</span>
+						</div>
+					</div>
+					<div class="product_addition">
+						<div class="price">
+							<strong>${board.price} 원</strong>
+						</div>
+						<div class="additional_info">
+							<span class="satisfaction">만족도(신뢰도) : ${board.score}</span>
+							<span class="buy">구  &nbsp;&nbsp;매 ${board.orderCount}</span>  
+							<span class="review">상품평 ReviewService.getCount(${board.no})</span>
+						</div>
+						<button class="add_to_cart btn_yellow"></button>
+					</div>
+				</div> <!-- <div class="product_list_content"> -->
+				<hr class="style14">
+		</c:forEach>
+	</c:when>
+	<c:otherwise>
+		<h4>해당되는 상품이 없습니다.</h4>
+	</c:otherwise>
+</c:choose>
+</div> <!-- 상품리스트 -->
 
-<div class="BLOCK50"></div>
+<!-- <div class="BLOCK50"></div> -->
 
 </div> <!-- article_wrap 끝 -->
+
+<br>
+<script>
+	function createURL(page) {
+		var helper = (function() {
+			var isFirst = true;
+			var isLastAmp = function() {
+				return url.lastIndexOf("&") != -1;
+			}
+			var addFirst = function() {
+				if(isFirst) {
+					url += "?";
+					isFirst = false;
+				}
+			}
+			var removeLast = function() {
+				if(isLastAmp) {
+					url = url.substr(0, url.length - 1);
+				}
+			}
+			return {
+				addFirst : addFirst,
+				removeLast : removeLast
+			}
+		})();
+		var url = "productList";
+		if('${param.mainCategory}' != '') {
+			helper.addFirst();
+			url += "mainCategory=" + '${param.mainCategory}' + "&";
+		}
+		if('${param.smallCategory}' != '') {
+			helper.addFirst();
+			url += "smallCategory=" + '${param.smallCategory}' + "&";
+		}
+		if(page != '') {
+			helper.addFirst();
+			url += "page=" + page + "&";
+		}
+		helper.removeLast();
+		location.href = url;
+	}
+</script>
+<div align="center">
+	<c:if test="${paging.totalRecord gt 0}">
+		<c:if test="${paging.nowBlock gt 0}">
+			<a href="javascript:void(0);" onclick="createURL(${paging.beginPage - 1});">[이전]</a>
+		</c:if>
+		<c:forEach 	var="i"
+					begin="${paging.beginPage}"
+					end="${paging.endPage}">
+			<a href="javascript:void(0);" onclick="createURL(${i});">[${i}]</a>
+		</c:forEach>
+		<c:if test="${paging.nowBlock lt paging.totalBlock}">
+			<a href="javascript:void(0);" onclick="createURL(${paging.endPage + 1});">[다음]</a>
+		</c:if>
+	</c:if>
+</div>
+<br>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

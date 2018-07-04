@@ -45,4 +45,8 @@ public class ValidationTools {
 		}
 	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git

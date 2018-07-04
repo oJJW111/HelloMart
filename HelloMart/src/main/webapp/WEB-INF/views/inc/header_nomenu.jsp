@@ -41,6 +41,9 @@ $(document).ready(function(){
 </script>
 <div class="header_bar_wrap">
 	<div class="header_bar">
+		<div class="F_right haeder_bar_menu" id="bar_menu1">오늘 본 상품</div>
+		<div class="F_right haeder_bar_menu_line"></div>
+		
 		<div class="F_right haeder_bar_menu" id="bar_menu1">고객센터</div>
 		<div class="F_right haeder_bar_menu_line"></div>
 		
@@ -53,7 +56,7 @@ $(document).ready(function(){
 		<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
-			<div class="F_right haeder_bar_menu" id="bar_menu5">회원정보</div>
+			<div class="F_right haeder_bar_menu" id="bar_menu5">My Page</div>
 		</sec:authorize>
 		
 		<sec:authorize access="hasAnyRole('ROLE_SELLER')">
@@ -61,12 +64,12 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu" id="bar_menu6">판매자 페이지</div>
 		</sec:authorize>
 		
-		
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
+		
 		
 		<div class="clear"></div>
 	</div>

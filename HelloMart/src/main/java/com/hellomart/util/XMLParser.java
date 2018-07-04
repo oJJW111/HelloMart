@@ -17,16 +17,25 @@ import org.xml.sax.SAXException;
 
 import java.io.InputStream;
 
+import java.io.InputStream;
+
 public class XMLParser {
 
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
 
 	private Document doc;
+<<<<<<< HEAD
 
 	public XMLParser(String xmlFilePath) {
+=======
+	
+	
+	public XMLParser(String xmlFilePath){
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 		doc = parseXML(xmlFilePath);
 	}
 
+<<<<<<< HEAD
 	private Document parseXML(String xmlFilePath) {
 		DocumentBuilderFactory documentBuilderFactory = null;
 		DocumentBuilder documentBuilder = null;
@@ -83,17 +92,157 @@ public class XMLParser {
 					children.add(node.getNodeName());
 				}
 			}
+=======
+	
+	
+	private Document parseXML(String xmlFilePath) {
+		DocumentBuilderFactory documentBuilderFactory = null;
+		DocumentBuilder documentBuilder = null;
+		Document doc = null;
+		
+		try{
+			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(xmlFilePath);
+			
+			doc = documentBuilder.parse(is); 
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 		}
+<<<<<<< HEAD
 
 		return children;
+=======
+		catch (ParserConfigurationException e){ 
+			logger.debug(e.getMessage()); 
+		} 
+		catch (SAXException | IOException e) { 
+			logger.debug("XML File not found / " + xmlFilePath + " 파일 경로 확인"); 
+        } 
+		
+		return doc;
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 	}
+<<<<<<< HEAD
 
 	private NodeList getNodeList(String tagName) {
 		return doc.getElementsByTagName(tagName);
+=======
+	
+	
+	
+	public String getValue(String tagName) {
+		Node firstNode = getFirstNode(tagName);
+		return getValue(firstNode);
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 	}
+<<<<<<< HEAD
 
 	private Node getFirstNode(String tagName) {
 		return getNodeList(tagName).item(0);
+=======
+	
+	
+	
+	public String getValue(String parentTagName, String tagName) {
+		Node uniqueNode = getUniqueNode(parentTagName, tagName);
+		return getValue(uniqueNode);
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
 	}
+<<<<<<< HEAD
 
 }
+=======
+	
+	
+
+	private String getValue(Node node) {
+		return node == null ? null : node.getTextContent();
+	}
+	
+	
+	
+	public String getAttributeValue(String tagName, String attr) {
+		Node firstNode = getFirstNode(tagName);
+		NamedNodeMap nnm = firstNode.getAttributes();
+		return getAttributeValue(nnm, attr);
+	}
+	
+	
+	
+	public String getAttributeValue(String parentTagName, String tagName, String attr) {
+		Node uniqueNode = getUniqueNode(parentTagName, tagName);
+		NamedNodeMap nnm = uniqueNode.getAttributes();
+		return getAttributeValue(nnm, attr);
+	}
+	
+	
+	
+	private String getAttributeValue(NamedNodeMap nnm, String attr) {
+		if(nnm != null) {
+			Node node = nnm.getNamedItem(attr);
+			if(node != null) {
+				return node.getTextContent();
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	public Vector<String> getChildren(String tagName) {
+		NodeList nodeList = getNodeList(tagName);
+		return getChildren(nodeList);
+	}
+	
+	
+	
+	public Vector<String> getChildren(String parentTagName, String tagName) {
+		Node uniqueNode = getUniqueNode(parentTagName, tagName);
+		NodeList nodeList = getNodeList(uniqueNode.getNodeName());
+		return getChildren(nodeList);
+	}
+	
+	
+	
+	private Vector<String> getChildren(NodeList nodeList) {
+		Vector<String> children = new Vector<>();
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			for (Node node = nodeList.item(i).getFirstChild(); node != null; node = node.getNextSibling()) {
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					children.add(node.getNodeName());
+				}
+			}
+		}
+		
+		return children;
+	}
+	
+	
+	
+	private NodeList getNodeList(String tagName) {
+		return doc.getElementsByTagName(tagName);
+	}
+	
+	
+	
+	private Node getFirstNode(String tagName) {
+		return getNodeList(tagName).item(0);
+	}
+	
+	
+	
+	private Node getUniqueNode(String parentTagName, String tagName) {
+		NodeList descNodes = getNodeList(tagName);
+		for(int i = 0; i < descNodes.getLength(); i++) {
+			Node node = descNodes.item(i);
+			if(parentTagName.equals(node.getParentNode().getNodeName())) {
+				return node;
+			}
+		}
+		return null;
+	}
+	
+}
+>>>>>>> branch 'jjw' of https://github.com/oJJW111/HelloMart.git
