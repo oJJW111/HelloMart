@@ -67,7 +67,7 @@ public class ProductListServiceImpl implements ProductListService{
 			columnList = xmlParser.getChildren(smallCategory);
 
 			for (String column : columnList) {
-				String value = xmlParser.getValue(column);
+				String value = xmlParser.getValue(smallCategory, column);
 				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 				// System.out.println(smallCategory + "의 " + column + "("
 				// + xmlParser.getName(column) + ")의 value : " + value.trim());
@@ -159,11 +159,14 @@ public class ProductListServiceImpl implements ProductListService{
 			sql += " and price <= " + request.getParameter("price_range2");
 		}
 			
-		// 첫번째 추가조건이면 and로 처리하기 위해서, 구분하기 위한 변수 
-		boolean isFirstAdd = true;
-			
 		for (int i = 0; i < columnListEng.size(); i++) {
 			if (request.getParameterValues(columnListEng.get(i)) != null) {
+				
+				// 같은 속성의 검색조건이 여러개면 or로 조건 처리
+				boolean isFirstAdd = true;
+				
+				sql += " and(";
+				
 				String[] value = request.getParameterValues(columnListEng.get(i));
 
 				for (int j = 0; j < value.length; j++) {
@@ -178,15 +181,15 @@ public class ProductListServiceImpl implements ProductListService{
 
 					if (secondValue == null) { // 범위 조건이 아닐경우, 해당 값으로 검색
 						if (isFirstAdd) {
-							sql += " and " + columnListEng.get(i) + " = '" + value + "'";
+							sql += " " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
 							isFirstAdd = false;
 						} else {
-							sql += " or " + columnListEng.get(i) + " = '" + value + "'";
+							sql += " or " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
 						}
 						System.out.println("sql 문장 : " + sql);
 					} else { // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
 						if (isFirstAdd) {
-							sql += " and (" + columnListEng.get(i) + " >= " + firstValue + " and "
+							sql += " (" + columnListEng.get(i) + " >= " + firstValue + " and "
 									+ columnListEng.get(i) + " <= " + secondValue + ")";
 							isFirstAdd = false;
 						} else {
@@ -195,8 +198,10 @@ public class ProductListServiceImpl implements ProductListService{
 						}
 						System.out.println("sql 문장 : " + sql);
 					}
-				}
-			}
+				} // for반복문 종료(같은 속성의 체크박스에 체크한 값들 반복)
+				sql += ")";
+				System.out.println("최종 sql 문장 : " + sql); 
+			} // if (request.getParameterValues(columnListEng.get(i)) != null)
 		}
 		
 		return sql;

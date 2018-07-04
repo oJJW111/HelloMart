@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import java.io.InputStream;
 
 public class XMLParser {
+	
 	private static final Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
 	private Document doc;
@@ -25,7 +26,7 @@ public class XMLParser {
 	public XMLParser(String xmlFilePath){
 		doc = parseXML(xmlFilePath);
 	}
-
+	
 	private Document parseXML(String xmlFilePath) {
 		DocumentBuilderFactory documentBuilderFactory = null;
 		DocumentBuilder documentBuilder = null;
@@ -49,16 +50,23 @@ public class XMLParser {
 		return doc;
 	}
 	
-	public String getValue(String tagName) { 
-		NodeList descNodes = doc.getElementsByTagName(tagName); 
-		Node node = descNodes.item(0);
-		return node.getTextContent();
+	public String getValue(String parentTagName, String tagName) { 
+		NodeList descNodes = doc.getElementsByTagName(tagName);
+		Node node = null;
+		for(int i=0; i<descNodes.getLength(); i++){
+			Node temp = descNodes.item(i);
+			
+			if(parentTagName.equals(temp.getParentNode().getNodeName())){
+				node = temp;
+				break;
+			}
+		}
+		
+		return (node == null) ? null : node.getTextContent();
 	}
 	
 	public String getAttributeValue(String tagName, String attr) {
-		NodeList descNodes = doc.getElementsByTagName(tagName);
-		Node node = descNodes.item(0);
-		NamedNodeMap nnm = node.getAttributes();
+		NamedNodeMap nnm = getFirstNode(tagName).getAttributes();
 		if(nnm != null) {
 			Node p = nnm.getNamedItem(attr);
 			if(p != null) {
@@ -68,10 +76,10 @@ public class XMLParser {
 		return null;
 	}
 	
-	public Vector<String> getChildren(String tagName) throws Exception {
-		NodeList descNodes = doc.getElementsByTagName(tagName);
+	public Vector<String> getChildren(String tagName) {
+		NodeList descNodes = getNodeList(tagName);
 
-		Vector<String> children = new Vector<String>();
+		Vector<String> children = new Vector<>();
 
 		for (int i = 0; i < descNodes.getLength(); i++) {
 			for (Node node = descNodes.item(i).getFirstChild(); node != null; node = node.getNextSibling()) {
@@ -83,4 +91,13 @@ public class XMLParser {
 
 		return children;
 	}
+	
+	private NodeList getNodeList(String tagName) {
+		return doc.getElementsByTagName(tagName);
+	}
+	
+	private Node getFirstNode(String tagName) {
+		return getNodeList(tagName).item(0);
+	}
+	
 }

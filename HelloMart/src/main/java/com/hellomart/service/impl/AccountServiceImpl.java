@@ -64,4 +64,9 @@ public class AccountServiceImpl implements AccountService {
 		}
 		
 	}
+
+	@Override
+	public Account get(String id) {
+		return dao.get(id); 
+	}
 }
