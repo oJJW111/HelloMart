@@ -53,31 +53,6 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	
-	/* 하이픈(-)을 자동으로 추가하며 올바른 번호가 아닐 경우 경고창을 띄운다. */
-/* 	$("#phone").on('blur', function(){
-	    if($(this).val() == '') return;
-	
-	    var trans_num = $(this).val().replace(/-/gi,'');
-	  
-		if(trans_num != null && trans_num != '') {
-			if(trans_num.length==11 || trans_num.length==10) {   
-				var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-				if(regExp_ctn.test(trans_num)) {
-				    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
-				}
-				$(this).val(trans_num);
-			} else {
-			    alert("유효하지 않은 전화번호 입니다.");
-			    $(this).val("");
-			    $(this).focus();
-			}
-		} else {
-	        alert("유효하지 않은 전화번호 입니다.");
-	        $(this).val("");
-	        $(this).focus();
-	    }
-	});*/
 }); 
 </script>
 </head>
