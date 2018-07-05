@@ -43,7 +43,6 @@ public class Paging {
 		
 		// 페이지의 인덱스를 얻는다.
 		int pageIndex = currentPage - 1;
-		System.out.println("pageIndex : " + pageIndex);
 		this.offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
 
 		// 현재 페이지 블럭을 구한다.
@@ -56,8 +55,6 @@ public class Paging {
 		this.beginPage = nowBlock * pagePerBlock + 1;
 		this.endPage = beginPage + pagePerBlock - 1;
 		
-		System.out.println("nowBlock : " + nowBlock);
-		System.out.println("totalBlock : " + totalBlock);
 		// 마지막 페이지가 총 페이지수를 넘었다면 마지막 페이지를 총 페이지수로 지정한다.
 		if(endPage > totalPage) { 
 			endPage = totalPage;

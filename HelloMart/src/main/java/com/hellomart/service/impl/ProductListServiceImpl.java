@@ -1,16 +1,18 @@
 package com.hellomart.service.impl;
 
-import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
@@ -36,7 +38,7 @@ public class ProductListServiceImpl implements ProductListService{
 	}
 
 	private Map<String, Object> putDefault(String mainCategory, String smallCategory, Integer page) {
-		Map<String, Object> model = new HashMap<>(); 
+		Map<String, Object> modelMap = new HashMap<>();
 		
 		page = page == null ? 1 : page;
 		
@@ -61,67 +63,43 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		
-		model.put("smallCategoryList", smallCategoryList);
-		model.put("paging", paging);
-		model.put("list", list);
+		modelMap.put("smallCategoryList", smallCategoryList);
+		modelMap.put("paging", paging);
+		modelMap.put("list", list);
 		
-		return model;
+		return modelMap;
 	}
 	
-	@Override
-	public Map<String, Object> getMainList(String mainCategory, Integer page) {
-		return putDefault(mainCategory, null, page);
-	}
-	
-	@Override
-	public Map<String, Object> getSmallList(String mainCategory, String smallCategory, Integer page) {
-		Map<String, Object> model = putDefault(mainCategory, smallCategory, page);
-		
-		List<String> columnList = null;
-		List<String> columnListEng = new ArrayList<>();
+	private void putSmallCategories(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
+		List<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
 		HashMap<String, String> smallCategoryColumn = new HashMap<>();
 
-		columnList = xmlParser.getChildren(smallCategory);
-		
 		for (String column : columnList) {
 			String value = xmlParser.getValue(smallCategory, column);
-			columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 			smallCategoryColumn.put(column, value);
 		}
 		
-		model.put("smallCategoryColumn", smallCategoryColumn);
-		model.put("columnList", columnList);
-		model.put("columnListEng", columnListEng);
 		
-		return model;
+		modelMap.put("smallCategoryColumn", smallCategoryColumn);
+		modelMap.put("columnList", columnList);
 	}
 	
-	
-	
 	@Override
-	public Map<String, Object> getDetailList(String mainCategory, String smallCategory, Integer page) {
+	public Map<String, Object> list(HttpServletRequest request, String mainCategory, String smallCategory, Integer page) {
+		Map<String, Object> modelMap = putDefault(mainCategory, smallCategory, page);
+		if(smallCategory != null) {
+			putSmallCategories(modelMap, mainCategory, smallCategory);
+		}
+		Enumeration<String> attributeNames = request.getAttributeNames();
 		
-//		String sql = createSQL(request); 
-//		HashMap<String, String> sqlMap = new HashMap<>();
-//		sqlMap.put("sql", sql);
-//		model.addAttribute("productList", dao.listDetail(sqlMap));
-
-		Map<String, Object> map = new HashMap<>();
-		
-		return map;
+		while(attributeNames.hasMoreElements()) {
+			
+		}
+		return modelMap;
 	}
 	
 	public String findNumber(String str){
-		String number = "";
-		
-		for(int i=0; i<str.length(); i++){
-			// 아스키코드, 0 -> 48, 9 -> 57
-			if( ((48 <= str.charAt(i)) && (str.charAt(i) <= 57)) || (str.charAt(i) == '.') ){
-				number += str.charAt(i); 
-			}
-		}
-		
-		return number;
+		return str.replaceAll("[^0-9]", "");
 	}
 	
 //	public String createSQL(HttpServletRequest request){
