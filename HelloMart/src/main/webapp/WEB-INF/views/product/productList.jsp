@@ -109,9 +109,9 @@ $(document).ready(function(){
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search">
-		<input type="text" placeholder="0원" name="price_range1">
+		<input type="text" placeholder="0원" name="price">
 		<div class="range">~</div>
-		<input type="text" placeholder="999,999,999원" name="price_range2">
+		<input type="text" placeholder="999,999,999원" name="price">
 		<div class="currency">원</div>
 		<button onclick="$.submitForm(this.form)"
 		><i class="fa fa-search"></i></button>

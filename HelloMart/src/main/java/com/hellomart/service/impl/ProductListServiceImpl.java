@@ -37,9 +37,9 @@ public class ProductListServiceImpl implements ProductListService{
 	}
 
 	private Map<String, Object> putDefault(
+			Map<String, Object> modelMap,
 			String mainCategory, String smallCategory,
 			Integer page, String detailWhereSQL) {
-		Map<String, Object> modelMap = new HashMap<>();
 		final int MAX_RESULT = 10;
 		final int PAGE_PER_BLOCK = 10;
 		
@@ -101,7 +101,7 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		
-		Map<String, String[]> checkMap = new HashMap<>();
+		Map<String, String[]> paramMap = new HashMap<>();
 		
 		while(parameterNames.hasMoreElements()) {
 			String param = parameterNames.nextElement();
@@ -117,54 +117,51 @@ public class ProductListServiceImpl implements ProductListService{
 				break;
 				default :
 					String[] value = request.getParameterValues(param);
-					checkMap.put(param, value);
+					paramMap.put(param, value);
 			}
 		}
 		
+		Map<String, Object> modelMap = new HashMap<>();
 		String detailWhereSQL = null;
-		
-		if(!checkMap.isEmpty()) {
-			Vector<String> columnList = ModelMap.class 
-			String table = xmlParser.getAttributeValue(smallCategory, "table"); 
-			detailWhereSQL = createDetailSQL(checkMap, table);
-		}
-		
-		Map<String, Object> modelMap = putDefault(mainCategory, smallCategory, page);
 		
 		if(smallCategory != null) {
 			putSmallCategories(modelMap, mainCategory, smallCategory);
+			if(!paramMap.isEmpty()) {
+				String table = xmlParser.getAttributeValue(smallCategory, "table"); 
+				detailWhereSQL = createDetailSQL(modelMap, paramMap, table);
+			}
 		}
+		
+		putDefault(modelMap, mainCategory, smallCategory, page, detailWhereSQL);
 		
 		return modelMap;
 	}
 	
 	
-	public String createDetailSQL(Map<String, String[]> checkMap, String table, Vector<String> columnList, Vector<String> columnListEng){
-		Set<String> keySet = checkMap.keySet();
+	@SuppressWarnings("unchecked")
+	public String createDetailSQL(Map<String, Object> modelMap, Map<String, String[]> paramMap, String table){
+		Vector<String> columnList = (Vector<String>) modelMap.get("columnList");
+		Vector<String> columnListEng = (Vector<String>) modelMap.get("columnListEng");
+		Set<String> keySet = paramMap.keySet();
 		
 		for(String key : keySet) {
-			for(String value : checkMap.get(key)) {
+			for(String value : paramMap.get(key)) {
 				logger.debug(value);
 			}
 		}
 		
-		Vector<String> columnList = null;
-		Vector<String> columnListEng = null;
-		
 		String sql = "";
-		System.out.println("sql 문장 : " + sql);
 		
-		// 상품 이름으로 검색
-		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
-			sql += " and productname = '" + request.getParameter("search") + "'";
+		if(paramMap.get("search")[0] != null && !paramMap.get("search")[0].isEmpty()){
+			sql += " search ";
 		}
-		// 최저 가격 검색
-		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
-			sql += " and price >= " + request.getParameter("price_range1");
+		
+		if(paramMap.get("price")[0] != null && !paramMap.get("price")[0].isEmpty()){
+			sql += " and price >= " + paramMap.get("price")[0];
 		}
-		// 최고 가격 검색
-		if(request.getParameter("price_range2") != null && !request.getParameter("price_range2").equals("")){
-			sql += " and price <= " + request.getParameter("price_range2");
+		
+		if(paramMap.get("price")[1] != null && !paramMap.get("price")[1].isEmpty()){
+			sql += " and price <= " + paramMap.get("price")[1];
 		}
 		
 		for (int i = 0; i < columnListEng.size(); i++) {
