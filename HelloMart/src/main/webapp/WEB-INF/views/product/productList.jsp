@@ -93,10 +93,10 @@ $(document).ready(function(){
 			<c:if test="${smallCategoryColumn ne null}">
 				<c:forEach var="column" items="${columnList}" varStatus="status">
 					<div>
-						<c:out value="${column}"/> <br><br>
-						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims="," varStatus="status">
+						<c:out value="${column}"/><br><br>
+						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
 							<label class="ck_container">
-								<input type="checkbox" name="${column}" value="${fn:trim(value)}">
+								<input type="checkbox" name="${columnListEng[status.index]}" value="${fn:trim(value)}">
 								<span class="checkmark"></span>
 								<c:out value="${fn:trim(value)}"/>
 							</label>
