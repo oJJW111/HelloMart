@@ -25,14 +25,14 @@
 		<table> 
 			<tr>
 				<td rowspan="5">
-					<img src="${product.imagePath}" width="400px">
+					<img src="${detail.ImagePath}" width="400px">
 				</td>
 				<td>상품명</td>
-				<td>${product.productName}</td>
+				<td>${detail.ProductName}</td>
 			</tr>
-			<tr>
+			<tr> 
 				<td>상품가격</td>
-				<td>${product.price}</td>
+				<td>${detail.Price}</td>
 			</tr>	
 			<tr>
 				<td>상품수량</td>
@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<td>상품 총 금액</td>
-				<td>${product.price * orderCount}</td>
+				<td>${detail.Price * orderCount}</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -76,7 +76,7 @@
 							<td>상세주소</td>
 							<td>
 								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
-										id="sample6_address2" readonly="readonly">
+										id="sample6_address2">
 							</td>
 						</tr>						
 					</table>
@@ -93,9 +93,9 @@
 			</tr>
 		</table>
 		<input type="hidden" name="orderId" value="${account.id}">
-		<input type="hidden" name="prodNo" value="${product.no}">
+		<input type="hidden" name="prodNo" value="${detail.No}">
 		<input type="hidden" name="orderCount" value="${orderCount}">
-		<input type="hidden" name="orderPrice" value="${product.price * orderCount}">
+		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
 		<input type="hidden" name="orderStatus" value="PAY_OK">
 		</form>
 	</center>

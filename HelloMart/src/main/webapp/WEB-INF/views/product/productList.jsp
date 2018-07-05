@@ -101,12 +101,12 @@ function move(mainCategory, small){
 			<c:if test="${isStop != 'stop'}">
 				<div class="product_list_content">
 					<div class="product_img">
-						<a href="/productView?no=${productList[product.index].no}">
+						<a href="/productView?no=${productList[product.index].no}&smallCategory=${smallCategory}">
 							<img src="${productList[product.index].imagePath}">
 						</a>
 					</div>
 					<div class="product_info">
-						<a class="title" href="/productView?no=${productList[product.index].no}">${productList[product.index].productName}</a>
+						<a class="title" href="/productView?no=${productList[product.index].no}&smallCategory=${smallCategory}">${productList[product.index].productName}</a>
 						<div class="additional_info">
 							<span class="brand">${productList[product.index].mfCompany}</span>
 							<span class="category">

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.hellomart.dao.ProductDAO;
-import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductService;
 import com.hellomart.util.XMLParser;
 
@@ -20,20 +19,16 @@ public class ProductServiceImpl implements ProductService{
 	ProductDAO dao;
 	
 	@Override
-	public void getProductInfo(String no, Model model) {
-		ProductList dto = dao.getProductInfo(no);
-		
-		model.addAttribute("product", dto); 
-		
+	public void getDetailInfo(String no, String smallCategory, Model model) {
 		XMLParser xmlParser = new XMLParser("category.xml");
 		
-		String smallCategoryEng = xmlParser.getAttributeValue(dto.getSmallCategory(), "table"); 
+		String smallCategoryEng = xmlParser.getAttributeValue(smallCategory, "table"); 
 		
 		List<String> columnList = new ArrayList<>();
 		List<String> columnListEng = new ArrayList<>();
 		
 		try {
-			columnList = xmlParser.getChildren(dto.getSmallCategory());
+			columnList = xmlParser.getChildren(smallCategory);
    
 			for (String column : columnList) {
 				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
@@ -52,6 +47,6 @@ public class ProductServiceImpl implements ProductService{
 		model.addAttribute("columnList", columnList);
 		model.addAttribute("columnListEng", columnListEng);
 		model.addAttribute("detail", dao.getDetailInfo(map)); 
-		System.out.println(dao.getDetailInfo(map).keySet()); 
+		// System.out.println(dao.getDetailInfo(map).keySet()); 
 	}
 }

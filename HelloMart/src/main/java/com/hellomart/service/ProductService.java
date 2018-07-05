@@ -4,6 +4,6 @@ import org.springframework.ui.Model;
 
 public interface ProductService {
 
-	void getProductInfo(String no, Model model);
+	void getDetailInfo(String no, String smallCategory, Model model);
  
 }

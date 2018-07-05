@@ -1,5 +1,7 @@
 package com.hellomart.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hellomart.dto.Account;
 import com.hellomart.dto.OrderList;
 import com.hellomart.service.AccountService;
+import com.hellomart.service.OrderService;
 import com.hellomart.service.ProductService;
 
 @Controller
-public class ProductBuyController {
+public class OrderController {
 	
 	@Autowired
 	AccountService accountService;
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	OrderService orderService;
 
 	@RequestMapping("/buy")
 	public String buy(Model model, HttpServletRequest request){
+		String no = request.getParameter("no");
+		String smallCategory = request.getParameter("smallCategory");
 		
 		// 구매상품정보
-		productService.getProductInfo(request.getParameter("no"), model); 
+		productService.getDetailInfo(no, smallCategory, model); 
 		// 상품구매수량
 		model.addAttribute("orderCount", request.getParameter("orderCount"));
 		// 구매자 정보
@@ -36,13 +44,32 @@ public class ProductBuyController {
 	}
 	
 	@RequestMapping("/buyOk")
-	public String buyOk(Model model, OrderList orderList){
+	public String buyOk(OrderList orderList){
+		orderService.insertOrder(orderList);
 		
 		return "index";
+		// return "마이페이지 구매리스트로?";
 	}
 	
 	@RequestMapping("/cartBuy")
 	public String cartBuy(){
 		return "product/productCartBuy";
 	}
+	
+	@RequestMapping("/cartBuyOk")
+	public String cartBuyOk(List<OrderList> orderLists){
+		orderService.insertOrderList(orderLists); 
+		
+		return "마이페이지로?";
+	}
+	
+	@RequestMapping("/cartList")
+	public String cartList(String id){
+		return "카트 목록 보기 페이지로";
+	}
 }
+
+
+
+
+
