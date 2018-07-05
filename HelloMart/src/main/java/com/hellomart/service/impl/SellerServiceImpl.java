@@ -73,7 +73,7 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 	@Override
-	public void productPartSpec(Model model, Map<String, String> category) {
+	public Map<String, Object> productPartSpec(Model model, Map<String, String> category) {
 		String mainCategory = category.get("mainCategory");		
 		String smallCategory = category.get("smallCategory");
 		
@@ -117,6 +117,11 @@ public class SellerServiceImpl implements SellerService{
 		model.addAttribute("specMapList", productPartSpecMap);
 		model.addAttribute("specEngNameList", productPartSpecEngName);
 		model.addAttribute("specKorNameList", productPartSpecKorName);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("specEngNameList", productPartSpecEngName);
+		map.put("table", xmlParser.getAttributeValue(smallCategory, "table"));
+		return map;
 	}
 
 	@Override

@@ -13,7 +13,9 @@ public class ProductList {
 	private String imagePath;    
 	private int orderCount;    
 	private int score;     
-	private Date prodDate;       
+	private String prodYear;
+	private String prodMonth;
+	private String prodDay;       
 	private String mfCompany;   
 	private int price;  
 	private int weight;        
