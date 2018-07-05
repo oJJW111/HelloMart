@@ -11,6 +11,21 @@
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>주문 페이지</title>
+<script type="text/javascript">
+	$(function(){
+		$('#usePoint').on({
+			"click" : function(){ 
+				$('#divPoint').load("/pointView?id=${account.id}");
+			}
+		});
+		
+		$('#noUsePoint').on({
+			"click" : function(){ 
+				$('#divPoint').empty();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -82,7 +97,16 @@
 					</table>
 				</td>
 			</tr>
-			
+			<tr>
+				<td align="center" colspan="3">
+					포인트를 사용하시겠습니까?
+					&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="usePoint" value="-">예
+					&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
+					<div id="divPoint"></div>
+				</td>
+			</tr>
 			<tr>
 				<td align="center" colspan="3">
 					<br><br>
@@ -92,8 +116,9 @@
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="orderId" value="${account.id}">
+		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
 		<input type="hidden" name="prodNo" value="${detail.No}">
+		<input type="hidden" name="prodName" value="${detail.ProductName}">
 		<input type="hidden" name="orderCount" value="${orderCount}">
 		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
 		<input type="hidden" name="orderStatus" value="PAY_OK">

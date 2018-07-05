@@ -8,7 +8,6 @@
 <title>HelloMart</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
 	function fnBuy(no, smallCategory, id){
@@ -16,6 +15,23 @@
 		location.href = "/buy?no=" + no + "&smallCategory=" + smallCategory
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
+	
+	$(function(){
+	    $('.__count_range input[count_range]').click(function(e){
+	        e.preventDefault();
+	        var type = $(this).attr('count_range');
+	        var $count = $(this).parent().children('input.count');
+	        var count_val = $count.val(); // min 1
+	        if(type=='m'){
+	            if(count_val<1){
+	                return;
+	            }
+	            $count.val(parseInt(count_val)-1);
+	        }else if(type=='p'){
+	            $count.val(parseInt(count_val)+1);
+	        }
+	    });
+	});
 </script>
 
 </head>
@@ -81,17 +97,16 @@
 	</table>                       
 </div>
 <br><br>
-<div align="center"> 
-	수량 &nbsp;&nbsp;
-	<select name="orderCount" id="orderCount"> 
-		<option value="1">1개</option>
-		<option value="2">2개</option>
-		<option value="3">3개</option>	
-		<option value="4">4개</option>
-		<option value="5">5개</option>
-	</select>
+	<div align="center"> 
+		수량 &nbsp;&nbsp;
+		<div class="__count_range">
+		<input value="-" count_range="m" type="button">
+ 		<input class="count" value="1" name="orderCount" id="orderCount" type="number">
+  		<input value="+" count_range="p" type="button">
+	</div>	
 	&nbsp;&nbsp;<input type="button" value="구매" 
 					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+	&nbsp;&nbsp;<input type="button" value="장바구니 담기" onclick="">
 </div>
 
 <div>
