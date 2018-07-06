@@ -58,6 +58,9 @@ $(document).ready(function(){
 		    $(this).find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
 		});
 	}
+	$.checkMaintain = function() {
+		
+	}
 });
 </script>
 
@@ -96,7 +99,12 @@ $(document).ready(function(){
 						<c:out value="${column}"/><br><br>
 						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
 							<label class="ck_container">
-								<input type="checkbox" name="${columnListEng[status.index]}" value="${fn:trim(value)}">
+								<input type="checkbox" name="${columnListEng[status.index]}"
+								id="${columnListEng[status.index] + status.index}" value="${fn:trim(value)}">
+<%-- 									<c:if test="${checked[columnListEng[status.index]].[status.index] == status.index}"> --%>
+<!-- 										checked -->
+<%-- 									</c:if> --%>
+<!-- 								> -->
 								<span class="checkmark"></span>
 								<c:out value="${fn:trim(value)}"/>
 							</label>
@@ -104,14 +112,14 @@ $(document).ready(function(){
 					</div>
 					<c:if test="${!status.last}"><hr></c:if>
 				</c:forEach>
-			</c:if>  
+			</c:if>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
-		<input type="text" placeholder="제품명 검색" name="search">
-		<input type="text" placeholder="0원" name="price1">
+		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
+		<input type="text" placeholder="0원" name="price1" value="${param.price1}">
 		<div class="range">~</div>
-		<input type="text" placeholder="999,999,999원" name="price2">
+		<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
 		<button onclick="$.submitForm(this.form)"
 		><i class="fa fa-search"></i></button>
