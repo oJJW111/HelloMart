@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hellomart.dao.AccountDAO;
 import com.hellomart.dao.PointDAO;
 import com.hellomart.dto.OrderList;
 import com.hellomart.dto.Point;
@@ -15,7 +16,10 @@ import com.hellomart.service.PointService;
 public class PointServiceImpl implements PointService {
 	
 	@Autowired
-	PointDAO dao;
+	PointDAO pointDao;
+	
+	@Autowired
+	AccountDAO accountDao;
 	
 	@Autowired
 	AccountService accountService;
@@ -32,7 +36,7 @@ public class PointServiceImpl implements PointService {
 		
 		String content = request.getParameter("prodName"); 
 		if(incDec.equals("+")){
-			qty = totalPrice * (0.01 + grade);
+			qty = totalPrice * (0.01 * grade);
 			content += "의 구매로" + qty + "만큼 " +"증가";	
 		}
 		if(incDec.equals("-")){
@@ -45,7 +49,8 @@ public class PointServiceImpl implements PointService {
 		point.setPoint((int)Math.ceil(qty));
 		point.setContent(content);
 		
-		dao.insertPoint(point); 
+		pointDao.insertPoint(point); 
+		accountDao.updatePoint(point.getId(), point.getPoint(), point.getIncDec());
 	}
 
 	@Override
@@ -62,7 +67,7 @@ public class PointServiceImpl implements PointService {
 
 		String content = request.getParameter("prodName0");
 		if (incDec.equals("+")) {
-			qty = totalPrice * (0.01 + grade);
+			qty = totalPrice * (0.01 * grade);
 			content += "외 " + size + "개의 상품의 구매로" + qty + "만큼 " + "증가";
 		}
 		if (incDec.equals("-")) {
@@ -75,6 +80,7 @@ public class PointServiceImpl implements PointService {
 		point.setPoint((int) Math.ceil(qty));
 		point.setContent(content);
 
-		dao.insertPoint(point);
+		pointDao.insertPoint(point);
+		accountDao.updatePoint(point.getId(), point.getPoint(), point.getIncDec());
 	}
 }

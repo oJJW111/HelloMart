@@ -91,7 +91,7 @@
 <br><br>
 <div align="center"> 
 	수량 &nbsp;&nbsp;
-	<select name="orderCount">
+	<select name="orderCount" id="orderCount">
     	<c:forEach begin="1" end="10" var="i">
     		<option value="${i}">${i}</option>
     	</c:forEach>

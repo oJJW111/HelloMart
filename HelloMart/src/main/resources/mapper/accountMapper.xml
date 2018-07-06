@@ -44,6 +44,17 @@
 		FROM Account WHERE ID = #{id};
 	</select>
 	
+	<update id="updatePoint">
+		update account
+		<if test='param3.equals("+")'>
+			set points = points + #{param2}
+		</if>
+		<if test='param3.equals("-")'> 
+			set points = points - #{param2}
+		</if>
+		where id = #{param1}
+	</update>
+	
 	<delete id="truncate">
 		TRUNCATE Account
 	</delete>

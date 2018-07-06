@@ -63,6 +63,15 @@ public interface AccountDAO {
 	Account get(String id);
 	
 	/**
+	 * 주문 처리 후, 유저의 보유 포인트 변경
+	 * 
+	 * @param id 계정의 아이디
+	 * @param point 변동 포인트 양
+	 * @param incDec 감소인지 증가인지 구분할 값
+	 */
+	void updatePoint(String id, int point, String incDec);
+	
+	/**
 	 * 테이블을 초기화한다. 테스트용으로 사용된다.
 	 */
 	void truncate();
