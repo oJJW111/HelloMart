@@ -22,19 +22,6 @@
 	<select id="list"
 			parameterType="HashMap"
 			resultType="com.hellomart.dto.ProductList">
-		select * from productlist
-		
-		<where>
-			mainCategory = #{mainCategory}
-			<if test="smallCategory != null"> 
-				and smallCategory = #{smallCategory}
-			</if>
-			order by no desc limit #{offset}, #{limit}
-		</where>
-	</select>
-	
-	<select id="listDetail"
-			resultType="com.hellomart.dto.ProductList">
-		${sql}
+			${detailWhereSQL}
 	</select>
 </mapper> 

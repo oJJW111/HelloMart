@@ -2,9 +2,9 @@ package com.hellomart.service.impl;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 
 import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.ProductList;
@@ -25,7 +24,6 @@ import com.hellomart.util.XMLParser;
 @Service
 public class ProductListServiceImpl implements ProductListService{
 	
-	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(ProductListServiceImpl.class);
 	
 	@Autowired
@@ -36,13 +34,11 @@ public class ProductListServiceImpl implements ProductListService{
 	public ProductListServiceImpl() {
 	}
 
-	private Map<String, Object> putDefault(
-			Map<String, Object> modelMap,
-			String mainCategory, String smallCategory,
-			Integer page, String detailWhereSQL) {
-		final int MAX_RESULT = 10;
-		final int PAGE_PER_BLOCK = 10;
-		
+	
+	
+	
+	
+	private Paging paging(String mainCategory, String smallCategory, Integer page) {
 		page = page == null ? 1 : page;
 		
 		Map<String, String> categories = new HashMap<>();
@@ -50,31 +46,32 @@ public class ProductListServiceImpl implements ProductListService{
 		categories.put("smallCategory", smallCategory);
 		int total = dao.getTotal(categories);
 		
-		Paging paging = new Paging(total, page, MAX_RESULT, PAGE_PER_BLOCK);
-		
-		int offset = paging.getOffset();
+		return new Paging(total, page, 10, 10);
+	}
+	
+	
+	
+	
+	
+	private Vector<ProductList> listBoard(String detailWhereSQL) {
 		Vector<ProductList> list = null;
 		
 		Map<String, Object> parametersMap = new HashMap<>();
-		parametersMap.put("mainCategory", mainCategory);
-		parametersMap.put("smallCategory", smallCategory);
-		parametersMap.put("offset", offset);
-		parametersMap.put("limit", MAX_RESULT);
 		parametersMap.put("detailWhereSQL", detailWhereSQL);
-		if(offset != -1) {
-			list = dao.list(parametersMap);
-		}
+		list = dao.list(parametersMap);
 		
-		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
-		
-		modelMap.put("smallCategoryList", smallCategoryList);
-		modelMap.put("paging", paging);
-		modelMap.put("list", list);
-		
-		return modelMap;
+		return list;
 	}
 	
-	private void putSmallCategories(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
+	
+	
+	
+	
+	
+	
+	
+	
+	private void smallCategoryDetails(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
 		Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
 		HashMap<String, String> smallCategoryColumn = new HashMap<>();
 		Vector<String> columnListEng = new Vector<>();
@@ -89,6 +86,10 @@ public class ProductListServiceImpl implements ProductListService{
 		modelMap.put("smallCategoryColumn", smallCategoryColumn);
 		modelMap.put("columnListEng", columnListEng);
 	}
+	
+	
+	
+	
 	
 	@Override
 	public Map<String, Object> list(Model model) {
@@ -106,113 +107,173 @@ public class ProductListServiceImpl implements ProductListService{
 		while(parameterNames.hasMoreElements()) {
 			String param = parameterNames.nextElement();
 			switch (param) {
-			case "mainCategory" :
+			case "mainCategory":
 				mainCategory = request.getParameter(param);
 				break;
-			case "smallCategory" :
+			case "smallCategory":
 				smallCategory = request.getParameter(param);
 				break;
-			case "page" :
+			case "page":
 				page = Integer.parseInt(request.getParameter(param));
 				break;
-				default :
+				default:
 					String[] value = request.getParameterValues(param);
 					paramMap.put(param, value);
 			}
 		}
 		
+		
+		
+		/***** Model에 put할 맵 생성 *****/
 		Map<String, Object> modelMap = new HashMap<>();
-		String detailWhereSQL = null;
+		/***** Model에 put할 맵 생성 *****/
 		
+		
+		
+		/***** 페이징처리 *****/
+		Paging paging = paging(mainCategory, smallCategory, page);
+		modelMap.put("paging", paging);
+		/***** 페이징처리 *****/
+		
+		
+		
+		/***** small 카테고리 리스트 처리 *****/
+		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
+		modelMap.put("smallCategoryList", smallCategoryList);
+		/***** small 카테고리 리스트 처리 *****/
+		
+		
+		
+		/***** 카테고리 세부 목록 처리 *****/
 		if(smallCategory != null) {
-			putSmallCategories(modelMap, mainCategory, smallCategory);
-			if(!paramMap.isEmpty()) {
-				String table = xmlParser.getAttributeValue(smallCategory, "table"); 
-				detailWhereSQL = createDetailSQL(modelMap, paramMap, table);
-			}
+			smallCategoryDetails(modelMap, mainCategory, smallCategory);
 		}
+		/***** 카테고리 세부 목록 처리 *****/
 		
-		putDefault(modelMap, mainCategory, smallCategory, page, detailWhereSQL);
+		
+		
+		/***** SQL 생성 *****/
+		String detailWhereSQL = null;
+		String table = null;
+		int offset = paging.getOffset();
+		int limit = paging.getMaxResult();
+		try {
+			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
+		} catch (NullPointerException e) {}
+		detailWhereSQL = createDetailSQL(paramMap, table, mainCategory, smallCategory, offset, limit);
+		/***** SQL 생성 *****/
+		
+		
+		
+		/***** 상품 리스트 처리 *****/
+		Vector<ProductList> list = listBoard(detailWhereSQL);
+		modelMap.put("list", list);
+		/***** 상품 리스트 처리 *****/
+		
+		
 		
 		return modelMap;
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	public String createDetailSQL(Map<String, Object> modelMap, Map<String, String[]> paramMap, String table){
-		Vector<String> columnList = (Vector<String>) modelMap.get("columnList");
-		Vector<String> columnListEng = (Vector<String>) modelMap.get("columnListEng");
-		Set<String> keySet = paramMap.keySet();
+	public String createDetailSQL(
+			Map<String, String[]> paramMap, String table, 
+			String mainCategory, String smallCategory,
+			int offset, int limit){
+		StringBuilder sql = new StringBuilder();
 		
-		for(String key : keySet) {
-			for(String value : paramMap.get(key)) {
-				logger.debug(value);
+		sql
+			.append("SELECT").append(" ")
+			.append("no").append(", ")
+			.append("imagePath").append(", ")
+			.append("productName").append(", ")
+			.append("mfCompany").append(", ")
+			.append("price").append(", ")
+			.append("score").append(", ")
+			.append("orderCount").append(" ")
+			.append("FROM").append(" ")
+			.append("ProductList").append(" ");
+		
+		Set<String> columns = paramMap.keySet();
+		
+		if(!columns.isEmpty()) {
+			sql
+			.append("NATURAL JOIN").append(" ")
+			.append(table).append(" ");
+		}
+		
+		sql
+			.append("WHERE").append(" ");
+		
+		sql
+			.append("mainCategory").append(" = ").append("'").append(mainCategory).append("'");
+		
+		if(smallCategory != null) {
+			sql.append(" and ").append("smallCategory").append(" = ").append("'").append(smallCategory).append("'");
+		}
+		
+		for(String column : columns) {
+			boolean isFirst = true;
+			StringBuilder sb = new StringBuilder();
+				sb.append(" and (");
+			for(String value : paramMap.get(column)) {
+				switch (column) {
+				case "search":
+					sb.append("ProductName").append(" = ")
+					.append("'%").append(value).append("%'");
+					break;
+				case "price1":
+					sb.append("price").append(" >= ").append(value);
+					break;
+				case "price2":
+					sb.append("price").append(" <= ").append(value);
+					break;
+					default:
+						if(isFirst) {
+							isFirst = false;
+						} else {
+							sb.append(" or ");
+						}
+						
+						if(value.indexOf('~') == -1) {
+							sb
+								.append(column)
+								.append(" = ")
+								.append("'").append(value).append("'");
+						} else {
+							StringTokenizer tokenizer = new StringTokenizer(value, "~");
+							
+							sb
+								.append("(")
+									.append(column)
+									.append(" >= ")
+									.append(filterNumber(tokenizer.nextToken()))
+									.append(" and ")
+									.append(column)
+									.append(" <= ")
+									.append(filterNumber(tokenizer.nextToken()))
+								.append(")");
+						}
+				}
 			}
+			sb.append(")");
+			
+			sql.append(sb.toString());
 		}
 		
-		String sql = "";
+		sql
+			.append(" ").append("ORDER BY").append(" ")
+			.append("no").append(" ")
+			.append("DESC").append(" ")
+			.append("LIMIT").append(" ").append(limit).append(" ")
+			.append("OFFSET").append(" ").append(offset);
 		
-		if(paramMap.get("search")[0] != null && !paramMap.get("search")[0].isEmpty()){
-			sql += " search ";
-		}
+		logger.debug("ProductLIst SQL : " + sql.toString());
 		
-		if(paramMap.get("price")[0] != null && !paramMap.get("price")[0].isEmpty()){
-			sql += " and price >= " + paramMap.get("price")[0];
-		}
-		
-		if(paramMap.get("price")[1] != null && !paramMap.get("price")[1].isEmpty()){
-			sql += " and price <= " + paramMap.get("price")[1];
-		}
-		
-		for (int i = 0; i < columnListEng.size(); i++) {
-			if (request.getParameterValues(columnListEng.get(i)) != null) {
-				
-				// 같은 속성의 검색조건이 여러개면 or로 조건 처리
-				boolean isFirstAdd = true;
-				
-				sql += " and(";
-				
-				String[] value = request.getParameterValues(columnListEng.get(i));
+		return sql.toString();
+	}
 	
-				for (int j = 0; j < value.length; j++) {
-					StringTokenizer tokenizer = new StringTokenizer(value[j], "~");
-					String firstValue = null;
-					String secondValue = null;
-	
-					firstValue = findNumber(tokenizer.nextToken());
-					while (tokenizer.hasMoreTokens()) {
-						secondValue = findNumber(tokenizer.nextToken());
-					}
-	
-					if (secondValue == null) { // 범위 조건이 아닐경우, 해당 값으로 검색
-						if (isFirstAdd) {
-							sql += " " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
-							isFirstAdd = false;
-						} else {
-							sql += " or " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
-						}
-						System.out.println("sql 문장 : " + sql);
-					} else { // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
-						if (isFirstAdd) {
-							sql += " (" + columnListEng.get(i) + " >= " + firstValue + " and "
-									+ columnListEng.get(i) + " <= " + secondValue + ")";
-							isFirstAdd = false;
-						} else {
-							sql += " or (" + columnListEng.get(i) + " >= " + firstValue + " and " + columnListEng.get(i)
-									+ " <= " + secondValue + ")";
-						}
-						System.out.println("sql 문장 : " + sql);
-					}
-				} // for반복문 종료(같은 속성의 체크박스에 체크한 값들 반복)
-				sql += ")";
-				System.out.println("최종 sql 문장 : " + sql); 
-			} // if (request.getParameterValues(columnListEng.get(i)) != null)
-		}
-		
-		return sql;
-	} // createSql 메소드 끝
-	
-	public String findNumber(String str){
+	public String filterNumber(String str){
 		return str.replaceAll("[^0-9]", "");
 	}
 	
