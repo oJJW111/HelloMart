@@ -1,7 +1,9 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.hellomart.dto.Account;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
 import com.hellomart.validator.ProductFormValidator;
@@ -32,7 +33,7 @@ import com.hellomart.validator.ProductFormValidator;
 public class SellerController {
 	
 	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SellerController.class);
 	
 	@Autowired
 	SellerService sellerService;
@@ -41,6 +42,7 @@ public class SellerController {
 	ProductFormValidator productFormValidator;
 	
 	Map<String, String> category;
+	Map<String, Object> tableInfoMap;
 	
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
@@ -77,7 +79,7 @@ public class SellerController {
 		category = new HashMap<String, String>();
 		category.put("mainCategory", mainCategoryInput);
 		category.put("smallCategory", smallCategoryInput);
-		sellerService.productPartSpec(model, category);
+		tableInfoMap = sellerService.productPartSpec(model, category);
 		model.addAttribute("ProductList", new ProductList());
 		return "seller/register";
 	}
@@ -86,7 +88,9 @@ public class SellerController {
 	public String sellerProductRegister(MultipartHttpServletRequest mRequest, 
 			@ModelAttribute("ProductList") @Valid ProductList productList,
 				BindingResult bindingResult, Model model){
+		boolean flag = false;
 		String uri = null;
+		Map<String, Object> tempTableInfoMap = tableInfoMap;
 		if(bindingResult.hasErrors()) {
 			Map<String, String> map = new HashMap<>();
 			map.put("selectedYear", productList.getProdYear());
@@ -94,18 +98,41 @@ public class SellerController {
 			map.put("selectedDay", productList.getProdDay());
 			
 			model.addAttribute("prodDate", map);
-			uri = "seller/register";
+			return "seller/register";
 		}
 		if(mRequest.getFile("productImageFile").isEmpty()){
 			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
-			uri = "seller/register";
+			flag = true;
 		}else{
 			System.out.println(mRequest.getFile("productImageFile").getOriginalFilename());
 			System.out.println(mRequest.getFile("productImageFile").getSize());
 		}
-		sellerService.sellerProductRegister(mRequest);
-		uri = "redirect:/seller/page/1";
 		
+		List<String> specEngNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
+		List<String> specKorNameList = (List<String>)tempTableInfoMap.get("specKorNameList");
+		Map<String, List<String>> specMapList = (Map<String, List<String>>)tempTableInfoMap.get("specMapList");
+		List<String> parameters = new ArrayList<String>();
+		for(int i = 0 ; i < specEngNameList.size() ; i++){
+			String requestValue = mRequest.getParameter(specEngNameList.get(i));
+			System.out.println(requestValue);
+			if(requestValue != ""){
+				parameters.add(requestValue);
+			}else{
+				flag = true;
+				model.addAttribute(specEngNameList.get(i) + "Msg", specKorNameList.get(i) + "를 입력하시지 않았습니다.");
+			}
+		}
+		if(flag){
+			model.addAttribute("mainCategory", category.get("mainCategory"));
+			model.addAttribute("smallCategory", category.get("smallCategory"));
+			model.addAttribute("specMapList", specMapList);
+			model.addAttribute("specEngNameList", specEngNameList);
+			model.addAttribute("specKorNameList", specKorNameList);
+			uri = "seller/register";
+		}else{
+			sellerService.sellerProductRegister(mRequest, productList, tempTableInfoMap);
+			uri = "redirect:/seller/page/1";
+		}
 		return uri;
 	}
 	

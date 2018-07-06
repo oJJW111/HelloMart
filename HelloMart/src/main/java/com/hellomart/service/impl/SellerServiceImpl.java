@@ -32,8 +32,6 @@ public class SellerServiceImpl implements SellerService{
 	@Autowired
 	private Upload upload;
 	
-	List<String> productPartSpecEngName;
-	
 	@Override
 	public void getSellerProductList(int pageNum, Model model, 
 				String id, String servletPath) {
@@ -79,9 +77,10 @@ public class SellerServiceImpl implements SellerService{
 		
 		List<String> productPartSpecList;
 		
-		productPartSpecEngName = new ArrayList<String>();
+		List<String> productPartSpecEngName = new ArrayList<String>();
 		List<String> productPartSpecKorName = new ArrayList<String>();
 		Map<String, List<String>> productPartSpecMap = new HashMap<String, List<String>>();
+		List<String> productPartSpecColumnTypeList = new ArrayList<String>();
 		
 		StringTokenizer tokenizer;
 		XMLParser xmlParser = new XMLParser("category.xml");
@@ -98,13 +97,14 @@ public class SellerServiceImpl implements SellerService{
 										+ xmlParser.getAttributeValue(productSpec, "column") + ")의 value : " + specValueList.trim());
 				
 				productPartSpecEngName.add(xmlParser.getAttributeValue(productSpec, "column"));
+				productPartSpecColumnTypeList.add(xmlParser.getAttributeValue(productSpec, "type"));
 				productPartSpecKorName.add(productSpec);
 				
 				tokenResultValueList = new ArrayList<String>();
 				tokenizer = new StringTokenizer(specValueList.trim(), ",");
 				while(tokenizer.hasMoreTokens()){ 
 					specValue = tokenizer.nextToken();
-					tokenResultValueList.add(specValue);	
+					tokenResultValueList.add(specValue.trim());	
 				}
 				
 				productPartSpecMap.put(productSpec, tokenResultValueList); 
@@ -120,17 +120,54 @@ public class SellerServiceImpl implements SellerService{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("specEngNameList", productPartSpecEngName);
-		map.put("table", xmlParser.getAttributeValue(smallCategory, "table"));
+		map.put("specKorNameList", productPartSpecKorName);
+		map.put("specMapList", productPartSpecMap);
+		map.put("tableName", xmlParser.getAttributeValue(smallCategory, "table"));
+		map.put("productPartSpecColumnTypeList",productPartSpecColumnTypeList);
 		return map;
 	}
 
 	@Override
-	public void sellerProductRegister(MultipartHttpServletRequest mRequest) {
-		
-		if(upload.fileUpload(mRequest)){
-			System.out.println("성공");
+	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList,
+				Map<String, Object> tempTableInfoMap) {
+		Map<String, Object> fileResultMap = upload.fileUpload(mRequest);
+		if((Boolean)fileResultMap.get("isUpload")){
+			String imagePath = (String)fileResultMap.get("imagePath");
+			productList.setImagePath(imagePath);
 		}else{
-			System.out.println("실패");
+			return;
+		}
+		List<String> productPartSpecColumnNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
+		List<String> productPartSpecColumnTypeList = (List<String>)tempTableInfoMap.get("productPartSpecColumnTypeList");
+		List<String> productPartSpecColumnValueList = new ArrayList<String>();
+		for(int i = 0 ; i < productPartSpecColumnNameList.size() ; i++){
+			String columnValue = mRequest.getParameter(productPartSpecColumnNameList.get(i));
+			String columnName = productPartSpecColumnNameList.get(i);
+			String columnType = productPartSpecColumnTypeList.get(i);
+			if(columnType.equals("Integer")){
+				if(columnValue.indexOf("~") > 0){
+					String[] columnValueList = columnValue.split("~");
+					for(String i : columnValueList){
+						
+					}
+					
+				}
+			}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
+				if(columnValue.indexOf("~") > 0){
+					
+				}
+			}
+			if(requestValue.indexOf("~") > 0){
+				
+			}else{
+				String str3 = null;
+		        for(int j = 0 ; j < requestValue.length(); j++)
+		        {    
+		            if(48 <= requestValue.charAt(j) && requestValue.charAt(j) <= 57)
+		                str3 += requestValue.charAt(j);
+		        }	
+			}
+
 		}
 	}
 }

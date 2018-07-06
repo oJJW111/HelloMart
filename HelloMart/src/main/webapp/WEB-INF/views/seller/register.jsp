@@ -38,16 +38,29 @@ $(document).ready(function(){
 		var specKorNameList = '${specKorNameList}';
 		alert(specKorNameList);
 		alert(specEngNameList);
+		var specEngNameList = specEngNameList.substring(1, specEngNameList.length-1);
+		var specKorNameList = specKorNameList.substring(1, specKorNameList.length-1);
+		alert(specKorNameList);
+		alert(specEngNameList);
+		var specEngNameList = specEngNameList.split(',');
+		var specKorNameList = specKorNameList.split(',');
+		for(var count = 0 ; count < specEngNameList.length; count++){
+			specEngNameList[count] = specEngNameList[count].trim();
+			specKorNameList[count] = specKorNameList[count].trim();
+		}
 		var flag = 0;
 		var html;
 		if(productImageFile == ''){
 			$("#fileErrors").html("이미지를 업로드하세요.");
 			$("#productImageFile").focus();
 			return false;
-		}
-		if(fileExtensionCapacityCheck('productImageFile') == 0){
+		}else if(fileExtensionCapacityCheck('productImageFile') == 0){
 			return false;
 		}
+		else{
+			$("#fileErrors").html("");
+		}
+		
 		function fileExtensionCapacityCheck(string){
 			var result = 1;
 			var ext = $("#" + string).val().split('.').pop().toLowerCase();
@@ -67,12 +80,15 @@ $(document).ready(function(){
 		    }
 		    return result;
 		}
+
 		for(var count = 0; count < specEngNameList.length; count++){
 			var specValue = $("#"+specEngNameList[count]+" option:selected").val();
+			alert(specValue + "안돼");
 			if(specValue == ''){
 				flag = 1;
-				$("#specErrors").html(specKorNameList[count] +"를 입력하시지 않았습니다.");
-				break;
+				$("#" + specEngNameList[count] + "Errors").html(specKorNameList[count] +"를 입력하시지 않았습니다.");
+			}else{
+				$("#" + specEngNameList[count] + "Errors").html("");
 			}
 		}
 		if(flag == 1){
@@ -154,13 +170,14 @@ $(document).ready(function(){
 				<li class="select">
 				<label for="${specEngNameList[status.index] }" class="control-label">${specName }</label>
 				<select name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
-					title='물품스펙리스트' required="required">
+					title='${specName }리스트' required="required">
 					<option value=''>선택</option>
 	<c:forEach var="value" items="${specMapList[specName]}">
 					<option value='${value }'>${value }</option>
 	</c:forEach>
 				</select>
-					<span class="errors" id="specErrors"></span>
+				<span class="errors" id="${specEngNameList[status.index] }Errors">			
+				</span>	
 				</li>
 </c:forEach>
 			</ul><br>
