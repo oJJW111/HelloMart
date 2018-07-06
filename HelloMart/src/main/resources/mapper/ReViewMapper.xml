@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hellomart.dao.ReViewDAO">
+
+	<select id="listReView" resultType="ReView"> select * from ReView order
+		by 1 desc limit #{param1},#{param2}
+	</select>
+
+	<insert id="reWrite" parameterType="com.hellomart.dto.ReView"> INSERT INTO
+		ReView(No,Id,Content) VALUES (#{No},#{id}, #{content})
+	</insert>
+
+	<select id="viewReView" resultType="ReView"> SELECT * FROM ReView WHERE
+		idx =#{Idx}
+	</select>
+
+	<!-- 글 수정 쿼리 -->
+
+
+	<update id="remodify"> UPDATE ReView SET Content=#{content} WHERE
+		Idx=#{Idx}
+	</update>
+
+	<!-- 글 삭제 쿼리 -->
+
+
+	<delete id="redelete"> DELETE FROM ReView WHERE Idx = #{Idx} </delete>
+
+	<select id="getCount" resultType="String"> SELECT count(*) FROM ReView
+	</select>
+
+</mapper>
