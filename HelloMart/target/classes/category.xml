@@ -109,7 +109,7 @@
 				SSD, HDD
 			</저장소종류>
 			<저장소용량 column="hardcap" type="Integer">
-      			0~200GB, 201~300GB, 301GB~500GB, 500GB~1024GB
+      			0~200GB, 201~300GB, 301GB~500GB, 500GB~1000GB
   			</저장소용량>
       		<화면크기 column="screensize" type="Double">
             	0~11.6, 13.3~15.0, 15.6~30
@@ -139,7 +139,7 @@
 				SSD, HDD
 			</저장소종류>
 			<저장소용량 column="hardcap" type="Integer">
-      			0~200GB, 201~300GB, 301GB~500GB, 500GB~1028GB
+      			0~200GB, 201~300GB, 301GB~500GB, 500GB~1000GB
    			</저장소용량>
        		<화면크기 column="screensize" type="Double">
             	0~20.0, 20.1~40.0, 40.1~60.0

@@ -9,4 +9,5 @@ public interface SellerDAO {
 	public ArrayList<ProductList> getSellerProductList(HashMap<String, Object> paramMap);
 	public int reviewCount(int no);
 	public int getSellerProductCount(String id);
+	public void insertProductInfo(ProductList productList);
 }

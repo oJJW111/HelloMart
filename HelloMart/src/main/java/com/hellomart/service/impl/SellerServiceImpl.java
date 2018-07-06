@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -137,37 +139,85 @@ public class SellerServiceImpl implements SellerService{
 		}else{
 			return;
 		}
+		
 		List<String> productPartSpecColumnNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
 		List<String> productPartSpecColumnTypeList = (List<String>)tempTableInfoMap.get("productPartSpecColumnTypeList");
-		List<String> productPartSpecColumnValueList = new ArrayList<String>();
+		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
+		
+		StringBuffer sBuffer; Pattern p; Matcher m;
+		int[] intNumbers = new int[2];
+		double[] doubleNumbers = new double[2];
+		
 		for(int i = 0 ; i < productPartSpecColumnNameList.size() ; i++){
 			String columnValue = mRequest.getParameter(productPartSpecColumnNameList.get(i));
 			String columnName = productPartSpecColumnNameList.get(i);
 			String columnType = productPartSpecColumnTypeList.get(i);
 			if(columnType.equals("Integer")){
+				int resultColumnValue;
 				if(columnValue.indexOf("~") > 0){
 					String[] columnValueList = columnValue.split("~");
-					for(String i : columnValueList){
-						
+					for(int j = 0 ; j < columnValueList.length ; j++){
+						sBuffer = new StringBuffer();
+						p = Pattern.compile("[-?0-9]+");
+						m = p.matcher(columnValueList[j]);
+						while (m.find()) {
+							sBuffer.append(m.group());
+						}
+						intNumbers[j] = Integer.parseInt(sBuffer.toString());
 					}
-					
+					resultColumnValue 
+						= (int) (Math.random() * (intNumbers[1] - intNumbers[0] + 1)) + intNumbers[0]; 
+				}else{
+					sBuffer = new StringBuffer();
+					p = Pattern.compile("[-?0-9]+");
+					m = p.matcher(columnValue);
+					while (m.find()) {
+						sBuffer.append(m.group());
+					}
+					resultColumnValue = Integer.parseInt(sBuffer.toString());
 				}
-			}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
+				productPartSpecColumnMap.put(columnName, resultColumnValue);
+			}else if(columnType.equals("Double")){
+				double resultColumnValue;
 				if(columnValue.indexOf("~") > 0){
-					
+					String[] columnValueList = columnValue.split("~");
+					for(int j = 0 ; j < columnValueList.length ; j++){
+						sBuffer = new StringBuffer();
+						p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
+						m = p.matcher(columnValueList[j]);
+						while (m.find()) {
+							sBuffer.append(m.group());
+						}
+						doubleNumbers[j] = Double.parseDouble(sBuffer.toString());
+					}
+					resultColumnValue 
+						= (Math.random() * (doubleNumbers[1] - doubleNumbers[0])) + doubleNumbers[0];
+					resultColumnValue 
+						= Double.parseDouble(String.format("%.1f", resultColumnValue));
+				}else{
+					sBuffer = new StringBuffer();
+					p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
+					m = p.matcher(columnValue);
+					while (m.find()) {
+						sBuffer.append(m.group());
+					}
+					resultColumnValue = Double.parseDouble(sBuffer.toString());
 				}
-			}
-			if(requestValue.indexOf("~") > 0){
-				
+				productPartSpecColumnMap.put(columnName, resultColumnValue);
 			}else{
-				String str3 = null;
-		        for(int j = 0 ; j < requestValue.length(); j++)
-		        {    
-		            if(48 <= requestValue.charAt(j) && requestValue.charAt(j) <= 57)
-		                str3 += requestValue.charAt(j);
-		        }	
+				productPartSpecColumnMap.put(columnName, columnValue);
 			}
-
 		}
+		String tableName = (String)tempTableInfoMap.get("tableName");
+//		productPartSpecColumnNameList;
+//		productPartSpecColumnTypeList;
+//		productPartSpecColumnMap;
+//		StringBuilder sql = new StringBuilder();
+//		sql.append("INSERT INTO ");
+//		sql.append()
+		
+		
+
+		dao.insertProductInfo(productList);
 	}
 }
