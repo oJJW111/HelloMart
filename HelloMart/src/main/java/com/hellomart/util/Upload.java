@@ -2,31 +2,35 @@ package com.hellomart.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component
 public class Upload {
 	
-	public boolean fileUpload(MultipartHttpServletRequest mRequest){
+	public Map<String, Object> fileUpload(MultipartHttpServletRequest mRequest){
 		boolean isUpload = false;
-		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String uploadPath = "D:/upload/";
-		
+		String saveFileName = null;
 		Iterator<String> iterator = mRequest.getFileNames();
 		while(iterator.hasNext()){
 			String upFileName = iterator.next();
 			System.out.println(upFileName + "\n");
 			MultipartFile mFile = mRequest.getFile(upFileName);
 			String originFileName = mFile.getOriginalFilename();
-			String saveFileName = originFileName;
+			saveFileName = originFileName;
 			if(saveFileName != null && !saveFileName.equals("")){
 				if(new File(uploadPath + saveFileName).exists()){
-					saveFileName = saveFileName + "_" + System.currentTimeMillis();
+					String fileName, extention; 
+					fileName = saveFileName.substring(0, saveFileName.lastIndexOf("."));
+					extention = saveFileName.substring(saveFileName.lastIndexOf("."), saveFileName.length());
+					saveFileName = fileName + "_" + System.currentTimeMillis() + extention;
 				}
 			}
 			try {
@@ -40,6 +44,8 @@ public class Upload {
 				isUpload = false;
 			}
 		}
-		return isUpload;
+		resultMap.put("isUpload", isUpload);
+		resultMap.put("imagePath",uploadPath + saveFileName);
+		return resultMap;
 	}
 }
