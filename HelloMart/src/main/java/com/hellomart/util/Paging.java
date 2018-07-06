@@ -12,6 +12,8 @@ public class Paging {
 	private int beginPage;						// 시작 페이지
 	private int endPage;						// 끝 페이지
 	
+	private int maxResult;
+	private int pagePerBlock;
 	
 	/**
 	 * <p>페이징 처리를 하는 함수이다.
@@ -31,6 +33,9 @@ public class Paging {
 		// DB에서 가져와 멤버 변수 list에 저장한다.
 		if(total == 0) return;
 		
+		this.maxResult = maxResult;
+		this.pagePerBlock = pagePerBlock;
+		
 		this.totalRecord = total;
 		
 		// 총 페이지수를 구한다.
@@ -43,7 +48,6 @@ public class Paging {
 		
 		// 페이지의 인덱스를 얻는다.
 		int pageIndex = currentPage - 1;
-		System.out.println("pageIndex : " + pageIndex);
 		this.offset = pageIndex * maxResult;		// 시작 인덱스(non-exclude)
 
 		// 현재 페이지 블럭을 구한다.
@@ -56,8 +60,6 @@ public class Paging {
 		this.beginPage = nowBlock * pagePerBlock + 1;
 		this.endPage = beginPage + pagePerBlock - 1;
 		
-		System.out.println("nowBlock : " + nowBlock);
-		System.out.println("totalBlock : " + totalBlock);
 		// 마지막 페이지가 총 페이지수를 넘었다면 마지막 페이지를 총 페이지수로 지정한다.
 		if(endPage > totalPage) { 
 			endPage = totalPage;
@@ -102,6 +104,14 @@ public class Paging {
 	
 	public int getOffset() {
 		return offset;
+	}
+	
+	public int getMaxResult() {
+		return maxResult;
+	}
+	
+	public int getPagePerBlock() {
+		return pagePerBlock;
 	}
 	
 }

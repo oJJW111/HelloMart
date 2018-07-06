@@ -6,34 +6,15 @@
 <mapper namespace="com.hellomart.dao.ProductListDAO">
 	
 
-	<select id="getTotal" parameterType="HashMap" resultType="Integer">
-		select count(*) from productlist
-		
-		<where>
-			<if test="mainCategory != null">
-				mainCategory = #{mainCategory}
-				<if test="smallCategory != null">
-				and smallCategory = #{smallCategory}
-				</if>
-			</if>
-		</where>
+	<select id="getTotal" 
+			parameterType="HashMap"
+			resultType="Integer">
+			${sql}
 	</select>
 	
-	<select id="listMain" 
+	<select id="list"
+			parameterType="HashMap"
 			resultType="com.hellomart.dto.ProductList">
-		select * from productlist 
-		where maincategory = #{param1} order by no desc limit #{param2}, #{param3}
-	</select>
-	
-	<select id="listSmall"
-			resultType="com.hellomart.dto.ProductList">
-		select * from productlist 
-		where maincategory = #{param1} and smallcategory = #{param2} 
-		order by no desc limit #{param3}, #{param4}
-	</select>
-	
-	<select id="listDetail"
-			resultType="com.hellomart.dto.ProductList">
-		${sql}
+			${sql}
 	</select>
 </mapper> 

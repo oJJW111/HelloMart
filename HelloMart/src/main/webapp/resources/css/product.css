@@ -225,7 +225,7 @@ hr.style14 {
     background: #f1f1f1;
 }
 
-.category_detail_down input[name=price_range1] {
+.category_detail_down input[name=price1] {
 	float: left;
 	margin-left: 80px;
 	padding: 12px;
@@ -239,7 +239,7 @@ hr.style14 {
     background: #f1f1f1;
 }
 
-.category_detail_down input[name=price_range2] {
+.category_detail_down input[name=price2] {
 	float: left;
 	padding: 12px;
     width: 150px;
