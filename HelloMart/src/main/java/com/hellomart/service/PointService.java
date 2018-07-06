@@ -1,7 +1,11 @@
 package com.hellomart.service;
 
-import com.hellomart.dto.Point;
+import javax.servlet.http.HttpServletRequest;
+
+import com.hellomart.dto.OrderList;
+
 
 public interface PointService {
-	public void insertPoint(Point point);
+	public void insertPoint(HttpServletRequest request, OrderList orderList);
+	public void insertPointList(HttpServletRequest request);
 }

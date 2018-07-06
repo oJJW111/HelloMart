@@ -13,7 +13,7 @@
 		#{receiverRoadAddress}, #{receiverDetailAddress}, #{orderStatus})
 	</insert>
 	
-	<insert id="insertOrderList">
+<!-- 	<insert id="insertOrderList">
 		<foreach collection="orderLists" item="order" separator=";">
 		insert into orderList(orderId, receiverName, receiverPhone, prodNo,
 		orderCount, orderDate, orderPrice, receiverPostCode, receiverRoadAddress,
@@ -22,5 +22,5 @@
 		#{orderCount}, #{orderDate}, #{orderPrice}, #{receiverPostCode}, 
 		#{receiverRoadAddress}, #{receiverDetailAddress}, #{orderStatus})
 		</foreach>
-	</insert>
+	</insert> -->
 </mapper> 

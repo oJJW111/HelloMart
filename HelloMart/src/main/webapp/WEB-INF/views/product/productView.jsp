@@ -16,22 +16,14 @@
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	$(function(){
-	    $('.__count_range input[count_range]').click(function(e){
-	        e.preventDefault();
-	        var type = $(this).attr('count_range');
-	        var $count = $(this).parent().children('input.count');
-	        var count_val = $count.val(); // min 1
-	        if(type=='m'){
-	            if(count_val<1){
-	                return;
-	            }
-	            $count.val(parseInt(count_val)-1);
-	        }else if(type=='p'){
-	            $count.val(parseInt(count_val)+1);
-	        }
-	    });
-	});
+	function fnCart(no, id){
+		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
+		
+		if(isMove){
+			var orderCount = document.getElementById("orderCount").value;
+			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
+		}
+	}
 </script>
 
 </head>
@@ -97,16 +89,18 @@
 	</table>                       
 </div>
 <br><br>
-	<div align="center"> 
-		수량 &nbsp;&nbsp;
-		<div class="__count_range">
-		<input value="-" count_range="m" type="button">
- 		<input class="count" value="1" name="orderCount" id="orderCount" type="number">
-  		<input value="+" count_range="p" type="button">
-	</div>	
+<div align="center"> 
+	수량 &nbsp;&nbsp;
+	<select name="orderCount">
+    	<c:forEach begin="1" end="10" var="i">
+    		<option value="${i}">${i}</option>
+    	</c:forEach>
+	</select>
+	
 	&nbsp;&nbsp;<input type="button" value="구매" 
 					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-	&nbsp;&nbsp;<input type="button" value="장바구니 담기" onclick="">
+	&nbsp;&nbsp;<input type="button" value="장바구니 담기" 
+	onclick="fnCart(${detail.No}, '${id}')">
 </div>
 
 <div>

@@ -1,6 +1,7 @@
 package com.hellomart.service.impl;
 
-import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,42 @@ public class OrderServiceImpl implements OrderService{
 		dao.insertOrder(orderList); 
 	}
 
+
 	@Override
-	public void insertOrderList(List<OrderList> orderLists) {
-		dao.insertOrderList(orderLists);
+	public void insertOrderList(HttpServletRequest request) {
+		int size = Integer.parseInt(request.getParameter("size"));
+
+		OrderList orderList = new OrderList();
+		
+		orderList.setOrderId(request.getParameter("orderId"));
+		orderList.setReceiverName(request.getParameter("receiverName"));
+		orderList.setReceiverPhone(request.getParameter("receiverPhone"));
+		orderList.setReceiverDetailAddress(request.getParameter("receiverDetailAddress"));
+		orderList.setReceiverPostCode(request.getParameter("receiverPostCode"));
+		orderList.setReceiverRoadAddress(request.getParameter("receiverRoadAddress"));
+		orderList.setOrderStatus(request.getParameter("orderStatus"));
+		
+		for(int i=0; i<=size; i++){
+			int orderCount = Integer.parseInt(request.getParameter("orderCount" + i));
+			int orderPrice = Integer.parseInt(request.getParameter("orderPrice" + i));
+			int prodNo = Integer.parseInt(request.getParameter("prodNo" + i));
+						
+			orderList.setOrderCount(orderCount);
+			orderList.setOrderPrice(orderPrice);
+			orderList.setProdNo(prodNo);
+			
+			dao.insertOrder(orderList);
+		}		
 	}	
 }
+
+
+
+
+
+
+
+
+
+
+
