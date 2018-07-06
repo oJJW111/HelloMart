@@ -7,21 +7,14 @@
 	
 
 	<select id="getTotal" 
-			parameterType="HashMap" 
+			parameterType="HashMap"
 			resultType="Integer">
-		select count(*) from productlist
-		
-		<where>
-			mainCategory = #{mainCategory}
-			<if test="smallCategory != null">
-			and smallCategory = #{smallCategory}
-			</if>
-		</where>
+			${sql}
 	</select>
 	
 	<select id="list"
 			parameterType="HashMap"
 			resultType="com.hellomart.dto.ProductList">
-			${detailWhereSQL}
+			${sql}
 	</select>
 </mapper> 

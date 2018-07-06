@@ -38,13 +38,12 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	
 	
-	private Paging paging(String mainCategory, String smallCategory, Integer page) {
+	private Paging paging(String sql, Integer page) {
 		page = page == null ? 1 : page;
 		
-		Map<String, String> categories = new HashMap<>();
-		categories.put("mainCategory", mainCategory);
-		categories.put("smallCategory", smallCategory);
-		int total = dao.getTotal(categories);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("sql", sql);
+		int total = dao.getTotal(paramMap);
 		
 		return new Paging(total, page, 10, 10);
 	}
@@ -53,12 +52,16 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	
 	
-	private Vector<ProductList> listBoard(String detailWhereSQL) {
+	private Vector<ProductList> listBoard(String sql) {
 		Vector<ProductList> list = null;
 		
-		Map<String, Object> parametersMap = new HashMap<>();
-		parametersMap.put("detailWhereSQL", detailWhereSQL);
-		list = dao.list(parametersMap);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("sql", sql);
+		list = dao.list(paramMap);
+		
+		if(list.isEmpty()) {
+			list = null;
+		}
 		
 		return list;
 	}
@@ -130,8 +133,17 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		
 		
+		String table = null;
+		try {
+			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
+		} catch (NullPointerException e) {}
+		
+		
+		
 		/***** 페이징처리 *****/
-		Paging paging = paging(mainCategory, smallCategory, page);
+		String sql = "SELECT Count(*) FROM ProductList";
+		String totalSql = createSQL(paramMap, sql, table, mainCategory, smallCategory, null, null);
+		Paging paging = paging(totalSql, page);
 		modelMap.put("paging", paging);
 		/***** 페이징처리 *****/
 		
@@ -153,20 +165,16 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		
 		/***** SQL 생성 *****/
-		String detailWhereSQL = null;
-		String table = null;
 		int offset = paging.getOffset();
 		int limit = paging.getMaxResult();
-		try {
-			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
-		} catch (NullPointerException e) {}
-		detailWhereSQL = createDetailSQL(paramMap, table, mainCategory, smallCategory, offset, limit);
+		sql = "SELECT no, imagePath, productName, mfCompany, price, score, orderCount From ProductList";
+		String listSql = createSQL(paramMap, sql, table, mainCategory, smallCategory, offset, limit);
 		/***** SQL 생성 *****/
 		
 		
 		
 		/***** 상품 리스트 처리 *****/
-		Vector<ProductList> list = listBoard(detailWhereSQL);
+		Vector<ProductList> list = listBoard(listSql);
 		modelMap.put("list", list);
 		/***** 상품 리스트 처리 *****/
 		
@@ -176,34 +184,22 @@ public class ProductListServiceImpl implements ProductListService{
 	}
 	
 	
-	public String createDetailSQL(
-			Map<String, String[]> paramMap, String table, 
+	public String createSQL(
+			Map<String, String[]> paramMap, String select, String table, 
 			String mainCategory, String smallCategory,
-			int offset, int limit){
-		StringBuilder sql = new StringBuilder();
-		
-		sql
-			.append("SELECT").append(" ")
-			.append("no").append(", ")
-			.append("imagePath").append(", ")
-			.append("productName").append(", ")
-			.append("mfCompany").append(", ")
-			.append("price").append(", ")
-			.append("score").append(", ")
-			.append("orderCount").append(" ")
-			.append("FROM").append(" ")
-			.append("ProductList").append(" ");
+			Integer offset, Integer limit){
+		StringBuilder sql = new StringBuilder(select);
 		
 		Set<String> columns = paramMap.keySet();
 		
 		if(!columns.isEmpty()) {
 			sql
-			.append("NATURAL JOIN").append(" ")
-			.append(table).append(" ");
+			.append(" ").append("NATURAL JOIN").append(" ")
+			.append(table);
 		}
 		
 		sql
-			.append("WHERE").append(" ");
+			.append(" ").append("WHERE").append(" ");
 		
 		sql
 			.append("mainCategory").append(" = ").append("'").append(mainCategory).append("'");
@@ -261,12 +257,14 @@ public class ProductListServiceImpl implements ProductListService{
 			sql.append(sb.toString());
 		}
 		
-		sql
-			.append(" ").append("ORDER BY").append(" ")
-			.append("no").append(" ")
-			.append("DESC").append(" ")
-			.append("LIMIT").append(" ").append(limit).append(" ")
-			.append("OFFSET").append(" ").append(offset);
+		if(offset != null && limit != null && offset != -1) {
+			sql
+				.append(" ").append("ORDER BY").append(" ")
+				.append("no").append(" ")
+				.append("DESC").append(" ")
+				.append("LIMIT").append(" ").append(limit).append(" ")
+				.append("OFFSET").append(" ").append(offset);
+		}
 		
 		logger.debug("ProductLIst SQL : " + sql.toString());
 		
