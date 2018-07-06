@@ -42,8 +42,7 @@
 	text-align: center;
 	border-left: 1px solid #ddd;
 	border-top: 1px solid #ddd;
-	margin: 0px auto;
-	margin-bottom: 70px;
+	margin: 60px auto;
 }
 
 .myshopMain .shopMain {
@@ -148,7 +147,7 @@ $(document).ready(function(){
 	</div>
 </div>
 
-<div class="BLOCK60"></div>
+<div class="BLOCK80"></div>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
