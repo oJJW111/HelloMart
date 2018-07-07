@@ -39,6 +39,4 @@
 		SELECT count(*) FROM cmtboard where cmtpar=#{param1}
 	</select>
 	
-
-	
 </mapper>

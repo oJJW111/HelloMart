@@ -5,7 +5,7 @@
 
 <mapper namespace="com.hellomart.dao.SellerDAO">
 
-	<select id="getSellerProductList" resultType="productList" parameterType="HashMap">
+	<select id="getSellerProductList" resultType="ProductList" parameterType="HashMap">
 		SELECT U.*
 		FROM
 		(

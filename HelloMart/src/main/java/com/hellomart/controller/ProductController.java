@@ -1,7 +1,5 @@
 package com.hellomart.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +14,8 @@ public class ProductController {
 	ProductService service;
 	
 	@RequestMapping("/productView")
-	public String productMainList(String no, Model model){
-		service.getProductInfo(no, model);
+	public String productMainList(String no, String smallCategory, Model model){
+		service.getDetailInfo(no, smallCategory, model);
 		
 		return "product/productView";
 	}

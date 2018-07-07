@@ -39,13 +39,6 @@
 		#{phone}, #{name}, #{birthYear}, #{birthMonth}, #{birthDay}, #{gender});
 	</insert>
 	
-	<select id="getInfo" resultType="Account" parameterType="String">
-		SELECT Name, Email, BirthYear, BirthMonth, BirthDay, Gender, Phone,
-		PostCode, RoadAddress, DetailAddress
-		
-		FROM Account WHERE ID = #{id}; 
-	</select>
-	
 	<delete id="deleteAccount">
 		DELETE FROM Account WHERE ID = #{id}
 	</delete>
@@ -106,16 +99,24 @@
 		</if>
 	</select>
 	
+	<update id="updatePoint">
+		update account
+		<if test='param3.equals("+")'>
+			set points = points + #{param2}
+		</if>
+		<if test='param3.equals("-")'> 
+			set points = points - #{param2}
+		</if>
+		where id = #{param1}
+	</update>
+	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS cnt FROM Account
 	</select>
 	
-	<select id="get" resultType="Account">
-		SELECT ID, Password, Role, Points, Grade, Email,
-			   PostCode, RoadAddress, DetailAddress,
-			   Phone, Name, BirthYear, BirthMonth, BirthDay, Gender, Reliability, JoinDate
-		FROM Account WHERE ID = #{id};
+	<select id="getInfo" resultType="Account">
+		SELECT * FROM Account WHERE ID = #{id};
 	</select>
 	
 	<delete id="truncate">

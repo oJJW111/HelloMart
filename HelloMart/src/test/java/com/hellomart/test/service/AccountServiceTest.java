@@ -92,13 +92,13 @@ public class AccountServiceTest {
 		assertEquals(count, 1);
 		
 		/* 일치하는 아이디가 없는 계정 정보를 불러온다. */
-		Account a2 = dao.get(wrongId);
+		Account a2 = dao.getInfo(wrongId);
 		
 		/* null 값이라면 정상! */
 		assertThat(a2, is(nullValue()));
 		
 		/* 일치하는 계정 정보를 불러온다. */
-		Account a3 = dao.get(id);
+		Account a3 = dao.getInfo(id);
 		
 		/* null 값이 아니라면 정상! */
 		assertThat(a3, is(not(nullValue())));

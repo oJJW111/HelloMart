@@ -10,7 +10,7 @@
 		by 1 desc limit #{param1},#{param2}
 	</select>
 
-	<insert id="reWrite" parameterType="com.hellomart.dto.ReView"> INSERT INTO
+	<insert id="reWrite" parameterType="ReView"> INSERT INTO
 		ReView(No,Id,Content) VALUES (#{No},#{id}, #{content})
 	</insert>
 

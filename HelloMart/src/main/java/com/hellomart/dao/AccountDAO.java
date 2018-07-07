@@ -1,20 +1,15 @@
 package com.hellomart.dao;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
 
 import com.hellomart.dto.Account;
 
 public interface AccountDAO {
-	String getPasswd(String id);
-	
-	void modifyPw(String id, String new_pw);
-	
-	void updateAccount(Account account);
 	/**
 	 * <p>로그인 정보를 가져온다.
 	 * 
-	 * <ul>로그인 정보
+	 * <ul>로그인 정보 
 	 * 	<li>PASSWORD
 	 * 	<li>Authority
 	 * </ul>
@@ -30,8 +25,6 @@ public interface AccountDAO {
 	 */
 	void insertAccount(Account account);
 	
-	Account getInfo(String id);
-	
 	/**
 	 * id와 일치하는 계정을 삭제한다.
 	 * 
@@ -41,33 +34,18 @@ public interface AccountDAO {
 	
 	/**
 	 * 계정 테이블의 모든 계정을 가져온다.
-	 * @param paramMap 
 	 * 
 	 * 
 	 * @return 모든 계정 정보를 담고 있는 리스트
 	 */
-	ArrayList<Account> accountList(Map<String, Object> paramMap);
+	ArrayList<Account> accountList(HashMap<String, Object> paramMap);
 	
 	/**
-	 * 판매진행중인 상태을 가진 아이디들을 모두 판매자권한으로 바꾼다.
+	 * 판매진행중인 권한을 가진 아이디들을 모두 판매자권한으로 바꾼다.
 	 * 
 	 * @param id 바꿀 id
 	 */
 	void sellerApproval(String id);
-	
-	/**
-	 * 판매자권한으로 바뀐 아이디들을 모두 판매자진행중에서 없음으로 변환한다.
-	 * 
-	 * @param id 바꿀 id
-	 */
-	void sellerProgressDelete(String id);
-	
-	/**
-	 * 판매자권한으로 바뀐 아이디들을 모두 판매자진행중에서 없음으로 변환한다.
-	 * 
-	 * @param 검색에 들어갈 데이터, flag 값
-	 */
-	int accountCount(Map<String, Object> paramMap);
 	
 	//테스트용
 	/**
@@ -83,7 +61,16 @@ public interface AccountDAO {
 	 * @param id 계정의 아이디
 	 * @return 계정 정보를 담고 있는 Account 객체
 	 */
-	Account get(String id);
+	Account getInfo(String id);
+	
+	/**
+	 * 주문 처리 후, 유저의 보유 포인트 변경
+	 * 
+	 * @param id 계정의 아이디
+	 * @param point 변동 포인트 양
+	 * @param incDec 감소인지 증가인지 구분할 값
+	 */
+	void updatePoint(String id, int point, String incDec);
 	
 	/**
 	 * 테이블을 초기화한다. 테스트용으로 사용된다.
@@ -91,4 +78,13 @@ public interface AccountDAO {
 	void truncate();
 	//테스트용
 
+	void sellerProgressDelete(String id);
+
+	int accountCount(HashMap<String, Object> paramMap);
+
+	void updateAccount(Account account);
+
+	String getPasswd(String id);
+
+	void modifyPw(String id, String new_pw);  
 }

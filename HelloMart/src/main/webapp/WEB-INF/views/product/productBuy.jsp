@@ -11,6 +11,21 @@
 <!-- 다음 api js 파일 추가 -->
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>주문 페이지</title>
+<script type="text/javascript">
+	$(function(){
+		$('#usePoint').on({
+			"click" : function(){ 
+				$('#divPoint').load("/pointView?id=${account.id}");
+			}
+		});
+		
+		$('#noUsePoint').on({
+			"click" : function(){ 
+				$('#divPoint').empty();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -25,14 +40,14 @@
 		<table> 
 			<tr>
 				<td rowspan="5">
-					<img src="${product.imagePath}" width="400px">
+					<img src="${detail.ImagePath}" width="400px">
 				</td>
 				<td>상품명</td>
-				<td>${product.productName}</td>
+				<td>${detail.ProductName}</td>
 			</tr>
-			<tr>
+			<tr> 
 				<td>상품가격</td>
-				<td>${product.price}</td>
+				<td>${detail.Price}</td>
 			</tr>	
 			<tr>
 				<td>상품수량</td>
@@ -40,7 +55,7 @@
 			</tr>
 			<tr>
 				<td>상품 총 금액</td>
-				<td>${product.price * orderCount}</td>
+				<td>${detail.Price * orderCount}</td>
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -76,13 +91,22 @@
 							<td>상세주소</td>
 							<td>
 								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
-										id="sample6_address2" readonly="readonly">
+										id="sample6_address2">
 							</td>
 						</tr>						
 					</table>
 				</td>
 			</tr>
-			
+			<tr>
+				<td align="center" colspan="3">
+					포인트를 사용하시겠습니까?
+					&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="usePoint" value="-">예
+					&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
+					<div id="divPoint"></div>
+				</td>
+			</tr>
 			<tr>
 				<td align="center" colspan="3">
 					<br><br>
@@ -92,10 +116,11 @@
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="orderId" value="${account.id}">
-		<input type="hidden" name="prodNo" value="${product.no}">
+		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
+		<input type="hidden" name="prodNo" value="${detail.No}">
+		<input type="hidden" name="prodName" value="${detail.ProductName}">
 		<input type="hidden" name="orderCount" value="${orderCount}">
-		<input type="hidden" name="orderPrice" value="${product.price * orderCount}">
+		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
 		<input type="hidden" name="orderStatus" value="PAY_OK">
 		</form>
 	</center>
