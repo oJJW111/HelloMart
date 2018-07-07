@@ -25,7 +25,7 @@
 			<용량 column="capacity" type="Integer">
 				25L, 24L, 23L, 22L, 21L, 20L
 			</용량>
-			<조작방식 column="controllmethod" type="Enum">
+			<조작방식 column="controlmethod" type="Enum">
 				다이얼식, 버튼식, 버튼+다이얼식
 			</조작방식>
 			<소비전력 column="powerconsumption" type="Integer">
