@@ -27,8 +27,14 @@ public class ProductServiceImpl implements ProductService{
 		
 		model.addAttribute("product", dto); 
 		
+<<<<<<< HEAD
 		String smallCategoryEng 
 			= xmlParser.getAttributeValue(dto.getSmallCategory(), "table");
+=======
+		XMLParser xmlParser = new XMLParser("category.xml");
+		
+		String smallCategoryEng = xmlParser.getAttributeValue(dto.getSmallCategory(), "table"); 
+>>>>>>> refs/remotes/origin/jsb
 		
 		List<String> columnList = new ArrayList<>();
 		List<String> columnListEng = new ArrayList<>();
@@ -43,21 +49,25 @@ public class ProductServiceImpl implements ProductService{
 			e.printStackTrace();
 		}
 		
+<<<<<<< HEAD
 		String sql = "select no, ";
 		for(int i=0; i<columnListEng.size(); i++){
 			sql += columnListEng.get(i);
 		}		
 
 		sql += " from productlist, " + smallCategoryEng
+=======
+		String sql = "select * from productlist, " + smallCategoryEng
+>>>>>>> refs/remotes/origin/jsb
 				+ " where productlist.no = " + no
-				+ " and produclist.no = " + smallCategoryEng + ".no";
-		// dto = template.queryForObject(sql);
-		HashMap<String, String> columnValue = new HashMap<>(); 
-		for(int i=0; i<columnList.size(); i++){
-			columnValue.put(columnList.get(i), "dto.get~~"); 
-		}
+				+ " and productlist.no = " + smallCategoryEng + ".no";
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sql", sql);
 		
 		model.addAttribute("columnList", columnList);
-		model.addAttribute("detail", columnValue); 
+		model.addAttribute("columnListEng", columnListEng);
+		model.addAttribute("detail", dao.getDetailInfo(map)); 
+		System.out.println(dao.getDetailInfo(map).keySet()); 
 	}
 }

@@ -63,6 +63,13 @@ public interface AccountService {
 	ArrayList<Account> accountList();
 	
 	/**
+	 * 
+	 * @param id 계정의 아이디
+	 * @return 계정 정보를 담고 있는 Account 객체
+	 */
+	Account get(String id);
+	
+	/**
 	 * SELLER_READY 권한을 가지고 있는 계정들을 모두 SELLER 권한으로 바꾼다.
 	 * 
 	 * @param sellerAc 권한을 바꿀 id 리스트

@@ -27,8 +27,11 @@ public class XMLParser {
 	public XMLParser(String xmlFilePath){
 		doc = parseXML(xmlFilePath);
 	}
+<<<<<<< HEAD
 
 	
+=======
+>>>>>>> refs/remotes/origin/jsb
 	
 	private Document parseXML(String xmlFilePath) {
 		DocumentBuilderFactory documentBuilderFactory = null;
@@ -53,6 +56,7 @@ public class XMLParser {
 		return doc;
 	}
 	
+<<<<<<< HEAD
 	
 	
 	public String getValue(String tagName) {
@@ -120,9 +124,46 @@ public class XMLParser {
 	
 	private Vector<String> getChildren(NodeList nodeList) {
 		Vector<String> children = new Vector<>();
+=======
+	public String getValue(String parentTagName, String tagName) { 
+		NodeList descNodes = doc.getElementsByTagName(tagName);
+		Node node = null;
+		for(int i=0; i<descNodes.getLength(); i++){
+			Node temp = descNodes.item(i);
+			
+			if(parentTagName.equals(temp.getParentNode().getNodeName())){
+				node = temp;
+				break;
+			}
+		}
+		
+		return (node == null) ? null : node.getTextContent();
+	}
+	
+	public String getAttributeValue(String tagName, String attr) {
+		NamedNodeMap nnm = getFirstNode(tagName).getAttributes();
+		if(nnm != null) {
+			Node p = nnm.getNamedItem(attr);
+			if(p != null) {
+				return p.getTextContent();
+			}
+		}
+		return null;
+	}
+	
+	public Vector<String> getChildren(String tagName) {
+		NodeList descNodes = getNodeList(tagName);
+>>>>>>> refs/remotes/origin/jsb
 
+<<<<<<< HEAD
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			for (Node node = nodeList.item(i).getFirstChild(); node != null; node = node.getNextSibling()) {
+=======
+		Vector<String> children = new Vector<>();
+
+		for (int i = 0; i < descNodes.getLength(); i++) {
+			for (Node node = descNodes.item(i).getFirstChild(); node != null; node = node.getNextSibling()) {
+>>>>>>> refs/remotes/origin/jsb
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					children.add(node.getNodeName());
 				}
@@ -132,6 +173,7 @@ public class XMLParser {
 		return children;
 	}
 	
+<<<<<<< HEAD
 	
 	
 	private NodeList getNodeList(String tagName) {
@@ -158,3 +200,14 @@ public class XMLParser {
 	}
 	
 }
+=======
+	private NodeList getNodeList(String tagName) {
+		return doc.getElementsByTagName(tagName);
+	}
+	
+	private Node getFirstNode(String tagName) {
+		return getNodeList(tagName).item(0);
+	}
+	
+}
+>>>>>>> refs/remotes/origin/jsb

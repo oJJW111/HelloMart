@@ -76,9 +76,7 @@
 .btn_yellow:active, .btn_yellow:focus {
 	outline: none;
 }
-
-
-
+/* 
 .WBLOCK40 {
 	float: left;
 	width: 40px;
@@ -96,7 +94,7 @@
 	width: 60px;
 	height: 100%;
 }
-
+ */
 hr.style14 {
 	margin: 5px;
 	border: 0;

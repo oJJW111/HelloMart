@@ -36,8 +36,6 @@ public class ProductListServiceImpl implements ProductListService{
 
 	
 	
-	
-	
 	private Paging paging(String sql, Integer page) {
 		page = page == null ? 1 : page;
 		
@@ -77,7 +75,35 @@ public class ProductListServiceImpl implements ProductListService{
 	private void smallCategoryDetails(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
 		Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
 		HashMap<String, String> smallCategoryColumn = new HashMap<>();
+<<<<<<< HEAD
 		Vector<String> columnListEng = new Vector<>();
+=======
+
+		XMLParser xmlParser = new XMLParser("category.xml");
+
+		try {
+			columnList = xmlParser.getChildren(smallCategory);
+
+			for (String column : columnList) {
+				String value = xmlParser.getValue(smallCategory, column);
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
+				// System.out.println(smallCategory + "의 " + column + "("
+				// + xmlParser.getName(column) + ")의 value : " + value.trim());
+
+				smallCategoryColumn.put(column, value);
+			}
+
+		} catch (Exception e) {
+			System.out.println("ProductListServiceImpl클래스 getSmallList메소드 에러.");
+			e.printStackTrace();
+		}
+
+		model.addAttribute("smallCategory", smallCategory);
+		model.addAttribute("smallCategoryColumn", smallCategoryColumn); 
+		model.addAttribute("columnList", columnList);
+		model.addAttribute("columnListEng", columnListEng);	 
+		model.addAttribute("productList", dao.getSmallList(smallCategory)); 
+>>>>>>> refs/remotes/origin/jsb
 		
 		for (String column : columnList) {
 			String value = xmlParser.getValue(smallCategory, column);
@@ -125,8 +151,21 @@ public class ProductListServiceImpl implements ProductListService{
 			}
 		}
 		
+<<<<<<< HEAD
+=======
+		return number;
+	}
+	
+	public String createSQL(HttpServletRequest request){
+		String smallCategory = request.getParameter("smallCategory");
+		
+		XMLParser xmlParser = new XMLParser("category.xml");
+
+		String smallCategoryEng = xmlParser.getAttributeValue(smallCategory, "table"); 
+>>>>>>> refs/remotes/origin/jsb
 		
 		
+<<<<<<< HEAD
 		/***** Model에 put할 맵 생성 *****/
 		Map<String, Object> modelMap = new HashMap<>();
 		/***** Model에 put할 맵 생성 *****/
@@ -134,7 +173,10 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		
 		String table = null;
+=======
+>>>>>>> refs/remotes/origin/jsb
 		try {
+<<<<<<< HEAD
 			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
 		} catch (NullPointerException e) {}
 		
@@ -196,17 +238,33 @@ public class ProductListServiceImpl implements ProductListService{
 			sql
 			.append(" ").append("NATURAL JOIN").append(" ")
 			.append(table);
+=======
+			columnList = xmlParser.getChildren(smallCategory);
+
+			for (String column : columnList) {
+				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+>>>>>>> refs/remotes/origin/jsb
 		}
 		
 		sql
 			.append(" ").append("WHERE").append(" ");
 		
+<<<<<<< HEAD
 		sql
 			.append("mainCategory").append(" = ").append("'").append(mainCategory).append("'");
 		
 		if(smallCategory != null) {
 			sql.append(" and ").append("smallCategory").append(" = ").append("'").append(smallCategory).append("'");
+=======
+		// 상품 이름으로 검색
+		if( (request.getParameter("search") != null) && !request.getParameter("search").equals("")){
+			sql += " and productname = '" + request.getParameter("search") + "'";
+>>>>>>> refs/remotes/origin/jsb
 		}
+<<<<<<< HEAD
 		
 		for(String column : columns) {
 			boolean isFirst = true;
@@ -227,15 +285,63 @@ public class ProductListServiceImpl implements ProductListService{
 					default:
 						if(isFirst) {
 							isFirst = false;
+=======
+		// 최저 가격 검색
+		if(request.getParameter("price_range1") != null && !request.getParameter("price_range1").equals("")){
+			sql += " and price >= " + request.getParameter("price_range1");
+		}
+		// 최고 가격 검색
+		if(request.getParameter("price_range2") != null && !request.getParameter("price_range2").equals("")){
+			sql += " and price <= " + request.getParameter("price_range2");
+		}
+			
+		for (int i = 0; i < columnListEng.size(); i++) {
+			if (request.getParameterValues(columnListEng.get(i)) != null) {
+				
+				// 같은 속성의 검색조건이 여러개면 or로 조건 처리
+				boolean isFirstAdd = true;
+				
+				sql += " and(";
+				
+				String[] value = request.getParameterValues(columnListEng.get(i));
+
+				for (int j = 0; j < value.length; j++) {
+					StringTokenizer tokenizer = new StringTokenizer(value[j], "~");
+					String firstValue = null;
+					String secondValue = null;
+
+					firstValue = findNumber(tokenizer.nextToken());
+					while (tokenizer.hasMoreTokens()) {
+						secondValue = findNumber(tokenizer.nextToken());
+					}
+
+					if (secondValue == null) { // 범위 조건이 아닐경우, 해당 값으로 검색
+						if (isFirstAdd) {
+							sql += " " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
+							isFirstAdd = false;
+>>>>>>> refs/remotes/origin/jsb
 						} else {
+<<<<<<< HEAD
 							sb.append(" or ");
+=======
+							sql += " or " + columnListEng.get(i) + " = '" + value[j].trim() + "'";
+>>>>>>> refs/remotes/origin/jsb
 						}
+<<<<<<< HEAD
 						
 						if(value.indexOf('~') == -1) {
 							sb
 								.append(column)
 								.append(" = ")
 								.append("'").append(value).append("'");
+=======
+						System.out.println("sql 문장 : " + sql);
+					} else { // 범위 조건일 경우, 앞뒤 값으로 비교해서 검색
+						if (isFirstAdd) {
+							sql += " (" + columnListEng.get(i) + " >= " + firstValue + " and "
+									+ columnListEng.get(i) + " <= " + secondValue + ")";
+							isFirstAdd = false;
+>>>>>>> refs/remotes/origin/jsb
 						} else {
 							StringTokenizer tokenizer = new StringTokenizer(value, "~");
 							
@@ -250,11 +356,20 @@ public class ProductListServiceImpl implements ProductListService{
 									.append(filterNumber(tokenizer.nextToken()))
 								.append(")");
 						}
+<<<<<<< HEAD
 				}
 			}
 			sb.append(")");
 			
 			sql.append(sb.toString());
+=======
+						System.out.println("sql 문장 : " + sql);
+					}
+				} // for반복문 종료(같은 속성의 체크박스에 체크한 값들 반복)
+				sql += ")";
+				System.out.println("최종 sql 문장 : " + sql); 
+			} // if (request.getParameterValues(columnListEng.get(i)) != null)
+>>>>>>> refs/remotes/origin/jsb
 		}
 		
 		if(offset != null && limit != null && offset != -1) {
