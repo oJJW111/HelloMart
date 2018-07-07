@@ -8,4 +8,15 @@
 		insert into point(id, incDec, point, content) 
 		values(#{id}, #{incDec}, #{point}, #{content})
 	</insert>
+	
+	<select id="getAllPoingLog" resultType="point">
+		select * from point where id = #{param1}
+	</select>
+	
+	<select id="getPeriodPoingLog" resultType="point">
+		select * from point 
+		where id = #{param1} and 
+		#{param2} &lt;= date and date &gt;= #{param3} 
+	</select>
 </mapper> 
+

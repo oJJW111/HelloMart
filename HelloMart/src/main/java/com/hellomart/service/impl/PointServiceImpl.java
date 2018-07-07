@@ -1,5 +1,8 @@
 package com.hellomart.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +85,17 @@ public class PointServiceImpl implements PointService {
 
 		pointDao.insertPoint(point);
 		accountDao.updatePoint(point.getId(), point.getPoint(), point.getIncDec());
+	}
+
+	@Override
+	public List<Point> getAllPointLog(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Point> getPeriodPointLog(String id, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
