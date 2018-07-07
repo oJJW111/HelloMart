@@ -33,7 +33,7 @@ public class MypageController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
-	@Autowired
+	@Autowired 
 	private AccountService service;
 
 	@Autowired
