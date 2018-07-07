@@ -36,12 +36,8 @@ $(document).ready(function(){
 		var productImageFile = $("#productImageFile").val();
 		var specEngNameList = '${specEngNameList}';
 		var specKorNameList = '${specKorNameList}';
-		alert(specKorNameList);
-		alert(specEngNameList);
 		var specEngNameList = specEngNameList.substring(1, specEngNameList.length-1);
 		var specKorNameList = specKorNameList.substring(1, specKorNameList.length-1);
-		alert(specKorNameList);
-		alert(specEngNameList);
 		var specEngNameList = specEngNameList.split(',');
 		var specKorNameList = specKorNameList.split(',');
 		for(var count = 0 ; count < specEngNameList.length; count++){
@@ -83,7 +79,6 @@ $(document).ready(function(){
 
 		for(var count = 0; count < specEngNameList.length; count++){
 			var specValue = $("#"+specEngNameList[count]+" option:selected").val();
-			alert(specValue + "안돼");
 			if(specValue == ''){
 				flag = 1;
 				$("#" + specEngNameList[count] + "Errors").html(specKorNameList[count] +"를 입력하시지 않았습니다.");
