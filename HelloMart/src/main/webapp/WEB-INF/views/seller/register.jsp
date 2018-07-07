@@ -36,12 +36,8 @@ $(document).ready(function(){
 		var productImageFile = $("#productImageFile").val();
 		var specEngNameList = '${specEngNameList}';
 		var specKorNameList = '${specKorNameList}';
-		alert(specKorNameList);
-		alert(specEngNameList);
 		var specEngNameList = specEngNameList.substring(1, specEngNameList.length-1);
 		var specKorNameList = specKorNameList.substring(1, specKorNameList.length-1);
-		alert(specKorNameList);
-		alert(specEngNameList);
 		var specEngNameList = specEngNameList.split(',');
 		var specKorNameList = specKorNameList.split(',');
 		for(var count = 0 ; count < specEngNameList.length; count++){
