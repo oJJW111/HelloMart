@@ -5,7 +5,7 @@
 
 <mapper namespace="com.hellomart.dao.SellerDAO">
 
-	<select id="getSellerProductList" resultType="ProductList" parameterType="HashMap">
+	<select id="getSellerProductList" resultType="productList" parameterType="HashMap">
 		SELECT U.*
 		FROM
 		(
@@ -31,5 +31,20 @@
 	<select id="getSellerProductCount" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM ProductList WHERE RegisterID = #{id}
 	</select>
-		
+	
+	<insert id="insertProductInfo" parameterType="productList">
+		INSERT INTO ProductList(ProductName, MainCategory, SmallCategory, ImagePath,
+		ProdYear, ProdMonth, ProdDay, MfCompany, Price, Weight, RegisterID, Comment) 
+		VALUES (#{productName}, #{mainCategory}, #{smallCategory}, #{imagePath}, 
+		#{prodYear}, #{prodMonth}, #{prodDay}, #{mfCompany}, #{price}, #{weight},
+		#{registerID}, #{comment}) 
+	</insert>
+	
+	<select id="getNoProductList" resultType="Integer">
+		select MAX(NO) FROM ProductList
+	</select>
+	
+	<insert id="insertPartProductInfo" parameterType="HashMap">
+		${sql}
+	</insert>	
 </mapper>

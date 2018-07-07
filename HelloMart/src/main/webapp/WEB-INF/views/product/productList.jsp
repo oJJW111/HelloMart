@@ -53,14 +53,24 @@ function createURL(mainCategory, smallCategory, page) {
 	return url;
 }
 $(document).ready(function(){
-	$.submitForm = function(f) {
-		$(f).submit(function() {
-		    $(this).find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+	$.submitForm = function() {
+		$("#detailForm").submit(function() {
+		    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
 		});
 	}
-	$.checkMaintain = function() {
-		
+	$.appendPage = function(page) {
+		$("#detailForm").append("<input type='hidden' name='page' value='" + page + "'>");
 	}
+	$(".category_small :checkbox").on("change", function() {
+		var value = $(this).attr("id");
+		if($(this).is(":checked")) {
+			var name = "checkedId";
+			$("#detailForm").append("<input type='hidden' name='" + name + "' value='" + value + "'>");
+		} else {
+			console.log("#" + value);
+			$("input[value=" + value + "]").remove();
+		}
+	});
 });
 </script>
 
@@ -74,7 +84,7 @@ $(document).ready(function(){
 
 <div class=BLOCK70></div>
 
-<form action="/productList" method="get"> 
+<form action="/productList" method="get" id="detailForm"> 
 <input type="hidden" name="mainCategory" value="${param.mainCategory}">
 <input type="hidden" name="smallCategory" value="${param.smallCategory}">
 <div class="category_detail noselect">
@@ -97,14 +107,21 @@ $(document).ready(function(){
 				<c:forEach var="column" items="${columnList}" varStatus="status">
 					<div>
 						<c:out value="${column}"/><br><br>
-						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims=",">
+						<c:forTokens var="value" items="${smallCategoryColumn[column]}" delims="," varStatus="innerStatus">
 							<label class="ck_container">
+								<c:set var="checkedId" value="${columnListEng[status.index]}${innerStatus.index}"/>
+								<c:set var="id" value="${columnListEng[status.index]}${innerStatus.index}"/>
 								<input type="checkbox" name="${columnListEng[status.index]}"
-								id="${columnListEng[status.index] + status.index}" value="${fn:trim(value)}">
-<%-- 									<c:if test="${checked[columnListEng[status.index]].[status.index] == status.index}"> --%>
-<!-- 										checked -->
-<%-- 									</c:if> --%>
-<!-- 								> -->
+								id="${id}" value="${fn:trim(value)}"
+								
+									<c:if test="${checked ne null and checked[checkedId] ne null}">
+										checked
+									</c:if>
+								
+								>
+								<c:if test="${checked ne null and checked[checkedId] ne null}">
+									<input type="hidden" name="checkedId" value="${id}">
+								</c:if>
 								<span class="checkmark"></span>
 								<c:out value="${fn:trim(value)}"/>
 							</label>
@@ -121,7 +138,7 @@ $(document).ready(function(){
 		<div class="range">~</div>
 		<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button onclick="$.submitForm(this.form)"
+		<button id="submit-form" onclick="$.submitForm()"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
@@ -183,8 +200,7 @@ $(document).ready(function(){
 		<c:forEach 	var="i"
 					begin="${paging.beginPage}"
 					end="${paging.endPage}">
-			<a href="javascript:void(0);" 
-			onclick="javascript:location.href = createURL('${param.mainCategory}', '${param.smallCategory}', '${i}');">[${i}]</a>
+		<label for="submit-form" tabindex="0" onclick="$.appendPage(${i})">[${i}]</label>
 		</c:forEach>
 		<c:if test="${paging.nowBlock lt paging.totalBlock}">
 			<a href="javascript:void(0);" 

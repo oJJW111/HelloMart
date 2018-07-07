@@ -66,11 +66,21 @@
                   </td>
                   <td width="5%">
                      <select id="count">
+                           <c:set var="count" value="${row.count }"/>
+                           <c:if test="${row.count > 20 }">
+                                <script>
+                                  (function(){
+                                    alert("주문개수는 20개를 초과할수 없습니다.");
+
+                                     })()
+                                </script>
+                              <c:set var="count" value="20"/>
+                           </c:if>
                            <c:forEach begin="1" end="20" var="i">
-                              <c:if test="${row.count == i}">
+                              <c:if test="${count == i}">
                                  <option value="${i}" id="${i}" selected="selected">${i}</option>
                               </c:if>
-                              <c:if test="${row.count != i}">
+                              <c:if test="${count != i}">
                                  <option value="${i}" id="${i}">${i}</option>
                               </c:if>
                            </c:forEach>
