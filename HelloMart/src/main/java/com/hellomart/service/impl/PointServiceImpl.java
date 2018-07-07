@@ -89,13 +89,11 @@ public class PointServiceImpl implements PointService {
 
 	@Override
 	public List<Point> getAllPointLog(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return pointDao.getAllPointLog(id);
 	}
 
 	@Override
 	public List<Point> getPeriodPointLog(String id, Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return pointDao.getPeriodPointLog(id, startDate, endDate);
+	} 
 }
