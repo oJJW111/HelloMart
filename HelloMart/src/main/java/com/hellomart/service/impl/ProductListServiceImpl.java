@@ -102,6 +102,7 @@ public class ProductListServiceImpl implements ProductListService{
 		String mainCategory = null;
 		String smallCategory = null;
 		Integer page = null;
+		String[] checkedId = null;
 		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		
@@ -118,6 +119,9 @@ public class ProductListServiceImpl implements ProductListService{
 				break;
 			case "page":
 				page = Integer.parseInt(request.getParameter(param));
+				break;
+			case "checkedId":
+				checkedId = request.getParameterValues("checkedId");
 				break;
 				default:
 					String[] value = request.getParameterValues(param);
@@ -155,6 +159,13 @@ public class ProductListServiceImpl implements ProductListService{
 		/***** small 카테고리 리스트 처리 *****/
 		
 		
+		if(checkedId != null) {
+			Map<String, String> checked = new HashMap<>();
+			for(String key : checkedId) {
+				checked.put(key, "");
+			}
+			modelMap.put("checked", checked);
+		}
 		
 		/***** 카테고리 세부 목록 처리 *****/
 		if(smallCategory != null) {
@@ -215,7 +226,7 @@ public class ProductListServiceImpl implements ProductListService{
 			for(String value : paramMap.get(column)) {
 				switch (column) {
 				case "search":
-					sb.append("ProductName").append(" = ")
+					sb.append("ProductName").append(" LIKE ")
 					.append("'%").append(value).append("%'");
 					break;
 				case "price1":
