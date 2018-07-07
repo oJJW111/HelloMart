@@ -22,6 +22,7 @@
 			BirthYear=#{birthYear}, BirthMonth=#{birthMonth}, BirthDay=#{birthDay}, Gender=#{gender}
 		WHERE ID = #{id}
 	</update>
+	
 
 	<select id="findAccount" resultType="Account" parameterType="String">
 		SELECT Password, Role FROM Account WHERE ID = #{id}
@@ -50,12 +51,60 @@
 	</delete>
 	
 	<select id="accountList" resultType="Account">
-		SELECT id, role FROM Account	
+		SELECT U.*
+		FROM
+		(
+				SELECT t.*
+				FROM
+				(
+					SELECT @rownum:=@rownum+1 as rownum, S.* 
+					FROM 
+		            (
+							SELECT a.id, a.role, a.apply   
+							FROM Account a
+							<if test="flag == 1">
+							 	<where> 
+								  <if test="id != null">
+								       id like #{id}
+								  </if> 
+								  <if test="accountRole != null">
+								       AND role like #{accountRole}
+								   </if>
+								   <if test="sellerApply != null">
+								       AND apply like #{sellerApply}
+								   </if>
+								</where>
+							</if>
+					)S, (SELECT @rownum := 0) r
+				)t
+		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
+		)U	
 	</select>
 	
 	<update id="sellerApproval">
 		UPDATE Account SET Role = 'SELLER' WHERE id = #{id}
 	</update>
+	
+	<update id="sellerProgressDelete">
+		UPDATE Account SET Apply = 'NOTHING' WHERE id = #{id}
+	</update>
+	
+	<select id="accountCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS cnt FROM Account
+		<if test="flag == 1">
+		 	<where> 
+			  <if test="id != null">
+			       id like #{id}
+			  </if> 
+			  <if test="accountRole != null">
+			       AND role like #{accountRole}
+			   </if>
+			   <if test="sellerApply != null">
+			       AND apply like #{sellerApply}
+			   </if>
+			</where>
+		</if>
+	</select>
 	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	<select id="count" resultType="java.lang.Integer">
@@ -73,6 +122,4 @@
 		TRUNCATE Account
 	</delete>
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
-	
-
 </mapper>

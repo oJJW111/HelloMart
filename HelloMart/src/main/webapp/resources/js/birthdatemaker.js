@@ -5,7 +5,7 @@ var BIRTHDATEMAKER = function() {
 		day : undefined,
 		begin : 0,
 		end : 0,
-		yearDefault : '생년',
+		yearDefault : '년',
 		monthDefault : '월',
 		dayDefault : '일',
 		yearDefaultAttr : '',

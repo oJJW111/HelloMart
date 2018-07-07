@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @CHARSET "UTF-8";
 
 /* The container */
@@ -376,6 +377,3 @@ hr.style14 {
 .product_list_content .product_cart {
 	padding: 20px 0 12px 0;	
 }
-
-/** CSS Cache Buster */
-define( 'CHILD_THEME_VERSION', filemtime( get_stylesheet_directory() . '/style.css' ) );

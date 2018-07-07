@@ -26,7 +26,6 @@ var a = {
 	name : 'defaultName',
 	pass : 'defaultpass'
 }
-
 var b = {
 	name : '홍길동',
 }

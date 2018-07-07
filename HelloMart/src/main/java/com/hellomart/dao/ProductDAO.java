@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.hellomart.dao;
 
 import java.util.HashMap;
@@ -7,3 +8,12 @@ public interface ProductDAO {
 	ProductList getProductInfo(String no);
 	HashMap<String, String> getDetailInfo(HashMap<String, String> map); 
 }
+=======
+package com.hellomart.dao;
+
+import com.hellomart.dto.ProductList;
+
+public interface ProductDAO {
+	ProductList getProductInfo(String no);
+}
+>>>>>>> refs/remotes/origin/kms

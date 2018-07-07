@@ -11,3 +11,5 @@ public class Refrigerator {
 	private int powerConsumption;
 	private int energyEfficiency;
 }
+
+

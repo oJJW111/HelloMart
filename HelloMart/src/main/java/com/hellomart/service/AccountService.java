@@ -1,7 +1,9 @@
 package com.hellomart.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.ui.Model;
 
 import com.hellomart.dto.Account;
 
@@ -60,14 +62,8 @@ public interface AccountService {
 	 * 
 	 * @return 계정 테이블의 모든 계정 리스트
 	 */
-	ArrayList<Account> accountList();
-	
-	/**
-	 * 
-	 * @param id 계정의 아이디
-	 * @return 계정 정보를 담고 있는 Account 객체
-	 */
-	Account get(String id);
+	void accountList(int pageNum, Model model, 
+				Map<String, Object> searchData, String servletPath);
 	
 	/**
 	 * SELLER_READY 권한을 가지고 있는 계정들을 모두 SELLER 권한으로 바꾼다.
