@@ -2,6 +2,7 @@ package com.hellomart.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.hellomart.dto.ProductList;
 
@@ -10,4 +11,6 @@ public interface SellerDAO {
 	public int reviewCount(int no);
 	public int getSellerProductCount(String id);
 	public void insertProductInfo(ProductList productList);
+	public int getNoProductList();
+	public void insertPartProductInfo(Map<String, Object> sqlMap);
 }

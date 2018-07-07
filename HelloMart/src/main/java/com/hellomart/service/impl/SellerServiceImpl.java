@@ -208,16 +208,50 @@ public class SellerServiceImpl implements SellerService{
 				productPartSpecColumnMap.put(columnName, columnValue);
 			}
 		}
-		String tableName = (String)tempTableInfoMap.get("tableName");
-//		productPartSpecColumnNameList;
-//		productPartSpecColumnTypeList;
-//		productPartSpecColumnMap;
-//		StringBuilder sql = new StringBuilder();
-//		sql.append("INSERT INTO ");
-//		sql.append()
 		
-		
-
 		dao.insertProductInfo(productList);
+		int no = dao.getNoProductList();
+		
+		String tableName = (String)tempTableInfoMap.get("tableName");
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO ");
+		sql.append(tableName);
+		sql.append(" (No, ");
+		int i;
+		for(i = 0 ; i < productPartSpecColumnNameList.size() - 1;i++){
+			sql.append(productPartSpecColumnNameList.get(i) + ", ");
+		}
+		sql.append(productPartSpecColumnNameList.get(i) + ") ");
+		sql.append("VALUES(");
+		sql.append(no + ", ");
+		for(i = 0 ; i < productPartSpecColumnTypeList.size() - 1 ; i++){
+			if(productPartSpecColumnTypeList.get(i).equals("Integer")){
+				int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+				sql.append(result + ", ");
+			}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
+				double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+				sql.append(result + ", ");
+			}else{
+				String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+				sql.append("'");
+				sql.append(result);
+				sql.append("', ");
+			}
+		}
+		if(productPartSpecColumnTypeList.get(i).equals("Integer")){
+			int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			sql.append(result + ")");
+		}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
+			double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			sql.append(result + ")");
+		}else{
+			String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			sql.append("'");
+			sql.append(result);
+			sql.append("')");
+		}
+		Map<String, Object> sqlMap = new HashMap<String, Object>();
+		sqlMap.put("sql", sql.toString());
+		dao.insertPartProductInfo(sqlMap);
 	}
 }

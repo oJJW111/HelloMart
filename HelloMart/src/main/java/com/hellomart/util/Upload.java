@@ -17,6 +17,9 @@ public class Upload {
 		boolean isUpload = false;
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String uploadPath = "D:/upload/";
+		if(!new File(uploadPath).exists()){
+			new File(uploadPath).mkdirs();
+		}
 		String saveFileName = null;
 		Iterator<String> iterator = mRequest.getFileNames();
 		while(iterator.hasNext()){

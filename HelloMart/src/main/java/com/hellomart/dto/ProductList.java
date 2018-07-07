@@ -15,7 +15,7 @@ public class ProductList {
 	private int score;     
 	private String prodYear;
 	private String prodMonth;
-	private String prodDay;       
+	private String prodDay;
 	private String mfCompany;   
 	private int price;  
 	private int weight;        

@@ -87,7 +87,7 @@ public class SellerController {
 	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
 	public String sellerProductRegister(MultipartHttpServletRequest mRequest, 
 			@ModelAttribute("ProductList") @Valid ProductList productList,
-				BindingResult bindingResult, Model model){
+				BindingResult bindingResult, Principal principal, Model model){
 		boolean flag = false;
 		String uri = null;
 		Map<String, Object> tempTableInfoMap = tableInfoMap;
@@ -130,6 +130,7 @@ public class SellerController {
 			model.addAttribute("specKorNameList", specKorNameList);
 			uri = "seller/register";
 		}else{
+			productList.setRegisterID(principal.getName());
 			sellerService.sellerProductRegister(mRequest, productList, tempTableInfoMap);
 			uri = "redirect:/seller/page/1";
 		}
