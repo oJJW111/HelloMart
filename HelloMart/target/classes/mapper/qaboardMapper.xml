@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hellomart.dao.QABoardDAO">
-	<select id="list" resultType="QABoard">
+	<select id="listQABoard" resultType="QABoard">
 		select * from qaboard order by 1 desc limit #{param1}, #{param2}
 	</select>
 

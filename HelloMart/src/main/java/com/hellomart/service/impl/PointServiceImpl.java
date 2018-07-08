@@ -39,7 +39,12 @@ public class PointServiceImpl implements PointService {
 		
 		String content = request.getParameter("prodName"); 
 		if(incDec.equals("+")){
-			qty = totalPrice * (0.01 * grade);
+			if(grade >= 2){
+			   qty = totalPrice * (0.01 * grade);
+			}
+			else{
+			   qty = totalPrice * 0.01;   
+			}
 			content += "의 구매로" + qty + "만큼 " +"증가";	
 		}
 		if(incDec.equals("-")){

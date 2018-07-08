@@ -17,5 +17,5 @@ public class QABoard {
 	private int count;
 	private Date date;
 	private Date modate;
-
+	private int cmt; 
 }
