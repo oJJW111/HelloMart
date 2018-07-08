@@ -73,65 +73,53 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 	@Override
-	public Map<String, Object> productPartSpec(Model model, Map<String, String> category) {
-		String mainCategory = category.get("mainCategory");		
-		String smallCategory = category.get("smallCategory");
+	public void productPartSpec(Model model, String mainCategory, String smallCategory) {
 		
-		List<String> productPartSpecList;
-		
-		List<String> productPartSpecEngName = new ArrayList<String>();
-		List<String> productPartSpecKorName = new ArrayList<String>();
-		Map<String, List<String>> productPartSpecMap = new HashMap<String, List<String>>();
-		List<String> productPartSpecColumnTypeList = new ArrayList<String>();
-		
-		StringTokenizer tokenizer;
-		XMLParser xmlParser = new XMLParser("category.xml");
-		String specValue = null;
-		String specValueList = null;
-		List<String> tokenResultValueList;
-		
-		try {
-			
-			productPartSpecList = xmlParser.getChildren(smallCategory);
-			for(String productSpec : productPartSpecList){
-				specValueList = xmlParser.getValue(smallCategory, productSpec); 
-				System.out.println(smallCategory + "의 " + productSpec + "("
-										+ xmlParser.getAttributeValue(productSpec, "column") + ")의 value : " + specValueList.trim());
-				
-				productPartSpecEngName.add(xmlParser.getAttributeValue(productSpec, "column"));
-				productPartSpecColumnTypeList.add(xmlParser.getAttributeValue(productSpec, "type"));
-				productPartSpecKorName.add(productSpec);
-				
-				tokenResultValueList = new ArrayList<String>();
-				tokenizer = new StringTokenizer(specValueList.trim(), ",");
-				while(tokenizer.hasMoreTokens()){ 
-					specValue = tokenizer.nextToken();
-					tokenResultValueList.add(specValue.trim());	
-				}
-				
-				productPartSpecMap.put(productSpec, tokenResultValueList); 
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		TableInformation tableInfo = tableInfoXmlParser(mainCategory, smallCategory);
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategory", smallCategory);
-		model.addAttribute("specMapList", productPartSpecMap);
-		model.addAttribute("specEngNameList", productPartSpecEngName);
-		model.addAttribute("specKorNameList", productPartSpecKorName);
+		model.addAttribute("specList", tableInfo.getColumnValueList());
+		model.addAttribute("specEngNameList", tableInfo.getColumnEngNameList());
+		model.addAttribute("specKorNameList", tableInfo.getColumnKorNameList());
+	}
+	
+	
+
+	@Override
+	public Boolean PartProductValidCheck(MultipartHttpServletRequest mRequest, 
+			Model model, String mainCategory, String smallCategory) {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("specEngNameList", productPartSpecEngName);
-		map.put("specKorNameList", productPartSpecKorName);
-		map.put("specMapList", productPartSpecMap);
-		map.put("tableName", xmlParser.getAttributeValue(smallCategory, "table"));
-		map.put("productPartSpecColumnTypeList",productPartSpecColumnTypeList);
-		return map;
+		Boolean flag = true;
+		TableInformation tableInfo = TableInformation.getInstance();
+		if(mRequest.getFile("productImageFile").isEmpty()){
+			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
+			flag = false;
+		}else{
+			System.out.println(mRequest.getFile("productImageFile").getOriginalFilename());
+			System.out.println(mRequest.getFile("productImageFile").getSize());
+		}
+		
+		List<String> parameters = new ArrayList<String>();
+		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
+			String requestValue 
+				= mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
+			if(requestValue != ""){
+				parameters.add(requestValue);
+			}else{
+				flag = false;
+				model.addAttribute(
+						tableInfo.getColumnEngNameList().get(i)
+						+ "Msg", tableInfo.getColumnKorNameList().get(i) + "를 입력하시지 않았습니다.");
+			}
+		}
+		if(!flag){
+			productPartSpec(model, mainCategory, smallCategory);
+		}
+		return flag;
 	}
 
 	@Override
-	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList,
-				Map<String, Object> tempTableInfoMap) {
+	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList) {
 		Map<String, Object> fileResultMap = upload.fileUpload(mRequest);
 		if((Boolean)fileResultMap.get("isUpload")){
 			String imagePath = (String)fileResultMap.get("imagePath");
@@ -139,19 +127,17 @@ public class SellerServiceImpl implements SellerService{
 		}else{
 			return;
 		}
-		
-		List<String> productPartSpecColumnNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
-		List<String> productPartSpecColumnTypeList = (List<String>)tempTableInfoMap.get("productPartSpecColumnTypeList");
+		TableInformation tableInfo = TableInformation.getInstance();
 		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
 		
 		StringBuffer sBuffer; Pattern p; Matcher m;
 		int[] intNumbers = new int[2];
 		double[] doubleNumbers = new double[2];
 		
-		for(int i = 0 ; i < productPartSpecColumnNameList.size() ; i++){
-			String columnValue = mRequest.getParameter(productPartSpecColumnNameList.get(i));
-			String columnName = productPartSpecColumnNameList.get(i);
-			String columnType = productPartSpecColumnTypeList.get(i);
+		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
+			String columnValue = mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
+			String columnName = tableInfo.getColumnEngNameList().get(i);
+			String columnType = tableInfo.getColumnTypeList().get(i);
 			if(columnType.equals("Integer")){
 				int resultColumnValue;
 				if(columnValue.indexOf("~") > 0){
@@ -212,40 +198,52 @@ public class SellerServiceImpl implements SellerService{
 		dao.insertProductInfo(productList);
 		int no = dao.getNoProductList();
 		
-		String tableName = (String)tempTableInfoMap.get("tableName");
+		String tableName = tableInfo.getTableName();
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO ");
 		sql.append(tableName);
 		sql.append(" (No, ");
 		int i;
-		for(i = 0 ; i < productPartSpecColumnNameList.size() - 1;i++){
-			sql.append(productPartSpecColumnNameList.get(i) + ", ");
+		for(i = 0 ; i < tableInfo.getColumnEngNameList().size() - 1;i++){
+			sql.append(tableInfo.getColumnEngNameList().get(i) + ", ");
 		}
-		sql.append(productPartSpecColumnNameList.get(i) + ") ");
+		sql.append(tableInfo.getColumnEngNameList().get(i) + ") ");
 		sql.append("VALUES(");
 		sql.append(no + ", ");
-		for(i = 0 ; i < productPartSpecColumnTypeList.size() - 1 ; i++){
-			if(productPartSpecColumnTypeList.get(i).equals("Integer")){
-				int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		for(i = 0 ; i < tableInfo.getColumnTypeList().size() - 1 ; i++){
+			if(tableInfo.getColumnTypeList().get(i).equals("Integer")){
+				int result 
+					= (int)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append(result + ", ");
-			}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
-				double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			}else if(tableInfo.getColumnTypeList().get(i).equals("Double")){
+				double result 
+					= (double)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append(result + ", ");
 			}else{
-				String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+				String result 
+					= (String)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append("'");
 				sql.append(result);
 				sql.append("', ");
 			}
 		}
-		if(productPartSpecColumnTypeList.get(i).equals("Integer")){
-			int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		if(tableInfo.getColumnTypeList().get(i).equals("Integer")){
+			int result 
+				= (int)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append(result + ")");
-		}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
-			double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		}else if(tableInfo.getColumnTypeList().get(i).equals("Double")){
+			double result 
+				= (double)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append(result + ")");
 		}else{
-			String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			String result 
+				= (String)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append("'");
 			sql.append(result);
 			sql.append("')");
@@ -254,4 +252,111 @@ public class SellerServiceImpl implements SellerService{
 		sqlMap.put("sql", sql.toString());
 		dao.insertPartProductInfo(sqlMap);
 	}
+	
+	private static TableInformation tableInfoXmlParser(String mainCategory, String smallCategory) {
+		XMLParser xmlParser = new XMLParser("category.xml");
+		TableInformation tableInfo = TableInformation.getInstance();
+		tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategory, smallCategory));
+		tableInfo.setColumnEngNameList(new ArrayList<String>());
+		tableInfo.setColumnTypeList(new ArrayList<String>());
+		tableInfo.setColumnValueList(new ArrayList<List<String>>());
+		
+		StringTokenizer tokenizer;
+		String valueList = null;
+		String specValue = null;
+		List<String> tokenResultValueList;
+		
+		for (String columnKorName : tableInfo.getColumnKorNameList()) {
+			valueList = xmlParser.getValue(smallCategory, columnKorName);
+
+			tableInfo.getColumnEngNameList()
+				.add(xmlParser.getAttributeValue(smallCategory, columnKorName, "column"));
+			tableInfo.getColumnTypeList()
+				.add(xmlParser.getAttributeValue(smallCategory, columnKorName, "type"));
+			
+			tokenResultValueList = new ArrayList<String>();
+			tokenizer = new StringTokenizer(valueList.trim(), ",");
+			while(tokenizer.hasMoreTokens()){ 
+				specValue = tokenizer.nextToken();
+				tokenResultValueList.add(specValue.trim());	
+			}
+			tableInfo.getColumnValueList().add(tokenResultValueList);
+		}
+		tableInfo.setTableName(xmlParser.getAttributeValue(smallCategory, "table"));
+		return tableInfo;
+	}
+}
+
+class TableInformation {
+	private String tableName;
+	private List<String> columnTypeList;
+	private List<String> columnEngNameList;
+	private List<String> columnKorNameList;
+	private List<List<String>> columnValueList;
+
+	private static class Singleton {
+		private static TableInformation instance;
+
+		public static TableInformation getInstance() {
+			if (instance == null) {
+				instance = new TableInformation();
+			}
+			return instance;
+		}
+	}
+
+	public static TableInformation getInstance() {
+		return Singleton.getInstance();
+	}
+
+	private TableInformation() {
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
+	public List<String> getColumnTypeList() {
+		return columnTypeList;
+	}
+
+	public void setColumnTypeList(List<String> columnTypeList) {
+		this.columnTypeList = columnTypeList;
+	}
+
+	public List<String> getColumnEngNameList() {
+		return columnEngNameList;
+	}
+
+	public void setColumnEngNameList(List<String> columnEngNameList) {
+		this.columnEngNameList = columnEngNameList;
+	}
+
+	public List<String> getColumnKorNameList() {
+		return columnKorNameList;
+	}
+
+	public void setColumnKorNameList(List<String> columnKorNameList) {
+		this.columnKorNameList = columnKorNameList;
+	}
+
+	public List<List<String>> getColumnValueList() {
+		return columnValueList;
+	}
+
+	public void setColumnValueList(List<List<String>> columnValueList) {
+		this.columnValueList = columnValueList;
+	}
+
+	@Override
+	public String toString() {
+		return "TableInformation [tableName=" + tableName + ", columnTypeList=" + columnTypeList
+				+ ", columnEngNameList=" + columnEngNameList + ", columnKorNameList=" + columnKorNameList
+				+ ", columnValueList=" + columnValueList + "]";
+	}
+
 }

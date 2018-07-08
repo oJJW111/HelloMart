@@ -10,7 +10,7 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/page.css">
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
@@ -72,9 +72,9 @@ $(document).ready(function() {
 	<!-- 헤더 -->
 	<div class="article_wrap">
 		
-		<div class=BLOCK30></div>
+		<div class=BLOCK20></div>
 		<h3>${id }님의 판매 품목 목록입니다.</h3>
-		<div class=BLOCK30></div>
+		<div class=BLOCK20></div>
 		<div class="product_list">
 <c:forEach var="map" items="${mapList }">
 			<div class="product_list_content">
@@ -102,11 +102,11 @@ $(document).ready(function() {
 			<hr class="style14">
 </c:forEach>
 		</div>
-		<div class="BLOCK50"></div>
+		<div class="BLOCK60"></div>
 		<div class="paginate">
 			${pageCode}
 		</div>
-		<div class="BLOCK50"></div>
+		<div class="BLOCK60"></div>
 		
 		<form name="productRegisterForm" method="get">
 			<label for="mainCategoryInput">메인카테고리 : 
@@ -126,7 +126,7 @@ $(document).ready(function() {
 			</label>
 			<input type="button" value="물품 등록" id="productRegister">
 		</form>
-		<div class="BLOCK50"></div>
+		<div class="BLOCK60"></div>
 	</div>
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />

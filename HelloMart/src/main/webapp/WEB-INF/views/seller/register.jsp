@@ -168,7 +168,7 @@ $(document).ready(function(){
 				<select name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
 					title='${specName }리스트' required="required">
 					<option value=''>선택</option>
-	<c:forEach var="value" items="${specMapList[specName]}">
+	<c:forEach var="value" items="${specList[status.index]}">
 					<option value='${value }'>${value }</option>
 	</c:forEach>
 				</select>
