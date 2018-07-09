@@ -1,5 +1,6 @@
 package com.hellomart.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -128,8 +129,6 @@ public class ProductListServiceImpl implements ProductListService{
 					paramMap.put(param, value);
 			}
 		}
-		
-		
 		
 		/***** Model에 put할 맵 생성 *****/
 		Map<String, Object> modelMap = new HashMap<>();

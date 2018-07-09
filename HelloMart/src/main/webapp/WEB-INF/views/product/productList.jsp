@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -50,7 +50,7 @@ function createURL(mainCategory, smallCategory, page) {
 		url += "page=" + page + "&";
 	}
 	helper.removeLast();
-	return url;
+	return encodeURI(url);
 }
 $(document).ready(function(){
 	$.submitForm = function() {
@@ -112,7 +112,7 @@ $(document).ready(function(){
 								<c:set var="checkedId" value="${columnListEng[status.index]}${innerStatus.index}"/>
 								<c:set var="id" value="${columnListEng[status.index]}${innerStatus.index}"/>
 								<input type="checkbox" name="${columnListEng[status.index]}"
-								id="${id}" value="${fn:trim(value)}"
+								id="${id}" value="javascript:encodeURI(${fn:trim(value)})"
 								
 									<c:if test="${checked ne null and checked[checkedId] ne null}">
 										checked
@@ -151,17 +151,21 @@ $(document).ready(function(){
 		<c:forEach var="board" items="${list}">
 				<div class="product_list_content">
 					<div class="product_img">
-						<a href="/productView?no=${board.no}&smallCategory=${param.smallCategory}">
+						<a href="javascript:void(0)"
+							onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${param.smallCategory}')">
 							<img src="${board.imagePath}">
 						</a>
 					</div>
 					<div class="product_info">
-						<a class="title" href="/productView?no=${board.no}&smallCategory=${param.smallCategory}">${board.productName}</a>
+						<a class="title" href="javascript:void(0)"
+						onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${param.smallCategory}')">${board.productName}</a>
 						<div class="additional_info">
 							<span class="brand">${board.mfCompany}</span>
 							<span class="category">
-								<a href="/productList/main?mainCategory=${param.mainCategory}">${param.mainCategory}</a> > 
-								<a href="/productList/small?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}">${param.smallCategory}</a>
+								<a href="javascript:void(0)"
+								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${param.mainCategory}')">${param.mainCategory}</a> > 
+								<a href="javascript:void(0)"
+								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}')">${param.smallCategory}</a>
 							</span>
 						</div>
 					</div>

@@ -1,5 +1,7 @@
 package com.hellomart.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class ProductListController {
 	public String productMainList(Model model, HttpServletRequest request,
 			@RequestParam(value="mainCategory", required=false) String mainCategory,
 			@RequestParam(value="smallCategory", required=false) String smallCategory,
-			@RequestParam(value="page", required=false) Integer page){
+			@RequestParam(value="page", required=false) Integer page) throws UnsupportedEncodingException {
 		model.addAttribute("request", request);
 		
 		Map<String, Object> attributes = service.list(model);
