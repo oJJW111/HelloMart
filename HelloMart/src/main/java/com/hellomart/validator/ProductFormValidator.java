@@ -32,16 +32,11 @@ public class ProductFormValidator implements Validator {
 	private void rejectIfEmptyOrWhitespace(Errors errors, ProductList productList) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productName", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mfCompany", "form.error.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prodDate", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weight", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comment", "form.error.required");
-
-				
-		if(ValidationTools.isNullOrEmpty(productList.getProdYear()) ||
-		   ValidationTools.isNullOrEmpty(productList.getProdMonth()) ||
-		   ValidationTools.isNullOrEmpty(productList.getProdDay())) {
-			errors.rejectValue("prodYear", "form.error.required");
-		}
+		
 	}
 	
 	private void rejectIfNotMatch(Errors errors, ProductList productList) {

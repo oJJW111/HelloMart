@@ -90,7 +90,7 @@ public class CartController {
         for(int i=0; i<no.length; i++){
             Cart cart = new Cart();
             cart.setId(id);
-            cart.setCount(count[i]);
+            cart.setOrderCount(count[i]);
             cart.setNo(no[i]);
             service.modifyCart(cart);
         }

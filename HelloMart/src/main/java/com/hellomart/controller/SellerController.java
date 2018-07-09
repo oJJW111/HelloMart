@@ -84,12 +84,7 @@ public class SellerController {
 				BindingResult bindingResult, Principal principal, Model model){
 		String uri = null;
 		if(bindingResult.hasErrors()) {
-			Map<String, String> map = new HashMap<>();
-			map.put("selectedYear", productList.getProdYear());
-			map.put("selectedMonth", productList.getProdMonth());
-			map.put("selectedDay", productList.getProdDay());
-			
-			model.addAttribute("prodDate", map);
+			model.addAttribute("ProductList", new ProductList());
 			return "seller/register";
 		}
 

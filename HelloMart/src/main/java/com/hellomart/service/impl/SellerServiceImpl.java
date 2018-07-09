@@ -95,7 +95,15 @@ public class SellerServiceImpl implements SellerService{
 			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
 			flag = false;
 		}else{
-			System.out.println(mRequest.getFile("productImageFile").getOriginalFilename());
+			String imageFileName = mRequest.getFile("productImageFile").getOriginalFilename();
+			String extension = imageFileName.substring(imageFileName.lastIndexOf("."), imageFileName.length());
+			if((!extension.toLowerCase().equals("gif")) 
+				&& (!extension.toLowerCase().equals("png"))
+				&& (!extension.toLowerCase().equals("jpg"))
+				&& (!extension.toLowerCase().equals("jpeg"))){
+				flag = false;
+			}
+			
 			System.out.println(mRequest.getFile("productImageFile").getSize());
 		}
 		

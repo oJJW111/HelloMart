@@ -12,6 +12,7 @@ import com.hellomart.dto.OrderList;
 import com.hellomart.service.AccountService;
 import com.hellomart.service.OrderService;
 import com.hellomart.service.PointService;
+import com.hellomart.service.ProductListService;
 import com.hellomart.service.ProductService;
 
 @Controller
@@ -22,6 +23,9 @@ public class OrderController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	ProductListService productListService;
 	
 	@Autowired
 	OrderService orderService;
@@ -51,6 +55,8 @@ public class OrderController {
 	public String buyOk(OrderList orderList, HttpServletRequest request){
 		orderService.insertOrder(orderList);
 		
+		productListService.updateOrderCount(request);
+
 		pointService.insertPoint(request, orderList);
 		
 		return "index";
@@ -68,6 +74,8 @@ public class OrderController {
 	public String cartBuyOk(HttpServletRequest request){
 		pointService.insertPointList(request);
 		 
+		productListService.updateOrderCountList(request);
+		
 		orderService.insertOrderList(request); 
 		
 		return "마이페이지로?";

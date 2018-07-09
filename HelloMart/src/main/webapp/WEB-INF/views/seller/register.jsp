@@ -14,7 +14,7 @@
 <script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/register.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/tooltip.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,7 +33,88 @@ $(document).ready(function(){
 		selectedDay: '${prodDate.selectedDay}'
 	});
 	$("#btnRegister").on("click", function(){
+		var productName = $("#productName").val();
+		var mfCompany = $("#mfCompany").val();
+		var prodDate = $("#prodDate").val();
+		var price = $("#price").val();
+		var weight = $("#weight").val();
+		var comment = $("#comment").val();
 		var productImageFile = $("#productImageFile").val();
+		var flag = 0;
+		
+		if(productName == ''){
+			$("#productNameError").html("필수 입력란입니다.");
+			$("#productName").focus();
+			flag = 1;
+		}else{
+			$("#productNameError").html("");
+		}
+		if(mfCompany == ''){
+			$("#mfCompanyError").html("필수 입력란입니다.");
+			$("#mfCompany").focus();
+			flag = 1;
+		}else{
+			$("#mfCompanyError").html("");
+		}
+		if(prodDate == ''){
+			$("#prodDateError").html("필수 입력란입니다.");
+			$("#prodDate").focus();
+			flag = 1;
+		}else{
+			$("#prodDateError").html("");
+		}
+		if(price == '' || price == '0'){
+			$("#priceError").html("필수 입력란입니다.");
+			$("#price").focus();
+			flag = 1;
+		}else{
+			$("#priceError").html("");
+		}
+		if(weight == '' || weight == '0.0'){
+			$("#weightError").html("필수 입력란입니다.");
+			$("#weight").focus();
+			flag = 1;
+		}else{
+			$("#weightError").html("");
+		}
+		if(comment == ''){
+			$("#commentError").html("필수 입력란입니다.");
+			$("#comment").focus();
+			flag = 1;
+		}else{
+			$("#commentError").html("");
+		}
+		if(productImageFile == ''){
+			$("#fileError").html("필수 입력란입니다.");
+			$("#productImageFile").focus();
+			flag = 1;
+		}else if(fileExtensionCapacityCheck('productImageFile') == 0){
+			flag = 1;
+		}
+		else{
+			$("#fileError").html("");
+		}
+		
+		function fileExtensionCapacityCheck(string){
+			var result = 1;
+			var ext = $("#" + string).val().split('.').pop().toLowerCase();
+		    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+		    	$("#fileError").html("gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.");
+		    	$("#" + string).val("");
+		    	$("#" + string).focus();
+		    	result = 0;
+		    }
+		    var file = document.getElementById(string).files[0];
+		    var maxSize = 1024*1024;
+		    if(file.size > maxSize){
+		    	$("#fileError").html("사진 파일용량이 1MB를 초과했습니다.");
+		    	$("#" + string).val("");
+		    	$("#" + string).focus();
+		    	result = 0;
+		    }
+		    return result;
+		}
+		
 		var specEngNameList = '${specEngNameList}';
 		var specKorNameList = '${specKorNameList}';
 		var specEngNameList = specEngNameList.substring(1, specEngNameList.length-1);
@@ -44,42 +125,10 @@ $(document).ready(function(){
 			specEngNameList[count] = specEngNameList[count].trim();
 			specKorNameList[count] = specKorNameList[count].trim();
 		}
-		var flag = 0;
-		var html;
-		if(productImageFile == ''){
-			$("#fileErrors").html("이미지를 업로드하세요.");
-			$("#productImageFile").focus();
-			return false;
-		}else if(fileExtensionCapacityCheck('productImageFile') == 0){
-			return false;
-		}
-		else{
-			$("#fileErrors").html("");
-		}
 		
-		function fileExtensionCapacityCheck(string){
-			var result = 1;
-			var ext = $("#" + string).val().split('.').pop().toLowerCase();
-		    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-		    	$("#fileErrors").html("gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.");
-		    	$("#" + string).val("");
-		    	$("#" + string).focus();
-		    	result = 0;
-		    }
-		    var file = document.getElementById(string).files[0];
-		    var maxSize = 1024*1024;
-		    if(file.size > maxSize){
-		    	$("#fileErrors").html("사진 파일용량이 1MB를 초과했습니다.");
-		    	$("#" + string).val("");
-		    	$("#" + string).focus();
-		    	result = 0;
-		    }
-		    return result;
-		}
-
+		
 		for(var count = 0; count < specEngNameList.length; count++){
 			var specValue = $("#"+specEngNameList[count]+" option:selected").val();
-			alert(specValue + "안돼");
 			if(specValue == ''){
 				flag = 1;
 				$("#" + specEngNameList[count] + "Errors").html(specKorNameList[count] +"를 입력하시지 않았습니다.");
@@ -109,56 +158,44 @@ $(document).ready(function(){
 		<div class="box-wrap">
 			<ul class="register-form">
 				<li>	
-					<form:input path="productName" class="txt-input joinTooltip" maxlength="50" placeholder="물품 이름" />
+					<form:input path="productName" id="productName" class="txt-input joinTooltip" maxlength="50" placeholder="물품 이름" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.productName"/></span>
+					<span class="errors" id="productNameError"></span>
 					<form:errors path="productName" class="errors"/>
 				</li>
 				<li>
-					<form:input path="mfCompany" class="txt-input joinTooltip" maxlength="30" placeholder="제조 회사" />
+					<form:input path="mfCompany" id="mfCompany" class="txt-input joinTooltip" maxlength="30" placeholder="제조 회사" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.mfCompany"/></span>
+					<span class="errors" id="mfCompanyError"></span>
 					<form:errors path="mfCompany" class="errors"/>
 				</li>
 				<li class="prodDate">
-					<dl class="type1">
-						<dd>
-							<label for="prodDateLabel">제조 날짜</label>
-						</dd>
-						<dd>
-							<form:select path="prodYear" id="year">
-							</form:select>
-						</dd>
-						<dd>
-							<form:select path="prodMonth" id="month">
-							</form:select>
-						</dd>
-						<dd>
-							<form:select path="prodDay" id="day">
-							</form:select>
-						</dd>
-					</dl>
-					<form:errors path="prodYear" class="errors"/>
+					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
+					<span class="errors" id="prodDateError"></span>
+					<form:errors path="prodDate" id="prodDateError" class="errors"/>
 				</li>
 				<li>
-					<form:input path="price" class="txt-input joinTooltip" maxlength="30" placeholder="물품 가격" />
+					<form:input path="price" id="price" class="txt-input joinTooltip" maxlength="10" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
-					<form:errors path="price" class="errors"/>
+					<form:errors path="price" id="priceError" class="errors"/>
 				</li>
 				<li>
-					<form:input path="weight" class="txt-input joinTooltip" maxlength="30" placeholder="물품 무게" />
+					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
-					<form:errors path="weight" class="errors"/>
+					<form:errors path="weight" id="weightError" class="errors"/>
 				</li>
 				<li>
-					<form:textarea path="comment" class="txt-input joinTooltip" cols="50" rows="5" placeholder="코멘트"/>
+					<form:textarea path="comment" id="comment" class="txt-input joinTooltip" cols="50" rows="5" maxlength="100" placeholder="코멘트"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.comment"/></span>
-					<form:errors path="comment" class="errors"/>
+					<form:errors path="comment" id="commentError" class="errors"/>
 				</li>
 				<li class="file">
 					<label for="productImageFile" class="control-label">이미지 업로드</label>
 					<div class="productImageFile">
 						<input type="file" name="productImageFile"  id="productImageFile"/>
 					</div>
-					<span class="errors" id="fileErrors">${msg }</span>
+					<span class="errors" id="fileError">${msg }</span>
 				</li>				
 				
 <c:forEach var="specName" items="${specKorNameList}" varStatus="status">
@@ -183,7 +220,7 @@ $(document).ready(function(){
 		</div>
 	</form:form>
 </div>
-		<div class=BLOCK50></div>
+		<div class=BLOCK60></div>
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />
 	<!-- 푸터 -->
