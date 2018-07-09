@@ -15,10 +15,33 @@
 
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
-<link rel="stylesheet" type="text/css"
-   href="/resources/css/cartlist.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
+<script type="text/javascript">
+
+
+function fnCartDel(idx){
+	var isMove = window.confirm("정말 삭제하시겠습니까?");
+	
+	if(isMove){
+		location.href = "/mypage/cartdelete?idx="+idx;
+	}
+}
+
+function buyCart() {
+	document.cart_form.action='/cartBuy';
+	document.cart_form.method='post';
+	document.cart_form.submit();
+}
+
+function cartmodify() {
+	document.cart_form.action='/mypage/cartmodify';
+	document.cart_form.method='post';
+	document.cart_form.submit();
+}
+
+</script>
+
 
 </head>
 <body>
@@ -28,7 +51,7 @@
 
    <div class="article_wrap">
       <h2 align="center">장바구니 리스트</h2>
-      <form name="cart_form" method="post" action="/cartmodify">
+      <form name="cart_form" action="#">
          <div id="cart_list">
             <table style="width: 100%">
                <tr>
@@ -47,12 +70,12 @@
                         장바구니가 비어있습니다.
                      </td>
                   </tr>
-               
                </c:when>
                <c:otherwise>
                <c:forEach var="row" items="${map.list }" varStatus="i">
                <tr class="cart_notice">
                   <td width="10%">
+                     <input type="hidden" name="no" value="${row.no }">
                      <img src="${row.imagepath }" width="100" height="100">
                   </td>
                   <td width="5%">
@@ -65,22 +88,22 @@
                      <fmt:formatNumber pattern="###,###,###" value="${row.price}"/> 원
                   </td>
                   <td width="5%">
-                     <select id="count">
-                           <c:set var="count" value="${row.count }"/>
-                           <c:if test="${row.count > 20 }">
+                     <select name="orderCount">
+                           <c:set var="orderCount" value="${row.orderCount }"/>
+                           <c:if test="${orderCount > 10 }">
                                 <script>
                                   (function(){
-                                    alert("주문개수는 20개를 초과할수 없습니다.");
+                                    alert("주문개수는 10개를 초과할수 없습니다.");
 
                                      })()
                                 </script>
-                              <c:set var="count" value="20"/>
+                              <c:set var="orderCount" value="10"/>
                            </c:if>
-                           <c:forEach begin="1" end="20" var="i">
-                              <c:if test="${count == i}">
+                           <c:forEach begin="1" end="10" var="i">
+                              <c:if test="${orderCount == i}">
                                  <option value="${i}" id="${i}" selected="selected">${i}</option>
                               </c:if>
-                              <c:if test="${count != i}">
+                              <c:if test="${orderCount != i}">
                                  <option value="${i}" id="${i}">${i}</option>
                               </c:if>
                            </c:forEach>
@@ -90,7 +113,7 @@
                      ${row.registerid } 
                   </td>    
                   <td width="5%">
-                     <input type="button" name="delete" class="button_01" value="삭제">
+                     <input type="button" name="delete" class="button_01" value="삭제" onclick="fnCartDel(${row.idx})">
                   </td>
                </tr>  
                </c:forEach>
@@ -107,11 +130,11 @@
 
          </div>
          <div class="cart_sub" align="right">
-         <input type="hidden" name="count" value="${map.count}">
-            <button type="submit" id="btnUpdate" class="button_02">수정</button>
-         <input type="submit" class="submit_01" value="구매하기">
+         <input type="button" value="수정" name="catmodify" onclick="cartmodify()">
+         <input type="button" value="구매하기" name="cartBuy" onclick="buyCart()">
          </div>
-      </form>
+         </form>
+      
    </div>
 
    <!-- 푸터 -->

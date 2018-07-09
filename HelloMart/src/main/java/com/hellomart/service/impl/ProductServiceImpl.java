@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.hellomart.dao.ProductDAO;
+import com.hellomart.dto.ProductList;
 import com.hellomart.service.ProductService;
 import com.hellomart.util.XMLParser;
 
@@ -45,5 +46,12 @@ public class ProductServiceImpl implements ProductService{
 		model.addAttribute("columnList", columnList);
 		model.addAttribute("columnListEng", columnListEng);
 		model.addAttribute("detail", dao.getDetailInfo(map));
+	}
+
+
+
+	@Override
+	public ProductList getProductInfo(int no) {
+		return dao.getProductInfo(no);
 	}
 }
