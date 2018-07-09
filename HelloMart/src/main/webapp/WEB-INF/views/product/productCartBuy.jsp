@@ -145,7 +145,7 @@
 		<!-- 장바구니에 몇 종류의 상품이 들어있었는지 -->
 		<input type="hidden" name="size" value="${size}">
 		<input type="hidden" name="orderStatus" value="PAY_OK">
-		<!-- 포인트 적립을 위한 총 합계 금액 -->
+		<!-- 포인트 적립을 위한 총 합계 금액 --> 
 		<input type="hidden" name="totalPrice" value="${totalPrice}">
 		</form>
 	</center>
