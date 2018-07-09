@@ -1,0 +1,72 @@
+package com.hellomart.util;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Component;
+
+public class CookieUtils {
+
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+
+	public CookieUtils(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
+	}
+
+	public void creatCookie(String key, String value, int period){
+		Cookie c = new Cookie(key, value);
+		c.setMaxAge(period);
+		response.addCookie(c);
+	}
+
+	public String[] getAllValue() {
+		Cookie[] cookies = request.getCookies();
+		int length = cookies.length;
+		String[] values = new String[length];
+		
+		for(int i = 0; i < length; i++) {
+			values[i] = cookies[i].getValue();
+		}
+		
+		return values;
+	}
+
+	public String getValue(String name){
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+	    	for(int i=0; i < cookies.length; i++){
+	    		if(name.equals(cookies[i].getName())){
+	    			return cookies[i].getValue();
+	    		}
+	        }
+	    }
+		return null;
+	}
+
+	public void removeAll(){
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+	    	for(int i=0; i < cookies.length; i++){
+	    		cookies[i].setMaxAge(0) ;
+	    		response.addCookie(cookies[i]) ;
+	        }
+	    }
+	}
+
+	public void remove(String name){
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+	    	for(int i=0; i < cookies.length; i++){
+	    		if(name.equals(cookies[i].getName())){
+	    			cookies[i].setMaxAge(0) ;
+		    		response.addCookie(cookies[i]) ;
+		    		break;
+	    		}
+	        }
+	    }
+	}
+
+}

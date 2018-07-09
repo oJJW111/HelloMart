@@ -83,40 +83,6 @@
 <hr>
 
 <div class="BLOCK60"></div>
-
-<script>
-$(document).ready(function(){
-	var mypage = "/mypage";
-	$("#info").click(function() {
-		location.href= mypage + "/info";
-	});
-	$("#shoppingcart").click(function() {
-		location.href= mypage + "/shoppingcart";
-	});
-	$("#point").click(function() {
-		location.href= mypage + "/point";
-	});
-	$("#history").click(function() {
-		location.href= mypage + "/history";
-	});
-	$("#history").click(function() {
-		location.href= mypage + "/todayView";
-	});
-});
-</script>
-
-<!-- 회원정보 관리 -->
-<!-- 쇼핑카트 -->
-<!-- 포인트 관리 -->
-<!-- 구매이력 -->
-<!-- <div class="mypage-container">
-	<ul class="mypage-list">
-		<li class="mypage-list-item" id="info">회원정보 관리</li>
-		<li class="mypage-list-item" id="shoppingcart">쇼핑카트</li>
-		<li class="mypage-list-item" id="point">포인트 관리</li>
-		<li class="mypage-list-item" id="history">구매이력</li>
-	</ul>
-</div> -->
 <div class="myshopMain">
 	<div class="shopMain">
 		<a href="/mypage/info"> 
@@ -139,7 +105,9 @@ $(document).ready(function(){
 		</a>
 	</div>
 	<div class="shopMain">
-		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+		<a href="/todayView">
+			<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+		</a>
 	</div>
 	<div class="shopMain">
 		<a href="/mypage/info/delete"> 
