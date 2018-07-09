@@ -1,5 +1,6 @@
 package com.hellomart.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,41 +23,41 @@ import com.hellomart.service.CartService;
 
 @Controller
 public class CartController {
-   
-   @SuppressWarnings("unused")
-   private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-   
-   @Autowired
-   CartService service;
-   
-   
-   // 1. 장바구니 추가
-   @RequestMapping(value = "/addCart", method=RequestMethod.GET)
-   public String addCart(@ModelAttribute Cart cart, HttpServletRequest request){
-      String id = request.getParameter("id");
-      cart.setId(id);
-      // 장바구니에 기존 상품이 있는지 검사
-      int count = service.countCart(cart.getNo(), id);
-      if(count == 0){
-         // 없으면 insert
-         service.insert(cart);
-      } else{
-         // 있으면 update
-         service.updateCart(cart);
-      }
-      return "productList/main?mainCategory=";      
-   }
-   
-   @RequestMapping(value = "/addCartMove", method=RequestMethod.GET)
-   public String addCartMove(@ModelAttribute Cart cart, HttpServletRequest request){
-      addCart(cart, request);
-      
-      return "redirect:/cartlist?id=" + request.getParameter("id");      
-   }
-   
-   // 2. 장바구니 목록
-    @RequestMapping(value = "/cartlist", method=RequestMethod.GET)
-    public ModelAndView list(HttpSession session, ModelAndView mav, String id){
+	
+	@SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+	
+	@Autowired
+	CartService service;
+	
+	
+	// 1. 장바구니 추가
+	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
+	public String addCart(@ModelAttribute Cart cart, Principal principal){
+		String id = principal.getName();
+		cart.setId(id);
+		// 장바구니에 기존 상품이 있는지 검사
+		int count = service.countCart(cart.getNo(), id);
+		if(count == 0){
+			// 없으면 insert
+			service.insert(cart);
+		} else{
+			// 있으면 update
+			service.updateCart(cart);
+		}
+		return "productList/main?mainCategory=";		
+	}
+	
+	@RequestMapping(value = "/addCartMove", method=RequestMethod.GET)
+	public String addCartMove(@ModelAttribute Cart cart, HttpServletRequest request){
+		return "redirect:/cartlist?id=" + request.getParameter("id");		
+	}
+	
+	// 2. 장바구니 목록
+    @RequestMapping(value = "mypage/cartlist", method=RequestMethod.GET)
+    public ModelAndView list(HttpSession session, ModelAndView mav, Principal principal){
+    	String id = principal.getName();
+    	
         Map<String, Object> map = new HashMap<String, Object>();
         List<Cart> list = service.listCart(id); // 장바구니 정보 
         int sumMoney = service.sumMoney(id); // 장바구니 전체 금액 호출
@@ -75,14 +76,14 @@ public class CartController {
     }
     
     // 3. 장바구니 삭제
-    @RequestMapping("/cartdelete")
+    @RequestMapping("mypage/cartdelete")
     public String delete(@RequestParam int idx){
         service.delete(idx);
         return "redirect:/cartlist";
     }
     
     // 4. 장바구니 수정
-    @RequestMapping(value="/cartmodify", method=RequestMethod.POST)
+    @RequestMapping(value="mypage/cartmodify", method=RequestMethod.POST)
     public String update(@RequestParam int[] count, @RequestParam int[] no, HttpSession session) {
         // session의 id
         String id = (String) session.getAttribute("id");
@@ -96,5 +97,8 @@ public class CartController {
         }
 
         return "redirect:/cartlist";
-    }  
+    }
+    
+
+	
 }

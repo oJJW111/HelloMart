@@ -21,7 +21,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void getDetailInfo(String no, String smallCategory, Model model) {
 		XMLParser xmlParser = new XMLParser("category.xml");
-		
 		String smallCategoryEng = xmlParser.getAttributeValue(smallCategory, "table"); 
 		
 		List<String> columnList = new ArrayList<>();
@@ -43,10 +42,8 @@ public class ProductServiceImpl implements ProductService{
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("sql", sql);
-		
 		model.addAttribute("columnList", columnList);
 		model.addAttribute("columnListEng", columnListEng);
-		model.addAttribute("detail", dao.getDetailInfo(map)); 
-		// System.out.println(dao.getDetailInfo(map).keySet()); 
+		model.addAttribute("detail", dao.getDetailInfo(map));
 	}
 }

@@ -42,7 +42,7 @@ public class MypageController {
 	@Autowired
 	private ModifyPasswordValidator modifyPasswordValidator;
 	
-	@RequestMapping("")
+	@RequestMapping("/menu")
 	public String main() {
 		System.out.println("메인 메소드 호출 ");
 		return "mypage/menu";
