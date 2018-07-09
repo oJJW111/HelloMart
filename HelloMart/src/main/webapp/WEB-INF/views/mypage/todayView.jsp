@@ -19,29 +19,37 @@
 <div class="product_list">
 	<c:forEach var="board" items="${todayView}">
 			<div class="product_list_content">
-				<div class="product_img">
-					<a href="/productView?no=${board.no}">
-						<img src="${board.imagePath}">
-					</a>
-				</div>
-				<div class="product_info">
-					<a class="title" href="/productView?no=${board.no}">${board.productName}</a>
-					<div class="additional_info">
-						<span class="brand">${board.mfCompany}</span>
+					<div class="product_img">
+						<a href="javascript:void(0)"
+							onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${board.smallCategory}')">
+							<img src="${board.imagePath}">
+						</a>
 					</div>
-				</div>
-				<div class="product_addition">
-					<div class="price">
-						<strong>${board.price} 원</strong>
+					<div class="product_info">
+						<a class="title" href="javascript:void(0)"
+						onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${board.smallCategory}')">${board.productName}</a>
+						<div class="additional_info">
+							<span class="brand">${board.mfCompany}</span>
+							<span class="category">
+								<a href="javascript:void(0)"
+								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${board.mainCategory}')">${board.mainCategory}</a> > 
+								<a href="javascript:void(0)"
+								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${board.mainCategory}&smallCategory=${board.smallCategory}')">${board.smallCategory}</a>
+							</span>
+						</div>
 					</div>
-					<div class="additional_info">
-						<span class="satisfaction">만족도 : ${board.score}</span>
-						<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
-						<span class="review">상품평 : ${board.no}</span>
+					<div class="product_addition">
+						<div class="price">
+							<strong>${board.price} 원</strong>
+						</div>
+						<div class="additional_info">
+							<span class="satisfaction">만족도 : ${board.score}</span>
+							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
+							<span class="review">상품평 : ${board.no}</span>
+						</div>
 					</div>
-				</div>
-			</div> <!-- <div class="product_list_content"> -->
-			<hr class="style14">
+				</div> <!-- <div class="product_list_content"> -->
+				<hr class="style14">
 	</c:forEach>
 </div>
 <!-- 상품리스트 -->

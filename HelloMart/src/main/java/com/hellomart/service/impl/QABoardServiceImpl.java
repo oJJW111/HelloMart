@@ -1,7 +1,5 @@
 package com.hellomart.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import org.slf4j.Logger;
@@ -12,64 +10,93 @@ import org.springframework.stereotype.Service;
 import com.hellomart.dao.QABoardDAO;
 import com.hellomart.dto.QABoard;
 import com.hellomart.service.QABoardService;
-import com.hellomart.util.Paging;
 
 @Service
-public class QABoardServiceImpl implements QABoardService {
-	
-	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(QABoardService.class);
-	
-	@Autowired
-	private QABoardDAO dao;
-	
-	private int maxResult = 5;
-	private int pagePerBlock = 5;
-	
-	public QABoardServiceImpl() {
-		
-	}
+public class QABoardServiceImpl implements QABoardService{
+   
+   private static final Logger logger = LoggerFactory.getLogger(QABoardService.class);
+   
+   @Autowired
+   private QABoardDAO dao;
+   
 
-	@Override
-	public Map<String, Object>  list(Integer page) {
-		page = page == null ? 1 : page;
-		
-		int total = dao.getTotal();
-		Paging paging = new Paging(total, page, maxResult, pagePerBlock);
-		Vector<QABoard> list = dao.list(paging.getOffset(), maxResult);
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("paging", paging);
-		map.put("list", list);
-		
-		return map;
-	}
-	
-	@Override
-	public void insertQABoard(QABoard qaboard) {
-		dao.insertQABoard(qaboard);
-	}
-	
-	@Override 
-	public QABoard viewQABoard(int idx) {
-		return dao.viewQABoard(idx);
-	}
+   @Override
+   public Vector<QABoard> listQABoardSub(String keyword, int startRow, int pageSize) {
+      return dao.listQABoardSub(keyword, startRow, pageSize);
+   }
+
+   @Override
+   public Vector<QABoard> listQABoardCon(String keyword, int startRow, int pageSize) {
+      return dao.listQABoardCon(keyword, startRow, pageSize);
+   }
+
+   @Override
+   public Vector<QABoard> listQABoardId(String keyword, int startRow, int pageSize) {
+      return dao.listQABoardId(keyword, startRow, pageSize);
+   }
+
+   @Override
+   public Vector<QABoard> listQABoard(int startRow, int pageSize) {
+      return dao.listQABoard(startRow, pageSize);
+   }
+
+   @Override
+   public void insertQABoard(QABoard qaboard) {
+      dao.insertQABoard(qaboard);
+   }
+   
+   @Override
+   public QABoard viewQABoard(int idx) {
+      return dao.viewQABoard(idx);
+   }
 
 
-	@Override
-	public void viewCount(int idx) {
-		dao.viewCount(idx);	
-	}
+   @Override
+   public void viewCount(int idx) {
+      dao.viewCount(idx);   
+   }
 
-	@Override
-	public void modify(QABoard qaboard) {
-		dao.modify(qaboard);
-	}
+   @Override
+   public int getCount() {
+      return dao.getCount();
+   }
+   
+   @Override
+   public int subjectCount(String keyword) {
+      return dao.subjectCount(keyword);
+   }
 
-	@Override
-	public void delete(int idx) {
-		dao.delete(idx);		
-	}
+   @Override
+   public int contentCount(String keyword) {
+      return dao.contentCount(keyword);
+   }
 
+   @Override
+   public int idCount(String keyword) {
+      return dao.idCount(keyword);
+   }
+
+   public QABoardServiceImpl() {
+      
+   }
+
+   @Override
+   public void modify(QABoard qaboard) {
+      dao.modify(qaboard);
+   }
+
+   @Override
+   public void delete(int idx) {
+      dao.delete(idx);      
+   }
+
+   @Override
+   public void cmtinc(int idx) {
+      dao.cmtinc(idx);
+   }
+
+   @Override
+   public void cmtdec(int idx) {
+      dao.cmtdec(idx);
+   }
 }

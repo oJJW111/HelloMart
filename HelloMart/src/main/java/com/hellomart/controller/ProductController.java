@@ -20,11 +20,12 @@ public class ProductController {
 	
 	@RequestMapping("/productView")
 	public String view(
-			@RequestParam("no") String no, Model model, 
+			@RequestParam("no") String no, Model model,
+			@RequestParam("smallCategory") String smallCategory, 
 			HttpServletRequest request, HttpServletResponse response) {
 		TodayViewUtils todayViewUtils = new TodayViewUtils(request, response);
 
-		service.getProductInfo(no, model);
+		service.getDetailInfo(no, smallCategory, model);
 		
 		todayViewUtils.addTodayView(no);
 		

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -11,6 +13,11 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
+<style type="text/css">
+   
+   .msg{font-size: 10pt;  color: red;}
+
+</style>
 </head>
 <body>
 <!-- 헤더 -->
@@ -21,25 +28,28 @@
 <section id="bo_w">
     <h2 id="container_title">글 작성</h2>
     
- <form:form action="write" method="post" modelAttribute="qaboard" id="qaboard_form">
+  
+  <form:form action="write" method="post" modelAttribute="qaboard" id="write_form">
+    <sec:authentication var="id" property="principal"/>
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <tbody>
         <tr>
             <td>
-            	<form:input path="id" name="wr_name" class="frm_input required" size="10" maxlength="20" placeholder="아이디"/>
-            	<form:errors path="id" class="errors"/>
+               <form:input path="id" class="frm_input required" size="10" maxlength="20" value="${id }" readonly="true"/>
             </td>
         </tr>
         <tr>
-            <td class="wr_subject">
-            	<form:input path="subject" name="wr_subject" size="80" maxlength="100" placeholder="제목"/>
+            <td>
+               <form:input path="subject" size="80" maxlength="100" placeholder="제목" />
+               <form:errors path="subject" cssClass="msg"/>
             </td>
         </tr>
 
         <tr>
-            <td class="wr_content">
-            	<form:textarea path="content" rows="10" cols="82" placeholder="5자 이상 입력하세요."/>
+            <td>
+               <form:textarea path="content" rows="10" cols="82" placeholder="5자 이상 입력하세요" />
+               <form:errors path="content" cssClass="msg"/>
             </td>
         </tr>
         </tbody>
@@ -50,8 +60,7 @@
         <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
         <input type="reset" value="취소" class="btn_cancel">
     </div>
-    </form:form>
-
+   </form:form>
 </section>
 </div>
 

@@ -6,13 +6,30 @@
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
 	
-	<select id="list" resultType="QABoard">
-		select * from qaboard order by 1 desc limit #{param1}, #{param2}
+	<select id="listQABoardSub" resultType="QABoard">
+	
+		select * from qaboard where subject like #{param1} order by 1 desc limit #{param2},#{param3}
+			
+	</select>
+	
+	<select id="listQABoardCon" resultType="QABoard">
+	
+		select * from qaboard where content like #{param1} order by 1 desc limit #{param2},#{param3}
+			
+	</select>
+	
+	<select id="listQABoardId" resultType="QABoard">
+	
+		select * from qaboard where id like #{param1} order by 1 desc limit #{param2},#{param3}
+
+	</select>
+	
+	<select id="listQABoard" resultType="QABoard">
+	
+		select * from qaboard order by 1 desc limit #{param1},#{param2}
+			
 	</select>
 
-	<select id="getTotal" resultType="java.lang.Integer">
-		select count(*) from qaboard
-	</select>
 	
 	<insert id="insertQABoard">
 		INSERT INTO
@@ -22,6 +39,14 @@
 		VALUES (#{subject}, #{content}, #{id}, 0);
 		
 	</insert>
+	
+	<update id="cmtinc" parameterType="Integer">
+		update QABoard set cmt=cmt+1 where idx=#{param1} 
+	</update>
+	
+	<update id="cmtdec" parameterType="Integer">
+		update QABoard set cmt=cmt-1 where idx=#{param1} 
+	</update>
 	
 	<update id="viewCount">
 		UPDATE QABoard SET count=count+1 WHERE idx=#{idx}
@@ -35,9 +60,11 @@
 	
 	<!-- 글 수정 쿼리 -->
 	<update id="modify">
+		
 		UPDATE QABoard SET 
 		subject=#{subject}, content=#{content}, modate=sysdate() 
 		WHERE idx=#{idx}
+		
 	</update>
 	
 	<!-- 글 삭제 쿼리 -->
@@ -48,6 +75,18 @@
 	
 	<select id="getCount" resultType="int">
 		SELECT count(*) FROM QABoard
+	</select>
+	
+	<select id="subjectCount" resultType="int">
+		SELECT count(*) FROM QABoard where subject like #{param1}
+	</select>
+	
+	<select id="contentCount" resultType="int">
+		SELECT count(*) FROM QABoard where content like #{param1}
+	</select>
+	
+	<select id="idCount" resultType="int">
+		SELECT count(*) FROM QABoard where id like #{param1}
 	</select>
 	
 	

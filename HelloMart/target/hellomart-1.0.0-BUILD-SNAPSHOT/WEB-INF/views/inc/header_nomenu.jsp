@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
@@ -41,6 +41,9 @@ $(document).ready(function(){
 </script>
 <div class="header_bar_wrap">
 	<div class="header_bar">
+		<div class="F_right haeder_bar_menu" id="bar_menu1">오늘 본 상품</div>
+		<div class="F_right haeder_bar_menu_line"></div>
+		
 		<div class="F_right haeder_bar_menu" id="bar_menu1">고객센터</div>
 		<div class="F_right haeder_bar_menu_line"></div>
 		
@@ -53,7 +56,7 @@ $(document).ready(function(){
 		<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
-			<div class="F_right haeder_bar_menu" id="bar_menu5">회원정보</div>
+			<div class="F_right haeder_bar_menu" id="bar_menu5">My Page</div>
 		</sec:authorize>
 		
 		<sec:authorize access="hasAnyRole('ROLE_SELLER')">
@@ -61,12 +64,12 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu" id="bar_menu6">판매자 페이지</div>
 		</sec:authorize>
 		
-		
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
+		
 		
 		<div class="clear"></div>
 	</div>
@@ -75,6 +78,6 @@ $(document).ready(function(){
 <div class="header_bg_wrap A_center">
 	<div class="BLOCK20"></div>
 	<div class="logo_wrap">
-		<h1 id="logo"><a href="/"><img src="/resources/images/logo.png"></a></h1>
+		<h1 id="logo"><a href="/"><img src="/resources/images/logo1.png" style="margin-top: -45px; width: 250px;"></a></h1>
 	</div>
 </div>

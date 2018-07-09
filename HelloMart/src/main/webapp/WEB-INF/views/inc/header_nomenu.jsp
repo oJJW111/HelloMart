@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css"/>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
@@ -14,7 +14,6 @@ $(document).ready(function(){
 	$('#logo').on('click', function(){
 		location.href="/";
 	});
-	
 	$('#bar_menu1').on('click', function(){
 		location.href="/todayView";
 	});
@@ -28,7 +27,7 @@ $(document).ready(function(){
 		location.href="/logout";
 	});
 	$('#bar_menu5').on('click', function(){
-		location.href="/mypage";
+		location.href="/mypage/menu";
 	});
 	$('#bar_menu6').on('click', function(){
 		location.href="/seller/page";

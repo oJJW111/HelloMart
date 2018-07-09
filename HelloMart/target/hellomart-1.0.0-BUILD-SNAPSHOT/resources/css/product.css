@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @CHARSET "UTF-8";
 
 /* The container */
@@ -76,9 +77,7 @@
 .btn_yellow:active, .btn_yellow:focus {
 	outline: none;
 }
-
-
-
+/* 
 .WBLOCK40 {
 	float: left;
 	width: 40px;
@@ -96,7 +95,7 @@
 	width: 60px;
 	height: 100%;
 }
-
+ */
 hr.style14 {
 	margin: 5px;
 	border: 0;
@@ -109,7 +108,7 @@ hr.style14 {
 }
 
 .article_wrap {
-	width: 1026px;	
+	width: 1006px;	
 	margin: auto;
 }
 
@@ -205,7 +204,7 @@ hr.style14 {
     float: right;
     width: 20%;
     height: 100%;
-    background: #2196F3;
+    background: #015299;
     color: white;
     font-size: 17px;
     border: none;
@@ -214,7 +213,7 @@ hr.style14 {
 }
 
 .category_detail_down button:hover {
-    background: #0b7dda;
+    background: #003768;
 }
 
 .category_detail_down input[name=search] {
@@ -227,7 +226,7 @@ hr.style14 {
     background: #f1f1f1;
 }
 
-.category_detail_down input[name=price_range1] {
+.category_detail_down input[name=price1] {
 	float: left;
 	margin-left: 80px;
 	padding: 12px;
@@ -241,7 +240,7 @@ hr.style14 {
     background: #f1f1f1;
 }
 
-.category_detail_down input[name=price_range2] {
+.category_detail_down input[name=price2] {
 	float: left;
 	padding: 12px;
     width: 150px;
@@ -378,6 +377,3 @@ hr.style14 {
 .product_list_content .product_cart {
 	padding: 20px 0 12px 0;	
 }
-
-/** CSS Cache Buster */
-define( 'CHILD_THEME_VERSION', filemtime( get_stylesheet_directory() . '/style.css' ) );

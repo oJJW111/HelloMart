@@ -129,8 +129,6 @@ public class ProductListServiceImpl implements ProductListService{
 			}
 		}
 		
-		
-		
 		/***** Model에 put할 맵 생성 *****/
 		Map<String, Object> modelMap = new HashMap<>();
 		/***** Model에 put할 맵 생성 *****/

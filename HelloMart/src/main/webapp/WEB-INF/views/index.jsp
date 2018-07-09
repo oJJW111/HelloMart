@@ -21,17 +21,5 @@
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->
-<script>
-var a = {
-	name : 'defaultName',
-	pass : 'defaultpass'
-}
-
-var b = {
-	name : '홍길동',
-}
-$.extend(a, b);
-console.log('a.name : ' + a.name + ', a.pass : ' + a.pass);
-</script>
 </body>
 </html>

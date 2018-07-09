@@ -26,7 +26,8 @@ input, select, textarea, button {
 #join_test .join-form li.birth dl dd { position:relative; float:left; width:75px; margin-left:10px; font-size:14px; font-weight:bold;}
 #join_test .join-form li.birth dl dd select { width: 60px; height: 28px; margin-top: 10px; } 
 #join_test .join-form li.birth dl dd:first-child { margin-left:0; }
-#join_test .join-form li.gender label { margin-right:30px; }
+#join_test .join-form li.gender label { width:20%; margin-right:30px; }
+#join_test .join-form li.gender select {width:30%;  }
 #pwCheck { position: absolute; left:290px; top:15px; }
 
 /* 버튼 */

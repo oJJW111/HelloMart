@@ -49,5 +49,5 @@ public class ModifyPasswordValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Account.class.isAssignableFrom(clazz); 
 	}
-	
 }
+
