@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService{
 			int orderCount = Integer.parseInt(request.getParameter("orderCount" + i));
 			int orderPrice = Integer.parseInt(request.getParameter("orderPrice" + i));
 			int prodNo = Integer.parseInt(request.getParameter("prodNo" + i));
-						
+			
 			orderList.setOrderCount(orderCount);
 			orderList.setOrderPrice(orderPrice);
 			orderList.setProdNo(prodNo);

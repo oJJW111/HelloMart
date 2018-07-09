@@ -13,7 +13,7 @@ public interface CartDAO {
    List<Cart> listCart(String id);
    
    // 3. 장바구니 삭제
-   void delete(int idx);
+   void deleteCart(int idx);
    
    // 4. 장바구니 수정
    void modifyCart(Cart cart);
@@ -25,5 +25,7 @@ public interface CartDAO {
    int countCart(int no, String id);
    
    // 7. 장바구니 상품수량 변경
-   void updateCart(Cart cart);  
+   void updateCart(Cart cart);
+
+   void deleteCartList(String id);   
 }

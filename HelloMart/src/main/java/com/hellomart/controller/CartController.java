@@ -45,19 +45,15 @@ public class CartController {
 			// 있으면 update
 			service.updateCart(cart);
 		}
-		return "productList/main?mainCategory=";		
+		return "redirect:/mypage/cartlist?id="+id;	
 	}
-	
-	@RequestMapping(value = "/addCartMove", method=RequestMethod.GET)
-	public String addCartMove(@ModelAttribute Cart cart, HttpServletRequest request){
-		return "redirect:/cartlist?id=" + request.getParameter("id");		
-	}
+
 	
 	// 2. 장바구니 목록
     @RequestMapping(value = "mypage/cartlist", method=RequestMethod.GET)
-    public ModelAndView list(HttpSession session, ModelAndView mav, Principal principal){
+    public ModelAndView list(ModelAndView mav, Principal principal){
     	String id = principal.getName();
-    	
+    	  
         Map<String, Object> map = new HashMap<String, Object>();
         List<Cart> list = service.listCart(id); // 장바구니 정보 
         int sumMoney = service.sumMoney(id); // 장바구니 전체 금액 호출
@@ -76,29 +72,28 @@ public class CartController {
     }
     
     // 3. 장바구니 삭제
-    @RequestMapping("mypage/cartdelete")
-    public String delete(@RequestParam int idx){
-        service.delete(idx);
-        return "redirect:/cartlist";
+    @RequestMapping(value="mypage/cartdelete", method=RequestMethod.GET)
+    public String delete(@RequestParam int idx, Principal principal){
+    	String id = principal.getName();
+        service.deleteCart(idx);
+        return "redirect:/mypage/cartlist?id="+id;
     }
     
     // 4. 장바구니 수정
     @RequestMapping(value="mypage/cartmodify", method=RequestMethod.POST)
-    public String update(@RequestParam int[] count, @RequestParam int[] no, HttpSession session) {
+    public String update(@RequestParam int[] orderCount, @RequestParam int[] no, Principal principal) {
         // session의 id
-        String id = (String) session.getAttribute("id");
+        String id = principal.getName();
         // 레코드의 갯수 만큼 반복문 실행
         for(int i=0; i<no.length; i++){
             Cart cart = new Cart();
             cart.setId(id);
-            cart.setOrderCount(count[i]);
+            cart.setOrderCount(orderCount[i]);
             cart.setNo(no[i]);
             service.modifyCart(cart);
         }
 
-        return "redirect:/cartlist";
+        return "redirect:/mypage/cartlist?id="+id;
     }
-    
-
-	
+    	
 }
