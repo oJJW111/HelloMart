@@ -12,6 +12,7 @@ import com.hellomart.dto.OrderList;
 import com.hellomart.service.AccountService;
 import com.hellomart.service.OrderService;
 import com.hellomart.service.PointService;
+import com.hellomart.service.ProductListService;
 import com.hellomart.service.ProductService;
 
 @Controller
@@ -28,6 +29,9 @@ public class OrderController {
 	
 	@Autowired
 	PointService pointService;
+	
+	@Autowired
+	ProductListService productListService;
 
 	// 상품 상세 보기 페이지에서 구매 버튼을 눌러서 구매 페이지로 이동
 	@RequestMapping("/buy")
@@ -53,6 +57,8 @@ public class OrderController {
 		
 		pointService.insertPoint(request, orderList);
 		
+		productListService.updateOrderCount(request);
+		
 		return "index";
 		// return "마이페이지 구매리스트로?";
 	}
@@ -69,6 +75,8 @@ public class OrderController {
 		pointService.insertPointList(request);
 		 
 		orderService.insertOrderList(request); 
+		
+		productListService.updateOrderCountList(request);
 		
 		return "마이페이지로?";
 	}

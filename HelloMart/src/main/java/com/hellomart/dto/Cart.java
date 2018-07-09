@@ -11,7 +11,7 @@ public class Cart {
    private String id;
    private int no;
    private Date date;
-   private int count;
+   private int orderCount;
    private String imagepath;
    private String smallcategory;
    private String productname;

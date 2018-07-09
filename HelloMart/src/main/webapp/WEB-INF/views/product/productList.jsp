@@ -151,12 +151,12 @@ $(document).ready(function(){
 		<c:forEach var="board" items="${list}">
 				<div class="product_list_content">
 					<div class="product_img">
-						<a href="/productView?no=${board.no}&smallCategory=${param.smallCategory}">
+						<a href="/productView?no=${board.no}&smallCategory=${board.smallCategory}">
 							<img src="${board.imagePath}">
 						</a>
 					</div>
 					<div class="product_info">
-						<a class="title" href="/productView?no=${board.no}&smallCategory=${param.smallCategory}">${board.productName}</a>
+						<a class="title" href="/productView?no=${board.no}&smallCategory=${board.smallCategory}">${board.productName}</a>
 						<div class="additional_info">
 							<span class="brand">${board.mfCompany}</span>
 							<span class="category">

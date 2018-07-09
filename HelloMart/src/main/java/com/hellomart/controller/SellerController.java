@@ -93,9 +93,9 @@ public class SellerController {
 		Map<String, Object> tempTableInfoMap = tableInfoMap;
 		if(bindingResult.hasErrors()) {
 			Map<String, String> map = new HashMap<>();
-			map.put("selectedYear", productList.getProdYear());
-			map.put("selectedMonth", productList.getProdMonth());
-			map.put("selectedDay", productList.getProdDay());
+//			map.put("selectedYear", productList.getProdYear());
+//			map.put("selectedMonth", productList.getProdMonth());
+//			map.put("selectedDay", productList.getProdDay());
 			
 			model.addAttribute("prodDate", map);
 			return "seller/register";
