@@ -15,7 +15,7 @@ public interface CartService {
    List<Cart> listCart(String id);
    
    // 3. 장바구니 삭제
-   void deleteCart(int idx);
+   void deleteCart(String id, int no);
    
    // 4. 장바구니 수정
    void modifyCart(Cart cart);

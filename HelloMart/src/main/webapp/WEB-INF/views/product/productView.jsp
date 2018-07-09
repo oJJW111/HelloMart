@@ -12,16 +12,22 @@
 <script type="text/javascript">
 	function fnBuy(no, smallCategory, id){
 		var orderCount = document.getElementById("orderCount").value;
+		
 		location.href = "/buy?no=" + no + "&smallCategory=" + smallCategory
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(no){
+	function fnCart(no, smallCategory){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
 		if(isMove){
 			var orderCount = document.getElementById("orderCount").value;
 			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount; 	
+		}
+		else{
+			var orderCount = document.getElementById("orderCount").value;
+			location.href = "/addCartNo?no=" + no + "&orderCount=" + orderCount 
+									+ "&smallCategory=" + smallCategory; 		
 		}
 	}
 </script>
@@ -89,18 +95,24 @@
 	</table>                       
 </div>
 <br><br>
-<div align="center"> 
-	수량 &nbsp;&nbsp;
-	<select name="orderCount" id="orderCount">
-    	<c:forEach begin="1" end="10" var="i">
-    		<option value="${i}">${i}</option>
-    	</c:forEach>
-	</select>
-	
-	&nbsp;&nbsp;<input type="button" value="구매" 
-					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-	&nbsp;&nbsp;<input type="button" value="장바구니 담기" 
-	onclick="fnCart(${detail.No})">
+<div align="center">
+	<sec:authorize access="isAnonymous()">
+       	 비회원은 구매와 장바구니를 이용할 수 없습니다. 
+       	 <a href="/login">로그인</a> 해주세요
+    </sec:authorize>
+
+	<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+     	수량 &nbsp;&nbsp;
+		<select name="orderCount" id="orderCount">
+			<c:forEach begin="1" end="10" var="i">
+				<option value="${i}">${i}</option>
+			</c:forEach>
+		</select>
+		&nbsp;&nbsp;<input type="button" value="구매"
+				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+		&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
+	</sec:authorize>
 </div>
 
 <!-- <div> -->

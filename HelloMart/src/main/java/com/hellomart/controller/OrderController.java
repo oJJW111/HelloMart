@@ -103,9 +103,4 @@ public class OrderController {
 		
 		return "index";
 	}
-	
-	@RequestMapping("/cartList")
-	public String cartList(String id){
-		return "카트 목록 보기 페이지로";
-	}
 }

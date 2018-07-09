@@ -58,8 +58,8 @@ public class CartServiceImpl implements CartService{
 
    // 3. 장바구니 삭제
    @Override
-   public void deleteCart(int idx) {
-      dao.deleteCart(idx);
+   public void deleteCart(String id, int no) {
+      dao.deleteCart(id, no);
    }
 
     // 4. 장바구니 수정

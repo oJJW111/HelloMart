@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Cart;
 import com.hellomart.service.CartService;
+import com.hellomart.service.ProductService;
 
 @Controller
 public class CartController {
@@ -30,8 +32,10 @@ public class CartController {
 	@Autowired
 	CartService service;
 	
+	@Autowired
+	ProductService service2;
 	
-	// 1. 장바구니 추가
+	// 1-1. 장바구니 추가(페이지 이동)
 	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
 	public String addCart(@ModelAttribute Cart cart, Principal principal){
 		String id = principal.getName();
@@ -46,6 +50,24 @@ public class CartController {
 			service.updateCart(cart);
 		}
 		return "redirect:/mypage/cartlist?id="+id;	
+	}
+	
+	// 1-2. 장바구니 추가 - 페이지유지
+	@RequestMapping(value = "/addCartNo", method=RequestMethod.GET)
+	public String addCartNo(@ModelAttribute Cart cart, Principal principal, String smallCategory, Model model){
+		String id = principal.getName();
+		cart.setId(id);
+		// 장바구니에 기존 상품이 있는지 검사
+		int count = service.countCart(cart.getNo(), id);
+		if(count == 0){
+			// 없으면 insert
+			service.insert(cart);
+		} else{
+			// 있으면 update
+			service.updateCart(cart);
+		}
+		service2.getDetailInfo(String.valueOf(cart.getNo()), smallCategory, model);
+		return "product/productView";
 	}
 
 	
@@ -73,9 +95,9 @@ public class CartController {
     
     // 3. 장바구니 삭제
     @RequestMapping(value="mypage/cartdelete", method=RequestMethod.GET)
-    public String delete(@RequestParam int idx, Principal principal){
+    public String delete(@RequestParam int no, Principal principal){
     	String id = principal.getName();
-        service.deleteCart(idx);
+        service.deleteCart(id, no);
         return "redirect:/mypage/cartlist?id="+id;
     }
     
