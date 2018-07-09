@@ -16,12 +16,15 @@
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(No, id){
+	function fnCart(No, smallCategory){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
 		if(isMove){
 			var orderCount = document.getElementById("orderCount").value;
 			location.href = "/addCart?no=" + No + "&orderCount=" + orderCount;
+		}else{
+			var orderCount = document.getElementById("orderCount").value;
+			location.href = "/addCartNo?no=" + No + "&orderCount=" + orderCount+"&smallCategory=" + smallCategory;
 		}
 	}
 </script>
@@ -100,7 +103,7 @@
 	&nbsp;&nbsp;<input type="button" value="구매" 
 					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
 	&nbsp;&nbsp;<input type="button" value="장바구니 담기" 
-					onclick="fnCart(${detail.No}, '${id}')">
+					onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 </div>
 
 <!-- <div> -->

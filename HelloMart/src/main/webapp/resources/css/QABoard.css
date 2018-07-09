@@ -5,6 +5,42 @@
 
 /* 게시판 버튼 */
 /* 목록 버튼 */
+
+#cart_stn{
+	padding: 0 8px;
+	height: 30px;
+	border: 1px solid #5a94de;
+	background: #5a94de;
+	color: #fff;
+	text-decoration: none;
+	line-height: 2.15em;
+	vertical-align: middle
+}
+#cart_stn:focus, #cart_stn:hover {
+	text-decoration: none
+}
+.button_01{
+	padding: 0 5px;
+	height: 30px;
+	border: 1px solid #5a94de;
+	background: #5a94de;
+	color: #fff;
+	text-decoration: none;
+	line-height: 2.15em;
+	vertical-align: middle
+}
+.button_01:focus, button_01:hover {
+	text-decoration: none
+}
+
+.cart_sub{
+	text-align: right;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+
+
 a.btn_b01 {
 	display: inline-block;
 	padding: 0 5px;
@@ -47,34 +83,12 @@ a.btn_admin {
 	text-decoration: none;
 	line-height: 2.15em;
 	vertical-align: middle
+	
 } /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {
 	text-decoration: none
 }
 
-/* 읽기 버튼 */
-#bo_v a.btn_b01 {
-	
-}
-
-#bo_v a.btn_b01:focus, #bo_v a.btn_b01:hover {
-	
-}
-
-#bo_v a.btn_b02 {
-	
-}
-
-#bo_v a.btn_b02:focus, #bo_v a.btn_b02:hover {
-	
-}
-
-#bo_v a.btn_admin {
-	
-} /* 관리자 전용 버튼 */
-#bo_v a.btn_admin:focus, #bo_v a.btn_admin:hover {
-	
-}
 
 /* 쓰기 버튼 */
 #bo_w .btn_confirm {
@@ -87,18 +101,6 @@ a.btn_admin:focus, a.btn_admin:hover {
 } 
 
 
-/* 서식단계 진행 */
-#bo_w .btn_submit {
-	
-}
-
-#bo_w button.btn_submit {
-	
-}
-
-#bo_w fieldset .btn_submit {
-	
-}
 
 #bo_w .btn_cancel {
     padding: 0 10px;
@@ -106,21 +108,6 @@ a.btn_admin:focus, a.btn_admin:hover {
     letter-spacing: -0.1em;
     vertical-align: middle;
 }
-
-#bo_w button.btn_cancel {
-	
-}
-
-#bo_w .btn_cancel:focus, #bo_w .btn_cancel:hover {
-	
-}
-
-#bo_w a.btn_frmline, #bo_w button.btn_frmline {
-	
-
-}
-
-/* 기본 테이블 */
 
 /* 목록 페이징 */
 #page a:focus, #page a:hover, #page a:active {

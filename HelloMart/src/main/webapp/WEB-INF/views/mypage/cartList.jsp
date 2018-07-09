@@ -20,11 +20,11 @@
 <script type="text/javascript">
 
 
-function fnCartDel(idx){
+function fnCartDel(no){
 	var isMove = window.confirm("정말 삭제하시겠습니까?");
 	
 	if(isMove){
-		location.href = "/mypage/cartdelete?idx="+idx;
+		location.href = "/mypage/cartdelete?no="+no;
 	}
 }
 
@@ -113,7 +113,7 @@ function cartmodify() {
                      ${row.registerid } 
                   </td>    
                   <td width="5%">
-                     <input type="button" name="delete" class="button_01" value="삭제" onclick="fnCartDel(${row.idx})">
+                     <input type="button" name="delete" class="button_01" value="삭제" onclick="fnCartDel(${row.no})">
                   </td>
                </tr>  
                </c:forEach>
@@ -129,9 +129,9 @@ function cartmodify() {
             </table>
 
          </div>
-         <div class="cart_sub" align="right">
-         <input type="button" value="수정" name="catmodify" onclick="cartmodify()">
-         <input type="button" value="구매하기" name="cartBuy" onclick="buyCart()">
+         <div class="cart_sub">
+         <input type="button" value="수정" id="cart_stn" onclick="cartmodify()">
+         <input type="button" value="구매하기" id="cart_stn" onclick="buyCart()">
          </div>
          </form>
       

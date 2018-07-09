@@ -42,7 +42,7 @@
 			<!-- 장바구니에 담겨있던 상품 리스트 -->
 			<c:forEach items="${productList}" varStatus="status">
 				<tr>
-					<td rowspan="5">
+					<td rowspan="4">
 						<img src="${productList[status.index].imagePath}" width="400px">
 					</td>
 					<td>상품명</td>
@@ -59,7 +59,7 @@
 				<tr>
 					<td>금액 합계</td>
 					<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
-					<c:set value="totalPrice" />
+					<c:set var="totalPrice" value="${totalPrice + orderPrice}" />
 					<td>${orderPrice}</td>
 				</tr>
 				

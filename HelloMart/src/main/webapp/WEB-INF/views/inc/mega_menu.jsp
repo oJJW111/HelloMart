@@ -128,7 +128,7 @@ $(document).ready(function(){
 					</div>
 					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
 							<div class="F_right megamenu_menu_title2">문의하기</div>
-							<div class="F_right megamenu_menu_title2">Q&A게시판</div>
+							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
 					</div>
 			</div>
 		</div>
