@@ -2,6 +2,8 @@ package com.hellomart.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.hellomart.dto.Cart;
 
 public interface CartService {
@@ -13,7 +15,7 @@ public interface CartService {
    List<Cart> listCart(String id);
    
    // 3. 장바구니 삭제
-   void delete(int idx);
+   void deleteCart(String id, int no);
    
    // 4. 장바구니 수정
    void modifyCart(Cart cart);
@@ -26,5 +28,7 @@ public interface CartService {
    
    // 7. 장바구니 상품수량 변경
    void updateCart(Cart cart);
- 
+   
+   // 8. 장바구니 물품 구매시, 장바구니 물품제거
+   void deleteCartList(String id);
 }

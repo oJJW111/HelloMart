@@ -79,7 +79,7 @@ $(document).ready(function(){
 	$("#info").click(function() {
 		location.href= mypage + "/info";
 	});
-	$("#shoppingcart").click(function() {
+	$("#cartlist").click(function() {
 		location.href= mypage + "/cartlist";
 	});
 	$("#point").click(function() {
@@ -118,7 +118,7 @@ $(document).ready(function(){
 		</a>
 	</div>
 	<div class="shopMain">
-		<a href="/mypage/shoppingcart"> 
+		<a href="/mypage/cartlist"> 
 			<span class="tit">CART<br>(장바구니)</span>
 		</a>
 	</div>

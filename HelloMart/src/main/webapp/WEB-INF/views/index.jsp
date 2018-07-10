@@ -16,8 +16,6 @@
 <jsp:include page="/WEB-INF/views/inc/carousel.jsp"/>
 <!-- 캐러셀 -->
 
-<div class="BLOCK600"> 본문데스 </div>
-		
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

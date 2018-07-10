@@ -39,7 +39,12 @@ public class PointServiceImpl implements PointService {
 		
 		String content = request.getParameter("prodName"); 
 		if(incDec.equals("+")){
-			qty = totalPrice * (0.01 * grade);
+			if(grade >= 2){
+				qty = totalPrice * (0.01 * grade);
+			}
+			else{
+				qty = totalPrice * 0.01;   
+			}
 			content += "의 구매로" + qty + "만큼 " +"증가";	
 		}
 		if(incDec.equals("-")){
@@ -70,7 +75,12 @@ public class PointServiceImpl implements PointService {
 
 		String content = request.getParameter("prodName0");
 		if (incDec.equals("+")) {
-			qty = totalPrice * (0.01 * grade);
+			if(grade >= 2){
+				qty = totalPrice * (0.01 * grade);
+			}
+			else{
+				qty = totalPrice * 0.01;   
+			}
 			content += "외 " + size + "개의 상품의 구매로" + qty + "만큼 " + "증가";
 		}
 		if (incDec.equals("-")) {
@@ -93,7 +103,7 @@ public class PointServiceImpl implements PointService {
 	}
 
 	@Override
-	public List<Point> getPeriodPointLog(String id, Date startDate, Date endDate) {
+	public List<Point> getPeriodPointLog(String id, String startDate, String endDate) {
 		return pointDao.getPeriodPointLog(id, startDate, endDate);
 	} 
 }

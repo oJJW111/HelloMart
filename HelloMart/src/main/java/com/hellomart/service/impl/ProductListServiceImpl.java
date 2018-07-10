@@ -33,11 +33,7 @@ public class ProductListServiceImpl implements ProductListService{
 	private final XMLParser xmlParser = new XMLParser("category.xml");
 	
 	public ProductListServiceImpl() {
-	}
-
-	
-	
-	
+	}	
 	
 	private Paging paging(String sql, Integer page) {
 		page = page == null ? 1 : page;
@@ -47,11 +43,7 @@ public class ProductListServiceImpl implements ProductListService{
 		int total = dao.getTotal(paramMap);
 		
 		return new Paging(total, page, 10, 10);
-	}
-	
-	
-	
-	
+	}	
 	
 	private Vector<ProductList> listBoard(String sql) {
 		Vector<ProductList> list = null;
@@ -66,14 +58,6 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	private void smallCategoryDetails(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
 		Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
@@ -90,10 +74,6 @@ public class ProductListServiceImpl implements ProductListService{
 		modelMap.put("smallCategoryColumn", smallCategoryColumn);
 		modelMap.put("columnListEng", columnListEng);
 	}
-	
-	
-	
-	
 	
 	@Override
 	public Map<String, Object> list(Model model) {
@@ -134,14 +114,10 @@ public class ProductListServiceImpl implements ProductListService{
 		Map<String, Object> modelMap = new HashMap<>();
 		/***** Model에 put할 맵 생성 *****/
 		
-		
-		
 		String table = null;
 		try {
 			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
 		} catch (NullPointerException e) {}
-		
-		
 		
 		/***** 페이징처리 *****/
 		String sql = "SELECT Count(*) FROM ProductList";
@@ -150,13 +126,10 @@ public class ProductListServiceImpl implements ProductListService{
 		modelMap.put("paging", paging);
 		/***** 페이징처리 *****/
 		
-		
-		
 		/***** small 카테고리 리스트 처리 *****/
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		modelMap.put("smallCategoryList", smallCategoryList);
 		/***** small 카테고리 리스트 처리 *****/
-		
 		
 		if(checkedId != null) {
 			Map<String, String> checked = new HashMap<>();
@@ -173,22 +146,18 @@ public class ProductListServiceImpl implements ProductListService{
 		/***** 카테고리 세부 목록 처리 *****/
 		
 		
-		
 		/***** SQL 생성 *****/
 		int offset = paging.getOffset();
 		int limit = paging.getMaxResult();
-		sql = "SELECT no, imagePath, productName, mfCompany, price, score, orderCount From ProductList";
+		sql = "SELECT * From ProductList";
 		String listSql = createSQL(paramMap, sql, table, mainCategory, smallCategory, offset, limit);
 		/***** SQL 생성 *****/
-		
 		
 		
 		/***** 상품 리스트 처리 *****/
 		Vector<ProductList> list = listBoard(listSql);
 		modelMap.put("list", list);
-		/***** 상품 리스트 처리 *****/
-		
-		
+		/***** 상품 리스트 처리 *****/		
 		
 		return modelMap;
 	}
@@ -283,6 +252,24 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	public String filterNumber(String str){
 		return str.replaceAll("[^0-9]", "");
+	}
+	
+
+	@Override
+	public void updateOrderCount(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("prodNo"));
+		dao.updateOrderCount(no);
+	}
+
+	@Override
+	public void updateOrderCountList(HttpServletRequest request) {
+		int size = Integer.parseInt(request.getParameter("size"));
+
+		for (int i = 0; i <= size; i++) {
+			int prodNo = Integer.parseInt(request.getParameter("prodNo" + i));
+
+			dao.updateOrderCount(prodNo);
+		}
 	}
 	
 }

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Cart;
 import com.hellomart.service.CartService;
+import com.hellomart.service.ProductService;
 
 @Controller
 public class CartController {
@@ -30,8 +32,10 @@ public class CartController {
 	@Autowired
 	CartService service;
 	
+	@Autowired
+	ProductService service2;
 	
-	// 1. 장바구니 추가
+	// 1-1. 장바구니 추가(페이지 이동)
 	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
 	public String addCart(@ModelAttribute Cart cart, Principal principal){
 		String id = principal.getName();
@@ -45,19 +49,33 @@ public class CartController {
 			// 있으면 update
 			service.updateCart(cart);
 		}
-		return "productList/main?mainCategory=";		
+		return "redirect:/mypage/cartlist?id="+id;	
 	}
 	
-	@RequestMapping(value = "/addCartMove", method=RequestMethod.GET)
-	public String addCartMove(@ModelAttribute Cart cart, HttpServletRequest request){
-		return "redirect:/cartlist?id=" + request.getParameter("id");		
+	// 1-2. 장바구니 추가 - 페이지유지
+	@RequestMapping(value = "/addCartNo", method=RequestMethod.GET)
+	public String addCartNo(@ModelAttribute Cart cart, Principal principal, String smallCategory, Model model){
+		String id = principal.getName();
+		cart.setId(id);
+		// 장바구니에 기존 상품이 있는지 검사
+		int count = service.countCart(cart.getNo(), id);
+		if(count == 0){
+			// 없으면 insert
+			service.insert(cart);
+		} else{
+			// 있으면 update
+			service.updateCart(cart);
+		}
+		service2.getDetailInfo(String.valueOf(cart.getNo()), smallCategory, model);
+		return "product/productView";
 	}
+
 	
 	// 2. 장바구니 목록
     @RequestMapping(value = "mypage/cartlist", method=RequestMethod.GET)
-    public ModelAndView list(HttpSession session, ModelAndView mav, Principal principal){
+    public ModelAndView list(ModelAndView mav, Principal principal){
     	String id = principal.getName();
-    	
+    	  
         Map<String, Object> map = new HashMap<String, Object>();
         List<Cart> list = service.listCart(id); // 장바구니 정보 
         int sumMoney = service.sumMoney(id); // 장바구니 전체 금액 호출
@@ -76,29 +94,28 @@ public class CartController {
     }
     
     // 3. 장바구니 삭제
-    @RequestMapping("mypage/cartdelete")
-    public String delete(@RequestParam int idx){
-        service.delete(idx);
-        return "redirect:/cartlist";
+    @RequestMapping(value="mypage/cartdelete", method=RequestMethod.GET)
+    public String delete(@RequestParam int no, Principal principal){
+    	String id = principal.getName();
+        service.deleteCart(id, no);
+        return "redirect:/mypage/cartlist?id="+id;
     }
     
     // 4. 장바구니 수정
     @RequestMapping(value="mypage/cartmodify", method=RequestMethod.POST)
-    public String update(@RequestParam int[] count, @RequestParam int[] no, HttpSession session) {
+    public String update(@RequestParam int[] orderCount, @RequestParam int[] no, Principal principal) {
         // session의 id
-        String id = (String) session.getAttribute("id");
+        String id = principal.getName();
         // 레코드의 갯수 만큼 반복문 실행
         for(int i=0; i<no.length; i++){
             Cart cart = new Cart();
             cart.setId(id);
-            cart.setCount(count[i]);
+            cart.setOrderCount(orderCount[i]);
             cart.setNo(no[i]);
             service.modifyCart(cart);
         }
 
-        return "redirect:/cartlist";
+        return "redirect:/mypage/cartlist?id="+id;
     }
-    
-
-	
+    	
 }
