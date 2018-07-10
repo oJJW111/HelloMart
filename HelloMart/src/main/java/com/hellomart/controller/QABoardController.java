@@ -1,7 +1,9 @@
 package com.hellomart.controller;
 
+import java.security.Principal;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
@@ -191,8 +193,13 @@ public class QABoardController {
    }
 
    @RequestMapping(value = "/qawrite", method = RequestMethod.GET)
-   public ModelAndView write() {
-      return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+   public ModelAndView write(Principal principal) {
+	  String id = principal.getName();
+	  if(!id.equals("anonymousUser")){
+		  return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+	  }else{
+		  return new ModelAndView("redirect:/");
+	  }
    }
 
    @RequestMapping(value = "/qawrite", method = RequestMethod.POST)
@@ -209,9 +216,12 @@ public class QABoardController {
    }
 
    @RequestMapping(value = "/qaview", method = RequestMethod.GET)
-   public ModelAndView view(int idx, String cmtnum) {
-      
+   public ModelAndView qaview(int idx, String cmtnum, HttpServletRequest request, Principal principal) {
+      String rid = request.getParameter("id");
+      String pid = principal.getName();
       ModelAndView mav = new ModelAndView();
+      
+      if(rid.equals(pid)){
       CmtBoard cmtboard = new CmtBoard();
       service.viewCount(idx);
       QABoard view = service.viewQABoard(idx);
@@ -261,7 +271,68 @@ public class QABoardController {
       mav.setViewName("qaboard/QAView");
 
       return mav;
+      
+      }else{
+    	  mav.setViewName("redirect:/qaboard/qaboardList");
+    	  return mav;
+      }
 
+   }
+   
+   @RequestMapping(value = "/qaviewad", method = RequestMethod.GET)
+   public ModelAndView qaviewad(int idx, String cmtnum) {
+	   ModelAndView mav = new ModelAndView();
+		   CmtBoard cmtboard = new CmtBoard();
+		   service.viewCount(idx);
+		   QABoard view = service.viewQABoard(idx);
+		   
+		   // 화면에 보여질 게시글의갯수를 지정
+		   int pageSize = 5;
+		   int startPage = 0;
+		   int endPage = 0;
+		   int pageBlock = 0;
+		   int pageCount = service2.cmtCount(idx);
+		   
+		   // 처음 게시글 보기를 누르면 pageNum없기에 null처리해주어야합니다.
+		   if (cmtnum == null) {
+			   cmtnum = "1";
+		   }
+		   // 현재 보여지는 페이지 넘버값
+		   int currentPage = Integer.parseInt(cmtnum);
+		   
+		   int startRow = (currentPage - 1) * pageSize;
+		   
+		   Vector<CmtBoard> cmtlist = null;
+		   // 게시글이 존재한다면
+		   if (pageCount > 0) {
+			   // 10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
+			   cmtlist = service2.cmtlist(idx, startRow, pageSize);
+			   pageCount = pageCount / pageSize + (pageCount % pageSize == 0 ? 0 : 1);
+			   pageBlock = 3;
+			   
+			   startPage = ((currentPage / pageBlock) - (currentPage % pageBlock == 0 ? 1 : 0)) * pageBlock + 1;
+			   
+			   endPage = startPage + pageBlock - 1;
+			   
+			   if (endPage > pageCount) {
+				   
+				   endPage = pageCount;
+			   }
+			   
+		   }
+		   mav.addObject("pageSize", pageSize);
+		   mav.addObject("pageBlock", pageBlock);
+		   mav.addObject("startPage", startPage);
+		   mav.addObject("endPage", endPage);
+		   mav.addObject("pageCount", pageCount);
+		   mav.addObject("view", view);
+		   mav.addObject("cmtlist", cmtlist);
+		   mav.addObject("cmtboard", cmtboard);
+		   mav.setViewName("qaboard/QAView");
+		   
+		   return mav;
+		   
+	   
    }
 
    @RequestMapping(value = "/cmtinsert", method = RequestMethod.POST)

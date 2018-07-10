@@ -21,8 +21,7 @@
 		<intercept-url pattern="/authenticated/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/**" access="permitAll" />
 		
-		<intercept-url pattern="/qaboard/write" access="isAuthenticated()" />
-		<intercept-url pattern="/view" access="isAuthenticated()" />
+		
 
 		<form-login
 			login-page="/login"
