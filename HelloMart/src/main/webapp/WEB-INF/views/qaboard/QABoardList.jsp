@@ -144,9 +144,7 @@
       </div>
       </c:if>
       <!-- 게시판 검색 시작 { -->
-      <fieldset id="bo_sch">
-         <legend>게시물 검색</legend>
-
+		<div style="float: inherit;">
          <form action="qasearch" method="get">
             <label for="sfl" class="sound_only">검색대상</label> 
             <select name="searchOption" id="searchOption">
@@ -160,11 +158,10 @@
             <input type="text" name="keyword" required id="keyword" class="frm_input required" size="15" maxlength="15"> 
             <input type="submit" value="검색" class="btn_submit">
          </form>
-      </fieldset>
+     	 </div>
       </div>
       <!-- 게시판 검색 끝 -->
-      
-
+      <div style="padding-top: 50px"></div>
 
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
