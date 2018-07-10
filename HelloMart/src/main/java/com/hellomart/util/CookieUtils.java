@@ -1,5 +1,7 @@
 package com.hellomart.util;
 
+import java.util.Vector;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +36,22 @@ public class CookieUtils {
 		return values;
 	}
 
+	public Vector<String> getAllValueWithKeyWord(String keyword) {
+		Cookie[] cookies = request.getCookies();
+		Vector<String> values = new Vector<>();
+		int length = cookies.length;
+		
+		for(int i = 0; i < length; i++) {
+			String name = cookies[i].getName();
+			String value = cookies[i].getValue();
+			if(name.indexOf(keyword) != -1) {
+				values.add(value);
+			}
+		}
+		
+		return values;
+	}
+	
 	public String getValue(String name){
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null){
