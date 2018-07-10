@@ -37,7 +37,7 @@
     <!-- 5. 장바구니 삭제 -->
     <delete id="deleteCart">
         DELETE FROM cartlist 
-        WHERE idx = #{param1}
+        WHERE id = #{param1}
         and no = #{param2}
     </delete>
     
