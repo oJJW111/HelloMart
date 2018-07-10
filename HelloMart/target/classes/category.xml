@@ -170,7 +170,7 @@
 
 		<프린터 table="Printer">
 			<인쇄방식 column="method" type="Enum">
-				잉크젯, 레이저
+				잉크젯, 레이저 
 			</인쇄방식>
 			<인쇄종류 column="type" type="Enum">
 				흑백, 컬러
