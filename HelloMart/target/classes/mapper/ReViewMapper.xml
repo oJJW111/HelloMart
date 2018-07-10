@@ -6,8 +6,8 @@
 
 <mapper namespace="com.hellomart.dao.ReViewDAO">
 
-	<select id="listReView" resultType="ReView"> select * from ReView order
-		by 1 desc limit #{param1},#{param2}
+	<select id="listReView" resultType="ReView"> select * from ReView where no= #{param1} order
+		by 1 desc limit #{param2},#{param3}
 	</select>
 
 	<insert id="reWrite" parameterType="ReView"> INSERT INTO

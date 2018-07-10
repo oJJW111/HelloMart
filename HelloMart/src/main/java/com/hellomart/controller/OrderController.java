@@ -75,6 +75,6 @@ public class OrderController {
 	
 	@RequestMapping("/cartList")
 	public String cartList(String id){
-		return "카트 목록 보기 페이지로";
+		return "카트목록보기";
 	}
 }

@@ -1,5 +1,6 @@
 package com.hellomart.controller;
 
+import java.security.Principal;
 import java.util.Vector;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class ReViewController {
 	private ReViewService service;
 
 	@RequestMapping("/review")
-	public ModelAndView reViewList(String pageNum) {
+	public ModelAndView reViewList(String pageNum,int no) {
 		ModelAndView mav = new ModelAndView();
 		
 		int pageSize = 5;
@@ -44,7 +45,7 @@ public class ReViewController {
 		
 		if(pageCount>0){
 			//10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
-			list = service.listReView(startRow, pageSize);
+			list = service.listReView(no,startRow, pageSize);
 			pageCount=pageCount/pageSize+(pageCount%pageSize==0?0:1);
 			pageBlock=3;
 			
@@ -74,7 +75,7 @@ public class ReViewController {
 		ModelAndView mav = new ModelAndView();
 		ReView view = service.ReView(idx);
 		mav.addObject("viewre", view);
-		mav.setViewName("review/reView");
+		mav.setViewName("review/ReViewList");
 
 		return mav;
 	}
@@ -88,10 +89,10 @@ public class ReViewController {
 	}
 	
 	@RequestMapping(value = "/reWrite", method=RequestMethod.POST)
-	public String writeProcess(ReView review){
-		System.out.println("dtzsrszrz : " + review);
+	public String writeProcess(ReView review, Principal principal){
+		String id = principal.getName();
 		service.reWrite(review);
-		return "redirect:/review";
+		return "redirect:/mypage/history?id="+id;
 	}
 	
 
@@ -108,13 +109,13 @@ public class ReViewController {
 	@RequestMapping(value = "/remodify", method = RequestMethod.POST)
 	public String remodifyProcess(ReView reView) {
 		service.remodify(reView);
-		return "redirect:/review";
+		return "redirect:/ReViewList";
 	}
 
 	@RequestMapping(value = "/redelete", method = RequestMethod.GET)
 	public String redeleteProcess(int idx) {
 		service.deleteReView(idx);
-		return "redirect:/review";
+		return "redirect:/ReViewList";
 	}
 
 }

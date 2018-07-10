@@ -80,7 +80,7 @@ $(document).ready(function(){
 		location.href= mypage + "/info";
 	});
 	$("#shoppingcart").click(function() {
-		location.href= mypage + "/shoppingcart";
+		location.href= mypage + "/cartlist";
 	});
 	$("#point").click(function() {
 		location.href= mypage + "/point";

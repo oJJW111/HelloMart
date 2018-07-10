@@ -9,6 +9,6 @@
 	</select>
 	
 	<select id="getDetailInfo" parameterType="HashMap" resultType="HashMap">
-		${sql} 
+		${sql}
 	</select>
 </mapper>

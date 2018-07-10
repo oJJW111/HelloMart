@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hellomart.dao.HistoryDAO">
+
+	<!-- 장바구니 목록 -->
+
+	<select id="History" resultType="HashMap">
+        SELECT o.orderid, o.ordercount, o.orderdate,
+        	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
+        FROM productList p, orderlist o
+        WHERE p.no = o.no AND o.id = #{id}
+        ORDER BY o.date
+    </select>
+
+	
+</mapper>

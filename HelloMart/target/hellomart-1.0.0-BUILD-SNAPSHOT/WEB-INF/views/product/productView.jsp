@@ -19,16 +19,9 @@
 	function fnCart(no, id){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
-		var orderCount = document.getElementById("orderCount").value;
-		
 		if(isMove){
+			var orderCount = document.getElementById("orderCount").value;
 			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
-		}
-		else{
-			// 구현중
-			/*
-			$.ajax({type:'post', url:~~~});
-			*/
 		}
 	}
 </script>
@@ -99,7 +92,7 @@
 <div align="center"> 
 	수량 &nbsp;&nbsp;
 	<select name="orderCount" id="orderCount">
-    	<c:forEach begin="1" end="20" var="i">
+    	<c:forEach begin="1" end="10" var="i">
     		<option value="${i}">${i}</option>
     	</c:forEach>
 	</select>
@@ -107,12 +100,12 @@
 	&nbsp;&nbsp;<input type="button" value="구매" 
 					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
 	&nbsp;&nbsp;<input type="button" value="장바구니 담기" 
-	onclick="fnCart(${detail.No}, '${id}')">
+	onclick="fnCart(${detail.no}, '${id}')">
 </div>
 
-<div>
-	<jsp:include page="/review?no=${detail.No}"/>
-</div>
+<!-- <div> -->
+<%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
+<!-- </div> -->
 	
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

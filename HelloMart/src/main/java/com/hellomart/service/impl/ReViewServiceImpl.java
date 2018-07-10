@@ -24,8 +24,8 @@ public class ReViewServiceImpl implements ReViewService{
 	}
 
 	@Override
-	public Vector<com.hellomart.dto.ReView> listReView(int startRow, int pageSize) {
-		return dao.listReView(startRow, pageSize);
+	public Vector<com.hellomart.dto.ReView> listReView(int no,int startRow, int pageSize) {
+		return dao.listReView(no, startRow, pageSize);
 	}
 
 	@Override

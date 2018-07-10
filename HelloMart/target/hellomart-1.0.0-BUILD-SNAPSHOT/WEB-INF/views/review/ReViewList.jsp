@@ -46,20 +46,20 @@
 			</div>
 
 		</div>
-		<div align="center" id="page">
+		<c:if test="${pageCount>1 }">
+			<div align="center" id="page">
 
-			<c:if test="${startPage > pageBlock}">
-				<a href="review?pageNum=${pageNum }">[이전]</a>
-			</c:if>			
-			<c:forEach var="i" begin="${startPage }" end="${endPage }">
-				<a href="review?pageNum=${i }">[${i }]</a>
-			</c:forEach>
-			<c:if test="${endPage < pageCount }">
-				<a href="review?pageNum=${startPage+pageBlock }">[다음]</a>
-			</c:if>
-			
-
-		</div>
+				<c:if test="${startPage > pageBlock}">
+					<a href="review?pageNum=${startPage-1}">[이전]</a>
+				</c:if>
+				<c:forEach var="i" begin="${startPage }" end="${endPage }">
+					<a href="review?pageNum=${i }">[${i }]</a>
+				</c:forEach>
+				<c:if test="${endPage < pageCount }">
+					<a href="review?pageNum=${startPage+pageBlock}">[다음]</a>
+				</c:if>
+			</div>
+		</c:if>
 	
 	</div>
 

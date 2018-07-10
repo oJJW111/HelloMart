@@ -8,7 +8,7 @@ public interface ReViewService{
 
 	
 	/* 게시글을 가져오는 메소드 */
-	Vector<ReView> listReView(int startRow, int pageSize);
+	Vector<ReView> listReView(int no,int startRow, int pageSize);
 	
 	/* 게시글을 삽입하는 메소드 */
 	void reWrite(ReView reView);

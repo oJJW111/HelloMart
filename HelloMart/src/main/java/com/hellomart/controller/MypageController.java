@@ -1,7 +1,11 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -20,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
+import com.hellomart.dto.Cart;
+import com.hellomart.dto.OrderList;
 import com.hellomart.service.AccountService;
+import com.hellomart.service.HistoryService;
 import com.hellomart.validator.DeleteAccountValidator;
 import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
@@ -41,6 +48,9 @@ public class MypageController {
 	
 	@Autowired
 	private ModifyPasswordValidator modifyPasswordValidator;
+	
+	@Autowired
+	private HistoryService historyservice;
 	
 	@RequestMapping("/menu")
 	public String main() {
@@ -165,8 +175,19 @@ public class MypageController {
 	public void point() {
 	}
 	
-	@RequestMapping("/history")
-	public void history() {
+	@RequestMapping(value = "/history", method=RequestMethod.GET)
+	public ModelAndView History(HttpSession session, ModelAndView mav, Principal principal){
+    	
+		String id = principal.getName();
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+		List<OrderList> list = historyservice.historylist(id);
+        map.put("list", list);               
+        map.put("count", list.size());        
+        mav.setViewName("mypage/history");    
+        mav.addObject("map", map);            
+        
+        return mav;
 	}
 	
 	@RequestMapping("/todayView")

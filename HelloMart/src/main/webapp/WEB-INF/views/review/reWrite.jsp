@@ -17,8 +17,12 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
+	<sec:authentication property="principal" var="id" />
+	<!-- 헤더 -->
+	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
+	<!-- 헤더 -->
 
-	<div class="article_wrap">
+	<div class="article_wrap" style="width: 1026px; margin: auto;'">
 		<section id="bo_w">
 
 			<h2 id="container_title">리뷰작성</h2>
@@ -28,7 +32,7 @@
 						<tbody>
 							<tr>
 								<td><input type="text" name="id" class="frm_input required"
-									size="10" maxlength="20" value="${review.id}" readonly="readonly">
+									size="10" maxlength="20" value="${id}" readonly="readonly">
 								</td>
 							</tr>
 							<tr>
@@ -49,6 +53,8 @@
 
 		</section>
 	</div>
-
+	<!-- 푸터 -->
+	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />
+	<!-- 푸터 -->
 </body>
 </html>

@@ -1,20 +1,17 @@
 -------------------------------------------------------------------------------
 Test set: com.helloart.test.dao.AccountDaoTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.155 sec <<< FAILURE! - in com.helloart.test.dao.AccountDaoTest
-methodTest(com.helloart.test.dao.AccountDaoTest)  Time elapsed: 0.2 sec  <<< ERROR!
-org.mybatis.spring.MyBatisSystemException: 
-nested exception is org.apache.ibatis.exceptions.PersistenceException: 
-### Error updating database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; nested exception is java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
-### Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; nested exception is java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
-	at com.helloart.test.dao.AccountDaoTest.before(AccountDaoTest.java:49)
-Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.289 sec <<< FAILURE! - in com.helloart.test.dao.AccountDaoTest
+methodTest(com.helloart.test.dao.AccountDaoTest)  Time elapsed: 0.297 sec  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
 
-### Error updating database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; nested exception is java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
-### Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; nested exception is java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Cannot truncate a table referenced in a foreign key constraint (`hellomart`.`cartlist`, CONSTRAINT `cl_id_fk` FOREIGN KEY (`Id`) REFERENCES `hellomart`.`account` (`ID`))
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: TRUNCATE Account
+### Cause: java.sql.SQLSyntaxErrorException: Cannot truncate a table referenced in a foreign key constraint (`hellomart`.`cartlist`, CONSTRAINT `cl_id_fk` FOREIGN KEY (`Id`) REFERENCES `hellomart`.`account` (`ID`))
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Cannot truncate a table referenced in a foreign key constraint (`hellomart`.`cartlist`, CONSTRAINT `cl_id_fk` FOREIGN KEY (`Id`) REFERENCES `hellomart`.`account` (`ID`))
 	at com.helloart.test.dao.AccountDaoTest.before(AccountDaoTest.java:49)
-Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Could not get JDBC Connection; nested exception is java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
-	at com.helloart.test.dao.AccountDaoTest.before(AccountDaoTest.java:49)
-Caused by: java.sql.SQLException: Access denied for user 'master'@'localhost' (using password: YES)
+Caused by: java.sql.SQLSyntaxErrorException: Cannot truncate a table referenced in a foreign key constraint (`hellomart`.`cartlist`, CONSTRAINT `cl_id_fk` FOREIGN KEY (`Id`) REFERENCES `hellomart`.`account` (`ID`))
 	at com.helloart.test.dao.AccountDaoTest.before(AccountDaoTest.java:49)
 
