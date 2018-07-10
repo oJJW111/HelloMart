@@ -88,6 +88,7 @@ $(document).ready(function(){
 <input type="hidden" name="mainCategory" value="${param.mainCategory}">
 <input type="hidden" name="smallCategory" value="${param.smallCategory}">
 <div class="category_detail noselect">
+	<c:if test="${smallCategory != '액세서리'}">  
 	<div class="category_detail_up">
 		<div class="category_major">
 			<h5>세부 분류</h5>
@@ -132,6 +133,7 @@ $(document).ready(function(){
 			</c:if>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
+	</c:if>
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
 		<input type="text" placeholder="0원" name="price1" value="${param.price1}">

@@ -123,9 +123,6 @@ $(document).ready(function(){
 							<div class="F_right megamenu_menu_title2">PC 액세서리</div>
 					</div>
 
-					<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
-							<div class="F_right megamenu_menu_title2">???</div>
-					</div>
 					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
 							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
 					</div>

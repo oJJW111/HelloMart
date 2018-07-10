@@ -42,7 +42,9 @@
 <!-- 헤더 -->
 
 <div align="center">
-	<table style="border: 1px solid;">
+	<h2>상품 정보 보기</h2>
+	<br>
+	<table>
 		<tr>
 			<td rowspan="9">
 				<img src="${detail.ImagePath}" width="400px">
@@ -107,13 +109,14 @@
 			<c:forEach begin="1" end="10" var="i">
 				<option value="${i}">${i}</option>
 			</c:forEach>
-		</select>
+		</select> 
 		&nbsp;&nbsp;<input type="button" value="구매"
 				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
 		&nbsp;&nbsp;<input type="button" value="장바구니 담기"
 				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 	</sec:authorize>
 </div>
+<br><br><br>
 
 <!-- <div> -->
 <%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
