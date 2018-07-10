@@ -47,6 +47,10 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=IT&smallCategory=노트북";
 	});
 	
+	$("#desktop").on('click', function(){
+		location.href="/productList?mainCategory=IT&smallCategory=데스크탑";
+	});
+	
 	$("#monitor").on('click', function(){
 		location.href="/productList?mainCategory=IT&smallCategory=모니터";
 	});
@@ -61,6 +65,10 @@ $(document).ready(function(){
 	
 	$("#tablet").on('click', function(){
 		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
+	});
+	
+	$("#qawrite").on('click', function(){
+		location.href="/write";
 	});
 	
 	$("#qaboard").on('click', function(){
@@ -104,7 +112,7 @@ $(document).ready(function(){
 
 					<div class="mega_menu_inner_menu mega_ct_002" style="display: none;">
 							<div class="F_left megamenu_menu_title2" id="notebook" style="margin-left: 230px">노트북</div>
-							<div class="F_left megamenu_menu_title2">데스크탑</div>
+							<div class="F_left megamenu_menu_title2" id="desktop">데스크탑</div>
 							<div class="F_left megamenu_menu_title2" id="monitor">모니터</div>
 							<div class="F_left megamenu_menu_title2" id="printer">프린터</div>
 					</div>
@@ -121,7 +129,7 @@ $(document).ready(function(){
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
-							<div class="F_right megamenu_menu_title2">문의하기</div>
+							<div class="F_right megamenu_menu_title2" id="qawrite">문의하기</div>
 							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
 					</div>
 					
