@@ -195,7 +195,7 @@
 
 	<모바일>
 		<스마트폰 table="Smartphone">
-			<모델 column="model" type="String">
+			<모델 column="model" type="Enum">
     			갤럭시S, 갤럭시노트 , 갤럭시A/J, 아이폰, LG 시리즈 
 			</모델>
 			<운영체제 column="os" type="Enum">
@@ -215,7 +215,7 @@
 		</스마트폰>
 
 		<태블릿 table="Tablet">
-			<모델 column="model" type="String"> 
+			<모델 column="model" type="Enum"> 
 				APPLE, 삼성전자, 레노버, LG전자,  Microsoft
 			</모델>
 			<운영체제 column="os" type="Enum">

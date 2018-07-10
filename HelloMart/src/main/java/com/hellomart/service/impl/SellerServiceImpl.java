@@ -34,6 +34,12 @@ public class SellerServiceImpl implements SellerService{
 	@Autowired
 	private Upload upload;
 	
+	private List<TableInformation> tableList;
+	
+	public SellerServiceImpl() {
+		tableList = tableInfoXmlParser();
+	}
+	
 	@Override
 	public void getSellerProductList(int pageNum, Model model, 
 				String id, String servletPath) {
@@ -75,12 +81,18 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	public void productPartSpec(Model model, String mainCategory, String smallCategory) {
 		
-		TableInformation tableInfo = tableInfoXmlParser(mainCategory, smallCategory);
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).){
+				
+			}
+		}
+		TableInformation tableInfo = 
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategory", smallCategory);
 		model.addAttribute("specList", tableInfo.getColumnValueList());
 		model.addAttribute("specEngNameList", tableInfo.getColumnEngNameList());
 		model.addAttribute("specKorNameList", tableInfo.getColumnKorNameList());
+		model.addAttribute("specTypeList", tableInfo.getColumnTypeList());
 	}
 	
 	
@@ -261,71 +273,90 @@ public class SellerServiceImpl implements SellerService{
 		dao.insertPartProductInfo(sqlMap);
 	}
 	
-	private static TableInformation tableInfoXmlParser(String mainCategory, String smallCategory) {
+	private static List<TableInformation> tableInfoXmlParser() {
 		XMLParser xmlParser = new XMLParser("category.xml");
-		TableInformation tableInfo = TableInformation.getInstance();
-		tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategory, smallCategory));
-		tableInfo.setColumnEngNameList(new ArrayList<String>());
-		tableInfo.setColumnTypeList(new ArrayList<String>());
-		tableInfo.setColumnValueList(new ArrayList<List<String>>());
+		
+		List<TableInformation> tableList = new ArrayList<TableInformation>();
+		TableInformation tableInfo;
+		String[] mainCategorys = new String[]{
+			"가전제품", "IT", "모바일"
+		};
+		String[] categorys1 = new String[]{
+			"냉장고","오븐_전자레인지","청소기", "에어컨", "세탁기", "공기청정기"
+		};
+		String[] categorys2 = new String[]{
+			"노트북","데스크탑","모니터","프린터"
+		};
+		String[] categorys3 = new String[]{
+			"스마트폰","태블릿"
+		};
+		Map<String, String[]> categoryMap = new HashMap<String, String[]>();
+		categoryMap.put(mainCategorys[0], categorys1);
+		categoryMap.put(mainCategorys[1], categorys2);
+		categoryMap.put(mainCategorys[2], categorys3);
 		
 		StringTokenizer tokenizer;
 		String valueList = null;
 		String specValue = null;
 		List<String> tokenResultValueList;
 		
-		for (String columnKorName : tableInfo.getColumnKorNameList()) {
-			valueList = xmlParser.getValue(smallCategory, columnKorName);
+		for(int i = 0 ; i < mainCategorys.length ; i++){
+			String[] smallCategorys = categoryMap.get(mainCategorys[i]);
+			for(int j = 0 ; j < smallCategorys.length ; j++){
+				tableInfo = new TableInformation();
+				tableInfo.setColumnEngNameList(new ArrayList<String>());
+				tableInfo.setColumnTypeList(new ArrayList<String>());
+				tableInfo.setColumnValueList(new ArrayList<List<String>>());
+				tableInfo.setTableKorName(smallCategorys[j]);
+				tableInfo.setTableEngName(xmlParser.getAttributeValue(smallCategorys[j], "table"));
+				tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategorys[i], smallCategorys[j]));
+				for (String columnKorName : tableInfo.getColumnKorNameList()) {
+					valueList = xmlParser.getValue(smallCategorys[j], columnKorName);
 
-			tableInfo.getColumnEngNameList()
-				.add(xmlParser.getAttributeValue(smallCategory, columnKorName, "column"));
-			tableInfo.getColumnTypeList()
-				.add(xmlParser.getAttributeValue(smallCategory, columnKorName, "type"));
-			
-			tokenResultValueList = new ArrayList<String>();
-			tokenizer = new StringTokenizer(valueList.trim(), ",");
-			while(tokenizer.hasMoreTokens()){ 
-				specValue = tokenizer.nextToken();
-				tokenResultValueList.add(specValue.trim());	
+					tableInfo.getColumnEngNameList()
+						.add(xmlParser.getAttributeValue(smallCategorys[j], columnKorName, "column"));
+					tableInfo.getColumnTypeList()
+						.add(xmlParser.getAttributeValue(smallCategorys[j], columnKorName, "type"));
+					
+					tokenResultValueList = new ArrayList<String>();
+					tokenizer = new StringTokenizer(valueList.trim(), ",");
+					while(tokenizer.hasMoreTokens()){ 
+						specValue = tokenizer.nextToken();
+						tokenResultValueList.add(specValue.trim());	
+					}
+					tableInfo.getColumnValueList().add(tokenResultValueList);
+				}
+				tableList.add(tableInfo);
 			}
-			tableInfo.getColumnValueList().add(tokenResultValueList);
 		}
-		tableInfo.setTableName(xmlParser.getAttributeValue(smallCategory, "table"));
-		return tableInfo;
+		return tableList;
 	}
 }
 
 class TableInformation {
-	private String tableName;
+	private String tableEngName;
+	private String tableKorName;
 	private List<String> columnTypeList;
 	private List<String> columnEngNameList;
 	private List<String> columnKorNameList;
 	private List<List<String>> columnValueList;
 
-	private static class Singleton {
-		private static TableInformation instance;
+	public TableInformation() {}
 
-		public static TableInformation getInstance() {
-			if (instance == null) {
-				instance = new TableInformation();
-			}
-			return instance;
-		}
+	public String getTableEngName() {
+		return tableEngName;
 	}
 
-	public static TableInformation getInstance() {
-		return Singleton.getInstance();
+	public void setTableEngName(String tableEngName) {
+		this.tableEngName = tableEngName;
 	}
 
-	private TableInformation() {
+	public String getTableKorName() {
+		return tableKorName;
 	}
 
-	public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+	public void setTableKorName(String tableKorName) {
+		this.tableKorName = tableKorName;
 	}
 
 	public List<String> getColumnTypeList() {
@@ -362,9 +393,10 @@ class TableInformation {
 
 	@Override
 	public String toString() {
-		return "TableInformation [tableName=" + tableName + ", columnTypeList=" + columnTypeList
-				+ ", columnEngNameList=" + columnEngNameList + ", columnKorNameList=" + columnKorNameList
-				+ ", columnValueList=" + columnValueList + "]";
+		return "TableInformation [tableEngName=" + tableEngName + ", tableKorName=" + tableKorName + ", columnTypeList="
+				+ columnTypeList + ", columnEngNameList=" + columnEngNameList + ", columnKorNameList="
+				+ columnKorNameList + ", columnValueList=" + columnValueList + "]";
 	}
 
+	
 }

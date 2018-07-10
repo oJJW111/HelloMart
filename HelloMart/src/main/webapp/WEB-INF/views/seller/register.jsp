@@ -157,64 +157,79 @@ $(document).ready(function(){
 		<h2>${mainCategory } >> ${smallCategory } 등록하기</h2><br/>
 		<div class="box-wrap">
 			<ul class="register-form">
-				<li>	
+				<li>
+					<label for="productName" class="control-label">물품 이름</label>	
 					<form:input path="productName" id="productName" class="txt-input joinTooltip" maxlength="50" placeholder="물품 이름" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.productName"/></span>
 <!-- 					<span class="errors" id="productNameError"></span> -->
 					<form:errors path="productName" class="errors"/>
 				</li>
 				<li>
+					<label for="mfCompany" class="control-label">제조 회사</label>
 					<form:input path="mfCompany" id="mfCompany" class="txt-input joinTooltip" maxlength="30" placeholder="제조 회사" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.mfCompany"/></span>
 <!-- 					<span class="errors" id="mfCompanyError"></span> -->
 					<form:errors path="mfCompany" class="errors"/>
 				</li>
-				<li class="prodDate">
+				<li>
+					<label for="prodDate" class="control-label">제조 날짜</label>
 					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
 <!-- 					<span class="errors" id="prodDateError"></span> -->
 					<form:errors path="prodDate" class="errors"/>
 				</li>
 				<li>
+					<label for="price" class="control-label">물품 가격</label>
 					<form:input path="price" id="price" class="txt-input joinTooltip" maxlength="10" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
 <!-- 					<span class="errors" id="priceError"></span>	 -->
 					<form:errors path="price" class="errors"/>
 				</li>
 				<li>
+					<label for="weight" class="control-label">물품 무게</label>
 					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
 <!-- 					<span class="errors" id="weightError"></span> -->
 					<form:errors path="weight" class="errors"/>
 				</li>
 				<li>
+					<label for="comment" class="control-label">코멘트</label>
 					<form:textarea path="comment" id="comment" class="txt-input joinTooltip" cols="50" rows="5" maxlength="100" placeholder="코멘트"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.comment"/></span>
 <!-- 					<span class="errors" id="commentError"></span> -->
 					<form:errors path="comment" class="errors"/>
 				</li>
-				<li class="file">
+				<li>
 					<label for="productImageFile" class="control-label">이미지 업로드</label>
-					<div class="productImageFile">
-						<input type="file" name="productImageFile"  id="productImageFile"/>
-					</div>
+						<input type="file" name="productImageFile"  id="productImageFile" class="txt-input joinTooltip productImageFile"/>
+						<span class="tooltiptext"><spring:message code="form.tooltip.validation.file"/></span>
 					<span class="errors" id="fileError">${msg }</span>
 				</li>				
 				
 <c:forEach var="specName" items="${specKorNameList}" varStatus="status">
 	<c:set var="specName" value="${specName }"/>
-				<li class="select">
+	<c:choose>
+   		<c:when test="${specTypeList[status.index] eq '' }">
+        등록된 글이 없습니다.    
+    	</c:when>
+	    <c:when test="${abc}">
+	        	<li>
 				<label for="${specEngNameList[status.index] }" class="control-label">${specName }</label>
 				<select name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
-					title='${specName }리스트' required="required">
+					title='${specName }리스트' class="txt-input joinTooltip" required="required">
 					<option value=''>선택</option>
-	<c:forEach var="value" items="${specList[status.index]}">
+			<c:forEach var="value" items="${specList[status.index]}">
 					<option value='${value }'>${value }</option>
-	</c:forEach>
+			</c:forEach>
 				</select>
 				<span class="errors" id="${specEngNameList[status.index] }Errors">			
 				</span>	
-				</li>
+				</li>   
+	    </c:when>
+	    <c:otherwise>
+	       
+	    </c:otherwise>
+	</c:choose>
 </c:forEach>
 			</ul><br>
 			<div class="new-btn-area">
