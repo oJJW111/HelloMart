@@ -160,37 +160,37 @@ $(document).ready(function(){
 				<li>	
 					<form:input path="productName" id="productName" class="txt-input joinTooltip" maxlength="50" placeholder="물품 이름" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.productName"/></span>
-					<span class="errors" id="productNameError"></span>
+<!-- 					<span class="errors" id="productNameError"></span> -->
 					<form:errors path="productName" class="errors"/>
 				</li>
 				<li>
 					<form:input path="mfCompany" id="mfCompany" class="txt-input joinTooltip" maxlength="30" placeholder="제조 회사" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.mfCompany"/></span>
-					<span class="errors" id="mfCompanyError"></span>
+<!-- 					<span class="errors" id="mfCompanyError"></span> -->
 					<form:errors path="mfCompany" class="errors"/>
 				</li>
 				<li class="prodDate">
 					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
-					<span class="errors" id="prodDateError"></span>
+<!-- 					<span class="errors" id="prodDateError"></span> -->
 					<form:errors path="prodDate" class="errors"/>
 				</li>
 				<li>
 					<form:input path="price" id="price" class="txt-input joinTooltip" maxlength="10" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
-					<span class="errors" id="priceError"></span>	
+<!-- 					<span class="errors" id="priceError"></span>	 -->
 					<form:errors path="price" class="errors"/>
 				</li>
 				<li>
 					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
-					<span class="errors" id="weightError"></span>
+<!-- 					<span class="errors" id="weightError"></span> -->
 					<form:errors path="weight" class="errors"/>
 				</li>
 				<li>
 					<form:textarea path="comment" id="comment" class="txt-input joinTooltip" cols="50" rows="5" maxlength="100" placeholder="코멘트"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.comment"/></span>
-					<span class="errors" id="commentError"></span>
+<!-- 					<span class="errors" id="commentError"></span> -->
 					<form:errors path="comment" class="errors"/>
 				</li>
 				<li class="file">

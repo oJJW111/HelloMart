@@ -85,6 +85,7 @@ public class SellerController {
 		String uri = null;
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("ProductList", new ProductList());
+			sellerService.productPartSpec(model, productList.getMainCategory(), productList.getSmallCategory());
 			return "seller/register";
 		}
 

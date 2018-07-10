@@ -7,7 +7,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.hellomart.dto.Account;
 import com.hellomart.dto.ProductList;
 
 @Component
@@ -19,7 +18,7 @@ public class ProductFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		ProductList productList = (ProductList) target;
-		
+		System.out.println("안녕222");
 		this.rejectIfEmptyOrWhitespace(errors, productList);
 		this.rejectIfNotMatch(errors, productList);
 	}
@@ -36,6 +35,7 @@ public class ProductFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weight", "form.error.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comment", "form.error.required");
+		System.out.println("안녕333");
 		
 	}
 	
@@ -44,6 +44,7 @@ public class ProductFormValidator implements Validator {
 //				"id", account.getId(), "[a-zA-Z][0-9a-zA-Z]{5,19}");
 //		ValidationTools.rejectIfNotMatch(errors, "form.error.notvalidate.password",
 //				"password", account.getPassword(), "[a-zA-Z](?=.*\\d{3,})(?=.*\\W)[0-9a-zA-Z!@#$%^&*]{7,15}");
+		System.out.println("안녕444");
 	}
 
 }
