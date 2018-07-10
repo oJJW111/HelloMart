@@ -34,59 +34,60 @@
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 
-	<center>
-		<h2>주문 페이지</h2>
+	<div class="article_wrap" style="width:1026px; margin: auto;">
+		<h2 align="center">주문 페이지</h2>
 		<c:set var="totalPrice" value="0" />
 		<c:set var="size" value="0"/> 
 		<form action="/cartBuyOk" method="post">
-		<table> 
+			<div id="order_page">
+			<table style="width: 100%"> 
 			<!-- 장바구니에 담겨있던 상품 리스트 -->
-			<c:forEach items="${productList}" varStatus="status">
+               <tr>
+                  <th width="10%">이미지</th>
+                  <th width="65%">상품명</th>
+                  <th width="10%">가격</th>
+                  <th width="5%">수량</th>
+                  <th width="10%">금액합계</th>
+               </tr>
+               <c:forEach items="${productList}" varStatus="status">
 				<tr>
-					<td rowspan="4">
-						<img src="${productList[status.index].imagePath}" width="200px">
+					<td>
+						<img src="${productList[status.index].imagePath}" width="100" height="100">
 					</td>
-					<td>상품명</td>
-					<td>${productList[status.index].productName}</td>
-				</tr> 
-				<tr>
-					<td>상품가격</td>
+					<td>
+						${productList[status.index].productName}
+					</td>
 					<td>
 						<fmt:formatNumber pattern="###,###,###" value="${productList[status.index].price}"/> 원
 					</td>
-				</tr> 
+					<td>
+						${orderCountList[status.index]} 개
+					</td>
+							<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
+							<c:set var="totalPrice" value="${totalPrice + orderPrice}"  />
+					<td>
+						<fmt:formatNumber pattern="###,###,###" value="${orderPrice}"/> 원
+					</td>
+				</tr>
+						<!-- 주문리스트 테이블에 들어갈 값들 -->
+						<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
+						<input type="hidden" name="orderCount${status.index}" value="${orderCountList[status.index]}">
+						<input type="hidden" name="orderPrice${status.index}" value="${orderPrice}">
+						<c:if test="${status.first}">
+						<!-- 포인트 이력 테이블에 표시할 대표 상품 이름 -->
+						<input type="hidden" name="prodName0" value="${productList[status.index].productName}">			
+						</c:if>
+						<c:if test="${status.last}">
+							<c:set var="size" value="${status.index}" />
+						</c:if> 	
+			</c:forEach> 
 				<tr>
-					<td>상품수량</td>
-					<td>${orderCountList[status.index]} 개</td>
+					<td colspan="5" align="right">
+						총 금액 합계 : <fmt:formatNumber pattern="###,###,###" value="${totalPrice }"/> 원
+					</td>
 				</tr>
 				<tr>
-					<td>금액 합계</td>
-					<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
-					<c:set var="totalPrice" value="${totalPrice + orderPrice}"  />
-					<td><fmt:formatNumber pattern="###,###,###" value="${orderPrice}"/> 원</td>
-				</tr>  
-				
-				<!-- 주문리스트 테이블에 들어갈 값들 -->
-				<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
-				<input type="hidden" name="orderCount${status.index}" value="${orderCountList[status.index]}">
-				<input type="hidden" name="orderPrice${status.index}" value="${orderPrice}">
-				
-				<c:if test="${status.first}">
-					<!-- 포인트 이력 테이블에 표시할 대표 상품 이름 -->
-					<input type="hidden" name="prodName0" value="${productList[status.index].productName}">			
-				</c:if>
-				<c:if test="${status.last}">
-					<c:set var="size" value="${status.index}" />
-				</c:if> 
-			</c:forEach> 
-			<tr>
-				<td colspan="3" align="center">
-					<h2>총 금액 합계 : ${totalPrice}</h2>
-				</td>
-			</tr>	
-			<!-- 상품 수령인 정보 -->
-			<tr>
-				<td colspan="3">
+					<td colspan="5" align="center">
 					<table>
 						<tr>
 							<td>받을 사람 이름</td>
@@ -126,7 +127,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center" colspan="3">
+				<td align="center" colspan="5" >
 					포인트를 사용하시겠습니까?
 					&nbsp;&nbsp;
 					<input type="radio" name="incDec" id="usePoint" value="-">예
@@ -134,16 +135,19 @@
 					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
 					<div id="divPoint"></div>
 				</td>
-			</tr>
+			</tr>	
 			<tr>
-				<td align="center" colspan="3">
+				<td align="center" colspan="5">
 					<br><br>
 					<input type="submit" value="주문하기">
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="button" value="취소하기" onclick="location.href='index.do'">
 				</td>
 			</tr>
-		</table>
+			</table>
+			</div>
+			<!-- 상품 수령인 정보 -->
+
 		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
 		<!-- 장바구니에 몇 종류의 상품이 들어있었는지 -->
 		<input type="hidden" name="size" value="${size}">
@@ -151,8 +155,9 @@
 		<!-- 포인트 적립을 위한 총 합계 금액 --> 
 		<input type="hidden" name="totalPrice" value="${totalPrice}">
 		</form>
-	</center>
+</div>
 
+<div style="padding-top: 100px"></div>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->
