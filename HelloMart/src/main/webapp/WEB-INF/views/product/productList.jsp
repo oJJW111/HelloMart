@@ -72,6 +72,10 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function fnCart(no){
+		location.href = "/addCart?no=" + no + "&orderCount=1"; 	
+}
 </script>
 
 </head>
@@ -174,7 +178,7 @@ $(document).ready(function(){
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
 							<span class="review">상품평 : ${board.no}</span>
 						</div>
-						<button class="add_to_cart btn_yellow"></button>
+						<button class="add_to_cart btn_yellow" onclick="fnCart(${board.no}, '${param.smallCategory}')"></button>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">

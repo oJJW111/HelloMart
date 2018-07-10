@@ -57,11 +57,13 @@
         AND no = #{no}
     </update>
     
+    <!-- 8. 물품구매시 장바구니 리스트 삭제 -->
     <delete id="deleteCartList">
     	DELETE FROM cartlist 
         WHERE id = #{id}
     </delete>
     
+    <!-- 장바구니 불러올때 dto합치기 -->
     <resultMap id="productListResultMap" type="java.util.HashMap">
     	<id property="no" column="no"/>
     	<result property="smallcategory" column="smallcategory"/>
