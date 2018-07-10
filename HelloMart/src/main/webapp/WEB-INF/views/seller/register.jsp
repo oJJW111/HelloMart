@@ -173,22 +173,25 @@ $(document).ready(function(){
 					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
 					<span class="errors" id="prodDateError"></span>
-					<form:errors path="prodDate" id="prodDateError" class="errors"/>
+					<form:errors path="prodDate" class="errors"/>
 				</li>
 				<li>
 					<form:input path="price" id="price" class="txt-input joinTooltip" maxlength="10" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
-					<form:errors path="price" id="priceError" class="errors"/>
+					<span class="errors" id="priceError"></span>	
+					<form:errors path="price" class="errors"/>
 				</li>
 				<li>
 					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
-					<form:errors path="weight" id="weightError" class="errors"/>
+					<span class="errors" id="weightError"></span>
+					<form:errors path="weight" class="errors"/>
 				</li>
 				<li>
 					<form:textarea path="comment" id="comment" class="txt-input joinTooltip" cols="50" rows="5" maxlength="100" placeholder="코멘트"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.comment"/></span>
-					<form:errors path="comment" id="commentError" class="errors"/>
+					<span class="errors" id="commentError"></span>
+					<form:errors path="comment" class="errors"/>
 				</li>
 				<li class="file">
 					<label for="productImageFile" class="control-label">이미지 업로드</label>
