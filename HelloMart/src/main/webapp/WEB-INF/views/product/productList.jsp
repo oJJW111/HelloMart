@@ -143,7 +143,7 @@ $(document).ready(function(){
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
 </form>
-
+<br>
 <!-- 상품리스트 -->
 <div class="product_list">
 <c:choose>

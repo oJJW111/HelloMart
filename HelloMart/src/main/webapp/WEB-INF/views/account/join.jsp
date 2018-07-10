@@ -43,7 +43,6 @@ $(document).ready(function(){
 	
 	/* 휴대폰번호에는 숫자값만 입력가능하다. */
 	$("#phone").on("keydown keyup", function(evt) {
-		console.log(evt.which);
 		if(!(	
 				(evt.which >= 48 && evt.which <= 57) || // 상단 숫자키패드 0-9
 				(evt.which >= 96 && evt.which <= 105) ||// 우측 숫자키패드 0-9

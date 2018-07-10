@@ -40,11 +40,11 @@
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
+<div class=BLOCK70></div>
 <div align="center">
-	<table style="border: 1px solid;">
+	<table style="border: 1px solid #ababab;">
 		<tr>
-			<td rowspan="9">
+			<td rowspan="9" style="border-right: 1px solid #ababab;">
 				<img src="${detail.ImagePath}" width="400px">
 			</td>
 			<td>이름</td>
@@ -114,7 +114,7 @@
 				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 	</sec:authorize>
 </div>
-
+<div class=BLOCK60></div>
 <!-- <div> -->
 <%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
 <!-- </div> -->

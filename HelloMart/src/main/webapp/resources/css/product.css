@@ -201,7 +201,7 @@ hr.style14 {
     float: right;
     width: 20%;
     height: 100%;
-    background: #015299;
+    background: #555555d4;
     color: white;
     font-size: 17px;
     border: none;
@@ -210,7 +210,7 @@ hr.style14 {
 }
 
 .category_detail_down button:hover {
-    background: #003768;
+    background: #015299;
 }
 
 .category_detail_down input[name=search] {

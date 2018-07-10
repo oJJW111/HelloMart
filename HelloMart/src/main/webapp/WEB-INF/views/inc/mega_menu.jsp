@@ -17,9 +17,6 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
-		location.href="/productList?mainCategory=퍼스널케어";
-	});
-	$("#main_menu_6").on('click', function(){
 		location.href="/qaboard";
 	});
 	$("#refrigerator").on('click', function(){
@@ -43,7 +40,7 @@ $(document).ready(function(){
 	});
 	
 	$("#airPurifier").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기";
+		location.href="/productList?mainCategory=가전제품&smallCategory=공기청정기";
 	});
 	
 	$("#notebook").on('click', function(){
@@ -85,9 +82,9 @@ $(document).ready(function(){
 		<div class="F_left header_menu_item" id="main_menu_4"
 			cd_key="ct_004">액세서리</div>
 		<div class="F_left header_menu_item" id="main_menu_5"
-			cd_key="ct_005">☆★☆</div>
-		<div class="F_left header_menu_item" id="main_menu_6"
-			cd_key="ct_006" style="width: 167px;">게시판</div>
+			cd_key="ct_005">고객센터</div>
+		<!-- <div class="F_left header_menu_item" id="main_menu_6"
+			cd_key="ct_006" style="width: 167px;">게시판</div> -->
 		<div class="clear"></div>
 	</div>
 
@@ -101,7 +98,7 @@ $(document).ready(function(){
 							<div class="F_left megamenu_menu_title1" id="cleaner">청소기</div>
 							<div class="F_left megamenu_menu_title1" id="airConditioner">에어컨</div>
 							<div class="F_left megamenu_menu_title1" id="washer">세탁기</div>
-							<div class="F_left megamenu_menu_title1" id="airPurifier">공기청정기/제습기</div>
+							<div class="F_left megamenu_menu_title1" id="airPurifier">공기청정기</div>
 					</div>
 				</div>
 
@@ -119,17 +116,19 @@ $(document).ready(function(){
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_004" style="display: none;">
-							<div class="F_right megamenu_menu_title2" style="margin-right: 160px">모바일 액세서리</div>
-							<div class="F_right megamenu_menu_title2">PC 액세서리</div>
+							<div class="F_right megamenu_menu_title2">모바일 액세서리</div>
+							<div class="F_right megamenu_menu_title2" style="margin-right: 5px;">PC 액세서리</div>
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
-							<div class="F_right megamenu_menu_title2">???</div>
-					</div>
-					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
 							<div class="F_right megamenu_menu_title2">문의하기</div>
 							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
 					</div>
+					
+					<!-- <div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
+							<div class="F_right megamenu_menu_title2">문의하기</div>
+							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
+					</div> -->
 			</div>
 		</div>
 	</div>

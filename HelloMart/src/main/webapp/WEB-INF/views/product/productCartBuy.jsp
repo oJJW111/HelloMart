@@ -137,7 +137,7 @@
 					<br><br>
 					<input type="submit" value="주문하기">
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="취소하기" onclick="location.href='index.do'">
+					<input type="button" value="취소하기" onclick="location.href='/'">
 				</td>
 			</tr>
 		</table>
