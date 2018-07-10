@@ -18,8 +18,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
-
-
 function fnCartDel(no){
 	var isMove = window.confirm("정말 삭제하시겠습니까?");
 	
@@ -27,19 +25,16 @@ function fnCartDel(no){
 		location.href = "/mypage/cartdelete?no="+no;
 	}
 }
-
 function buyCart() {
 	document.cart_form.action='/cartBuy';
 	document.cart_form.method='post';
 	document.cart_form.submit();
 }
-
 function cartmodify() {
 	document.cart_form.action='/mypage/cartmodify';
 	document.cart_form.method='post';
 	document.cart_form.submit();
 }
-
 </script>
 
 
@@ -94,7 +89,6 @@ function cartmodify() {
                                 <script>
                                   (function(){
                                     alert("주문개수는 10개를 초과할수 없습니다.");
-
                                      })()
                                 </script>
                               <c:set var="orderCount" value="10"/>
@@ -129,7 +123,7 @@ function cartmodify() {
             </table>
 
          </div>
-         <div class="cart_sub">
+         <div class="cart_sub" align="right">
          <input type="button" value="수정" id="cart_stn" onclick="cartmodify()">
          <input type="button" value="구매하기" id="cart_stn" onclick="buyCart()">
          </div>

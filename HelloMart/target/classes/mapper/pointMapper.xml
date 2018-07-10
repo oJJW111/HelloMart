@@ -16,7 +16,6 @@
 	<select id="getPeriodPointLog" resultType="Point">
 		select * from point 
 		where id = #{param1} and 
-		#{param2} &lt;= date and date &gt;= #{param3} 
+		#{param2} &lt;= date and date &lt;= #{param3} 
 	</select>
 </mapper> 
-

@@ -1,6 +1,7 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
+import com.hellomart.service.PointService;
 import com.hellomart.validator.DeleteAccountValidator;
 import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
@@ -35,6 +37,9 @@ public class MypageController {
 	
 	@Autowired 
 	private AccountService service;
+	
+	@Autowired
+	private PointService pointService;
 
 	@Autowired
 	private DeleteAccountValidator deleteAccountValidator;
@@ -44,7 +49,6 @@ public class MypageController {
 	
 	@RequestMapping("/menu")
 	public String main() {
-		System.out.println("메인 메소드 호출 ");
 		return "mypage/menu";
 	}
 	
@@ -161,9 +165,25 @@ public class MypageController {
 	@RequestMapping("/shoppingcart")
 	public void shoppingcart() {
 	}
-	
+
 	@RequestMapping("/point")
-	public void point() {
+	public String point(Model model, Principal principal) {
+		String id = principal.getName();
+		
+		model.addAttribute("pointList", pointService.getAllPointLog(id));
+		model.addAttribute("viewPage", "pointList");
+		
+		return "mypage/info/page"; 
+	}
+	
+	@RequestMapping("/point/period")
+	public String pointPeriod(Model model, Principal principal, String startDate, String endDate) {
+		String id = principal.getName();
+		
+		model.addAttribute("pointList", pointService.getPeriodPointLog(id, startDate, endDate + " 24:00:00"));
+		model.addAttribute("viewPage", "pointList");
+		
+		return "mypage/info/page"; 
 	}
 	
 	@RequestMapping("/history")

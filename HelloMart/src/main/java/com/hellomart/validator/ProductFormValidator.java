@@ -37,11 +37,11 @@ public class ProductFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comment", "form.error.required");
 
 				
-		if(ValidationTools.isNullOrEmpty(productList.getProdYear()) ||
-		   ValidationTools.isNullOrEmpty(productList.getProdMonth()) ||
-		   ValidationTools.isNullOrEmpty(productList.getProdDay())) {
-			errors.rejectValue("prodYear", "form.error.required");
-		}
+//		if(ValidationTools.isNullOrEmpty(productList.getProdYear()) ||
+//		   ValidationTools.isNullOrEmpty(productList.getProdMonth()) ||
+//		   ValidationTools.isNullOrEmpty(productList.getProdDay())) {
+//			errors.rejectValue("prodYear", "form.error.required");
+//		}
 	}
 	
 	private void rejectIfNotMatch(Errors errors, ProductList productList) {
@@ -52,4 +52,3 @@ public class ProductFormValidator implements Validator {
 	}
 
 }
-

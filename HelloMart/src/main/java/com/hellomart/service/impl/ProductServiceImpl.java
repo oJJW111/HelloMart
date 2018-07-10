@@ -47,11 +47,9 @@ public class ProductServiceImpl implements ProductService{
 		model.addAttribute("columnListEng", columnListEng);
 		model.addAttribute("detail", dao.getDetailInfo(map));
 	}
-
-
-
+	
 	@Override
 	public ProductList getProductInfo(int no) {
-		return dao.getProductInfo(no);
+		return dao.getProductInfo(no);  
 	}
 }

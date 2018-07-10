@@ -15,4 +15,10 @@
 			resultType="ProductList">
 			${sql}
 	</select>
+	
+	<update id="updateOrderCount">
+   		update productlist 
+   		set orderCount = orderCount + 1
+   		where no = #{param1}
+	</update>
 </mapper> 

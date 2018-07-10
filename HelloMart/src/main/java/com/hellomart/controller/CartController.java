@@ -35,8 +35,7 @@ public class CartController {
 	@Autowired
 	ProductService service2;
 	
-	
-	// 1-1. 장바구니 추가 - 페이지 이동
+	// 1-1. 장바구니 추가(페이지 이동)
 	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
 	public String addCart(@ModelAttribute Cart cart, Principal principal){
 		String id = principal.getName();
@@ -98,7 +97,7 @@ public class CartController {
     @RequestMapping(value="mypage/cartdelete", method=RequestMethod.GET)
     public String delete(@RequestParam int no, Principal principal){
     	String id = principal.getName();
-        service.deleteCart(id,no);
+        service.deleteCart(id, no);
         return "redirect:/mypage/cartlist?id="+id;
     }
     
@@ -118,7 +117,5 @@ public class CartController {
 
         return "redirect:/mypage/cartlist?id="+id;
     }
-    
-
-	
+    	
 }
