@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -178,7 +180,9 @@ function fnCart(no){
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
 							<span class="review">상품평 : ${board.no}</span>
 						</div>
+						<sec:authorize access="isAuthenticated()">
 						<button class="add_to_cart btn_yellow" onclick="fnCart(${board.no}, '${param.smallCategory}')"></button>
+						</sec:authorize>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">
