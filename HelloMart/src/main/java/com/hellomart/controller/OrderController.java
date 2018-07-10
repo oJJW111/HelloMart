@@ -69,7 +69,7 @@ public class OrderController {
 		
 		productListService.updateOrderCount(request);
 		
-		return "index";
+		return "/product/orderOk";
 		// return "마이페이지 구매리스트로?";
 	}
 	
@@ -101,6 +101,6 @@ public class OrderController {
 		
 		cartService.deleteCartList(principal.getName());
 		
-		return "index";
+		return "/product/orderOk";
 	}
 }
