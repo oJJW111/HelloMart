@@ -15,7 +15,7 @@ $(document).ready(function(){
 		location.href="/";
 	});
 	$('#bar_menu1').on('click', function(){
-		window.open("고객센터");
+		window.open("오늘본상품");
 	});
 	$('#bar_menu2').on('click', function(){
 		location.href="/join";
@@ -43,9 +43,6 @@ $(document).ready(function(){
 		<div class="F_right haeder_bar_menu" id="bar_menu1">오늘 본 상품</div>
 		<div class="F_right haeder_bar_menu_line"></div>
 		
-		<div class="F_right haeder_bar_menu" id="bar_menu1">고객센터</div>
-		<div class="F_right haeder_bar_menu_line"></div>
-		
 		<sec:authorize access="isAnonymous()">
 			<div class="F_right haeder_bar_menu" id="bar_menu2">회원가입</div>
 			<div class="F_right haeder_bar_menu_line"></div>
@@ -68,7 +65,6 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
-		
 		
 		<div class="clear"></div>
 	</div>
