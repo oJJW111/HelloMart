@@ -199,7 +199,7 @@ $(document).ready(function(){
 						<div class="additional_info">
 							<span class="satisfaction">만족도 : ${board.score}</span>
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
-							<span class="review">상품평 : ${board.no}</span>
+							<span class="review">상품평 : ${board.reviewCount} 개</span>
 						</div>
 						<button class="add_to_cart btn_yellow"></button>
 					</div>

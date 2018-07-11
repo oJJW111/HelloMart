@@ -20,6 +20,7 @@ public class ProductList {
 	private String registerID;     
 	private String comment;     
 	private Date registerDate;
+	private int reviewCount;
 }
 
 
