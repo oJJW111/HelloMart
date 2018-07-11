@@ -1,23 +1,55 @@
 package com.hellomart.util;
 
+import java.util.Vector;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Component;
 
 public class CookieUtils {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
+
 	public CookieUtils(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 	}
-	
+
 	public void creatCookie(String key, String value, int period){
 		Cookie c = new Cookie(key, value);
 		c.setMaxAge(period);
 		response.addCookie(c);
+	}
+
+	public String[] getAllValue() {
+		Cookie[] cookies = request.getCookies();
+		int length = cookies.length;
+		String[] values = new String[length];
+		
+		for(int i = 0; i < length; i++) {
+			values[i] = cookies[i].getValue();
+		}
+		
+		return values;
+	}
+
+	public Vector<String> getAllValueWithKeyWord(String keyword) {
+		Cookie[] cookies = request.getCookies();
+		Vector<String> values = new Vector<>();
+		int length = cookies.length;
+		
+		for(int i = 0; i < length; i++) {
+			String name = cookies[i].getName();
+			String value = cookies[i].getValue();
+			if(name.indexOf(keyword) != -1) {
+				values.add(value);
+			}
+		}
+		
+		return values;
 	}
 	
 	public String getValue(String name){
@@ -31,7 +63,7 @@ public class CookieUtils {
 	    }
 		return null;
 	}
-	
+
 	public void removeAll(){
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null){
@@ -41,7 +73,7 @@ public class CookieUtils {
 	        }
 	    }
 	}
-	
+
 	public void remove(String name){
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null){
@@ -54,11 +86,5 @@ public class CookieUtils {
 	        }
 	    }
 	}
-	
-	public void append(String name, String value){
-		
-		
-	}
-	
-	
+
 }

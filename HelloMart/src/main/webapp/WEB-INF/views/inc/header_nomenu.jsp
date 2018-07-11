@@ -15,7 +15,7 @@ $(document).ready(function(){
 		location.href="/";
 	});
 	$('#bar_menu1').on('click', function(){
-		window.open("고객센터");
+		location.href="/todayView";
 	});
 	$('#bar_menu2').on('click', function(){
 		location.href="/join";

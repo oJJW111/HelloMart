@@ -115,10 +115,6 @@
 	</sec:authorize>
 </div>
 
-<!-- <div> -->
-<%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
-<!-- </div> -->
-	
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

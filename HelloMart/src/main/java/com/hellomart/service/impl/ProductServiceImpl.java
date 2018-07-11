@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
 		
 		try {
 			columnList = xmlParser.getChildren(smallCategory);
-   
+
 			for (String column : columnList) {
 				columnListEng.add(xmlParser.getAttributeValue(column, "column"));
 			}
