@@ -10,14 +10,14 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.CmtBoard;
@@ -38,7 +38,8 @@ public class QABoardController {
    @Autowired
    private CmtBoardService service2;
 
-
+   
+   
    @RequestMapping("/qaboardList")
    public ModelAndView qaBoardList(String pageNum) {
       ModelAndView mav = new ModelAndView();
@@ -77,6 +78,7 @@ public class QABoardController {
          if (endPage > pageCount) {
 
             endPage = pageCount;
+            
          }
 
       }
@@ -97,7 +99,6 @@ public class QABoardController {
    public ModelAndView qaSearchList(@Param("pagenum")String pageNum, 
                            @Param("searchOption")String searchOption, 
                            @Param("keyword")String keyword) {
-      
       ModelAndView mav = new ModelAndView();
       
       //화면에 보여질 게시글의갯수를 지정
@@ -143,7 +144,7 @@ public class QABoardController {
             mav.addObject("subjectCount", subjectCount);
             }
       
-      }else if (searchOption.equals("content")) {
+      } else if (searchOption.equals("content")) {
          if(contentCount >0){
             //10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
             list = service.listQABoardCon("%" + keyword + "%", startRow, pageSize);
@@ -162,7 +163,7 @@ public class QABoardController {
                   mav.addObject("contentCount", contentCount);
                }
 
-      }else if (searchOption.equals("id")) {
+      } else if (searchOption.equals("id")) {
          if(idCount >0){
             //10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
             list = service.listQABoardId("%" + keyword + "%", startRow, pageSize);
@@ -178,9 +179,10 @@ public class QABoardController {
                
                endPage = idCount;
                mav.addObject("idCount", idCount);
+               
             }
             
-   }
+      }
    
       mav.addObject("searchOption", searchOption);
       mav.addObject("keyword", keyword);
@@ -207,26 +209,24 @@ public class QABoardController {
 
    @RequestMapping(value = "/qawrite", method = RequestMethod.POST)
    public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-      
-      //오류여부 확인
       if(bindingResult.hasErrors()){
-         return "qaboard/QAWrite";
+    	  return "qaboard/QAWrite";
       }else{
-      
-      service.insertQABoard(qaboard);
-      return "redirect:/qaboard/qaboardList";
+	      service.insertQABoard(qaboard);
+	      return "redirect:/qaboard/qaboardList";
       }
    }
-
-   @PreAuthorize("hasRole('')")
+   
    @RequestMapping(value = "/qaview", method = RequestMethod.GET)
-   public ModelAndView qaview(int idx, String cmtnum) {
+   public ModelAndView qaview(
+		   @RequestParam("idx") int idx,
+		   String cmtnum) {
       ModelAndView mav = new ModelAndView();
       
+      QABoard view = service.viewQABoard(idx);
       CmtBoard cmtboard = new CmtBoard();
       service.viewCount(idx);
-      QABoard view = service.viewQABoard(idx);
-
+      
       // 화면에 보여질 게시글의갯수를 지정
       int pageSize = 5;
       int startPage = 0;
@@ -258,6 +258,7 @@ public class QABoardController {
          if (endPage > pageCount) {
 
             endPage = pageCount;
+            
          }
 
       }
@@ -272,6 +273,7 @@ public class QABoardController {
       mav.setViewName("qaboard/QAView");
 
       return mav;
+   }
    
    @RequestMapping(value = "/qaviewad", method = RequestMethod.GET)
    public ModelAndView qaviewad(int idx, String cmtnum, HttpServletRequest request) {
@@ -301,6 +303,7 @@ public class QABoardController {
 		   Vector<CmtBoard> cmtlist = null;
 		   // 게시글이 존재한다면
 		   if (pageCount > 0) {
+			   
 			   // 10개를 기준으로 데이터를 데이터 베이스에서 읽어드림
 			   cmtlist = service2.cmtlist(idx, startRow, pageSize);
 			   pageCount = pageCount / pageSize + (pageCount % pageSize == 0 ? 0 : 1);

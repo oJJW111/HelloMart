@@ -53,7 +53,7 @@
                            <sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
                            <c:choose>
                               <c:when test="${loginid == list.id }">
-                               <a href="/qaboard/qaview?idx=${list.idx }&id=${list.id}">${list.subject }</a> [${list.cmt }]
+                               <a href="/qaboard/qaview?idx=${list.idx}">${list.subject }</a> [${list.cmt }]
                               </c:when>
                               <c:otherwise>
                                글을 볼수 없습니다.
@@ -61,7 +61,7 @@
                            </c:choose>
                            </sec:authorize>
                                <sec:authorize access="hasRole('ROLE_ADMIN')" var="v">
-                               <a href="/qaboard/qaviewad?idx=${list.idx }&v=${v}">${list.subject }</a> [${list.cmt }]
+                               <a href="/qaboard/qaviewad?idx=${list.idx}&v=${v}">${list.subject }</a> [${list.cmt }]
                               </sec:authorize>
                            </td>                                  
                            <td class="td_name sv_use">${list.id }</td>
