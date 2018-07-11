@@ -11,8 +11,8 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 
-<script src="/resources/js/birthdatemaker.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
+<script src="/resources/js/productValidCheck/${smallCategoryEng }.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/register.css" />
@@ -22,16 +22,6 @@
 <title>물품등록페이지</title>
 <script type="text/javascript">
 $(document).ready(function(){
-	BIRTHDATEMAKER.make({
-		year: 'year',
-		month: 'month',
-		day: 'day',
-		begin: 1930,
-		end: 2018,
-		selectedYear: '${prodDate.selectedYear}',
-		selectedMonth: '${prodDate.selectedMonth}',
-		selectedDay: '${prodDate.selectedDay}'
-	});
 	$("#btnRegister").on("click", function(){
 		var productName = $("#productName").val();
 		var mfCompany = $("#mfCompany").val();
