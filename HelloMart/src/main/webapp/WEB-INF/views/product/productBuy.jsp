@@ -38,25 +38,49 @@
 		
 		<form action="/buyOk" method="post">
 		<table> 
-			<tr>
-				<td rowspan="5">
-					<img src="${detail.ImagePath}" width="400px">
-				</td>
-				<td>상품명</td>
-				<td>${detail.ProductName}</td>
-			</tr>
-			<tr> 
-				<td>상품가격</td>
-				<td>${detail.Price}</td>
-			</tr>	
-			<tr>
-				<td>상품수량</td>
-				<td>${orderCount}</td>
-			</tr>
-			<tr>
-				<td>상품 총 금액</td>
-				<td>${detail.Price * orderCount}</td>
-			</tr>
+			<c:if test="${detail == null}">
+				<tr>
+					<td rowspan="5">
+						<img src="${product.imagePath}" width="400px">
+					</td>
+					<td>상품명</td>
+					<td>${product.productName}</td>
+				</tr>
+				<tr> 
+					<td>상품가격</td>
+					<td>${product.price}</td>
+				</tr>	
+				<tr>
+					<td>상품수량</td>
+					<td>${orderCount}</td>
+				</tr>
+				<tr>
+					<td>상품 총 금액</td>
+					<td>${product.price * orderCount}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${detail != null}">
+				<tr>
+					<td rowspan="5">
+						<img src="${detail.ImagePath}" width="400px">
+					</td>
+					<td>상품명</td>
+					<td>${detail.ProductName}</td>
+				</tr>
+				<tr> 
+					<td>상품가격</td>
+					<td>${detail.Price}</td>
+				</tr>	
+				<tr>
+					<td>상품수량</td>
+					<td>${orderCount}</td>
+				</tr>
+				<tr>
+					<td>상품 총 금액</td>
+					<td>${detail.Price * orderCount}</td>
+				</tr>
+			</c:if>	
 			<tr>
 				<td colspan="3">
 					<table>
@@ -116,12 +140,22 @@
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
-		<input type="hidden" name="prodNo" value="${detail.No}">
-		<input type="hidden" name="prodName" value="${detail.ProductName}">
-		<input type="hidden" name="orderCount" value="${orderCount}">
-		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
-		<input type="hidden" name="orderStatus" value="PAY_OK">
+	
+		<c:if test="${detail != null}">
+			<input type="hidden" name="prodNo" value="${detail.No}">
+			<input type="hidden" name="prodName" value="${detail.ProductName}">
+			<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
+		</c:if>
+		
+		<c:if test="${detail == null}">
+ 			<input type="hidden" name="prodNo" value="${product.no}"> 
+ 			<input type="hidden" name="prodName" value="${product.productName}"> 
+ 			<input type="hidden" name="orderPrice" value="${product.price * orderCount}"> 
+		</c:if> 
+		
+			<input type="hidden" name="orderCount" value="${orderCount}">
+			<input type="hidden" name="orderStatus" value="PAY_OK">	
+			<input type="hidden" name="orderId" value="${account.id}">
 		</form>
 	</center>
 
@@ -131,5 +165,3 @@
 
 </body>
 </html>
-
-

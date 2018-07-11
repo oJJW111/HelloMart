@@ -46,7 +46,7 @@
 	<br>
 	<table>
 		<c:if test="${detail == null}">
-	<tr>
+		<tr>
 			<td rowspan="9">
 				<img src="${product.imagePath}" width="400px">
 			</td>
@@ -150,10 +150,18 @@
 				<option value="${i}">${i}</option>
 			</c:forEach>
 		</select> 
-		&nbsp;&nbsp;<input type="button" value="구매"
+		<c:if test="${detail == null}">
+			&nbsp;&nbsp;<input type="button" value="구매"
+				onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${product.no}, '${product.smallCategory}')">
+		</c:if>
+		<c:if test="${detail != null}">
+			&nbsp;&nbsp;<input type="button" value="구매"
 				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-		&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
 				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
+		</c:if>
 	</sec:authorize>
 </div>
 <br><br><br>

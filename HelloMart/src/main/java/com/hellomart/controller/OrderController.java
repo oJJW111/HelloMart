@@ -69,8 +69,7 @@ public class OrderController {
 		
 		productListService.updateOrderCount(request);
 		
-		return "/product/orderOk";
-		// return "마이페이지 구매리스트로?";
+		return "product/orderOk";
 	}
 	
 	// 장바구니에서 구매 버튼을 눌렀을 때
@@ -101,6 +100,6 @@ public class OrderController {
 		
 		cartService.deleteCartList(principal.getName());
 		
-		return "/product/orderOk";
+		return "product/orderOk";
 	}
 }
