@@ -76,31 +76,40 @@ $(document).ready(function() {
 		<h3>${id }님의 판매 품목 목록입니다.</h3>
 		<div class=BLOCK20></div>
 		<div class="product_list">
-<c:forEach var="map" items="${mapList }">
-			<div class="product_list_content">
-				<div class="product_img">
-					<a href="#"><img
-						src="${map.ImagePath }"></a>
-				</div>
-				<div class="product_info">
-					<a class="title" href="#"> ${map.ProductName } </a>
-					<div class="additional_info">
-						<span class="brand">[${map.MfCompany }]</span> <span class="category"> <a
-							href="#">${map.MainCategory }</a> > <a href="#">${map.SmallCategory }</a></span>
-					</div>
-				</div>
-				<div class="product_addition">
-					<div class="price">
-						<strong>${map.Price }원</strong>
-					</div>
-					<div class="additional_info">
-						<span class="satisfaction">만족도 ${map.Score }%</span> <span class="buy">구
-							&nbsp;&nbsp;매 ${map.OrderCount }</span> <span class="review">상품평 ${map.count }</span>
-					</div>
+<c:choose>
+	<c:when test="${totalCount == 0}">
+        <h3>등록된 판매 품목이 없습니다.</h3>
+   	</c:when>
+		    
+    <c:otherwise>
+		<c:forEach var="map" items="${mapList }">
+		<div class="product_list_content">
+			<div class="product_img">
+				<a href="#"><img
+					src="${map.ImagePath }"></a>
+			</div>
+			<div class="product_info">
+				<a class="title" href="#"> ${map.ProductName } </a>
+				<div class="additional_info">
+					<span class="brand">[${map.MfCompany }]</span> <span class="category"> <a
+						href="#">${map.MainCategory }</a> > <a href="#">${map.SmallCategory }</a></span>
 				</div>
 			</div>
-			<hr class="style14">
-</c:forEach>
+			<div class="product_addition">
+				<div class="price">
+					<strong>${map.Price }원</strong>
+				</div>
+				<div class="additional_info">
+					<span class="satisfaction">만족도 ${map.Score }%</span> <span class="buy">구
+						&nbsp;&nbsp;매 ${map.OrderCount }</span> <span class="review">상품평 ${map.count }</span>
+				</div>
+			</div>
+		</div>
+		<hr class="style14">
+		</c:forEach>		       
+    </c:otherwise>
+</c:choose>
+
 		</div>
 		<div class="BLOCK60"></div>
 		<div class="paginate">

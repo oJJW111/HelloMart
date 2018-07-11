@@ -69,7 +69,7 @@ public class SellerServiceImpl implements SellerService{
 			sellerProductMap.put("Price", i.getPrice());
 			sellerProductMap.put("Score", i.getScore());
 			sellerProductMap.put("OrderCount", i.getOrderCount());
-			sellerProductMap.put("count", dao.reviewCount(i.getNo()));
+			sellerProductMap.put("count", i.getReviewCount());
 			sellerProdReviewList.add(sellerProductMap);
 		}
 		model.addAttribute("id", id);
@@ -81,18 +81,21 @@ public class SellerServiceImpl implements SellerService{
 	@Override
 	public void productPartSpec(Model model, String mainCategory, String smallCategory) {
 		
+		TableInformation tableInfo = null;
 		for(int i = 0 ; i < tableList.size() ; i++){
-			if(tableList.get(i).){
-				
+			if(tableList.get(i).getTableKorName().equals(smallCategory)){
+				tableInfo = tableList.get(i);
 			}
 		}
-		TableInformation tableInfo = 
+
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategory", smallCategory);
+		model.addAttribute("smallCategoryEng", tableInfo.getTableEngName());
 		model.addAttribute("specList", tableInfo.getColumnValueList());
 		model.addAttribute("specEngNameList", tableInfo.getColumnEngNameList());
 		model.addAttribute("specKorNameList", tableInfo.getColumnKorNameList());
 		model.addAttribute("specTypeList", tableInfo.getColumnTypeList());
+		model.addAttribute("specUnitList", tableInfo.getColumnUnitList());
 	}
 	
 	
@@ -102,7 +105,12 @@ public class SellerServiceImpl implements SellerService{
 			Model model, String mainCategory, String smallCategory) {
 		
 		Boolean flag = true;
-		TableInformation tableInfo = TableInformation.getInstance();
+		TableInformation tableInfo = null;
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).getTableKorName().equals(smallCategory)){
+				tableInfo = tableList.get(i);
+			}
+		}
 		if(mRequest.getFile("productImageFile").isEmpty()){
 			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
 			flag = false;
@@ -147,7 +155,12 @@ public class SellerServiceImpl implements SellerService{
 		}else{
 			return;
 		}
-		TableInformation tableInfo = TableInformation.getInstance();
+		TableInformation tableInfo = null;
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).getTableKorName().equals(productList.getSmallCategory())){
+				tableInfo = tableList.get(i);
+			}
+		}
 		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
 		
 		StringBuffer sBuffer; Pattern p; Matcher m;
@@ -218,7 +231,7 @@ public class SellerServiceImpl implements SellerService{
 		dao.insertProductInfo(productList);
 		int no = dao.getNoProductList();
 		
-		String tableName = tableInfo.getTableName();
+		String tableName = tableInfo.getTableEngName();
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO ");
 		sql.append(tableName);
@@ -278,53 +291,76 @@ public class SellerServiceImpl implements SellerService{
 		
 		List<TableInformation> tableList = new ArrayList<TableInformation>();
 		TableInformation tableInfo;
-		String[] mainCategorys = new String[]{
-			"가전제품", "IT", "모바일"
-		};
-		String[] categorys1 = new String[]{
-			"냉장고","오븐_전자레인지","청소기", "에어컨", "세탁기", "공기청정기"
-		};
-		String[] categorys2 = new String[]{
-			"노트북","데스크탑","모니터","프린터"
-		};
-		String[] categorys3 = new String[]{
-			"스마트폰","태블릿"
-		};
-		Map<String, String[]> categoryMap = new HashMap<String, String[]>();
-		categoryMap.put(mainCategorys[0], categorys1);
-		categoryMap.put(mainCategorys[1], categorys2);
-		categoryMap.put(mainCategorys[2], categorys3);
+		List<String> mainCategorys = xmlParser.getChildren("카테고리"); 
+		Map<String, List<String>> categoryMap = new HashMap<String, List<String>>();
+		List<String> smallCategorys;
+		for(int i = 0 ; i < mainCategorys.size() ; i++){
+			smallCategorys = xmlParser.getChildren(mainCategorys.get(i));
+			categoryMap.put(mainCategorys.get(i), smallCategorys);
+		}
+		
+		StringBuffer sBuffer; Pattern p; Matcher m;
 		
 		StringTokenizer tokenizer;
 		String valueList = null;
 		String specValue = null;
 		List<String> tokenResultValueList;
 		
-		for(int i = 0 ; i < mainCategorys.length ; i++){
-			String[] smallCategorys = categoryMap.get(mainCategorys[i]);
-			for(int j = 0 ; j < smallCategorys.length ; j++){
+		for(int i = 0 ; i < mainCategorys.size() ; i++){
+			smallCategorys = categoryMap.get(mainCategorys.get(i));
+			for(int j = 0 ; j < smallCategorys.size() ; j++){
 				tableInfo = new TableInformation();
 				tableInfo.setColumnEngNameList(new ArrayList<String>());
 				tableInfo.setColumnTypeList(new ArrayList<String>());
+				tableInfo.setColumnUnitList(new ArrayList<String>());
 				tableInfo.setColumnValueList(new ArrayList<List<String>>());
-				tableInfo.setTableKorName(smallCategorys[j]);
-				tableInfo.setTableEngName(xmlParser.getAttributeValue(smallCategorys[j], "table"));
-				tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategorys[i], smallCategorys[j]));
+				tableInfo.setTableKorName(smallCategorys.get(j));
+				tableInfo.setTableEngName(xmlParser.getAttributeValue(smallCategorys.get(j), "table"));
+				tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategorys.get(i), smallCategorys.get(j)));
 				for (String columnKorName : tableInfo.getColumnKorNameList()) {
-					valueList = xmlParser.getValue(smallCategorys[j], columnKorName);
+					valueList = xmlParser.getValue(smallCategorys.get(j), columnKorName);
 
 					tableInfo.getColumnEngNameList()
-						.add(xmlParser.getAttributeValue(smallCategorys[j], columnKorName, "column"));
-					tableInfo.getColumnTypeList()
-						.add(xmlParser.getAttributeValue(smallCategorys[j], columnKorName, "type"));
+						.add(xmlParser.getAttributeValue(smallCategorys.get(j), columnKorName, "column"));
 					
-					tokenResultValueList = new ArrayList<String>();
-					tokenizer = new StringTokenizer(valueList.trim(), ",");
-					while(tokenizer.hasMoreTokens()){ 
-						specValue = tokenizer.nextToken();
-						tokenResultValueList.add(specValue.trim());	
+					String columnType = xmlParser.getAttributeValue(smallCategorys.get(j), columnKorName, "type");
+					
+					tableInfo.getColumnTypeList().add(columnType);
+					
+					if(columnType.equals("Integer") || columnType.equals("Double")){
+						String[] value = valueList.split(",", 2);
+						sBuffer = new StringBuffer();
+						p = Pattern.compile("[^-?\\d+(,\\d+)*?\\.?\\d+?]+");
+						m = p.matcher(value[0].trim());
+						while (m.find()) {
+							sBuffer.append(m.group());
+						}
+						String stringUnit = sBuffer.toString();
+						if(stringUnit.indexOf("~") >= 0){
+							String[] tempUnit = stringUnit.split("~");
+							if(tempUnit.length == 0){
+								tableInfo.getColumnUnitList().add(" ");
+							}else{
+								tableInfo.getColumnUnitList().add(tempUnit[1]);
+							}
+						}else{
+							if(stringUnit.isEmpty()){
+								tableInfo.getColumnUnitList().add(" ");
+							}else{
+								tableInfo.getColumnUnitList().add(stringUnit);
+							}
+						}
+						tableInfo.getColumnValueList().add(new ArrayList<String>());
+					}else{
+						tokenResultValueList = new ArrayList<String>();
+						tokenizer = new StringTokenizer(valueList.trim(), ",");
+						while(tokenizer.hasMoreTokens()){ 
+							specValue = tokenizer.nextToken();
+							tokenResultValueList.add(specValue.trim());	
+						}
+						tableInfo.getColumnValueList().add(tokenResultValueList);
+						tableInfo.getColumnUnitList().add(" ");
 					}
-					tableInfo.getColumnValueList().add(tokenResultValueList);
 				}
 				tableList.add(tableInfo);
 			}
@@ -339,6 +375,7 @@ class TableInformation {
 	private List<String> columnTypeList;
 	private List<String> columnEngNameList;
 	private List<String> columnKorNameList;
+	private List<String> columnUnitList;
 	private List<List<String>> columnValueList;
 
 	public TableInformation() {}
@@ -382,6 +419,14 @@ class TableInformation {
 	public void setColumnKorNameList(List<String> columnKorNameList) {
 		this.columnKorNameList = columnKorNameList;
 	}
+	
+	public List<String> getColumnUnitList() {
+		return columnUnitList;
+	}
+
+	public void setColumnUnitList(List<String> columnUnitList) {
+		this.columnUnitList = columnUnitList;
+	}
 
 	public List<List<String>> getColumnValueList() {
 		return columnValueList;
@@ -395,8 +440,8 @@ class TableInformation {
 	public String toString() {
 		return "TableInformation [tableEngName=" + tableEngName + ", tableKorName=" + tableKorName + ", columnTypeList="
 				+ columnTypeList + ", columnEngNameList=" + columnEngNameList + ", columnKorNameList="
-				+ columnKorNameList + ", columnValueList=" + columnValueList + "]";
+				+ columnKorNameList + ", columnUnitList=" + columnUnitList + ", columnValueList=" + columnValueList
+				+ "]";
 	}
-
 	
 }

@@ -23,11 +23,7 @@
 		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
 		)U
 	</select>
-	
-	<select id="reviewCount" resultType="Integer" parameterType="Integer">
-		SELECT COUNT(*) FROM Review WHERE No = #{no}
-	</select>
-	
+		
 	<select id="getSellerProductCount" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM ProductList WHERE RegisterID = #{id}
 	</select>

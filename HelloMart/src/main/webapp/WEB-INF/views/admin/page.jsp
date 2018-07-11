@@ -116,7 +116,14 @@
 				</tr>
 			<thead>
 			<tbody>
-<c:forEach var="account" items="${accountList }">
+<c:choose>	
+	<c:when test="${totalCount == 0 }">
+		<tr>
+			<td colspan="4" style="text-align: center;">가입된 계정이 없습니다.</td>
+		</tr>
+	</c:when>
+	<c:otherwise>		
+		<c:forEach var="account" items="${accountList }">
 				<tr>
 					<td style="text-align: center;">${account.id }</td>
 					<td style="text-align: center;">${account.role }</td>
@@ -126,7 +133,9 @@
 						<input type="hidden" id="sellerApply2" value="${account.apply }">
 					</td>
 				</tr>
-</c:forEach>
+		</c:forEach>
+	</c:otherwise>
+</c:choose>
 				<tr>
 					<td colspan="4" style="text-align: center;">
 						<div class="paginate">

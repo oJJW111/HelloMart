@@ -206,29 +206,47 @@ $(document).ready(function(){
 					<span class="errors" id="fileError">${msg }</span>
 				</li>				
 				
-<c:forEach var="specName" items="${specKorNameList}" varStatus="status">
-	<c:set var="specName" value="${specName }"/>
+<c:forEach var="specKorName" items="${specKorNameList}" varStatus="status">
+	<c:set var="specKorName" value="${specKorName }"/>
 	<c:choose>
-   		<c:when test="${specTypeList[status.index] eq '' }">
-        등록된 글이 없습니다.    
+   		<c:when test="${specTypeList[status.index] eq 'Integer' or specTypeList[status.index] eq 'Double' }">
+            	<li>
+				<label for="${specEngNameList[status.index] }" class="control-label">${specKorName }</label>
+			<c:choose>
+				<c:when test="${specTypeList[status.index] eq 'Integer'}">
+				<input type="text" name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
+					title='${specKorName }' class="txt-input joinTooltip" placeholder="${specKorName }" value="0"/>
+				</c:when>
+				<c:otherwise>
+				<input type="text" name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
+					title='${specKorName }' class="txt-input joinTooltip" placeholder="${specKorName }" value="0.0"/>	
+				</c:otherwise>
+			</c:choose>
+				<span class="tooltiptext">
+					<spring:message code="form.tooltip.validation.${smallCategoryEng }.${specEngNameList[status.index] }"/>
+				</span>
+				<span class="unit">${specUnitList[status.index] }</span>
+				<span class="errors" id="${specEngNameList[status.index] }Errors">			
+				</span>	
+				</li> 
     	</c:when>
-	    <c:when test="${abc}">
+	    <c:when test="${specTypeList[status.index] eq 'String' or specTypeList[status.index] eq 'Enum' }">
 	        	<li>
-				<label for="${specEngNameList[status.index] }" class="control-label">${specName }</label>
+				<label for="${specEngNameList[status.index] }" class="control-label">${specKorName }</label>
 				<select name='${specEngNameList[status.index] }' id="${specEngNameList[status.index] }" 
-					title='${specName }리스트' class="txt-input joinTooltip" required="required">
+					title='${specKorName }리스트' class="txt-input joinTooltip" required="required">
 					<option value=''>선택</option>
 			<c:forEach var="value" items="${specList[status.index]}">
 					<option value='${value }'>${value }</option>
 			</c:forEach>
 				</select>
+				<span class="tooltiptext">
+					<spring:message code="form.tooltip.validation.${smallCategoryEng }.${specEngNameList[status.index] }"/>
+				</span>
 				<span class="errors" id="${specEngNameList[status.index] }Errors">			
 				</span>	
 				</li>   
 	    </c:when>
-	    <c:otherwise>
-	       
-	    </c:otherwise>
 	</c:choose>
 </c:forEach>
 			</ul><br>

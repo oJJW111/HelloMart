@@ -19,8 +19,9 @@ public class ProductList {
 	private int price;  
 	private double weight;        
 	private String registerID;     
-	private String comment;     
-	private Date registerDate;    
+	private String comment;   
+	private int reviewCount;
+	private Date registerDate;
 }
 
 
