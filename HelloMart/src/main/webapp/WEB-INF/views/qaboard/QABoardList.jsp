@@ -60,8 +60,8 @@
                                </c:otherwise>
                            </c:choose>
                            </sec:authorize>
-                               <sec:authorize access="hasRole('ROLE_ADMIN')">
-                               <a href="/qaboard/qaviewad?idx=${list.idx }">${list.subject }</a> [${list.cmt }]
+                               <sec:authorize access="hasRole('ROLE_ADMIN')" var="v">
+                               <a href="/qaboard/qaviewad?idx=${list.idx }&v=${v}">${list.subject }</a> [${list.cmt }]
                               </sec:authorize>
                            </td>                                  
                            <td class="td_name sv_use">${list.id }</td>
