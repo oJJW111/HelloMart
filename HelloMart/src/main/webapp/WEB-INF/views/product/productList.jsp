@@ -53,14 +53,20 @@ function createURL(mainCategory, smallCategory, page) {
 	return url;
 }
 $(document).ready(function(){
-	$.submitForm = function() {
-		if($("#price1").val() > $("#price2").val()){
-			alert("최저 가격은 최고 가격보다 적어야 합니다");
-			return;
+	$.submitForm = function(f) {
+		if( ($("#price2").val() != null) && ($("#price2").val() != "")){
+			if($("#price1").val() > $("#price2").val()){
+				alert("최저 가격은 최고 가격보다 적어야 합니다");
+			}
+			else{
+				f.submit(function() {
+				    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+				});
+			}			
 		}
 		else{
-			$("#detailForm").submit(function() {
-			    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+			f.submit(function() {
+			    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
 			});
 		}
 	}
@@ -102,7 +108,7 @@ $(document).ready(function(){
 			<div class="range">~</div>
 			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 			<div class="currency">원</div>
-			<button id="submit-form" type="button" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
+			<button id="submit-form" type="button" onclick="$.submitForm(this.form)"><i class="fa fa-search"></i></button>
 		</div>
 	</div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory == '액세서리'} -->
@@ -158,7 +164,7 @@ $(document).ready(function(){
 		<div class="range">~</div>
 		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm()" type="button"
+		<button id="submit-form" onclick="$.submitForm(this.form)" type="button"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->

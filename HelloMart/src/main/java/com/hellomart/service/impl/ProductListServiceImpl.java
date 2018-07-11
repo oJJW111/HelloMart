@@ -59,19 +59,21 @@ public class ProductListServiceImpl implements ProductListService{
 	}
 	
 	private void smallCategoryDetails(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
-		Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
-		HashMap<String, String> smallCategoryColumn = new HashMap<>();
-		Vector<String> columnListEng = new Vector<>();
+		if( (smallCategory != null) && (!smallCategory.equals(""))){
+			Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
+			HashMap<String, String> smallCategoryColumn = new HashMap<>();
+			Vector<String> columnListEng = new Vector<>();
 		
-		for (String column : columnList) {
-			String value = xmlParser.getValue(smallCategory, column);
-			smallCategoryColumn.put(column, value);
-			columnListEng.add(xmlParser.getAttributeValue(smallCategory, column, "column"));
+			for (String column : columnList) {
+				String value = xmlParser.getValue(smallCategory, column);
+				smallCategoryColumn.put(column, value);
+				columnListEng.add(xmlParser.getAttributeValue(smallCategory, column, "column"));
+			}
+		
+			modelMap.put("columnList", columnList);
+			modelMap.put("smallCategoryColumn", smallCategoryColumn);
+			modelMap.put("columnListEng", columnListEng);
 		}
-		
-		modelMap.put("columnList", columnList);
-		modelMap.put("smallCategoryColumn", smallCategoryColumn);
-		modelMap.put("columnListEng", columnListEng);
 	}
 	
 	@Override
@@ -182,57 +184,62 @@ public class ProductListServiceImpl implements ProductListService{
 		sql
 			.append("mainCategory").append(" = ").append("'").append(mainCategory).append("'");
 		
-		if(smallCategory != null) {
+		if((smallCategory != null) && (!smallCategory.equals(""))) {
 			sql.append(" and ").append("smallCategory").append(" = ").append("'").append(smallCategory).append("'");
 		}
 		
-		for(String column : columns) {
-			boolean isFirst = true;
-			StringBuilder sb = new StringBuilder();
+		for(String column : columns) {			
+			if(!paramMap.get(column)[0].equals("")){
+				boolean isFirst = true;
+				
+				StringBuilder sb = new StringBuilder();
 				sb.append(" and (");
-			for(String value : paramMap.get(column)) {
-				switch (column) {
-				case "search":
-					sb.append("ProductName").append(" LIKE ")
-					.append("'%").append(value).append("%'");
-					break;
-				case "price1":
-					sb.append("price").append(" >= ").append(value);
-					break;
-				case "price2":
-					sb.append("price").append(" <= ").append(value);
-					break;
-					default:
-						if(isFirst) {
-							isFirst = false;
-						} else {
-							sb.append(" or ");
+				for(String value : paramMap.get(column)) {
+					if(!value.equals("")){
+						switch (column) {
+						case "search":
+							sb.append("ProductName").append(" LIKE ")
+							.append("'%").append(value).append("%'");
+							break;
+						case "price1":
+							sb.append("price").append(" >= ").append(value);
+							break;
+						case "price2":
+							sb.append("price").append(" <= ").append(value);
+							break;
+							default:
+								if(isFirst) {
+									isFirst = false;
+								} else {
+									sb.append(" or ");
+								}
+								
+								if(value.indexOf('~') == -1) {
+									sb
+										.append(column)
+										.append(" = ")
+										.append("'").append(value).append("'");
+								} else {
+									StringTokenizer tokenizer = new StringTokenizer(value, "~");
+									
+									sb
+										.append("(")
+											.append(column)
+											.append(" >= ")
+											.append(filterNumber(tokenizer.nextToken()))
+											.append(" and ")
+											.append(column)
+											.append(" <= ")
+											.append(filterNumber(tokenizer.nextToken()))
+										.append(")");
+								}
 						}
-						
-						if(value.indexOf('~') == -1) {
-							sb
-								.append(column)
-								.append(" = ")
-								.append("'").append(value).append("'");
-						} else {
-							StringTokenizer tokenizer = new StringTokenizer(value, "~");
-							
-							sb
-								.append("(")
-									.append(column)
-									.append(" >= ")
-									.append(filterNumber(tokenizer.nextToken()))
-									.append(" and ")
-									.append(column)
-									.append(" <= ")
-									.append(filterNumber(tokenizer.nextToken()))
-								.append(")");
-						}
+					}
 				}
+				sb.append(")");
+				
+				sql.append(sb.toString());
 			}
-			sb.append(")");
-			
-			sql.append(sb.toString());
 		}
 		
 		if(offset != null && limit != null && offset != -1) {
