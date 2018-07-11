@@ -11,5 +11,5 @@ public class ReView {
 	 private String content;
 	 private String Id;
 	 private Timestamp regdate;
-
+	 private int star;
 }

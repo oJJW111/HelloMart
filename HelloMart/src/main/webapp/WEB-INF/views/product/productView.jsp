@@ -165,10 +165,19 @@
 	</sec:authorize>
 </div>
 <br><br><br>
+		
+<c:if test="${detail != null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${detail.No}"/> 
+	</div> 
+</c:if>
 
-<!-- <div> -->
-<%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
-<!-- </div> -->
+<c:if test="${detail == null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${product.no}"/> 
+	</div> 
+</c:if>
+
 	
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

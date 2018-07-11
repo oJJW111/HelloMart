@@ -6,12 +6,12 @@
 
 <mapper namespace="com.hellomart.dao.ReViewDAO">
 
-	<select id="listReView" resultType="ReView"> select * from ReView order
-		by 1 desc limit #{param1},#{param2}
+	<select id="listReView" resultType="ReView"> select * from ReView where no= #{param1} order
+		by 1 desc limit #{param2},#{param3}
 	</select>
 
 	<insert id="reWrite" parameterType="ReView"> INSERT INTO
-		ReView(No,Id,Content) VALUES (#{No},#{id}, #{content})
+		ReView(No,Id,Content,Star) VALUES (#{No},#{id}, #{content}, #{star})
 	</insert>
 
 	<select id="viewReView" resultType="ReView"> SELECT * FROM ReView WHERE
@@ -30,7 +30,7 @@
 
 	<delete id="redelete"> DELETE FROM ReView WHERE Idx = #{Idx} </delete>
 
-	<select id="getCount" resultType="String"> SELECT count(*) FROM ReView
+	<select id="getReCount" resultType="int"> 
+		SELECT count(*) FROM ReView
 	</select>
-
 </mapper>

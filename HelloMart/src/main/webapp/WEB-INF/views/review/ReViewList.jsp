@@ -25,41 +25,39 @@
 			</div>
 			<div class="tbl_head01 tbl_wrap">
 					<table>
-						<tbody>
-						<c:forEach var="list" items="${list}">
-							<c:set var="wid" value="0"/>
-								<tr class="bo_notice">
-									<td class="td_num">${list.idx }</td>
-									<td class="td_name sv_use">${list.id}</td>
+						<c:forEach var="review" items="${list}">
+							<tr class="bo_notice">
+									<td><c:forEach begin="1" end="${review.star}">★</c:forEach>
+									<td class="td_num">${review.idx}</td>
+									<td class="td_name sv_use">${review.id}</td>
 									<td class="td_date">
-										<fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
+									<fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd"/>
+								</td>
+							</tr>
+						</c:forEach>
 					</table>
 			</div>
 			<div class="bo_fx">
 				<ul class="btn_bo_user">
-					<li><a href="/ReViewWrite" class="btn_b02">글쓰기</a></li>
+					<li><a href="/reWrite" class="btn_b02">글쓰기</a></li>
 				</ul>
 			</div>
 
 		</div>
-		<div align="center" id="page">
+		<c:if test="${pageCount>1 }">
+			<div align="center" id="page">
 
-			<c:if test="${startPage > pageBlock}">
-				<a href="review?pageNum=${pageNum }">[이전]</a>
-			</c:if>			
-			<c:forEach var="i" begin="${startPage }" end="${endPage }">
-				<a href="review?pageNum=${i }">[${i }]</a>
-			</c:forEach>
-			<c:if test="${endPage < pageCount }">
-				<a href="review?pageNum=${startPage+pageBlock }">[다음]</a>
-			</c:if>
-			
-
-		</div>
+				<c:if test="${startPage > pageBlock}">
+					<a href="review?pageNum=${startPage-1}">[이전]</a>
+				</c:if>
+				<c:forEach var="i" begin="${startPage }" end="${endPage }">
+					<a href="review?pageNum=${i }">[${i }]</a>
+				</c:forEach>
+				<c:if test="${endPage < pageCount }">
+					<a href="review?pageNum=${startPage+pageBlock}">[다음]</a>
+				</c:if>
+			</div>
+		</c:if>
 	
 	</div>
 
