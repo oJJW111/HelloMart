@@ -10,6 +10,8 @@ public class ReView {
 	 private int No;
 	 private String content;
 	 private String Id;
+	 private int star;
 	 private Timestamp regdate;
+	
 
 }

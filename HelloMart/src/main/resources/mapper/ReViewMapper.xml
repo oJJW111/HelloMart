@@ -11,7 +11,7 @@
 	</select>
 
 	<insert id="reWrite" parameterType="ReView"> INSERT INTO
-		ReView(No,Id,Content) VALUES (#{No},#{id}, #{content})
+		ReView(No,Id,Content,Star) VALUES (#{No},#{id}, #{content}, #{star})
 	</insert>
 
 	<select id="viewReView" resultType="ReView"> SELECT * FROM ReView WHERE

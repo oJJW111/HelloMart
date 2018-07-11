@@ -28,7 +28,8 @@
 						<tbody>
 						<c:forEach var="list" items="${list}">
 							<c:set var="wid" value="0"/>
-								<tr class="bo_notice">
+									<tr class="bo_notice">
+									<td><c:forEach begin="1" end="${list.star}">★</c:forEach>
 									<td class="td_num">${list.idx }</td>
 									<td class="td_name sv_use">${list.id}</td>
 									<td class="td_date">
@@ -41,7 +42,7 @@
 			</div>
 			<div class="bo_fx">
 				<ul class="btn_bo_user">
-					<li><a href="/ReViewWrite" class="btn_b02">글쓰기</a></li>
+					<li><a href="/reWrite" class="btn_b02">글쓰기</a></li>
 				</ul>
 			</div>
 

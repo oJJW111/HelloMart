@@ -3,6 +3,8 @@ package com.hellomart.controller;
 import java.security.Principal;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,15 +76,15 @@ public class ReViewController {
 
 		ModelAndView mav = new ModelAndView();
 		ReView view = service.ReView(idx);
-		mav.addObject("viewre", view);
+		mav.addObject("view", view);
 		mav.setViewName("review/ReViewList");
 
 		return mav;
 	}
 	
 	@RequestMapping(value = "/reWrite", method=RequestMethod.GET)
-	public ModelAndView write(ReView review) {
-		ModelAndView mav = new ModelAndView();
+	public ModelAndView write(ReView review) {	
+		ModelAndView mav = new ModelAndView();		
 		mav.addObject("review", review);		
 		mav.setViewName("review/reWrite");
 		return mav;
@@ -92,6 +94,7 @@ public class ReViewController {
 	public String writeProcess(ReView review, Principal principal){
 		String id = principal.getName();
 		service.reWrite(review);
+		
 		return "redirect:/mypage/history?id="+id;
 	}
 	
