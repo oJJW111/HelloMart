@@ -69,6 +69,7 @@ public class CartController {
 		service2.getDetailInfo(String.valueOf(cart.getNo()), smallCategory, model);
 		return "product/productView";
 	}
+	
 
 	
 	// 2. 장바구니 목록

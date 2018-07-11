@@ -21,6 +21,3 @@ public class ProductList {
 	private String comment;     
 	private Date registerDate;
 }
-
-
-

@@ -27,5 +27,6 @@ public interface CartDAO {
    // 7. 장바구니 상품수량 변경
    void updateCart(Cart cart);
 
+   // 8. 구매후 카트리스트에서 삭제
    void deleteCartList(String id);   
 }

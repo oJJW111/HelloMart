@@ -20,6 +20,8 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/authenticated/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/**" access="permitAll" />
+		
+		
 
 		<form-login
 			login-page="/login"

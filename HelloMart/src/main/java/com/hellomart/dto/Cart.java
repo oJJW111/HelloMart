@@ -12,10 +12,5 @@ public class Cart {
    private int no;
    private Date date;
    private int orderCount;
-   private String imagepath;
-   private String smallcategory;
-   private String productname;
-   private String registerid;
-   private int price;
    
 }

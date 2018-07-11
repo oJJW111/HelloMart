@@ -29,7 +29,7 @@
     <h2 id="container_title">글 작성</h2>
     
   
-  <form:form action="write" method="post" modelAttribute="qaboard" id="write_form">
+  <form:form action="qawrite" method="post" modelAttribute="qaboard" id="write_form">
     <sec:authentication var="id" property="principal"/>
     <div class="tbl_frm01 tbl_wrap">
         <table>

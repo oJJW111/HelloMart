@@ -11,7 +11,7 @@
     </insert>
     
     <!-- 2. 장바구니 목록 -->
-    <select id="listCart" resultType="Cart">
+    <select id="listCart" parameterType="String" resultMap="cartResultMap">
         SELECT c.idx, c.id, c.orderCount, c.date,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, cartlist c
@@ -37,7 +37,7 @@
     <!-- 5. 장바구니 삭제 -->
     <delete id="deleteCart">
         DELETE FROM cartlist 
-        WHERE idx = #{param1}
+        WHERE id = #{param1}
         and no = #{param2}
     </delete>
     
@@ -57,8 +57,28 @@
         AND no = #{no}
     </update>
     
+    <!-- 8. 물품구매시 장바구니 리스트 삭제 -->
     <delete id="deleteCartList">
     	DELETE FROM cartlist 
         WHERE id = #{id}
     </delete>
+    
+    <!-- 장바구니 불러올때 dto합치기 -->
+    <resultMap id="productListResultMap" type="java.util.HashMap">
+    	<id property="no" column="no"/>
+    	<result property="smallcategory" column="smallcategory"/>
+    	<result property="imagepath" column="imagepath"/>
+    	<result property="productname" column="productname"/>
+    	<result property="registerid" column="registerid"/>
+    	<result property="price" column="price"/>
+    	<collection property="productList" javaType="java.util.ArrayList" resultMap="cartResultMap"/>
+    </resultMap>
+    	
+    <resultMap id="cartResultMap" type="java.util.HashMap">
+    	<id property="idx" column="idx"/>
+    	<result property="id" column="id"/>
+    	<result property="orderCount" column="orderCount"/>
+    	<result property="date" column="date"/>
+    </resultMap>
+    
 </mapper>

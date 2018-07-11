@@ -19,4 +19,3 @@
 		#{param2} &lt;= date and date &lt;= #{param3} 
 	</select>
 </mapper> 
-
