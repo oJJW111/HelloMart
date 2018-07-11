@@ -170,7 +170,7 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		Set<String> columns = paramMap.keySet();
 		
-		if((!mainCategory.equals("액세서리")) && (!columns.isEmpty())) {
+		if((!mainCategory.equals("액세서리")) && (table != null) && (!table.isEmpty())) {
 			sql
 			.append(" ").append("NATURAL JOIN").append(" ")
 			.append(table);

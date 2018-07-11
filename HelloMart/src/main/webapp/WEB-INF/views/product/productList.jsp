@@ -54,9 +54,15 @@ function createURL(mainCategory, smallCategory, page) {
 }
 $(document).ready(function(){
 	$.submitForm = function() {
-		$("#detailForm").submit(function() {
-		    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
-		});
+		if($("#price1").val() > $("#price2").val()){
+			alert("최저 가격은 최고 가격보다 적어야 합니다");
+			return;
+		}
+		else{
+			$("#detailForm").submit(function() {
+			    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+			});
+		}
 	}
 	$.appendPage = function(page) {
 		$("#detailForm").append("<input type='hidden' name='page' value='" + page + "'>");
@@ -92,11 +98,11 @@ $(document).ready(function(){
 	<div class="category_detail noselect" style="height: 48px;"> 
 		<div class="category_detail_down" style="height: 48px;">	
 			<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
-			<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+			<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
 			<div class="range">~</div>
-			<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 			<div class="currency">원</div>
-			<button id="submit-form" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
+			<button id="submit-form" type="button" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
 		</div>
 	</div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory == '액세서리'} -->
@@ -148,11 +154,11 @@ $(document).ready(function(){
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
-		<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+		<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
 		<div class="range">~</div>
-		<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm()"
+		<button id="submit-form" onclick="$.submitForm()" type="button"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
