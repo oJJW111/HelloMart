@@ -139,7 +139,7 @@ public class ProductListServiceImpl implements ProductListService{
 		}
 		
 		/***** 카테고리 세부 목록 처리 *****/
-		if(smallCategory != null) {
+		if((!mainCategory.equals("액세서리")) && (smallCategory != null)) {
 			smallCategoryDetails(modelMap, mainCategory, smallCategory);
 		}
 		/***** 카테고리 세부 목록 처리 *****/

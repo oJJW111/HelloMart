@@ -87,8 +87,22 @@ $(document).ready(function(){
 <form action="/productList" method="get" id="detailForm"> 
 <input type="hidden" name="mainCategory" value="${param.mainCategory}">
 <input type="hidden" name="smallCategory" value="${param.smallCategory}">
+
+<c:if test="${param.mainCategory == '액세서리'}"> 
+	<div class="category_detail noselect" style="height: 48px;"> 
+		<div class="category_detail_down" style="height: 48px;">	
+			<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
+			<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+			<div class="range">~</div>
+			<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+			<div class="currency">원</div>
+			<button id="submit-form" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
+		</div>
+	</div> <!-- <div class="category_detail noselect"> -->
+</c:if> <!-- test="${mainCategory == '액세서리'} -->
+
+<c:if test="${param.mainCategory != '액세서리'}"> 
 <div class="category_detail noselect">
-	<c:if test="${smallCategory != '액세서리'}">  
 	<div class="category_detail_up">
 		<div class="category_major">
 			<h5>세부 분류</h5>
@@ -118,7 +132,6 @@ $(document).ready(function(){
 									<c:if test="${checked ne null and checked[checkedId] ne null}">
 										checked
 									</c:if>
-								
 								>
 								<c:if test="${checked ne null and checked[checkedId] ne null}">
 									<input type="hidden" name="checkedId" value="${id}">
@@ -133,7 +146,6 @@ $(document).ready(function(){
 			</c:if>
 		</div> <!-- <div class="category_small"> -->
 	</div> <!-- <div class="category_detail_up"> -->
-	</c:if>
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
 		<input type="text" placeholder="0원" name="price1" value="${param.price1}">
@@ -144,6 +156,7 @@ $(document).ready(function(){
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
+</c:if> <!-- test="${mainCategory != '액세서리'} -->
 </form>
 
 <!-- 상품리스트 -->
