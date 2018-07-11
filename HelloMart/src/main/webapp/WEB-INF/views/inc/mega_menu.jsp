@@ -50,6 +50,10 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=IT&smallCategory=노트북";
 	});
 	
+	$("#desktop").on('click', function(){
+		location.href="/productList?mainCategory=IT&smallCategory=데스크탑";
+	});
+	
 	$("#monitor").on('click', function(){
 		location.href="/productList?mainCategory=IT&smallCategory=모니터";
 	});
@@ -64,6 +68,14 @@ $(document).ready(function(){
 	
 	$("#tablet").on('click', function(){
 		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
+	});
+	
+	$("#acc").on('click', function(){
+		location.href="/productList?mainCategory=액세서리&smallCategory=PC 액세서리";
+	});
+	
+	$("#mobileAcc").on('click', function(){
+		location.href="/productList?mainCategory=액세서리&smallCategory=모바일 액세서리";
 	});
 	
 	$("#qaboard").on('click', function(){
@@ -107,7 +119,7 @@ $(document).ready(function(){
 
 					<div class="mega_menu_inner_menu mega_ct_002" style="display: none;">
 							<div class="F_left megamenu_menu_title2" id="notebook" style="margin-left: 230px">노트북</div>
-							<div class="F_left megamenu_menu_title2">데스크탑</div>
+							<div class="F_left megamenu_menu_title2" id="desktop">데스크탑</div>
 							<div class="F_left megamenu_menu_title2" id="monitor">모니터</div>
 							<div class="F_left megamenu_menu_title2" id="printer">프린터</div>
 					</div>
@@ -119,8 +131,8 @@ $(document).ready(function(){
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_004" style="display: none;">
-							<div class="F_right megamenu_menu_title2" style="margin-right: 160px">모바일 액세서리</div>
-							<div class="F_right megamenu_menu_title2">PC 액세서리</div>
+							<div class="F_right megamenu_menu_title2" style="margin-right: 160px" id="mobileAcc">모바일 액세서리</div>
+							<div class="F_right megamenu_menu_title2" id="acc">PC 액세서리</div>
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
