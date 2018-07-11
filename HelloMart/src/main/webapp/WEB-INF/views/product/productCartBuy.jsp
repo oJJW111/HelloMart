@@ -26,21 +26,55 @@
 		});
 	});
 </script>
+<style type="text/css">
+table tr{
+	text-align: center;
+	border: 1px dotted #ababab;
+	border-left: none;
+	border-right: none;
+	height: 30px;
+}
+table tr th{
+	text-align: center;
+	border: 1px solid #ababab;
+	border-left: none;
+	border-right: none;
+}
+table tr td{ 
+	text-align: center;
+}
+
+</style>
 </head>
 <body>
-
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 
 	<center>
-		<h2>주문 페이지</h2>
+		<div class=BLOCK70></div>
 		<c:set var="totalPrice" value="0" />
 		<c:set var="size" value="0"/> 
 		<form action="/cartBuyOk" method="post">
-		<table> 
+		<table width="800" border="1"> 
 			<!-- 장바구니에 담겨있던 상품 리스트 -->
+			<tr>
+				<th width="180">상품이미지</th>
+				<th>상품정보</th>
+				<th>상품금액x수량</th>
+				<th>총금액</th>
+			</tr>
 			<c:forEach items="${productList}" varStatus="status">
+				<tr>
+					<td><img src="${productList[status.index].imagePath}" width="130"></td>				
+					<td style="text-align: left;">[ ${productList[status.index].productName} ]</td>
+					<td>￦&nbsp; ${productList[status.index].price} x ${orderCountList[status.index]}</td>
+					<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
+					<c:set var="totalPrice" value="${totalPrice + orderPrice}" />
+					<td>￦&nbsp; ${orderPrice}</td>
+				</tr>
+				
+			<%-- 	
 				<tr>
 					<td rowspan="4">
 						<img src="${productList[status.index].imagePath}" width="200px">
@@ -62,7 +96,7 @@
 					<c:set var="totalPrice" value="${totalPrice + orderPrice}"  />
 					<td>${orderPrice}</td>
 				</tr>  
-				
+				 --%>
 				<!-- 주문리스트 테이블에 들어갈 값들 -->
 				<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
 				<input type="hidden" name="orderCount${status.index}" value="${orderCountList[status.index]}">
@@ -76,71 +110,28 @@
 					<c:set var="size" value="${status.index}" />
 				</c:if> 
 			</c:forEach> 
-			<tr>
-				<td colspan="3" align="center">
-					<h2>총 금액 합계 : ${totalPrice}</h2>
-				</td>
-			</tr>	
+			</table>
+					총 금액 합계 : ${totalPrice}
+			
 			<!-- 상품 수령인 정보 -->
-			<tr>
-				<td colspan="3">
-					<table>
-						<tr>
-							<td>받을 사람 이름</td>
-							<td>
-								<input type="text" name="receiverName" value="${account.name}">
-							</td>
-						</tr>
-						<tr>
-							<td>받을 사람 연락처</td>
-							<td>
-								<input type="text" name="receiverPhone" value="${account.phone}">
-							</td>
-						</tr>
-						<tr>
-							<td>우편번호</td>
-							<td>
-								<input type="text" name="receiverPostCode" value="${account.postCode}"
-										id="sample6_postcode" readonly="readonly">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-							</td>
-						</tr>
-						<tr>
-							<td>도로명 주소</td>
-							<td>
-								<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
-										id="sample6_address" readonly="readonly">
-							</td>
-						</tr>
-						<tr>
-							<td>상세주소</td>
-							<td>
-								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
-										id="sample6_address2">
-							</td>
-						</tr>						
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3">
-					포인트를 사용하시겠습니까?
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="usePoint" value="-">예
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
-					<div id="divPoint"></div>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3">
-					<br><br>
-					<input type="submit" value="주문하기">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="취소하기" onclick="location.href='/'">
-				</td>
-			</tr>
-		</table>
+		
+		<%-- 	받을 사람 이름<input type="text" name="receiverName" value="${account.name}">
+			받을 사람 연락처<input type="text" name="receiverPhone" value="${account.phone}">
+			우편번호<input type="text" name="receiverPostCode" value="${account.postCode}"
+						id="sample6_postcode" readonly="readonly">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+			도로명 주소<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
+						id="sample6_address" readonly="readonly">
+			상세주소<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
+						id="sample6_address2">
+			포인트를 사용하시겠습니까?
+			&nbsp;&nbsp; <input type="radio" name="incDec" id="usePoint" value="-">예
+			&nbsp;&nbsp; <input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
+			<div id="divPoint"></div> --%>
+			
+			
+			<input type="submit" value="주문하기">&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="취소하기" onclick="location.href='/mypage/cartlist'">
 		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
 		<!-- 장바구니에 몇 종류의 상품이 들어있었는지 -->
 		<input type="hidden" name="size" value="${size}">

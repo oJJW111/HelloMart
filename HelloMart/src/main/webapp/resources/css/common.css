@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
-@font-face{ font-family:'Gothic'; } 
+@font-face{ font-family:'Nanum Gothic', 'arial', 'Verdana', Dotum, AppleGothic, sans-serif;  }  */
 
 html, body { height: 100% }
 body, div, span, table, tr, td, ul, li, p, img {
@@ -32,6 +32,7 @@ a { text-decoration: none;}
 .M_CENTER{margin: 0 auto;}
 
 .BLOCK20{width: 100%; height: 20px;}
+.BLOCK30{width: 100%; height: 30px;}
 .BLOCK60{width: 100%; height: 60px;}
 .BLOCK70{width: 100%; height: 70px;}
 .BLOCK80{width: 100%; height: 80px;}
@@ -79,7 +80,7 @@ a { text-decoration: none;}
 	width: 840px; height: 60px; margin: 0 auto; background: #f8f8f8; border: 1px dotted #b9b9b9; border-top: none;
 }
 .megamenu_menu_title1{
-	font-size: 16px; color: #666666; cursor: pointer; margin: 20px 33px;
+	font-size: 16px; color: #666666; cursor: pointer; margin: 20px 37px;
 }
 .megamenu_menu_title2{
 	font-size: 16px; color: #666666; cursor: pointer; margin: 20px 45px;

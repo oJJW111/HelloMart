@@ -17,6 +17,9 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
+		location.href="/productList?mainCategory=퍼스널케어";
+	});
+	$("#main_menu_6").on('click', function(){
 		location.href="/qaboard";
 	});
 	$("#refrigerator").on('click', function(){
@@ -67,8 +70,12 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
 	});
 	
-	$("#qawrite").on('click', function(){
-		location.href="/write";
+	$("#acc").on('click', function(){
+		location.href="/productList?mainCategory=액세서리&smallCategory=PC 액세서리";
+	});
+	
+	$("#mobileAcc").on('click', function(){
+		location.href="/productList?mainCategory=액세서리&smallCategory=모바일 액세서리";
 	});
 	
 	$("#qaboard").on('click', function(){
