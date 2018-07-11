@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.hellomart.dao.HistoryDAO">
+
+	<!-- 장바구니 목록 -->
+
+	<select id="historylist" parameterType="String" resultMap="orderlistResultMap">
+        SELECT o.prodNo,o.orderCount, o.orderDate,
+        	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
+        FROM productList p, orderlist o
+        WHERE p.no = o.prodNo AND o.orderId = #{param1}
+        ORDER BY o.orderDate
+    </select>
+    
+    <resultMap type="java.util.HashMap" id="orderlistResultMap">
+    	<id property="orderId" column="orderId"/>
+    	<result property="prodNo" column="prodNo"/>
+    	<result property="orderDate" column="orderDate"/>
+    </resultMap>
+    
+    <resultMap type="java.util.HashMap" id="productlistResultMap">
+    	<id property="no" column="no"/>
+    	<result property="smallcategory" column="smallcategory"/>
+    	<result property="imagepath" column="imagepath"/>
+    	<result property="productname" column="productname"/>
+    	<result property="registerid" column="registerid"/>
+    	<result property="price" column="price"/>
+    	<collection property="productlist" javaType="java.util.ArrayList" resultMap="orderlistResultMap"/>
+    </resultMap>
+</mapper>
