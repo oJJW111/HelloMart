@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -56,7 +57,7 @@ table tr td{
 		<c:set var="totalPrice" value="0" />
 		<c:set var="size" value="0"/> 
 		<form action="/cartBuyOk" method="post">
-		<table width="800" border="1"> 
+		<table width="900" border="1"> 
 			<!-- 장바구니에 담겨있던 상품 리스트 -->
 			<tr>
 				<th width="180">상품이미지</th>
@@ -67,7 +68,7 @@ table tr td{
 			<c:forEach items="${productList}" varStatus="status">
 				<tr>
 					<td><img src="${productList[status.index].imagePath}" width="130"></td>				
-					<td style="text-align: left;">[ ${productList[status.index].productName} ]</td>
+					<td style="text-align: left;">[ ${productList[status.index].productName} ] </td>
 					<td>￦&nbsp; ${productList[status.index].price} x ${orderCountList[status.index]}</td>
 					<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
 					<c:set var="totalPrice" value="${totalPrice + orderPrice}" />
