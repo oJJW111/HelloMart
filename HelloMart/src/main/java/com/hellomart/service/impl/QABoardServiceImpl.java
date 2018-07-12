@@ -14,6 +14,7 @@ import com.hellomart.service.QABoardService;
 @Service
 public class QABoardServiceImpl implements QABoardService{
    
+   @SuppressWarnings("unused")
    private static final Logger logger = LoggerFactory.getLogger(QABoardService.class);
    
    @Autowired
@@ -49,7 +50,6 @@ public class QABoardServiceImpl implements QABoardService{
    public QABoard viewQABoard(int idx) {
       return dao.viewQABoard(idx);
    }
-
 
    @Override
    public void viewCount(int idx) {

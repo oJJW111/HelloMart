@@ -22,7 +22,7 @@
 		<intercept-url pattern="/**" access="permitAll" />
 		
 		
-
+		
 		<form-login
 			login-page="/login"
 			username-parameter="id"
@@ -51,7 +51,7 @@
 		
 		<!-- 접근 권한이 없는 유저가 접근시 이동할 에러 페이지 설정 -->
 		<access-denied-handler error-page="/error/403"/>
-			
+		
 		<!-- csrf 기능은 꺼둔다. 잘 모르니까!!! -->
 		<csrf disabled="true"/>
 	</http> 
@@ -63,5 +63,5 @@
 	<beans:bean id="authenticatedFailurHandler" class="com.hellomart.authentication.CustomAuthenticationFailurHandler" />
 	<beans:bean id="userProvider" class="com.hellomart.authentication.CustomAuthenticationProvider" />
 	<beans:bean id="userService" class="com.hellomart.authentication.CustomUserDetailsService" />    		
-
+	
 </beans:beans>

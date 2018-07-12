@@ -48,7 +48,7 @@
     </bean>
 	<!-- bean 등록 -->
 	<mybatis-spring:scan base-package="com.hellomart.dao"/>
-	<context:component-scan base-package="com.hellomart.service.impl"/>
+	<context:component-scan base-package="com.hellomart.service.impl" />
 	<context:component-scan base-package="com.hellomart.util"/>
 	<context:component-scan base-package="com.hellomart.validator"/>
 		
