@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -13,10 +15,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component
 public class Upload {
 	
+	@Resource(name="uploadPath")
+	private String uploadPath;
+	
 	public Map<String, Object> fileUpload(MultipartHttpServletRequest mRequest){
 		boolean isUpload = false;
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String uploadPath = "D:/upload/";
 		if(!new File(uploadPath).exists()){
 			new File(uploadPath).mkdirs();
 		}

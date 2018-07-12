@@ -18,5 +18,6 @@ public interface SellerService {
 	public void sellerProductRegister(MultipartHttpServletRequest mRequest,
 				ProductList productList);
 
-	
+	public String getFileName(String productNo);
+
 }

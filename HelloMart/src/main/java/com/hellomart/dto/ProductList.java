@@ -14,7 +14,7 @@ public class ProductList {
 	private String imagePath;    
 	private int orderCount;    
 	private int score;     
-	private Date prodDate;
+	private String prodDate;
 	private String mfCompany;   
 	private int price;  
 	private double weight;        

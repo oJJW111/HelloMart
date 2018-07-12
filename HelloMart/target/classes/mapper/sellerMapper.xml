@@ -18,6 +18,7 @@
 							SELECT *    
 							FROM ProductList 
 							WHERE RegisterID = #{id}
+							ORDER BY RegisterDate DESC
 					)S, (SELECT @rownum := 0) r
 				)t
 		        WHERE t.rownum BETWEEN #{startRow} AND #{endRow}
@@ -29,11 +30,10 @@
 	</select>
 	
 	<insert id="insertProductInfo" parameterType="productList">
-		INSERT INTO ProductList(ProductName, MainCategory, SmallCategory, ImagePath,
-		ProdYear, ProdMonth, ProdDay, MfCompany, Price, Weight, RegisterID, Comment) 
-		VALUES (#{productName}, #{mainCategory}, #{smallCategory}, #{imagePath}, 
-		#{prodYear}, #{prodMonth}, #{prodDay}, #{mfCompany}, #{price}, #{weight},
-		#{registerID}, #{comment}) 
+		INSERT INTO ProductList(ProductName, MainCategory, SmallCategory, ImagePath, ProdDate,
+		MfCompany, Price, Weight, RegisterID, Comment) 
+		VALUES (#{productName}, #{mainCategory}, #{smallCategory}, #{imagePath},#{prodDate}, 
+		#{mfCompany}, #{price}, #{weight}, #{registerID}, #{comment}) 
 	</insert>
 	
 	<select id="getNoProductList" resultType="Integer">
@@ -42,5 +42,9 @@
 	
 	<insert id="insertPartProductInfo" parameterType="HashMap">
 		${sql}
-	</insert>	
+	</insert>
+	
+	<select id="getFilePath" parameterType="Integer" resultType="String">
+		SELECT ImagePath FROM ProductList WHERE No = #{no}
+	</select>	
 </mapper>

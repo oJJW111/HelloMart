@@ -22,6 +22,20 @@
 <title>물품등록페이지</title>
 <script type="text/javascript">
 $(document).ready(function(){
+	//콤마찍기
+	function comma(str) {
+	    str = String(str);
+	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	}
+	//콤마풀기
+	function uncomma(str) {
+	    str = String(str);
+	    return str.replace(/[^\d]+/g, '');
+	}
+	function inputNumberFormat() {
+		var price = $("#price").val();
+		$("#price").val(comma(uncomma(price)));
+	}
 	$("#btnRegister").on("click", function(){
 		var productName = $("#productName").val();
 		var mfCompany = $("#mfCompany").val();
@@ -34,49 +48,42 @@ $(document).ready(function(){
 		
 		if(productName == ''){
 			$("#productNameError").html("필수 입력란입니다.");
-			$("#productName").focus();
 			flag = 1;
 		}else{
 			$("#productNameError").html("");
 		}
 		if(mfCompany == ''){
 			$("#mfCompanyError").html("필수 입력란입니다.");
-			$("#mfCompany").focus();
 			flag = 1;
 		}else{
 			$("#mfCompanyError").html("");
 		}
 		if(prodDate == ''){
 			$("#prodDateError").html("필수 입력란입니다.");
-			$("#prodDate").focus();
 			flag = 1;
 		}else{
 			$("#prodDateError").html("");
 		}
 		if(price == '' || price == '0'){
 			$("#priceError").html("필수 입력란입니다.");
-			$("#price").focus();
 			flag = 1;
 		}else{
 			$("#priceError").html("");
 		}
 		if(weight == '' || weight == '0.0'){
 			$("#weightError").html("필수 입력란입니다.");
-			$("#weight").focus();
 			flag = 1;
 		}else{
 			$("#weightError").html("");
 		}
 		if(comment == ''){
 			$("#commentError").html("필수 입력란입니다.");
-			$("#comment").focus();
 			flag = 1;
 		}else{
 			$("#commentError").html("");
 		}
 		if(productImageFile == ''){
 			$("#fileError").html("필수 입력란입니다.");
-			$("#productImageFile").focus();
 			flag = 1;
 		}else if(fileExtensionCapacityCheck('productImageFile') == 0){
 			flag = 1;
@@ -116,22 +123,15 @@ $(document).ready(function(){
 			specKorNameList[count] = specKorNameList[count].trim();
 		}
 		
-		
-		for(var count = 0; count < specEngNameList.length; count++){
-			var specValue = $("#"+specEngNameList[count]+" option:selected").val();
-			if(specValue == ''){
-				flag = 1;
-				$("#" + specEngNameList[count] + "Errors").html(specKorNameList[count] +"를 입력하시지 않았습니다.");
-			}else{
-				$("#" + specEngNameList[count] + "Errors").html("");
-			}
+		if(productValidCheck(specEngNameList, specKorNameList)){
+			flag = 1;
 		}
+		
 		if(flag == 1){
 			return false;
 		}
 		document.productRegister.submit();
 	});
-	
 }); 
 </script>
 </head>
@@ -151,49 +151,52 @@ $(document).ready(function(){
 					<label for="productName" class="control-label">물품 이름</label>	
 					<form:input path="productName" id="productName" class="txt-input joinTooltip" maxlength="50" placeholder="물품 이름" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.productName"/></span>
-<!-- 					<span class="errors" id="productNameError"></span> -->
+					<span class="errors" id="productNameError"></span>
 					<form:errors path="productName" class="errors"/>
 				</li>
 				<li>
 					<label for="mfCompany" class="control-label">제조 회사</label>
 					<form:input path="mfCompany" id="mfCompany" class="txt-input joinTooltip" maxlength="30" placeholder="제조 회사" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.mfCompany"/></span>
-<!-- 					<span class="errors" id="mfCompanyError"></span> -->
+					<span class="errors" id="mfCompanyError"></span>
 					<form:errors path="mfCompany" class="errors"/>
 				</li>
 				<li>
 					<label for="prodDate" class="control-label">제조 날짜</label>
 					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
-<!-- 					<span class="errors" id="prodDateError"></span> -->
+					<span class="errors" id="prodDateError"></span>
 					<form:errors path="prodDate" class="errors"/>
 				</li>
 				<li>
 					<label for="price" class="control-label">물품 가격</label>
-					<form:input path="price" id="price" class="txt-input joinTooltip" maxlength="10" placeholder="물품 가격" />
+					<form:input path="price" id="price" class="txt-input joinTooltip"
+						onkeyup="inputNumberFormat()" maxlength="30" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
-<!-- 					<span class="errors" id="priceError"></span>	 -->
+						<span class="unit">원</span>
+					<span class="errors" id="priceError"></span>	
 					<form:errors path="price" class="errors"/>
 				</li>
 				<li>
 					<label for="weight" class="control-label">물품 무게</label>
 					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
-<!-- 					<span class="errors" id="weightError"></span> -->
+						<span class="unit">Kg</span>
+					<span class="errors" id="weightError"></span>
 					<form:errors path="weight" class="errors"/>
 				</li>
 				<li>
 					<label for="comment" class="control-label">코멘트</label>
 					<form:textarea path="comment" id="comment" class="txt-input joinTooltip" cols="50" rows="5" maxlength="100" placeholder="코멘트"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.comment"/></span>
-<!-- 					<span class="errors" id="commentError"></span> -->
+					<span class="errors" id="commentError"></span>
 					<form:errors path="comment" class="errors"/>
 				</li>
 				<li>
 					<label for="productImageFile" class="control-label">이미지 업로드</label>
 						<input type="file" name="productImageFile"  id="productImageFile" class="txt-input joinTooltip productImageFile"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.file"/></span>
-					<span class="errors" id="fileError">${msg }</span>
+					<span class="errors" id="fileError">${fileMsg }</span>
 				</li>				
 				
 <c:forEach var="specKorName" items="${specKorNameList}" varStatus="status">
@@ -216,7 +219,8 @@ $(document).ready(function(){
 					<spring:message code="form.tooltip.validation.${smallCategoryEng }.${specEngNameList[status.index] }"/>
 				</span>
 				<span class="unit">${specUnitList[status.index] }</span>
-				<span class="errors" id="${specEngNameList[status.index] }Errors">			
+				<span class="errors" id="${specEngNameList[status.index] }Errors">
+				${specKorNameError[status.index]}			
 				</span>	
 				</li> 
     	</c:when>
@@ -233,7 +237,8 @@ $(document).ready(function(){
 				<span class="tooltiptext">
 					<spring:message code="form.tooltip.validation.${smallCategoryEng }.${specEngNameList[status.index] }"/>
 				</span>
-				<span class="errors" id="${specEngNameList[status.index] }Errors">			
+				<span class="errors" id="${specEngNameList[status.index] }Errors">
+				${specKorNameError[status.index]}			
 				</span>	
 				</li>   
 	    </c:when>

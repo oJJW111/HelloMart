@@ -1,13 +1,21 @@
 package com.hellomart.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.Principal;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +30,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
+import com.hellomart.util.MediaUtils;
 import com.hellomart.validator.ProductFormValidator;
 
 @Controller
@@ -33,6 +42,9 @@ public class SellerController {
 	
 	@Autowired
 	SellerService sellerService;
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	@Autowired
 	ProductFormValidator productFormValidator;
@@ -63,6 +75,39 @@ public class SellerController {
 		return "seller/page";
 	}
 	
+	@RequestMapping(value = "/display/{productNo}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> displayFile(@PathVariable String productNo)throws Exception{
+		InputStream in = null;
+		ResponseEntity<byte[]> entity = null;
+		String fileName = sellerService.getFileName(productNo);
+		try {
+			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+			HttpHeaders headers = new HttpHeaders();
+			in = new FileInputStream(uploadPath+fileName);
+			
+			//step: change HttpHeader ContentType
+			if(mType != null) {
+				//image file(show image)
+				headers.setContentType(mType);
+			}else {
+				//another format file(download file)
+				fileName = fileName.substring(fileName.indexOf("_")+1);//original file Name
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\""); 
+			}
+			
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally {
+			in.close();
+		}
+		return entity;
+	}
+	
 	@RequestMapping(value="/productRegister", method=RequestMethod.GET)
 	public String sellerProductRegister(@RequestParam("mainCategoryInput") 
 										String mainCategoryInput,
@@ -81,7 +126,8 @@ public class SellerController {
 		String uri = null;
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("ProductList", new ProductList());
-			sellerService.productPartSpec(model, productList.getMainCategory(), productList.getSmallCategory());
+			sellerService.PartProductValidCheck(mRequest, model,
+				productList.getMainCategory(), productList.getSmallCategory());
 			return "seller/register";
 		}
 
@@ -95,5 +141,4 @@ public class SellerController {
 		}
 		return uri;
 	}
-	
 }

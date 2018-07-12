@@ -1,6 +1,9 @@
 package com.hellomart.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +64,7 @@ public class SellerServiceImpl implements SellerService{
 			= new ArrayList<HashMap<String,Object>>();
 		for(ProductList i : sellerProductList){
 			sellerProductMap = new HashMap<String, Object>();
-			sellerProductMap.put("ImagePath", i.getImagePath());
+			sellerProductMap.put("No", i.getNo());
 			sellerProductMap.put("ProductName", i.getProductName());
 			sellerProductMap.put("MfCompany", i.getMfCompany());
 			sellerProductMap.put("MainCategory", i.getMainCategory());
@@ -112,35 +115,40 @@ public class SellerServiceImpl implements SellerService{
 			}
 		}
 		if(mRequest.getFile("productImageFile").isEmpty()){
-			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
+			model.addAttribute("fileMsg", "업로드가 안 되었습니다.");
 			flag = false;
 		}else{
 			String imageFileName = mRequest.getFile("productImageFile").getOriginalFilename();
-			String extension = imageFileName.substring(imageFileName.lastIndexOf("."), imageFileName.length());
+			Long imageFileSize = mRequest.getFile("productImageFile").getSize();
+			String extension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1, imageFileName.length());
 			if((!extension.toLowerCase().equals("gif")) 
 				&& (!extension.toLowerCase().equals("png"))
 				&& (!extension.toLowerCase().equals("jpg"))
 				&& (!extension.toLowerCase().equals("jpeg"))){
+				model.addAttribute("fileMsg", "확장자가 맞지 않습니다.");
+				flag = false;
+			}else if(imageFileSize > 1*1024*1024){
+				model.addAttribute("fileMsg", "크기는 1MB이하입니다.");
 				flag = false;
 			}
-			
-			System.out.println(mRequest.getFile("productImageFile").getSize());
 		}
 		
 		List<String> parameters = new ArrayList<String>();
+		List<String> errorMessages = new ArrayList<String>();
 		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
 			String requestValue 
 				= mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
 			if(requestValue != ""){
 				parameters.add(requestValue);
+				errorMessages.add(" ");
 			}else{
 				flag = false;
-				model.addAttribute(
-						tableInfo.getColumnEngNameList().get(i)
-						+ "Msg", tableInfo.getColumnKorNameList().get(i) + "를 입력하시지 않았습니다.");
+				errorMessages.add(tableInfo.getColumnKorNameList().get(i) + "가 입력되어 있지 않습니다.");
 			}
 		}
+		model.addAttribute("specKorNameError", errorMessages);
 		if(!flag){
+			System.out.println("체크 통과 못함");
 			productPartSpec(model, mainCategory, smallCategory);
 		}
 		return flag;
@@ -155,80 +163,32 @@ public class SellerServiceImpl implements SellerService{
 		}else{
 			return;
 		}
+		dao.insertProductInfo(productList);
+		
 		TableInformation tableInfo = null;
 		for(int i = 0 ; i < tableList.size() ; i++){
 			if(tableList.get(i).getTableKorName().equals(productList.getSmallCategory())){
 				tableInfo = tableList.get(i);
 			}
 		}
-		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
 		
-		StringBuffer sBuffer; Pattern p; Matcher m;
-		int[] intNumbers = new int[2];
-		double[] doubleNumbers = new double[2];
+		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
 		
 		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
 			String columnValue = mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
 			String columnName = tableInfo.getColumnEngNameList().get(i);
 			String columnType = tableInfo.getColumnTypeList().get(i);
 			if(columnType.equals("Integer")){
-				int resultColumnValue;
-				if(columnValue.indexOf("~") > 0){
-					String[] columnValueList = columnValue.split("~");
-					for(int j = 0 ; j < columnValueList.length ; j++){
-						sBuffer = new StringBuffer();
-						p = Pattern.compile("[-?0-9]+");
-						m = p.matcher(columnValueList[j]);
-						while (m.find()) {
-							sBuffer.append(m.group());
-						}
-						intNumbers[j] = Integer.parseInt(sBuffer.toString());
-					}
-					resultColumnValue 
-						= (int) (Math.random() * (intNumbers[1] - intNumbers[0] + 1)) + intNumbers[0]; 
-				}else{
-					sBuffer = new StringBuffer();
-					p = Pattern.compile("[-?0-9]+");
-					m = p.matcher(columnValue);
-					while (m.find()) {
-						sBuffer.append(m.group());
-					}
-					resultColumnValue = Integer.parseInt(sBuffer.toString());
-				}
+				int resultColumnValue = Integer.parseInt(columnValue);
 				productPartSpecColumnMap.put(columnName, resultColumnValue);
 			}else if(columnType.equals("Double")){
-				double resultColumnValue;
-				if(columnValue.indexOf("~") > 0){
-					String[] columnValueList = columnValue.split("~");
-					for(int j = 0 ; j < columnValueList.length ; j++){
-						sBuffer = new StringBuffer();
-						p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
-						m = p.matcher(columnValueList[j]);
-						while (m.find()) {
-							sBuffer.append(m.group());
-						}
-						doubleNumbers[j] = Double.parseDouble(sBuffer.toString());
-					}
-					resultColumnValue 
-						= (Math.random() * (doubleNumbers[1] - doubleNumbers[0])) + doubleNumbers[0];
-					resultColumnValue 
-						= Double.parseDouble(String.format("%.1f", resultColumnValue));
-				}else{
-					sBuffer = new StringBuffer();
-					p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
-					m = p.matcher(columnValue);
-					while (m.find()) {
-						sBuffer.append(m.group());
-					}
-					resultColumnValue = Double.parseDouble(sBuffer.toString());
-				}
+				double resultColumnValue = Double.parseDouble(columnValue);
 				productPartSpecColumnMap.put(columnName, resultColumnValue);
 			}else{
 				productPartSpecColumnMap.put(columnName, columnValue);
 			}
 		}
 		
-		dao.insertProductInfo(productList);
 		int no = dao.getNoProductList();
 		
 		String tableName = tableInfo.getTableEngName();
@@ -286,6 +246,14 @@ public class SellerServiceImpl implements SellerService{
 		dao.insertPartProductInfo(sqlMap);
 	}
 	
+	@Override
+	public String getFileName(String productNo) {
+		int no = Integer.parseInt(productNo);
+		String filePath = dao.getFilePath(no);
+		String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+		return fileName;
+	}
+
 	private static List<TableInformation> tableInfoXmlParser() {
 		XMLParser xmlParser = new XMLParser("category.xml");
 		

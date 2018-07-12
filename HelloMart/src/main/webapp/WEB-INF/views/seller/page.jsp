@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -86,7 +87,7 @@ $(document).ready(function() {
 		<div class="product_list_content">
 			<div class="product_img">
 				<a href="#"><img
-					src="${map.ImagePath }"></a>
+					src="/seller/display/${map.No }"></a>
 			</div>
 			<div class="product_info">
 				<a class="title" href="#"> ${map.ProductName } </a>
@@ -97,7 +98,7 @@ $(document).ready(function() {
 			</div>
 			<div class="product_addition">
 				<div class="price">
-					<strong>${map.Price }원</strong>
+					<strong><fmt:formatNumber pattern="###,###,###" value="${map.Price }"/>원</strong>
 				</div>
 				<div class="additional_info">
 					<span class="satisfaction">만족도 ${map.Score }%</span> <span class="buy">구
@@ -111,30 +112,31 @@ $(document).ready(function() {
 </c:choose>
 
 		</div>
-		<div class="BLOCK60"></div>
+		<div class="BLOCK20"></div>
 		<div class="paginate">
 			${pageCode}
 		</div>
-		<div class="BLOCK60"></div>
-		
-		<form name="productRegisterForm" method="get">
-			<label for="mainCategoryInput">메인카테고리 : 
-				<select  id='mainCategoryInput' name='mainCategoryInput' 
-					title='mainCategoryInput' required="required">
-					<option value=''>선택</option>
-					<option value='가전제품'>가전제품</option>
-					<option value='IT'>IT</option>
-					<option value='모바일'>모바일</option>
-				</select>
-			</label>
-			<label for="smallCategoryInput">하위카테고리 : 
-				<select  id='smallCategoryInput' name='smallCategoryInput' 
-					title='smallCategoryInput' required="required">
-					<option value=''>선택</option>
-				</select>
-			</label>
-			<input type="button" value="물품 등록" id="productRegister">
-		</form>
+		<div class="BLOCK20"></div>
+		<div align="center">
+			<form name="productRegisterForm" method="get">
+				<label for="mainCategoryInput">메인카테고리 : 
+					<select  id='mainCategoryInput' name='mainCategoryInput' 
+						title='mainCategoryInput' required="required">
+						<option value=''>선택</option>
+						<option value='가전제품'>가전제품</option>
+						<option value='IT'>IT</option>
+						<option value='모바일'>모바일</option>
+					</select>
+				</label>
+				<label for="smallCategoryInput">하위카테고리 : 
+					<select  id='smallCategoryInput' name='smallCategoryInput' 
+						title='smallCategoryInput' required="required">
+						<option value=''>선택</option>
+					</select>
+				</label>
+				<input type="button" value="물품 등록" id="productRegister">
+			</form>
+		</div>
 		<div class="BLOCK60"></div>
 	</div>
 	<!-- 푸터 -->
