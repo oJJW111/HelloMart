@@ -69,7 +69,9 @@
 		</a>
 	</div>
 	<div class="shopMain">
-		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+		<a href="/todayView">
+			<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+		</a>
 	</div>
 	<div class="shopMain">
 		<a href="/mypage/info/delete"> 
