@@ -41,7 +41,7 @@
 									</select>
 								</td>
 							<tr>
-								<td><input type="text" name="id" class="frm_input required"
+								<td><input type="text" name="Id" class="frm_input required"
 									size="10" maxlength="20" value="${id}" readonly="readonly">
 								</td>
 							</tr>

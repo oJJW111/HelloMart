@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
 import com.hellomart.dto.OrderList;
+import com.hellomart.dto.ReView;
 import com.hellomart.service.AccountService;
 import com.hellomart.service.HistoryService;
 import com.hellomart.service.PointService;
@@ -196,8 +198,7 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value = "/history", method=RequestMethod.GET)
-	public ModelAndView History(HttpSession session, ModelAndView mav, Principal principal){
-    	
+	public ModelAndView History(ModelAndView mav, Principal principal){
 		String id = principal.getName();
     	
         Map<String, Object> map = new HashMap<String, Object>();
@@ -221,8 +222,21 @@ public class MypageController {
 		return "mypage/history"; 
 	}
 	
-	@RequestMapping("/todayView")
-	public void todayView() {
-	}
-	
+	@RequestMapping("/historyButton")
+	public ModelAndView historyButton(ModelAndView mav,Principal principal, HttpServletRequest request ) {
+		String id = principal.getName();
+		String no = request.getParameter("no");
+		ReView review = historyservice.reviewCheck(no, id);
+		boolean check = false;
+		if(review != null){
+			check = true;
+			mav.addObject("idx", review.getIdx());
+			
+		}
+		mav.addObject("no", no);
+		mav.addObject("check", check);
+		mav.setViewName("mypage/historyButton");
+		
+		return mav;
+	}	
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
@@ -31,14 +30,13 @@
 							<td class="td_date">
 								<fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd"/>
 							</td>
-							</tr>
-						</c:forEach>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
 		<c:if test="${pageCount>1 }">
 			<div align="center" id="page">
-
 				<c:if test="${startPage > pageBlock}">
 					<a href="review?pageNum=${startPage-1}">[이전]</a>
 				</c:if>

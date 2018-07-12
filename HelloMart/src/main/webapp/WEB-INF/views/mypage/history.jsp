@@ -43,7 +43,7 @@
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
 
-   <div class="article_wrap" style="width: 1026px; margin: auto;'">
+    <div class="article_wrap" style="width: 1026px; margin: auto;'">
 	<h2 align="center">구매목록 확인</h2>
 			<table style="width: 100%">
 				<tr>
@@ -97,7 +97,7 @@
 						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> 원
 					</td>
 					<td>
-						<input type="button" value="리뷰작성" onclick="fnRv('${row.no}')">
+						<jsp:include page="/mypage/historyButton?no=${row.prodNo}" />
 					</td>
 				</tr>
 				</c:forEach>

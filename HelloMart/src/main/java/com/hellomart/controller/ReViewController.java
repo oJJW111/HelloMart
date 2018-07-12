@@ -24,14 +24,14 @@ public class ReViewController {
 	private ReViewService service;
 
 	@RequestMapping("/review")
-	public ModelAndView reViewList(String pageNum,int no) {
+	public ModelAndView reViewList(String pageNum, int no) {
 		ModelAndView mav = new ModelAndView();
 		
 		int pageSize = 5;
 		int startPage = 0;
 		int endPage=0;
 		int pageBlock=0;
-		int pageCount = service.getReCount();
+		int pageCount = service.getReCount(no);
 		
 		if(pageNum == null){
 			pageNum ="1";
@@ -68,17 +68,6 @@ public class ReViewController {
 		return mav;
 	}
 	
-	/*@RequestMapping(value = "/review", method = RequestMethod.GET)
-	public ModelAndView view(int idx) { 
-
-		ModelAndView mav = new ModelAndView();
-		ReView view = service.ReView(idx);
-		mav.addObject("view", view);
-		mav.setViewName("review/ReViewList");
-
-		return mav;
-	}*/
-	
 	@RequestMapping(value = "/reWrite", method=RequestMethod.GET)
 	public ModelAndView write(ReView review) {	
 		ModelAndView mav = new ModelAndView();		
@@ -98,10 +87,9 @@ public class ReViewController {
 
 	@RequestMapping(value = "/remodify", method = RequestMethod.GET)
 	public ModelAndView remodify(int idx) {
-
 		ModelAndView mav = new ModelAndView();
-		ReView reView = service.ReView(idx);
-		mav.addObject("reivew", reView);
+		ReView reView = service.getReView(idx);
+		mav.addObject("reView", reView);
 		mav.setViewName("review/remodify");
 		return mav;
 	}
@@ -109,12 +97,12 @@ public class ReViewController {
 	@RequestMapping(value = "/remodify", method = RequestMethod.POST)
 	public String remodifyProcess(ReView reView) {
 		service.remodify(reView);
-		return "redirect:/ReViewList";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/redelete", method = RequestMethod.GET)
 	public String redeleteProcess(int idx) {
-		service.deleteReView(idx);
-		return "redirect:/ReViewList";
+		service.redelete(idx);
+		return "redirect:/";
 	}
 }

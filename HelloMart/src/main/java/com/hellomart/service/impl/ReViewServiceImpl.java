@@ -2,6 +2,8 @@ package com.hellomart.service.impl;
 
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,7 @@ public class ReViewServiceImpl implements ReViewService{
 	@Autowired
 	private ReViewDAO dao;
 	
-	public ReViewServiceImpl() {
-		
-	}
+	public ReViewServiceImpl() { }
 
 	@Override
 	public Vector<ReView> listReView(int no,int startRow, int pageSize) {
@@ -34,27 +34,28 @@ public class ReViewServiceImpl implements ReViewService{
 	}
 
 	@Override
-	public ReView ReView(int idx) {
-		return dao.ReView(idx);
-	}
-
-	@Override
-	public void deleteReView(int idx) {
-		dao.deleteReView(idx);
-	}
-
-	@Override
 	public void remodify(ReView reView) {
 		dao.remodify(reView);
 	}
 
 	@Override
-	public void Redelete(int idx) {
-		dao.Redelete(idx);
+	public void redelete(int idx) {
+		dao.redelete(idx);
 	}
 	
 	@Override
-	public int getReCount() {
-		return dao.getReCount();
+	public void updatereviewCount(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("prodNo"));
+		dao.updatereviewCount(no);
+	}
+
+	@Override
+	public ReView getReView(int idx) {
+		return dao.getReView(idx);
+	}
+
+	@Override
+	public int getReCount(int no) {
+		return dao.getReCount(no);
 	}
 }

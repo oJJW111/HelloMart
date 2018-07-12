@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hellomart.dao.HistoryDAO;
 import com.hellomart.dto.OrderList;
+import com.hellomart.dto.ReView;
 import com.hellomart.service.HistoryService;
 
 @Service
@@ -28,4 +29,9 @@ public class HistoryServiceImpl implements HistoryService{
 	public List<OrderList> historyDatelist(String id, String startDate, String endDate) {
 		return dao.historyDatelist(id, startDate, endDate);
 	} 	
+	
+	@Override
+	public ReView reviewCheck(String no, String id) {
+ 		return dao.reviewCheck(no, id);
+ 	}
 }
