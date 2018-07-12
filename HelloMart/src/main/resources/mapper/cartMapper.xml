@@ -11,7 +11,7 @@
     </insert>
     
     <!-- 2. 장바구니 목록 -->
-    <select id="listCart" parameterType="String" resultMap="cartResultMap">
+    <select id="listCart" parameterType="String" resultType="java.util.HashMap">
         SELECT c.idx, c.id, c.orderCount, c.date,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, cartlist c
@@ -63,22 +63,6 @@
         WHERE id = #{id}
     </delete>
     
-    <!-- 장바구니 불러올때 dto합치기 -->
-    <resultMap id="productListResultMap" type="java.util.HashMap">
-    	<id property="no" column="no"/>
-    	<result property="smallcategory" column="smallcategory"/>
-    	<result property="imagepath" column="imagepath"/>
-    	<result property="productname" column="productname"/>
-    	<result property="registerid" column="registerid"/>
-    	<result property="price" column="price"/>
-    	<collection property="productList" javaType="java.util.ArrayList" resultMap="cartResultMap"/>
-    </resultMap>
-    	
-    <resultMap id="cartResultMap" type="java.util.HashMap">
-    	<id property="idx" column="idx"/>
-    	<result property="id" column="id"/>
-    	<result property="orderCount" column="orderCount"/>
-    	<result property="date" column="date"/>
-    </resultMap>
+
     
 </mapper>
