@@ -12,16 +12,22 @@
 <script type="text/javascript">
 	function fnBuy(no, smallCategory, id){
 		var orderCount = document.getElementById("orderCount").value;
+		
 		location.href = "/buy?no=" + no + "&smallCategory=" + smallCategory
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(no, id){
+	function fnCart(no, smallCategory){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
 		if(isMove){
 			var orderCount = document.getElementById("orderCount").value;
-			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
+			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount; 	
+		}
+		else{
+			var orderCount = document.getElementById("orderCount").value;
+			location.href = "/addCartNo?no=" + no + "&orderCount=" + orderCount 
+									+ "&smallCategory=" + smallCategory; 		
 		}
 	}
 </script>
@@ -36,7 +42,48 @@
 <!-- 헤더 -->
 
 <div align="center">
-	<table style="border: 1px solid;">
+	<h2>상품 정보 보기</h2>
+	<br>
+	<table>
+		<c:if test="${detail == null}">
+		<tr>
+			<td rowspan="9">
+				<img src="${product.imagePath}" width="400px">
+			</td>
+			<td>이름</td>
+			<td>${product.productName}</td>
+		</tr>
+		<tr>
+			<td>주문횟수</td>
+			<td>${product.orderCount}</td>
+		</tr>
+		<tr>
+			<td>상품평</td>
+			<!-- 점수에 따라서 별 이미지로 처리? -->
+			<td>${prodcut.score}</td> 
+		</tr>
+		<tr>
+			<td>제작년도</td>
+			<td>${product.prodDate}</td>
+		</tr>
+		<tr>
+			<td>제작회사</td>
+			<td>${product.mfCompany}</td>
+		</tr>
+		<tr>
+			<td>가격</td>
+			<td>${product.price}</td>	
+		</tr>
+		<tr>
+			<td>무게</td>
+			<td>${product.weight}</td>
+		</tr>
+		<tr>
+			<td colspan="2">판매자 코멘트 : ${product.comment}</td>
+		</tr>
+		</c:if>
+	
+		<c:if test="${detail != null}">
 		<tr>
 			<td rowspan="9">
 				<img src="${detail.ImagePath}" width="400px">
@@ -86,26 +133,51 @@
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${detail.Comment}</td>
 		</tr>
+		</c:if>
 	</table>                       
 </div>
 <br><br>
-<div align="center"> 
-	수량 &nbsp;&nbsp;
-	<select name="orderCount" id="orderCount">
-    	<c:forEach begin="1" end="10" var="i">
-    		<option value="${i}">${i}</option>
-    	</c:forEach>
-	</select>
-	
-	&nbsp;&nbsp;<input type="button" value="구매" 
-					onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-	&nbsp;&nbsp;<input type="button" value="장바구니 담기" 
-	onclick="fnCart(${detail.no}, '${id}')">
-</div>
+<div align="center">
+	<sec:authorize access="isAnonymous()">
+       	 비회원은 구매와 장바구니를 이용할 수 없습니다. 
+       	 <a href="/login">로그인</a> 해주세요
+    </sec:authorize>
 
-<!-- <div> -->
-<%-- 	<jsp:include page="/review?no=${detail.No}"/> --%>
-<!-- </div> -->
+	<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+     	수량 &nbsp;&nbsp;
+		<select name="orderCount" id="orderCount">
+			<c:forEach begin="1" end="10" var="i">
+				<option value="${i}">${i}</option>
+			</c:forEach>
+		</select> 
+		<c:if test="${detail == null}">
+			&nbsp;&nbsp;<input type="button" value="구매"
+				onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${product.no}, '${product.smallCategory}')">
+		</c:if>
+		<c:if test="${detail != null}">
+			&nbsp;&nbsp;<input type="button" value="구매"
+				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
+		</c:if>
+	</sec:authorize>
+</div>
+<br><br><br>
+		
+<c:if test="${detail != null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${detail.No}"/> 
+	</div> 
+</c:if>
+
+<c:if test="${detail == null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${product.no}"/> 
+	</div> 
+</c:if>
+
 	
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

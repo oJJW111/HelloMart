@@ -44,7 +44,6 @@ public class AccountController {
 	@RequestMapping(value = "/join", method=RequestMethod.POST)
 	public String joinProcess(Model model,
 			@ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
-		System.out.println("안녕");
 		if(bindingResult.hasErrors()) {
 			Map<String, String> map = new HashMap<>();
 			map.put("selectedYear", account.getBirthYear());

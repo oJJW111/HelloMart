@@ -13,15 +13,14 @@ public class ProductList {
 	private String imagePath;    
 	private int orderCount;    
 	private int score;     
-	private String prodYear;
-	private String prodMonth;
-	private String prodDay;       
+	private Date prodDate;
 	private String mfCompany;   
 	private int price;  
-	private int weight;        
+	private double weight;        
 	private String registerID;     
 	private String comment;     
 	private Date registerDate;
+	private int reviewCount;
 }
 
 

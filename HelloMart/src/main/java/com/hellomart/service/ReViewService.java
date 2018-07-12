@@ -2,6 +2,8 @@ package com.hellomart.service;
 
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.hellomart.dto.ReView;
 
 public interface ReViewService{
@@ -26,7 +28,7 @@ public interface ReViewService{
 	void remodify(ReView reView);
 
 	/* 글 삭제 하는 메소드 */
-	void Redelete(int idx);
-	
-	
+	void Redelete(int idx);	
+
+	void updatereviewCount(HttpServletRequest request);
 }

@@ -2,6 +2,8 @@ package com.hellomart.service.impl;
 
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,11 @@ public class ReViewServiceImpl implements ReViewService{
 		return dao.getReCount();
 	}
 
+	@Override
+	public void updatereviewCount(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("prodNo"));
+		dao.updatereviewCount(no);
+	}
 	
-
-
+	
 }

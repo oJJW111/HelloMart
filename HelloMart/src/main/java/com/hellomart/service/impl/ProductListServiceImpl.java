@@ -33,11 +33,7 @@ public class ProductListServiceImpl implements ProductListService{
 	private final XMLParser xmlParser = new XMLParser("category.xml");
 	
 	public ProductListServiceImpl() {
-	}
-
-	
-	
-	
+	}	
 	
 	private Paging paging(String sql, Integer page) {
 		page = page == null ? 1 : page;
@@ -47,11 +43,7 @@ public class ProductListServiceImpl implements ProductListService{
 		int total = dao.getTotal(paramMap);
 		
 		return new Paging(total, page, 10, 10);
-	}
-	
-	
-	
-	
+	}	
 	
 	private Vector<ProductList> listBoard(String sql) {
 		Vector<ProductList> list = null;
@@ -67,33 +59,23 @@ public class ProductListServiceImpl implements ProductListService{
 		return list;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	private void smallCategoryDetails(Map<String, Object> modelMap, String mainCategory, String smallCategory) {
-		Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
-		HashMap<String, String> smallCategoryColumn = new HashMap<>();
-		Vector<String> columnListEng = new Vector<>();
+		if( (smallCategory != null) && (!smallCategory.equals(""))){
+			Vector<String> columnList = xmlParser.getChildren(mainCategory, smallCategory);
+			HashMap<String, String> smallCategoryColumn = new HashMap<>();
+			Vector<String> columnListEng = new Vector<>();
 		
-		for (String column : columnList) {
-			String value = xmlParser.getValue(smallCategory, column);
-			smallCategoryColumn.put(column, value);
-			columnListEng.add(xmlParser.getAttributeValue(smallCategory, column, "column"));
+			for (String column : columnList) {
+				String value = xmlParser.getValue(smallCategory, column);
+				smallCategoryColumn.put(column, value);
+				columnListEng.add(xmlParser.getAttributeValue(smallCategory, column, "column"));
+			}
+		
+			modelMap.put("columnList", columnList);
+			modelMap.put("smallCategoryColumn", smallCategoryColumn);
+			modelMap.put("columnListEng", columnListEng);
 		}
-		
-		modelMap.put("columnList", columnList);
-		modelMap.put("smallCategoryColumn", smallCategoryColumn);
-		modelMap.put("columnListEng", columnListEng);
 	}
-	
-	
-	
-	
 	
 	@Override
 	public Map<String, Object> list(Model model) {
@@ -134,14 +116,10 @@ public class ProductListServiceImpl implements ProductListService{
 		Map<String, Object> modelMap = new HashMap<>();
 		/***** Model에 put할 맵 생성 *****/
 		
-		
-		
 		String table = null;
 		try {
 			table = xmlParser.getAttributeValue(mainCategory, smallCategory, "table");
 		} catch (NullPointerException e) {}
-		
-		
 		
 		/***** 페이징처리 *****/
 		String sql = "SELECT Count(*) FROM ProductList";
@@ -150,13 +128,10 @@ public class ProductListServiceImpl implements ProductListService{
 		modelMap.put("paging", paging);
 		/***** 페이징처리 *****/
 		
-		
-		
 		/***** small 카테고리 리스트 처리 *****/
 		Vector<String> smallCategoryList = xmlParser.getChildren(mainCategory);
 		modelMap.put("smallCategoryList", smallCategoryList);
 		/***** small 카테고리 리스트 처리 *****/
-		
 		
 		if(checkedId != null) {
 			Map<String, String> checked = new HashMap<>();
@@ -167,28 +142,24 @@ public class ProductListServiceImpl implements ProductListService{
 		}
 		
 		/***** 카테고리 세부 목록 처리 *****/
-		if(smallCategory != null) {
+		if((!mainCategory.equals("액세서리")) && (smallCategory != null)) {
 			smallCategoryDetails(modelMap, mainCategory, smallCategory);
 		}
 		/***** 카테고리 세부 목록 처리 *****/
 		
 		
-		
 		/***** SQL 생성 *****/
 		int offset = paging.getOffset();
 		int limit = paging.getMaxResult();
-		sql = "SELECT no, imagePath, productName, mfCompany, price, score, orderCount From ProductList";
+		sql = "SELECT * From ProductList";
 		String listSql = createSQL(paramMap, sql, table, mainCategory, smallCategory, offset, limit);
 		/***** SQL 생성 *****/
-		
 		
 		
 		/***** 상품 리스트 처리 *****/
 		Vector<ProductList> list = listBoard(listSql);
 		modelMap.put("list", list);
-		/***** 상품 리스트 처리 *****/
-		
-		
+		/***** 상품 리스트 처리 *****/		
 		
 		return modelMap;
 	}
@@ -202,7 +173,7 @@ public class ProductListServiceImpl implements ProductListService{
 		
 		Set<String> columns = paramMap.keySet();
 		
-		if(!columns.isEmpty()) {
+		if((!mainCategory.equals("액세서리")) && (table != null) && (!table.isEmpty())) {
 			sql
 			.append(" ").append("NATURAL JOIN").append(" ")
 			.append(table);
@@ -214,57 +185,62 @@ public class ProductListServiceImpl implements ProductListService{
 		sql
 			.append("mainCategory").append(" = ").append("'").append(mainCategory).append("'");
 		
-		if(smallCategory != null) {
+		if((smallCategory != null) && (!smallCategory.equals(""))) {
 			sql.append(" and ").append("smallCategory").append(" = ").append("'").append(smallCategory).append("'");
 		}
 		
-		for(String column : columns) {
-			boolean isFirst = true;
-			StringBuilder sb = new StringBuilder();
+		for(String column : columns) {			
+			if(!paramMap.get(column)[0].equals("")){
+				boolean isFirst = true;
+				
+				StringBuilder sb = new StringBuilder();
 				sb.append(" and (");
-			for(String value : paramMap.get(column)) {
-				switch (column) {
-				case "search":
-					sb.append("ProductName").append(" LIKE ")
-					.append("'%").append(value).append("%'");
-					break;
-				case "price1":
-					sb.append("price").append(" >= ").append(value);
-					break;
-				case "price2":
-					sb.append("price").append(" <= ").append(value);
-					break;
-					default:
-						if(isFirst) {
-							isFirst = false;
-						} else {
-							sb.append(" or ");
+				for(String value : paramMap.get(column)) {
+					if(!value.equals("")){
+						switch (column) {
+						case "search":
+							sb.append("ProductName").append(" LIKE ")
+							.append("'%").append(value).append("%'");
+							break;
+						case "price1":
+							sb.append("price").append(" >= ").append(value);
+							break;
+						case "price2":
+							sb.append("price").append(" <= ").append(value);
+							break;
+							default:
+								if(isFirst) {
+									isFirst = false;
+								} else {
+									sb.append(" or ");
+								}
+								
+								if(value.indexOf('~') == -1) {
+									sb
+										.append(column)
+										.append(" = ")
+										.append("'").append(value).append("'");
+								} else {
+									StringTokenizer tokenizer = new StringTokenizer(value, "~");
+									
+									sb
+										.append("(")
+											.append(column)
+											.append(" >= ")
+											.append(filterNumber(tokenizer.nextToken()))
+											.append(" and ")
+											.append(column)
+											.append(" <= ")
+											.append(filterNumber(tokenizer.nextToken()))
+										.append(")");
+								}
 						}
-						
-						if(value.indexOf('~') == -1) {
-							sb
-								.append(column)
-								.append(" = ")
-								.append("'").append(value).append("'");
-						} else {
-							StringTokenizer tokenizer = new StringTokenizer(value, "~");
-							
-							sb
-								.append("(")
-									.append(column)
-									.append(" >= ")
-									.append(filterNumber(tokenizer.nextToken()))
-									.append(" and ")
-									.append(column)
-									.append(" <= ")
-									.append(filterNumber(tokenizer.nextToken()))
-								.append(")");
-						}
+					}
 				}
+				sb.append(")");
+				
+				sql.append(sb.toString());
 			}
-			sb.append(")");
-			
-			sql.append(sb.toString());
 		}
 		
 		if(offset != null && limit != null && offset != -1) {
@@ -283,6 +259,24 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	public String filterNumber(String str){
 		return str.replaceAll("[^0-9]", "");
+	}
+	
+
+	@Override
+	public void updateOrderCount(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("prodNo"));
+		dao.updateOrderCount(no);
+	}
+
+	@Override
+	public void updateOrderCountList(HttpServletRequest request) {
+		int size = Integer.parseInt(request.getParameter("size"));
+
+		for (int i = 0; i <= size; i++) {
+			int prodNo = Integer.parseInt(request.getParameter("prodNo" + i));
+
+			dao.updateOrderCount(prodNo);
+		}
 	}
 	
 }

@@ -12,6 +12,5 @@ public class ReView {
 	 private String Id;
 	 private int star;
 	 private Timestamp regdate;
-	
-
+	 private int reviewCount;
 }

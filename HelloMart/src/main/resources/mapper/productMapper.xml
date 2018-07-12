@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hellomart.dao.ProductDAO">
-	<select id="getProductInfo" parameterType="String" resultType="ProductList">
+	<select id="getProductInfo" parameterType="int" resultType="ProductList">
 		select * from productlist where no = #{no}
 	</select>
 	

@@ -28,4 +28,6 @@ public interface ReViewDAO {
 	/* 글 삭제 하는 메소드 */
 	void Redelete(int idx);
 	
+	void updatereviewCount(int no);
+	
 }

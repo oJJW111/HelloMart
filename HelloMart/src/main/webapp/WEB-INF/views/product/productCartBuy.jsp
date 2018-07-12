@@ -37,21 +37,21 @@
 		<h2>주문 페이지</h2>
 		<c:set var="totalPrice" value="0" />
 		<c:set var="size" value="0"/> 
-		<form action="/buyOk" method="post">
+		<form action="/cartBuyOk" method="post">
 		<table> 
 			<!-- 장바구니에 담겨있던 상품 리스트 -->
 			<c:forEach items="${productList}" varStatus="status">
 				<tr>
-					<td rowspan="5">
-						<img src="${productList[status.index].imagePath}" width="400px">
+					<td rowspan="4">
+						<img src="${productList[status.index].imagePath}" width="200px">
 					</td>
 					<td>상품명</td>
 					<td>${productList[status.index].productName}</td>
-				</tr>
+				</tr> 
 				<tr>
 					<td>상품가격</td>
 					<td>${productList[status.index].price}</td>
-				</tr>	
+				</tr> 
 				<tr>
 					<td>상품수량</td>
 					<td>${orderCountList[status.index]}</td>
@@ -59,9 +59,9 @@
 				<tr>
 					<td>금액 합계</td>
 					<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
-					<c:set value="totalPrice" />
+					<c:set var="totalPrice" value="${totalPrice + orderPrice}"  />
 					<td>${orderPrice}</td>
-				</tr>
+				</tr>  
 				
 				<!-- 주문리스트 테이블에 들어갈 값들 -->
 				<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
@@ -74,10 +74,10 @@
 				</c:if>
 				<c:if test="${status.last}">
 					<c:set var="size" value="${status.index}" />
-				</c:if>
-			</c:forEach>	
+				</c:if> 
+			</c:forEach> 
 			<tr>
-				<td colspan="3">
+				<td colspan="3" align="center">
 					<h2>총 금액 합계 : ${totalPrice}</h2>
 				</td>
 			</tr>	
@@ -145,7 +145,7 @@
 		<!-- 장바구니에 몇 종류의 상품이 들어있었는지 -->
 		<input type="hidden" name="size" value="${size}">
 		<input type="hidden" name="orderStatus" value="PAY_OK">
-		<!-- 포인트 적립을 위한 총 합계 금액 -->
+		<!-- 포인트 적립을 위한 총 합계 금액 --> 
 		<input type="hidden" name="totalPrice" value="${totalPrice}">
 		</form>
 	</center>

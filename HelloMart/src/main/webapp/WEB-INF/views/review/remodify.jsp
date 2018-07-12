@@ -16,7 +16,9 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
-
+	<!-- 헤더 -->
+	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
+	<!-- 헤더 -->
 	<div class="article_wrap">
 		<section id="bo_w">
 			<h2 id="container_title">글 수정</h2>
@@ -41,12 +43,14 @@
 				</div>
 
 				<div class="btn_confirm">
-					<input type="submit" value="글수정" id="btn_submit" class="btn_submit"> 
+					<input type="submit" value="글수정" id="btn_submit" class="btn_submit">
 					<input type="reset" value="취소" class="btn_cancel">
 				</div>
 			</form>
 		</section>
 	</div>
-
+	<!-- 푸터 -->
+	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />
+	<!-- 푸터 -->
 </body>
 </html>
