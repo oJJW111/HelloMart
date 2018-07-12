@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +24,7 @@
 					alert("종료날짜는 시작날짜 이전이 될 수 없습니다");
 				}
 				else{
-					location.href = "/mypage/history?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate;
+					location.href = "/mypage/history/period?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate;
 				}
 			}
 			else{
@@ -37,6 +38,7 @@
 </script>
 </head>
 <body>
+<sec:authentication property="principal" var="id"/>
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
@@ -51,14 +53,15 @@
 				<input type="button" value="검색" onclick="search('${id}')">
 				</td>
 				</tr>
+				<tr><td><br><br></td></tr>
 				<tr>
-					<th>이미지</th>
-					<th>상품명</th>
-					<th>구매날짜</th>
-					<th>상품금액</th>
-					<th>수량</th>
-					<th>총금액</th>
-					<th>리뷰작성</th>
+					<th align="center">이미지</th>
+					<th align="center">상품명</th>
+					<th align="center">구매날짜</th>
+					<th align="center">상품금액</th>
+					<th align="center">수량</th>
+					<th align="center">총금액</th>
+					<th align="center">리뷰작성</th>
 				</tr>
 				<c:choose>
 				<c:when test="${map.count == 0}">
@@ -72,19 +75,23 @@
 				<c:forEach var="row" items="${map.list}" varStatus="i">
 				<tr>
 					<td>
-						<img src="${row.imagepath}" width="150" height="150">
+						<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}">
+							<img src="${row.imagepath}" width="150" height="150">
+						</a>
 					</td>
 					<td>
-						${row.productname }
+						<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}"
+						style="color: black;"> 
+						${row.productname}</a>
 					</td>
 					<td>
 						<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price }"/> 원
+						<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> 원
 					</td>
 					<td>
-						${row.orderCount } 개
+						${row.orderCount} 개
 					</td>
 					<td>
 						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> 원

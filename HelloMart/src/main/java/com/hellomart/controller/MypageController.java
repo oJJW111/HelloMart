@@ -210,6 +210,17 @@ public class MypageController {
         return mav;
 	}
 	
+	@RequestMapping("/history/period")
+	public String historyPeriod(Model model, String id, String startDate, String endDate) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<OrderList> list = historyservice.historyDatelist(id, startDate, endDate + " 24:00:00");
+        map.put("list", list);               
+        map.put("count", list.size());        
+        model.addAttribute("map", map);
+        
+		return "mypage/history"; 
+	}
+	
 	@RequestMapping("/todayView")
 	public void todayView() {
 	}

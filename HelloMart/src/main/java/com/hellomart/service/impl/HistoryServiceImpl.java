@@ -23,5 +23,9 @@ public class HistoryServiceImpl implements HistoryService{
 	public List<OrderList> historylist(String id) {
 		return dao.historylist(id);
 	}
-	
+
+	@Override
+	public List<OrderList> historyDatelist(String id, String startDate, String endDate) {
+		return dao.historyDatelist(id, startDate, endDate);
+	} 	
 }

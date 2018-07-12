@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class ReView {
-
 	 private int Idx;
 	 private int No;
 	 private String content;

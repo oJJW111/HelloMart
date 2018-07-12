@@ -16,33 +16,25 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
-
 	<div class="article_wrap">
-		<h4 align="left">리뷰쓰기</h4>
+		<h4 align="left">리뷰</h4>
 		<div id="bo_list">
-			<div id="bo_list_total">
-				전체<span>20</span>건
-			</div>
 			<div class="tbl_head01 tbl_wrap">
-					<table>
-						<c:forEach var="review" items="${list}">
-							<tr class="bo_notice">
-									<td><c:forEach begin="1" end="${review.star}">★</c:forEach>
-									<td class="td_num">${review.idx}</td>
-									<td class="td_name sv_use">${review.id}</td>
-									<td class="td_date">
-									<fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd"/>
-								</td>
+				<table>
+					<c:forEach var="review" items="${list}">
+						<tr class="bo_notice">
+							<td>
+								<c:forEach begin="1" end="${review.star}">★</c:forEach><c:forEach begin="${review.star + 1}" end="5">☆</c:forEach>
+							</td>
+							<td>${review.content}</td>
+							<td class="td_name sv_use">${review.id}</td>
+							<td class="td_date">
+								<fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd"/>
+							</td>
 							</tr>
 						</c:forEach>
-					</table>
+				</table>
 			</div>
-			<div class="bo_fx">
-				<ul class="btn_bo_user">
-					<li><a href="/reWrite" class="btn_b02">글쓰기</a></li>
-				</ul>
-			</div>
-
 		</div>
 		<c:if test="${pageCount>1 }">
 			<div align="center" id="page">
@@ -58,8 +50,6 @@
 				</c:if>
 			</div>
 		</c:if>
-	
 	</div>
-
 </body>
 </html>
