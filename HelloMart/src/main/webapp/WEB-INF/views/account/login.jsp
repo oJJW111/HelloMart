@@ -103,8 +103,11 @@ function checkCapsLock( e ) {
     }
     if( myKeyCode >= 97 && myKeyCode <= 122 ){
     	$('.tooltiptext').css("visibility","hidden");
-    }
-    
+    }   
+}
+
+function findIdPw() {
+	var idpw_search = window.open("idpw_search", "_blank", "width=300,height=300,left=800,top=200");
 }
 </script>
 </head>

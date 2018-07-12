@@ -72,5 +72,5 @@ public interface AccountService {
 	 */
 	void sellerApproval(List<String> idList);
 
-
+	void searchIDPW(String email);
 }

@@ -87,4 +87,6 @@ public interface AccountDAO {
 	String getPasswd(String id);
 
 	void modifyPw(String id, String new_pw);  
+	
+	String findIdByEmail(String email);
 }

@@ -58,4 +58,23 @@ public class AccountController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value="/idpw_search", method=RequestMethod.GET)
+	public String idpw_search() {
+		return "account/idpw_search";
+	}
+		
+	@RequestMapping(value="/idpw_search", method=RequestMethod.POST)
+	public ModelAndView idpw_search_do(@RequestParam("email") String email) {
+		ModelAndView mav = new ModelAndView();
+		StringBuilder sb = new StringBuilder();
+		
+		service.searchIDPW(email);
+	
+		sb.append("redirect:/idpw_search");
+		sb.append("?submit=1");
+			
+		mav.setViewName(sb.toString());
+		return mav;
+	}
+	
 }
