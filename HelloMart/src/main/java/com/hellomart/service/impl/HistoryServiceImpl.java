@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.hellomart.dao.HistoryDAO;
 import com.hellomart.dto.OrderList;
+import com.hellomart.dto.ReView;
 import com.hellomart.service.HistoryService;
 
 @Service
@@ -26,7 +27,7 @@ public class HistoryServiceImpl implements HistoryService{
 	}
 
 	@Override
-	public int reviewCheck(String no, String id) {
+	public ReView reviewCheck(String no, String id) {
 		return dao.reviewCheck(no, id);
 	}
 

@@ -41,20 +41,10 @@ public class ReViewServiceImpl implements ReViewService{
 	}
 
 	@Override
-	public void deleteReView(int idx) {
-		dao.deleteReView(idx);
-	}
-
-	@Override
 	public void remodify(ReView reView) {
 		dao.remodify(reView);
 	}
 
-	@Override
-	public void Redelete(int idx) {
-		dao.Redelete(idx);
-	}
-	
 	@Override
 	public int getReCount() {
 		return dao.getReCount();
@@ -64,6 +54,12 @@ public class ReViewServiceImpl implements ReViewService{
 	public void updatereviewCount(HttpServletRequest request) {
 		int no = Integer.parseInt(request.getParameter("prodNo"));
 		dao.updatereviewCount(no);
+	}
+
+	@Override
+	public void redelete(int idx) {
+		dao.redelete(idx);
+		
 	}
 	
 	

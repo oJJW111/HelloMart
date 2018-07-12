@@ -15,15 +15,15 @@
 </head>
 <body>
 
-		<c:choose>
-			<c:when test="${check == 0}">
+			<c:if test="${check == false}">
 				<input type="button" value="리뷰작성" onclick="fnRv('${no}')">
-			</c:when>
-			<c:otherwise>
+			</c:if>
+			<c:if test="${check == true}">
 				<input type="button" value="수정"
-					onclick="location.href='/remodify?idx=${idx}'">
-			</c:otherwise>
-		</c:choose>
+					onclick="location.href='/remodify?idx=${idx}'">&nbsp;&nbsp;&nbsp;
+				<input type="button" value="삭제"
+					onclick="location.href='/redelete?idx=${idx}'">	
+			</c:if>
 
 </body>
 </html>

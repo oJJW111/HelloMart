@@ -105,7 +105,7 @@
 								<input type="button" value="¼öÁ¤" onclick="location.href='/remodify?idx=${row.idx}'">
 							</c:otherwise>
 						</c:choose> --%>
-						<jsp:include page="/mypage/historyButton?no=${row.prodNo}&idx=${row.idx }"></jsp:include>
+						<jsp:include page="/mypage/historyButton?no=${row.prodNo}"></jsp:include>
 						
 					</td>
 				</tr>

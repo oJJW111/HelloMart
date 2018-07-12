@@ -16,9 +16,6 @@ public interface ReViewDAO {
 	/* 게시글 뷰화면 메소드 */
 	ReView ReView(int idx);
 	
-	/* 게시글을 삭제하는 메소드 */
-	void deleteReView(int idx);
-
 	/* 게시글의 전체 개수 불러오는 메소드 */
 	int getReCount();
 	
@@ -26,7 +23,7 @@ public interface ReViewDAO {
 	void remodify(ReView reView);
 
 	/* 글 삭제 하는 메소드 */
-	void Redelete(int idx);
+	void redelete(int idx);
 	
 	void updatereviewCount(int no);
 	

@@ -23,14 +23,14 @@
 		<section id="bo_w">
 			<h2 id="container_title">글 수정</h2>
 
-			<form action="remodify" method="post">
-				<sec:authentication var="id" property="principal" />
-				<input type="hidden" name="idx" value="${reView.idx}">
+			<form action="/remodify" method="post">
+				<sec:authentication var="Id" property="principal" />
+				<input type="hidden" name="Idx" value="${reView.idx}">
 				<div class="tbl_frm01 tbl_wrap">
 					<table>
 						<tbody>
 							<tr>
-								<td><input type="text" name="id" class="frm_input required"
+								<td><input type="text" name="Id" class="frm_input required"
 									size="10" maxlength="20" value="${reView.id }"
 									readonly="readonly"></td>
 							</tr>

@@ -15,7 +15,7 @@
 	</insert>
 
 	<select id="ReView" resultType="ReView"> 
-		SELECT * FROM ReView WHERE	Idx =#{idx}
+		SELECT * FROM ReView WHERE Idx =#{idx}
 	</select>
 
 	<!-- 글 수정 쿼리 -->

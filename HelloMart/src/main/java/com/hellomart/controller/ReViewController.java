@@ -97,11 +97,11 @@ public class ReViewController {
 	}
 
 	@RequestMapping(value = "/remodify", method = RequestMethod.GET)
-	public ModelAndView remodify(int idx) {
+	public ModelAndView remodify(int idx){
 
 		ModelAndView mav = new ModelAndView();
 		ReView reView = service.ReView(idx);
-		mav.addObject("reivew", reView);
+		mav.addObject("reView", reView);
 		mav.setViewName("review/remodify");
 		return mav;
 	}
@@ -109,12 +109,12 @@ public class ReViewController {
 	@RequestMapping(value = "/remodify", method = RequestMethod.POST)
 	public String remodifyProcess(ReView reView) {
 		service.remodify(reView);
-		return "redirect:/ReViewList";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/redelete", method = RequestMethod.GET)
 	public String redeleteProcess(int idx) {
-		service.deleteReView(idx);
-		return "redirect:/ReViewList";
+		service.redelete(idx);
+		return "redirect:/";
 	}
 }

@@ -33,6 +33,7 @@ import com.hellomart.dto.Cart;
 
 import com.hellomart.dto.OrderList;
 import com.hellomart.dto.ProductList;
+import com.hellomart.dto.ReView;
 import com.hellomart.service.AccountService;
 import com.hellomart.service.HistoryService;
 import com.hellomart.service.PointService;
@@ -231,11 +232,15 @@ public class MypageController {
 	public ModelAndView historyButton(ModelAndView mav,Principal principal, HttpServletRequest request ) {
 		String id = principal.getName();
 		String no = request.getParameter("no");
-		String idx = request.getParameter("idx");
-		int check = historyservice.reviewCheck(no, id);
-		mav.addObject("check", check);
+		ReView review = historyservice.reviewCheck(no, id);
+		boolean check = false;
+		if(review != null){
+			check = true;
+			mav.addObject("idx", review.getIdx());
+			
+		}
 		mav.addObject("no", no);
-		mav.addObject("idx", idx);
+		mav.addObject("check", check);
 		mav.setViewName("mypage/historyButton");
 		
 		return mav;

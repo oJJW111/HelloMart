@@ -25,8 +25,8 @@
 		ORDER BY o.orderDate
 	</select>
 
-	<select id="reviewCheck" resultType="int">
-		select count(*) from review where no = #{param1} and id = #{param2}
+	<select id="reviewCheck" resultType="ReView">
+		select * from review where no = #{param1} and id = #{param2}
 	</select>
 
 

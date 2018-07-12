@@ -14,17 +14,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-
-<script type="text/javascript">
-function redelchk(){
-    if(confirm("글을 삭제하시겠습니까?")){
-        location.href = "/redelete?Idx=${review.idx}";
-        return true;
-    } else {
-        return false;
-    }
-}
-</script>
 </head>
 <body>
 	<div class="article_wrap">
