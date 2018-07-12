@@ -14,6 +14,7 @@
 
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
@@ -52,15 +53,15 @@
                            <sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
                            <c:choose>
                               <c:when test="${loginid == list.id }">
-                               <a href="/qaboard/qaview?idx=${list.idx}">${list.subject }</a> [${list.cmt }]
+                               <a href="/qaboard/qaview?idx=${list.idx }&id=${list.id}">${list.subject }</a> [${list.cmt }]
                               </c:when>
                               <c:otherwise>
                                글을 볼수 없습니다.
                                </c:otherwise>
                            </c:choose>
                            </sec:authorize>
-                               <sec:authorize access="hasRole('ROLE_ADMIN')" var="v">
-                               <a href="/qaboard/qaviewad?idx=${list.idx}&v=${v}">${list.subject }</a> [${list.cmt }]
+                               <sec:authorize access="hasRole('ROLE_ADMIN')">
+                               <a href="/qaboard/qaview?idx=${list.idx }">${list.subject }</a> [${list.cmt }]
                               </sec:authorize>
                            </td>                                  
                            <td class="td_name sv_use">${list.id }</td>
