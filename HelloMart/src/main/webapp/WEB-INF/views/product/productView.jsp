@@ -42,7 +42,48 @@
 <!-- 헤더 -->
 
 <div align="center">
-	<table style="border: 1px solid;">
+	<h2>상품 정보 보기</h2>
+	<br>
+	<table>
+		<c:if test="${detail == null}">
+	<tr>
+			<td rowspan="9">
+				<img src="${product.imagePath}" width="400px">
+			</td>
+			<td>이름</td>
+			<td>${product.productName}</td>
+		</tr>
+		<tr>
+			<td>주문횟수</td>
+			<td>${product.orderCount}</td>
+		</tr>
+		<tr>
+			<td>상품평</td>
+			<!-- 점수에 따라서 별 이미지로 처리? -->
+			<td>${prodcut.score}</td> 
+		</tr>
+		<tr>
+			<td>제작년도</td>
+			<td>${product.prodDate}</td>
+		</tr>
+		<tr>
+			<td>제작회사</td>
+			<td>${product.mfCompany}</td>
+		</tr>
+		<tr>
+			<td>가격</td>
+			<td>${product.price}</td>	
+		</tr>
+		<tr>
+			<td>무게</td>
+			<td>${product.weight}</td>
+		</tr>
+		<tr>
+			<td colspan="2">판매자 코멘트 : ${product.comment}</td>
+		</tr>
+		</c:if>
+	
+		<c:if test="${detail != null}">
 		<tr>
 			<td rowspan="9">
 				<img src="${detail.ImagePath}" width="400px">
@@ -92,6 +133,7 @@
 		<tr>
 			<td colspan="2">판매자 코멘트 : ${detail.Comment}</td>
 		</tr>
+		</c:if>
 	</table>                       
 </div>
 <br><br>
@@ -107,13 +149,14 @@
 			<c:forEach begin="1" end="10" var="i">
 				<option value="${i}">${i}</option>
 			</c:forEach>
-		</select>
+		</select> 
 		&nbsp;&nbsp;<input type="button" value="구매"
 				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
 		&nbsp;&nbsp;<input type="button" value="장바구니 담기"
 				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 	</sec:authorize>
 </div>
+<br><br><br>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

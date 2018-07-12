@@ -43,9 +43,6 @@ $(document).ready(function(){
 		<div class="F_right haeder_bar_menu" id="bar_menu1">오늘 본 상품</div>
 		<div class="F_right haeder_bar_menu_line"></div>
 		
-		<div class="F_right haeder_bar_menu" id="bar_menu1">고객센터</div>
-		<div class="F_right haeder_bar_menu_line"></div>
-		
 		<sec:authorize access="isAnonymous()">
 			<div class="F_right haeder_bar_menu" id="bar_menu2">회원가입</div>
 			<div class="F_right haeder_bar_menu_line"></div>
