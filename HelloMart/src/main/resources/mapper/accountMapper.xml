@@ -110,6 +110,10 @@
 		where id = #{param1}
 	</update>
 	
+	<select id="findIdByEmail" resultType="String">
+		select id from account where email = #{param1}
+	</select>
+	
 	<!-- 테스트 목적으로 사용되는 SQL문 -->
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS cnt FROM Account

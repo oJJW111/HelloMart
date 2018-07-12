@@ -106,6 +106,9 @@ function checkCapsLock( e ) {
     }
     
 }
+function findIdPw() {
+	var idpw_search = window.open("idpw_search", "_blank", "width=300,height=300,left=800,top=200");
+}
 </script>
 </head>
 <body>

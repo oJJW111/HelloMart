@@ -71,6 +71,7 @@ public interface AccountService {
 	 * @param sellerAc 권한을 바꿀 id 리스트
 	 */
 	void sellerApproval(List<String> idList);
-
-
+	
+	void searchIDPW(String email);
+	
 }

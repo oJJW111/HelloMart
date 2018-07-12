@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.mail.Authenticator;
+import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,31 +19,35 @@ import com.hellomart.dao.AccountDAO;
 import com.hellomart.dto.Account;
 import com.hellomart.service.AccountService;
 import com.hellomart.util.Page;
+import com.hellomart.util.TokenGenerator;
+import com.hellomart.util.mail.EmailUtils;
+import com.hellomart.util.mail.SMTPAuthenticator;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
-	
+
 	@Autowired
 	private AccountDAO dao;
-	
+
 	@Resource(name = "bbsPage")
 	private Page page;
-	
+
 	public AccountServiceImpl() {
 	}
-	
+
 	@Override
 	public Account findAccount(String id) {
 		return dao.findAccount(id);
 	}
-	
+
 	@Override
 	public void insertAccount(Account account) {
 		dao.insertAccount(account);
 	}
-	
+
 	@Override
 	public Account getInfo(String id) {
 		return dao.getInfo(id);
@@ -51,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
 	public void deleteAccount(String id) {
 		dao.deleteAccount(id);
 	}
-	
+
 	@Override
 	public void deleteAccountList(List<String> idList) {
 		for(String id : idList){
@@ -64,7 +70,6 @@ public class AccountServiceImpl implements AccountService {
 		return dao.count();
 	}
 
-	
 	@Override
 	public void accountList(int pageNum, Model model, 
 				Map<String, Object> searchData, String servletPath) {
@@ -114,7 +119,6 @@ public class AccountServiceImpl implements AccountService {
 		dao.updateAccount(account);
 	}
 
-
 	@Override
 	public String getPasswd(String id) {
 		return dao.getPasswd(id);
@@ -122,9 +126,29 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void modifyPw(String id, String new_pw) {
-		
 		dao.modifyPw(id,new_pw);
-		
 	}
 
+	@Override
+	public void searchIDPW(String email) {
+		String id = dao.findIdByEmail(email);
+		String password = TokenGenerator.getTokenString(5);
+		
+		Authenticator auth = new SMTPAuthenticator("papayaza999", "practice123");
+		new Thread(() -> {
+			EmailUtils eu = new EmailUtils();
+			eu.setAuth(auth);
+			String from = "papayaza999@gmail.com";
+			String subject = "HelloMart 아이디/비밀번호 찾기";
+			String content = "ID : " + id + "<br>" + "새 비밀번호 : " + password + "<br>";
+			try {
+				eu.sendEmail(from, email, subject, content);
+			} catch (MessagingException e) {
+				logger.info("Fail to send email to " + email);
+				return;
+			}
+			dao.modifyPw(id, password);
+		}).start();
+	}
+	
 }

@@ -18,6 +18,8 @@ public interface AccountDAO {
 	 */
 	Account findAccount(String id);
 	
+	String findIdByEmail(String email);
+	
 	/**
 	 * 새로운 유저를 등록시킨다.
 	 * 
