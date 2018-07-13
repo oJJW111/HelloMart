@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.ReView;
+import com.hellomart.service.ProductListService;
 import com.hellomart.service.ReViewService;
 
 @Controller
@@ -22,6 +23,9 @@ public class ReViewController {
 
 	@Autowired
 	private ReViewService service;
+	
+	@Autowired
+	private ProductListService productListService;
 
 	@RequestMapping("/review")
 	public ModelAndView reViewList(String pageNum, int no) {
@@ -80,6 +84,8 @@ public class ReViewController {
 	public String writeProcess(ReView review, Principal principal){
 		String id = principal.getName();
 		service.reWrite(review);
+		productListService.updateScore(review.getStar()*20,review.getNo());
+		productListService.updateReviewCount(review.getNo());
 		
 		return "redirect:/mypage/history?id="+id;
 	}

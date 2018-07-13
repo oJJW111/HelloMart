@@ -27,8 +27,8 @@ public class ProductListServiceImpl implements ProductListService{
 	private static final Logger logger = LoggerFactory.getLogger(ProductListServiceImpl.class);
 	
 	@Autowired
-	ProductListDAO dao;
-	
+	ProductListDAO dao; 
+	 
 	private final XMLParser xmlParser = new XMLParser("category.xml");
 	
 	public ProductListServiceImpl() {
@@ -103,7 +103,7 @@ public class ProductListServiceImpl implements ProductListService{
 				page = Integer.parseInt(request.getParameter(param));
 				break;
 			case "checkedId":
-				checkedId = request.getParameterValues(param);
+				checkedId = request.getParameterValues("checkedId");
 				break;
 				default:
 					String[] value = request.getParameterValues(param);
@@ -277,5 +277,14 @@ public class ProductListServiceImpl implements ProductListService{
 			dao.updateOrderCount(prodNo);
 		}
 	}
-	
+
+	@Override
+	public void updateScore(int star, int no) {
+		dao.updateScore(star, no);
+	}
+ 
+	@Override
+	public void updateReviewCount(int no) {
+		dao.updateReviewCount(no); 
+	}	
 }

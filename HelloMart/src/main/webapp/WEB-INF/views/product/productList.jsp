@@ -233,9 +233,9 @@ $(function(){
 							<strong>${board.price} 원</strong>
 						</div>
 						<div class="additional_info">
-							<span class="satisfaction">만족도 : ${board.score}</span>
+							<span class="satisfaction">만족도 : ${board.score}점</span>
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
-							<span class="review">상품평 : ${board.reviewCount} 개</span>
+							<span class="review">상품평 : ${board.reviewCount}개</span>
 						</div>
 						<sec:authentication property="principal" var="userId" />
 						<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">

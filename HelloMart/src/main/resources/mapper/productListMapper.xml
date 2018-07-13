@@ -21,4 +21,14 @@
    		set orderCount = orderCount + 1
    		where no = #{param1}
 	</update>
+	
+	<update id="updateReviewCount">
+   		update productlist 
+   		set reviewCount = reviewCount + 1
+   		where no = #{param1}
+	</update>
+	
+	<update id="updateScore">
+		update productlist set score = (reviewCount * score + #{param1})/ (reviewCount + 1) where no = ${param2};
+	</update>
 </mapper> 

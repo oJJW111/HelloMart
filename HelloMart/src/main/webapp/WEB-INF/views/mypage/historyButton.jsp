@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
 	function fnRv(no) {
@@ -14,13 +13,13 @@
 </head>
 <body>
 	<c:if test="${check == false}">
-		<input type="button" value="¸®ºä ÀÛ¼º" onclick="fnRv('${no}')">
+		<input type="button" value="ë¦¬ë·° ìž‘ì„±" onclick="fnRv('${no}')">
 	</c:if>
 	
 	<c:if test="${check == true}">
-		<input type="button" value="¸®ºä ¼öÁ¤" onclick="location.href='/remodify?idx=${idx}'">
+		<input type="button" value="ë¦¬ë·° ìˆ˜ì •" onclick="location.href='/remodify?idx=${idx}'">
 		&nbsp;&nbsp;&nbsp;
-		<input type="button" value="¸®ºä »èÁ¦" onclick="location.href='/redelete?idx=${idx}'">	
+		<input type="button" value="ë¦¬ë·° ì‚­ì œ" onclick="location.href='/redelete?idx=${idx}'">	
 	</c:if>
 </body>
 </html>

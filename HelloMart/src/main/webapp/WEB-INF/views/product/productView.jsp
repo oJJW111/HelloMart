@@ -96,9 +96,8 @@
 			<td>${detail.OrderCount}</td>
 		</tr>
 		<tr>
-			<td>상품평</td>
-			<!-- 점수에 따라서 별 이미지로 처리? -->
-			<td>${detail.Score}</td> 
+			<td>만족도</td>
+			<td>${detail.Score}점</td> 
 		</tr>
 		<tr>
 			<td>제작년도</td>
