@@ -52,6 +52,7 @@
 			<td align="center" width="15%">감소</td>
 			<td align="center" width="55%">내용</td>
 		</tr>
+		
 	<c:forEach var="point" items="${pointList}">
 		<tr>
 			<td align="center">
@@ -68,6 +69,7 @@
 			<td align="center">${point.content}</td>	
 		</tr>
 	</c:forEach>
+	
 	</table>
 	<br><br><br><br>
 </body>
