@@ -34,6 +34,12 @@ public class SellerServiceImpl implements SellerService{
 	@Autowired
 	private Upload upload;
 	
+	private List<TableInformation> tableList;
+	
+	public SellerServiceImpl() {
+		tableList = tableInfoXmlParser();
+	}
+	
 	@Override
 	public void getSellerProductList(int pageNum, Model model, 
 				String id, String servletPath) {
@@ -55,7 +61,7 @@ public class SellerServiceImpl implements SellerService{
 			= new ArrayList<HashMap<String,Object>>();
 		for(ProductList i : sellerProductList){
 			sellerProductMap = new HashMap<String, Object>();
-			sellerProductMap.put("ImagePath", i.getImagePath());
+			sellerProductMap.put("imagePath", i.getImagePath());
 			sellerProductMap.put("ProductName", i.getProductName());
 			sellerProductMap.put("MfCompany", i.getMfCompany());
 			sellerProductMap.put("MainCategory", i.getMainCategory());
@@ -63,7 +69,7 @@ public class SellerServiceImpl implements SellerService{
 			sellerProductMap.put("Price", i.getPrice());
 			sellerProductMap.put("Score", i.getScore());
 			sellerProductMap.put("OrderCount", i.getOrderCount());
-			sellerProductMap.put("count", dao.reviewCount(i.getNo()));
+			sellerProductMap.put("count", i.getReviewCount());
 			sellerProdReviewList.add(sellerProductMap);
 		}
 		model.addAttribute("id", id);
@@ -73,65 +79,80 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 	@Override
-	public Map<String, Object> productPartSpec(Model model, Map<String, String> category) {
-		String mainCategory = category.get("mainCategory");		
-		String smallCategory = category.get("smallCategory");
+	public void productPartSpec(Model model, String mainCategory, String smallCategory) {
 		
-		List<String> productPartSpecList;
-		
-		List<String> productPartSpecEngName = new ArrayList<String>();
-		List<String> productPartSpecKorName = new ArrayList<String>();
-		Map<String, List<String>> productPartSpecMap = new HashMap<String, List<String>>();
-		List<String> productPartSpecColumnTypeList = new ArrayList<String>();
-		
-		StringTokenizer tokenizer;
-		XMLParser xmlParser = new XMLParser("category.xml");
-		String specValue = null;
-		String specValueList = null;
-		List<String> tokenResultValueList;
-		
-		try {
-			
-			productPartSpecList = xmlParser.getChildren(smallCategory);
-			for(String productSpec : productPartSpecList){
-				specValueList = xmlParser.getValue(smallCategory, productSpec); 
-				System.out.println(smallCategory + "의 " + productSpec + "("
-										+ xmlParser.getAttributeValue(productSpec, "column") + ")의 value : " + specValueList.trim());
-				
-				productPartSpecEngName.add(xmlParser.getAttributeValue(productSpec, "column"));
-				productPartSpecColumnTypeList.add(xmlParser.getAttributeValue(productSpec, "type"));
-				productPartSpecKorName.add(productSpec);
-				
-				tokenResultValueList = new ArrayList<String>();
-				tokenizer = new StringTokenizer(specValueList.trim(), ",");
-				while(tokenizer.hasMoreTokens()){ 
-					specValue = tokenizer.nextToken();
-					tokenResultValueList.add(specValue.trim());	
-				}
-				
-				productPartSpecMap.put(productSpec, tokenResultValueList); 
+		TableInformation tableInfo = null;
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).getTableKorName().equals(smallCategory)){
+				tableInfo = tableList.get(i);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+
 		model.addAttribute("mainCategory", mainCategory);
 		model.addAttribute("smallCategory", smallCategory);
-		model.addAttribute("specMapList", productPartSpecMap);
-		model.addAttribute("specEngNameList", productPartSpecEngName);
-		model.addAttribute("specKorNameList", productPartSpecKorName);
+		model.addAttribute("smallCategoryEng", tableInfo.getTableEngName());
+		model.addAttribute("specList", tableInfo.getColumnValueList());
+		model.addAttribute("specEngNameList", tableInfo.getColumnEngNameList());
+		model.addAttribute("specKorNameList", tableInfo.getColumnKorNameList());
+		model.addAttribute("specTypeList", tableInfo.getColumnTypeList());
+		model.addAttribute("specUnitList", tableInfo.getColumnUnitList());
+	}
+	
+	
+
+	@Override
+	public Boolean PartProductValidCheck(MultipartHttpServletRequest mRequest, 
+			Model model, String mainCategory, String smallCategory) {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("specEngNameList", productPartSpecEngName);
-		map.put("specKorNameList", productPartSpecKorName);
-		map.put("specMapList", productPartSpecMap);
-		map.put("tableName", xmlParser.getAttributeValue(smallCategory, "table"));
-		map.put("productPartSpecColumnTypeList",productPartSpecColumnTypeList);
-		return map;
+		Boolean flag = true;
+		TableInformation tableInfo = null;
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).getTableKorName().equals(smallCategory)){
+				tableInfo = tableList.get(i);
+			}
+		}
+		if(mRequest.getFile("productImageFile").isEmpty()){
+			model.addAttribute("fileMsg", "업로드가 안 되었습니다.");
+			flag = false;
+		}else{
+			String imageFileName = mRequest.getFile("productImageFile").getOriginalFilename();
+			Long imageFileSize = mRequest.getFile("productImageFile").getSize();
+			String extension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1, imageFileName.length());
+			if((!extension.toLowerCase().equals("gif")) 
+				&& (!extension.toLowerCase().equals("png"))
+				&& (!extension.toLowerCase().equals("jpg"))
+				&& (!extension.toLowerCase().equals("jpeg"))){
+				model.addAttribute("fileMsg", "확장자가 맞지 않습니다.");
+				flag = false;
+			}else if(imageFileSize > 1*1024*1024){
+				model.addAttribute("fileMsg", "크기는 1MB이하입니다.");
+				flag = false;
+			}
+		}
+		
+		List<String> parameters = new ArrayList<String>();
+		List<String> errorMessages = new ArrayList<String>();
+		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
+			String requestValue 
+				= mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
+			if(requestValue != ""){
+				parameters.add(requestValue);
+				errorMessages.add(" ");
+			}else{
+				flag = false;
+				errorMessages.add(tableInfo.getColumnKorNameList().get(i) + "가 입력되어 있지 않습니다.");
+			}
+		}
+		model.addAttribute("specKorNameError", errorMessages);
+		if(!flag){
+			System.out.println("체크 통과 못함");
+			productPartSpec(model, mainCategory, smallCategory);
+		}
+		return flag;
 	}
 
 	@Override
-	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList,
-				Map<String, Object> tempTableInfoMap) {
+	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList) {
 		Map<String, Object> fileResultMap = upload.fileUpload(mRequest);
 		if((Boolean)fileResultMap.get("isUpload")){
 			String imagePath = (String)fileResultMap.get("imagePath");
@@ -139,113 +160,80 @@ public class SellerServiceImpl implements SellerService{
 		}else{
 			return;
 		}
+		dao.insertProductInfo(productList);
 		
-		List<String> productPartSpecColumnNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
-		List<String> productPartSpecColumnTypeList = (List<String>)tempTableInfoMap.get("productPartSpecColumnTypeList");
+		TableInformation tableInfo = null;
+		for(int i = 0 ; i < tableList.size() ; i++){
+			if(tableList.get(i).getTableKorName().equals(productList.getSmallCategory())){
+				tableInfo = tableList.get(i);
+			}
+		}
+		
 		Map<String, Object> productPartSpecColumnMap = new HashMap<String, Object>();
 		
-		StringBuffer sBuffer; Pattern p; Matcher m;
-		int[] intNumbers = new int[2];
-		double[] doubleNumbers = new double[2];
-		
-		for(int i = 0 ; i < productPartSpecColumnNameList.size() ; i++){
-			String columnValue = mRequest.getParameter(productPartSpecColumnNameList.get(i));
-			String columnName = productPartSpecColumnNameList.get(i);
-			String columnType = productPartSpecColumnTypeList.get(i);
+		for(int i = 0 ; i < tableInfo.getColumnEngNameList().size() ; i++){
+			String columnValue = mRequest.getParameter(tableInfo.getColumnEngNameList().get(i));
+			String columnName = tableInfo.getColumnEngNameList().get(i);
+			String columnType = tableInfo.getColumnTypeList().get(i);
 			if(columnType.equals("Integer")){
-				int resultColumnValue;
-				if(columnValue.indexOf("~") > 0){
-					String[] columnValueList = columnValue.split("~");
-					for(int j = 0 ; j < columnValueList.length ; j++){
-						sBuffer = new StringBuffer();
-						p = Pattern.compile("[-?0-9]+");
-						m = p.matcher(columnValueList[j]);
-						while (m.find()) {
-							sBuffer.append(m.group());
-						}
-						intNumbers[j] = Integer.parseInt(sBuffer.toString());
-					}
-					resultColumnValue 
-						= (int) (Math.random() * (intNumbers[1] - intNumbers[0] + 1)) + intNumbers[0]; 
-				}else{
-					sBuffer = new StringBuffer();
-					p = Pattern.compile("[-?0-9]+");
-					m = p.matcher(columnValue);
-					while (m.find()) {
-						sBuffer.append(m.group());
-					}
-					resultColumnValue = Integer.parseInt(sBuffer.toString());
-				}
+				int resultColumnValue = Integer.parseInt(columnValue);
 				productPartSpecColumnMap.put(columnName, resultColumnValue);
 			}else if(columnType.equals("Double")){
-				double resultColumnValue;
-				if(columnValue.indexOf("~") > 0){
-					String[] columnValueList = columnValue.split("~");
-					for(int j = 0 ; j < columnValueList.length ; j++){
-						sBuffer = new StringBuffer();
-						p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
-						m = p.matcher(columnValueList[j]);
-						while (m.find()) {
-							sBuffer.append(m.group());
-						}
-						doubleNumbers[j] = Double.parseDouble(sBuffer.toString());
-					}
-					resultColumnValue 
-						= (Math.random() * (doubleNumbers[1] - doubleNumbers[0])) + doubleNumbers[0];
-					resultColumnValue 
-						= Double.parseDouble(String.format("%.1f", resultColumnValue));
-				}else{
-					sBuffer = new StringBuffer();
-					p = Pattern.compile("-?\\d+(,\\d+)*?\\.?\\d+?");
-					m = p.matcher(columnValue);
-					while (m.find()) {
-						sBuffer.append(m.group());
-					}
-					resultColumnValue = Double.parseDouble(sBuffer.toString());
-				}
+				double resultColumnValue = Double.parseDouble(columnValue);
 				productPartSpecColumnMap.put(columnName, resultColumnValue);
 			}else{
 				productPartSpecColumnMap.put(columnName, columnValue);
 			}
 		}
 		
-		dao.insertProductInfo(productList);
 		int no = dao.getNoProductList();
 		
-		String tableName = (String)tempTableInfoMap.get("tableName");
+		String tableName = tableInfo.getTableEngName();
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO ");
 		sql.append(tableName);
 		sql.append(" (No, ");
 		int i;
-		for(i = 0 ; i < productPartSpecColumnNameList.size() - 1;i++){
-			sql.append(productPartSpecColumnNameList.get(i) + ", ");
+		for(i = 0 ; i < tableInfo.getColumnEngNameList().size() - 1;i++){
+			sql.append(tableInfo.getColumnEngNameList().get(i) + ", ");
 		}
-		sql.append(productPartSpecColumnNameList.get(i) + ") ");
+		sql.append(tableInfo.getColumnEngNameList().get(i) + ") ");
 		sql.append("VALUES(");
 		sql.append(no + ", ");
-		for(i = 0 ; i < productPartSpecColumnTypeList.size() - 1 ; i++){
-			if(productPartSpecColumnTypeList.get(i).equals("Integer")){
-				int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		for(i = 0 ; i < tableInfo.getColumnTypeList().size() - 1 ; i++){
+			if(tableInfo.getColumnTypeList().get(i).equals("Integer")){
+				int result 
+					= (int)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append(result + ", ");
-			}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
-				double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			}else if(tableInfo.getColumnTypeList().get(i).equals("Double")){
+				double result 
+					= (double)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append(result + ", ");
 			}else{
-				String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+				String result 
+					= (String)productPartSpecColumnMap
+					.get(tableInfo.getColumnEngNameList().get(i));
 				sql.append("'");
 				sql.append(result);
 				sql.append("', ");
 			}
 		}
-		if(productPartSpecColumnTypeList.get(i).equals("Integer")){
-			int result = (int)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		if(tableInfo.getColumnTypeList().get(i).equals("Integer")){
+			int result 
+				= (int)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append(result + ")");
-		}else if(productPartSpecColumnTypeList.get(i).equals("Double")){
-			double result = (double)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+		}else if(tableInfo.getColumnTypeList().get(i).equals("Double")){
+			double result 
+				= (double)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append(result + ")");
 		}else{
-			String result = (String)productPartSpecColumnMap.get(productPartSpecColumnNameList.get(i));
+			String result 
+				= (String)productPartSpecColumnMap
+				.get(tableInfo.getColumnEngNameList().get(i));
 			sql.append("'");
 			sql.append(result);
 			sql.append("')");
@@ -254,4 +242,171 @@ public class SellerServiceImpl implements SellerService{
 		sqlMap.put("sql", sql.toString());
 		dao.insertPartProductInfo(sqlMap);
 	}
+	
+	@Override
+	public String getFileName(String productNo) {
+		int no = Integer.parseInt(productNo);
+		String filePath = dao.getFilePath(no);
+		String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+		return fileName;
+	}
+
+	private static List<TableInformation> tableInfoXmlParser() {
+		XMLParser xmlParser = new XMLParser("category.xml");
+		
+		List<TableInformation> tableList = new ArrayList<TableInformation>();
+		TableInformation tableInfo;
+		List<String> mainCategorys = xmlParser.getChildren("카테고리"); 
+		Map<String, List<String>> categoryMap = new HashMap<String, List<String>>();
+		List<String> smallCategorys;
+		for(int i = 0 ; i < mainCategorys.size() ; i++){
+			smallCategorys = xmlParser.getChildren(mainCategorys.get(i));
+			categoryMap.put(mainCategorys.get(i), smallCategorys);
+		}
+		
+		StringBuffer sBuffer; Pattern p; Matcher m;
+		
+		StringTokenizer tokenizer;
+		String valueList = null;
+		String specValue = null;
+		List<String> tokenResultValueList;
+		
+		for(int i = 0 ; i < mainCategorys.size() ; i++){
+			smallCategorys = categoryMap.get(mainCategorys.get(i));
+			for(int j = 0 ; j < smallCategorys.size() ; j++){
+				tableInfo = new TableInformation();
+				tableInfo.setColumnEngNameList(new ArrayList<String>());
+				tableInfo.setColumnTypeList(new ArrayList<String>());
+				tableInfo.setColumnUnitList(new ArrayList<String>());
+				tableInfo.setColumnValueList(new ArrayList<List<String>>());
+				tableInfo.setTableKorName(smallCategorys.get(j));
+				tableInfo.setTableEngName(xmlParser.getAttributeValue(smallCategorys.get(j), "table"));
+				tableInfo.setColumnKorNameList(xmlParser.getChildren(mainCategorys.get(i), smallCategorys.get(j)));
+				for (String columnKorName : tableInfo.getColumnKorNameList()) {
+					valueList = xmlParser.getValue(smallCategorys.get(j), columnKorName);
+
+					tableInfo.getColumnEngNameList()
+						.add(xmlParser.getAttributeValue(smallCategorys.get(j), columnKorName, "column"));
+					
+					String columnType = xmlParser.getAttributeValue(smallCategorys.get(j), columnKorName, "type");
+					
+					tableInfo.getColumnTypeList().add(columnType);
+					
+					if(columnType.equals("Integer") || columnType.equals("Double")){
+						String[] value = valueList.split(",", 2);
+						sBuffer = new StringBuffer();
+						p = Pattern.compile("[^-?\\d+(,\\d+)*?\\.?\\d+?]+");
+						m = p.matcher(value[0].trim());
+						while (m.find()) {
+							sBuffer.append(m.group());
+						}
+						String stringUnit = sBuffer.toString();
+						if(stringUnit.indexOf("~") >= 0){
+							String[] tempUnit = stringUnit.split("~");
+							if(tempUnit.length == 0){
+								tableInfo.getColumnUnitList().add(" ");
+							}else{
+								tableInfo.getColumnUnitList().add(tempUnit[1]);
+							}
+						}else{
+							if(stringUnit.isEmpty()){
+								tableInfo.getColumnUnitList().add(" ");
+							}else{
+								tableInfo.getColumnUnitList().add(stringUnit);
+							}
+						}
+						tableInfo.getColumnValueList().add(new ArrayList<String>());
+					}else{
+						tokenResultValueList = new ArrayList<String>();
+						tokenizer = new StringTokenizer(valueList.trim(), ",");
+						while(tokenizer.hasMoreTokens()){ 
+							specValue = tokenizer.nextToken();
+							tokenResultValueList.add(specValue.trim());	
+						}
+						tableInfo.getColumnValueList().add(tokenResultValueList);
+						tableInfo.getColumnUnitList().add(" ");
+					}
+				}
+				tableList.add(tableInfo);
+			}
+		}
+		return tableList;
+	}
+}
+
+class TableInformation {
+	private String tableEngName;
+	private String tableKorName;
+	private List<String> columnTypeList;
+	private List<String> columnEngNameList;
+	private List<String> columnKorNameList;
+	private List<String> columnUnitList;
+	private List<List<String>> columnValueList;
+
+	public TableInformation() {}
+
+	public String getTableEngName() {
+		return tableEngName;
+	}
+
+	public void setTableEngName(String tableEngName) {
+		this.tableEngName = tableEngName;
+	}
+
+	public String getTableKorName() {
+		return tableKorName;
+	}
+
+	public void setTableKorName(String tableKorName) {
+		this.tableKorName = tableKorName;
+	}
+
+	public List<String> getColumnTypeList() {
+		return columnTypeList;
+	}
+
+	public void setColumnTypeList(List<String> columnTypeList) {
+		this.columnTypeList = columnTypeList;
+	}
+
+	public List<String> getColumnEngNameList() {
+		return columnEngNameList;
+	}
+
+	public void setColumnEngNameList(List<String> columnEngNameList) {
+		this.columnEngNameList = columnEngNameList;
+	}
+
+	public List<String> getColumnKorNameList() {
+		return columnKorNameList;
+	}
+
+	public void setColumnKorNameList(List<String> columnKorNameList) {
+		this.columnKorNameList = columnKorNameList;
+	}
+	
+	public List<String> getColumnUnitList() {
+		return columnUnitList;
+	}
+
+	public void setColumnUnitList(List<String> columnUnitList) {
+		this.columnUnitList = columnUnitList;
+	}
+
+	public List<List<String>> getColumnValueList() {
+		return columnValueList;
+	}
+
+	public void setColumnValueList(List<List<String>> columnValueList) {
+		this.columnValueList = columnValueList;
+	}
+
+	@Override
+	public String toString() {
+		return "TableInformation [tableEngName=" + tableEngName + ", tableKorName=" + tableKorName + ", columnTypeList="
+				+ columnTypeList + ", columnEngNameList=" + columnEngNameList + ", columnKorNameList="
+				+ columnKorNameList + ", columnUnitList=" + columnUnitList + ", columnValueList=" + columnValueList
+				+ "]";
+	}
+	
 }

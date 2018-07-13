@@ -1,11 +1,8 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -38,11 +35,11 @@ public class SellerController {
 	@Autowired
 	SellerService sellerService;
 	
+	@Resource(name="uploadPath")
+	private String uploadPath;
+	
 	@Autowired
 	ProductFormValidator productFormValidator;
-	
-	Map<String, String> category;
-	Map<String, Object> tableInfoMap;
 	
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
@@ -57,18 +54,9 @@ public class SellerController {
 		String servletPath = request.getServletPath();
 		String id = principal.getName();
 		sellerService.getSellerProductList(pageNum, model, id, servletPath);
-		return "seller/page";
+		return "seller/sellerProductList";
 	}
 	
-	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.POST)
-	public String searchSellerProductList(@PathVariable String pageNumString, 
-			Model model, Principal principal, HttpServletRequest request) {
-		int pageNum = Integer.parseInt(pageNumString);
-		String id = principal.getName();
-		String servletPath = request.getServletPath();
-		sellerService.getSellerProductList(pageNum, model, id, servletPath);
-		return "seller/page";
-	}
 	
 	@RequestMapping(value="/productRegister", method=RequestMethod.GET)
 	public String sellerProductRegister(@RequestParam("mainCategoryInput") 
@@ -76,62 +64,29 @@ public class SellerController {
 										@RequestParam("smallCategoryInput")
 										String smallCategoryInput,
 										Model model){
-		category = new HashMap<String, String>();
-		category.put("mainCategory", mainCategoryInput);
-		category.put("smallCategory", smallCategoryInput);
-		tableInfoMap = sellerService.productPartSpec(model, category);
+		sellerService.productPartSpec(model, mainCategoryInput, smallCategoryInput);
 		model.addAttribute("ProductList", new ProductList());
-		return "seller/register";
+		return "seller/productRegister";
 	}
 	
 	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
 	public String sellerProductRegister(MultipartHttpServletRequest mRequest, 
 			@ModelAttribute("ProductList") @Valid ProductList productList,
 				BindingResult bindingResult, Principal principal, Model model){
-		boolean flag = false;
 		String uri = null;
-		Map<String, Object> tempTableInfoMap = tableInfoMap;
 		if(bindingResult.hasErrors()) {
-			Map<String, String> map = new HashMap<>();
-//			map.put("selectedYear", productList.getProdYear());
-//			map.put("selectedMonth", productList.getProdMonth());
-//			map.put("selectedDay", productList.getProdDay());
-			
-			model.addAttribute("prodDate", map);
-			return "seller/register";
+			model.addAttribute("ProductList", new ProductList());
+			sellerService.PartProductValidCheck(mRequest, model,
+				productList.getMainCategory(), productList.getSmallCategory());
+			return "seller/productRegister";
 		}
-		if(mRequest.getFile("productImageFile").isEmpty()){
-			model.addAttribute("msg", "파일이 업로드가 안 되었습니다.");
-			flag = true;
-		}else{
-			System.out.println(mRequest.getFile("productImageFile").getOriginalFilename());
-			System.out.println(mRequest.getFile("productImageFile").getSize());
-		}
-		
-		List<String> specEngNameList = (List<String>)tempTableInfoMap.get("specEngNameList");
-		List<String> specKorNameList = (List<String>)tempTableInfoMap.get("specKorNameList");
-		Map<String, List<String>> specMapList = (Map<String, List<String>>)tempTableInfoMap.get("specMapList");
-		List<String> parameters = new ArrayList<String>();
-		for(int i = 0 ; i < specEngNameList.size() ; i++){
-			String requestValue = mRequest.getParameter(specEngNameList.get(i));
-			System.out.println(requestValue);
-			if(requestValue != ""){
-				parameters.add(requestValue);
-			}else{
-				flag = true;
-				model.addAttribute(specEngNameList.get(i) + "Msg", specKorNameList.get(i) + "를 입력하시지 않았습니다.");
-			}
-		}
-		if(flag){
-			model.addAttribute("mainCategory", category.get("mainCategory"));
-			model.addAttribute("smallCategory", category.get("smallCategory"));
-			model.addAttribute("specMapList", specMapList);
-			model.addAttribute("specEngNameList", specEngNameList);
-			model.addAttribute("specKorNameList", specKorNameList);
-			uri = "seller/register";
+
+		if(!sellerService.PartProductValidCheck(mRequest,model,
+				productList.getMainCategory(), productList.getSmallCategory())){
+			uri = "seller/productRegister";
 		}else{
 			productList.setRegisterID(principal.getName());
-			sellerService.sellerProductRegister(mRequest, productList, tempTableInfoMap);
+			sellerService.sellerProductRegister(mRequest, productList);
 			uri = "redirect:/seller/page/1";
 		}
 		return uri;

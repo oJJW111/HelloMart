@@ -33,7 +33,7 @@ $(document).ready(function(){
 		location.href="/seller/page/1";
 	});
 	$('#bar_menu7').on('click', function(){
-		location.href="/admin/page";
+		location.href="/admin/page/1";
 	});
 	$('#bar_menu8').on('click', function(){
 		location.href="/mypage/cartlist";

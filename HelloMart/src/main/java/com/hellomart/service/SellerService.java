@@ -1,7 +1,5 @@
 package com.hellomart.service;
 
-import java.util.Map;
-
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -11,8 +9,15 @@ public interface SellerService {
 	public void getSellerProductList(int pageNum, Model model, 
 				String id, String servletPath);
 
-	public Map<String, Object> productPartSpec(Model model, Map<String, String> category);
-
+	public void productPartSpec(Model model, String mainCategory, String smallCategory);
+	
+	public Boolean PartProductValidCheck(MultipartHttpServletRequest mRequest,
+			Model model,
+			String mainCategory, String smallCategory);
+	
 	public void sellerProductRegister(MultipartHttpServletRequest mRequest,
-				ProductList productList, Map<String, Object> tempTableInfoMap);
+				ProductList productList);
+
+	public String getFileName(String productNo);
+
 }
