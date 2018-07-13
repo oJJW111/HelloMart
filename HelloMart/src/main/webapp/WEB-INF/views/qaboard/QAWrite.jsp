@@ -13,11 +13,11 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<style type="text/css">
-   
-   .msg{font-size: 10pt;  color: red;}
 
+<style type="text/css"> 
+   .msg{font-size: 10pt;  color: red;}
 </style>
+
 </head>
 <body>
 <!-- 헤더 -->
@@ -28,8 +28,7 @@
 <section id="bo_w">
     <h2 id="container_title">글 작성</h2>
     
-  
-  <form:form action="write" method="post" modelAttribute="qaboard" id="write_form">
+	<form:form action="qawrite" method="post" modelAttribute="qaboard" id="write_form">
     <sec:authentication var="id" property="principal"/>
     <div class="tbl_frm01 tbl_wrap">
         <table>
@@ -45,7 +44,6 @@
                <form:errors path="subject" cssClass="msg"/>
             </td>
         </tr>
-
         <tr>
             <td>
                <form:textarea path="content" rows="10" cols="82" placeholder="5자 이상 입력하세요" />

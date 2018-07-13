@@ -53,7 +53,7 @@
                            <sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
                            <c:choose>
                               <c:when test="${loginid == list.id }">
-                               <a href="/view?idx=${list.idx }">${list.subject }</a> [${list.cmt }]
+                               <a href="/qaboard/qaview?idx=${list.idx }&id=${list.id}">${list.subject }</a> [${list.cmt }]
                               </c:when>
                               <c:otherwise>
                                글을 볼수 없습니다.
@@ -61,7 +61,7 @@
                            </c:choose>
                            </sec:authorize>
                                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                               <a href="/view?idx=${list.idx }">${list.subject }</a> [${list.cmt }]
+                               <a href="/qaboard/qaview?idx=${list.idx }">${list.subject }</a> [${list.cmt }]
                               </sec:authorize>
                            </td>                                  
                            <td class="td_name sv_use">${list.id }</td>
@@ -76,7 +76,7 @@
          <div class="bo_fx">
             <ul class="btn_bo_user">
             <sec:authorize access="isAuthenticated()">
-               <li><a href="/write" class="btn_b02">글쓰기</a></li>
+               <li><a href="/qaboard/qawrite" class="btn_b02">글쓰기</a></li>
             </sec:authorize>
             </ul>
          </div>
@@ -91,13 +91,13 @@
       <div align="center" id="page">
 
          <c:if test="${startPage > pageBlock}">
-            <a href="qaboard?pageNum=${startPage-1}">[이전]</a>
+            <a href="/qaboard/qaboardList?pageNum=${startPage-1}">[이전]</a>
          </c:if>         
          <c:forEach var="i" begin="${startPage }" end="${endPage }">
-            <a href="qaboard?pageNum=${i }">[${i }]</a>
+            <a href="/qaboard/qaboardList?pageNum=${i }">[${i }]</a>
          </c:forEach>
          <c:if test="${endPage < pageCount }">
-            <a href="qaboard?pageNum=${startPage+pageBlock}">[다음]</a>
+            <a href="/qaboard/qaboardList?pageNum=${startPage+pageBlock}">[다음]</a>
          </c:if>
       </div>
       </c:if>
@@ -105,13 +105,13 @@
       <div align="center" id="page">
 
          <c:if test="${startPage > pageBlock}">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
          </c:if>         
          <c:forEach var="i" begin="${startPage }" end="${endPage }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
          </c:forEach>
          <c:if test="${endPage < subjectCount }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
+            <a href="/qaboard.qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
          </c:if>
       </div>
       </c:if>
@@ -119,13 +119,13 @@
       <div align="center" id="page">
 
          <c:if test="${startPage > pageBlock}">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
          </c:if>         
          <c:forEach var="i" begin="${startPage }" end="${endPage }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
          </c:forEach>
          <c:if test="${endPage < contentCount }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
          </c:if>
       </div>
       </c:if>
@@ -133,20 +133,18 @@
       <div align="center" id="page">
 
          <c:if test="${startPage > pageBlock}">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage-1}">[이전]</a>
          </c:if>         
          <c:forEach var="i" begin="${startPage }" end="${endPage }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${i }">[${i }]</a>
          </c:forEach>
          <c:if test="${endPage < idCount }">
-            <a href="qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
+            <a href="/qaboard/qasearch?searchOption=${searchOption }&keyword=${keyword}&pageNum=${startPage+pageBlock}">[다음]</a>
          </c:if>
       </div>
       </c:if>
       <!-- 게시판 검색 시작 { -->
-      <fieldset id="bo_sch">
-         <legend>게시물 검색</legend>
-
+		<div align="center">
          <form action="qasearch" method="get">
             <label for="sfl" class="sound_only">검색대상</label> 
             <select name="searchOption" id="searchOption">
@@ -160,11 +158,10 @@
             <input type="text" name="keyword" required id="keyword" class="frm_input required" size="15" maxlength="15"> 
             <input type="submit" value="검색" class="btn_submit">
          </form>
-      </fieldset>
+     	 </div>
       </div>
       <!-- 게시판 검색 끝 -->
-      
-
+      <div style="padding-top: 50px"></div>
 
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />

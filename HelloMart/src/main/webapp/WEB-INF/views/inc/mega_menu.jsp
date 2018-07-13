@@ -20,8 +20,9 @@ $(document).ready(function(){
 		location.href="/productList?mainCategory=퍼스널케어";
 	});
 	$("#main_menu_6").on('click', function(){
-		location.href="/qaboard";
+		location.href="/qaboard/qaboardList";
 	});
+	
 	$("#refrigerator").on('click', function(){
 		location.href="/productList?mainCategory=가전제품&smallCategory=냉장고";
 	});
@@ -79,7 +80,7 @@ $(document).ready(function(){
 	});
 	
 	$("#qaboard").on('click', function(){
-		location.href="/qaboard";
+		location.href="/qaboard/qaboardList";
 	});
 	
 });

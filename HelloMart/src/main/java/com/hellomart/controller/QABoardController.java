@@ -1,13 +1,18 @@
 package com.hellomart.controller;
 
+import java.security.Principal;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +26,7 @@ import com.hellomart.service.CmtBoardService;
 import com.hellomart.service.QABoardService;
 
 @Controller
+@RequestMapping("/qaboard")
 public class QABoardController {
 
    @SuppressWarnings("unused")
@@ -33,7 +39,7 @@ public class QABoardController {
    private CmtBoardService service2;
 
 
-   @RequestMapping("/qaboard")
+   @RequestMapping("/qaboardList")
    public ModelAndView qaBoardList(String pageNum) {
       ModelAndView mav = new ModelAndView();
 
@@ -189,12 +195,13 @@ public class QABoardController {
       return mav;
    }
 
-   @RequestMapping(value = "/write", method = RequestMethod.GET)
+   @PostAuthorize("isAuthenticated()")
+   @RequestMapping(value = "/qawrite", method = RequestMethod.GET)
    public ModelAndView write() {
-      return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+		  return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
    }
 
-   @RequestMapping(value = "/write", method = RequestMethod.POST)
+   @RequestMapping(value = "/qawrite", method = RequestMethod.POST)
    public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
       
       //오류여부 확인
@@ -203,14 +210,14 @@ public class QABoardController {
       }else{
       
       service.insertQABoard(qaboard);
-      return "redirect:/qaboard";
+      return "redirect:/qaboard/qaboardList";
       }
    }
 
-   @RequestMapping(value = "/view", method = RequestMethod.GET)
-   public ModelAndView view(int idx, String cmtnum) {
-      
+   @RequestMapping(value = "/qaview", method = RequestMethod.GET)
+   public ModelAndView qaview(int idx, String cmtnum) {
       ModelAndView mav = new ModelAndView();
+      
       CmtBoard cmtboard = new CmtBoard();
       service.viewCount(idx);
       QABoard view = service.viewQABoard(idx);
@@ -260,8 +267,10 @@ public class QABoardController {
       mav.setViewName("qaboard/QAView");
 
       return mav;
+      
 
    }
+   
 
    @RequestMapping(value = "/cmtinsert", method = RequestMethod.POST)
    public String cmtinsertProcess(@ModelAttribute("cmtboard") @Valid CmtBoard cmtboard, BindingResult bindingResult) {
@@ -269,11 +278,11 @@ public class QABoardController {
 
       //오류여부 확인
       if(bindingResult.hasErrors()){
-         return "redirect:/view?idx=" + idx;
+         return "redirect:/qaboard/qaview?idx=" + idx;
       }else{
          service2.cmtinsert(cmtboard);
          service.cmtinc(idx);
-         return "redirect:/view?idx=" + idx;
+         return "redirect:/qaboard/qaview?idx=" + idx;
       }
    }
 
@@ -281,28 +290,40 @@ public class QABoardController {
    public String cmtdeleteProcess(int cmtidx, int idx) {
       service2.cmtdelete(cmtidx);
       service.cmtdec(idx);
-      return "redirect:/view?idx=" + idx;
+      return "redirect:/qaboard/qaview?idx=" + idx;
    }
 
-   @RequestMapping(value = "/modify", method = RequestMethod.GET)
+   @RequestMapping(value = "/qamodify", method = RequestMethod.GET)
    public ModelAndView modify(int idx) {
 
       ModelAndView mav = new ModelAndView();
       QABoard qaboard = service.viewQABoard(idx);
       mav.addObject("qaboard", qaboard);
-      mav.setViewName("qaboard/modify");
+      mav.setViewName("qaboard/QAModify");
       return mav;
    }
 
-   @RequestMapping(value = "/modify", method = RequestMethod.POST)
-   public String modifyProcess(QABoard qaboard) {
-      service.modify(qaboard);
-      return "redirect:/qaboard";
+   @RequestMapping(value = "/qamodify", method = RequestMethod.POST)
+   public ModelAndView modifyProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
+	    ModelAndView mav = new ModelAndView();
+	    
+	   	//오류여부 확인
+	      if(bindingResult.hasErrors()){
+	    	  String check = "1";
+	    	  mav.addObject("idx",qaboard.getIdx());
+	    	  mav.addObject("check", check);
+	    	  mav.setViewName("redirect:/qaboard/qamodify");
+	    	  return mav;
+	      }else{
+	    	  service.modify(qaboard);
+	    	  mav.setViewName("redirect:/qaboard/qaboardList");
+	    	  return mav;
+	      }
    }
 
-   @RequestMapping(value = "/delete", method = RequestMethod.GET)
+   @RequestMapping(value = "/qadelete", method = RequestMethod.GET)
    public String deleteProcess(int idx) {
       service.delete(idx);
-      return "redirect:/qaboard";
+      return "redirect:/qaboard/qaboardList";
    }
 }

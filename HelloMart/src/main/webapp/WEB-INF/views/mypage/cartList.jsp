@@ -60,7 +60,7 @@ function cartmodify() {
                </tr>
                <c:choose>
                <c:when test="${map.count == 0}">
-                  <tr>
+                  <tr height="100px">
                      <td colspan="7" align="center">
                         장바구니가 비어있습니다.
                      </td>
@@ -121,16 +121,16 @@ function cartmodify() {
                </c:otherwise>
                </c:choose>
             </table>
-
          </div>
+         <c:if test="${map.count != 0 }">
          <div class="cart_sub" align="right">
          <input type="button" value="수정" id="cart_stn" onclick="cartmodify()">
          <input type="button" value="구매하기" id="cart_stn" onclick="buyCart()">
          </div>
+         </c:if>
          </form>
-      
    </div>
-
+   <div style="padding-top: 50px"></div>
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
    <!-- 푸터 -->

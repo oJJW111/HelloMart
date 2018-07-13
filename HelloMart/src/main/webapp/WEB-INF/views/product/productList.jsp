@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -84,9 +86,13 @@ $(document).ready(function(){
 		}
 	});
 });
-</script>
 
+function fnCart(no){
+	location.href = "/addCart?no=" + no + "&orderCount=1"; 	
+}
+</script>
 </head>
+
 <body>
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
@@ -201,7 +207,7 @@ $(document).ready(function(){
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
 							<span class="review">상품평 : ${board.reviewCount} 개</span>
 						</div>
-						<button class="add_to_cart btn_yellow"></button>
+						<button class="add_to_cart btn_yellow" onclick="fnCart(${board.no})"></button>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">
@@ -212,8 +218,6 @@ $(document).ready(function(){
 	</c:otherwise>
 </c:choose>
 </div> <!-- 상품리스트 -->
-
-<!-- <div class="BLOCK50"></div> -->
 
 </div> <!-- article_wrap 끝 -->
 

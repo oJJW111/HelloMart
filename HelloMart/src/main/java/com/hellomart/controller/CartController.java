@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Cart;
+import com.hellomart.dto.ProductList;
 import com.hellomart.service.CartService;
 import com.hellomart.service.ProductService;
 
@@ -75,7 +76,14 @@ public class CartController {
     @RequestMapping(value = "mypage/cartlist", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView mav, Principal principal){
     	String id = principal.getName();
-    	  
+    	
+    	/* 쿼리 조인 결과를 받을 커스텀 맵 */
+    	ProductList productList = new ProductList();
+    	Cart cart = new Cart();
+    	Map<String, Object> dtomap = new HashMap<String, Object>();
+    	dtomap.put("cart", cart);
+    	dtomap.put("productlList", productList);
+    	
         Map<String, Object> map = new HashMap<String, Object>();
         List<Cart> list = service.listCart(id); // 장바구니 정보 
         int sumMoney = service.sumMoney(id); // 장바구니 전체 금액 호출

@@ -76,10 +76,6 @@ public class QABoardServiceImpl implements QABoardService{
       return dao.idCount(keyword);
    }
 
-   public QABoardServiceImpl() {
-      
-   }
-
    @Override
    public void modify(QABoard qaboard) {
       dao.modify(qaboard);
