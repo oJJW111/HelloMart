@@ -13,7 +13,7 @@
 		ORDER BY o.orderDate
 	</select>
 	
-	<select id="historyDatelist" resultMap="orderlistResultMap">
+	<select id="historyDatelist" resultType="java.util.HashMap"> 
 	 	SELECT o.prodNo,o.orderCount, o.orderDate,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, orderlist o
