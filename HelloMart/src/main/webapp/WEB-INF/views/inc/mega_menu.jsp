@@ -22,9 +22,6 @@ $(document).ready(function(){
    $("#main_menu_5").on('click', function(){
       locationEncode("/qaboard/qaboardList");
    });
-   $("#main_menu_6").on('click', function(){
-      locationEncode("/qaboard/qaboardList");
-   });
    
    $("#refrigerator").on('click', function(){
       locationEncode("/productList?mainCategory=가전제품&smallCategory=냉장고");

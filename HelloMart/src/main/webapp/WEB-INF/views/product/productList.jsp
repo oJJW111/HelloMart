@@ -86,9 +86,24 @@ $(document).ready(function(){
 	});
 });
 
-function fnCart(no){
-	location.href = "/addCart?no=" + no + "&orderCount=1"; 	
-}
+$(function(){	
+	$('#addCart').on({
+		"submit" : function(){ 
+			var d = $(this).serialize();
+		
+			$.ajax({
+				url : "/addCart",
+				type : "get",
+				data : d,
+				success : function(result){
+						alert("해당 상품이 장바구니에 1개 추가되었습니다");
+					}
+				});
+				
+				return false; // action 페이지로 전환되는 것을 차단
+			}
+		});
+});
 </script>
 </head>
 
@@ -204,7 +219,15 @@ function fnCart(no){
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
 							<span class="review">상품평 : ${board.reviewCount} 개</span>
 						</div>
-						<button class="add_to_cart btn_yellow" onclick="fnCart(${board.no})"></button>
+						<sec:authentication property="principal" var="userId" />
+							<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+								<form action="#" method="get" id="addCart">
+									<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
+									<input type="hidden" name="no" value="${board.no}">	
+									<input type="hidden" name="orderCount" value="1"> 	
+									<input type="hidden" name="id" value="${userId}"> 
+								</form>	
+							</sec:authorize>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">

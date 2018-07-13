@@ -38,8 +38,7 @@ public class CartController {
 	
 	// 1-1. 장바구니 추가(페이지 이동)
 	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
-	public String addCart(@ModelAttribute Cart cart, Principal principal){
-		String id = principal.getName();
+	public String addCart(@ModelAttribute Cart cart, String id){
 		cart.setId(id);
 		// 장바구니에 기존 상품이 있는지 검사
 		int count = service.countCart(cart.getNo(), id);

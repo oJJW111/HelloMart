@@ -277,5 +277,14 @@ public class ProductListServiceImpl implements ProductListService{
 			dao.updateOrderCount(prodNo);
 		}
 	}
-	
+
+	@Override
+	public void updateScore(int star, int no) {
+		dao.updateScore(star, no);
+	}
+ 
+	@Override
+	public void updateReviewCount(int no) {
+		dao.updateReviewCount(no); 
+	}	
 }
