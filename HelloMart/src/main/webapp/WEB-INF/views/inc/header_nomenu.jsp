@@ -30,7 +30,7 @@ $(document).ready(function(){
 		location.href="/mypage/menu";
 	});
 	$('#bar_menu6').on('click', function(){
-		location.href="/seller/page";
+		location.href="/seller/page/1";
 	});
 	$('#bar_menu7').on('click', function(){
 		location.href="/admin/page";
@@ -65,7 +65,6 @@ $(document).ready(function(){
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu7">관리자페이지</div>
 		</sec:authorize>
-		
 		
 		<div class="clear"></div>
 	</div>

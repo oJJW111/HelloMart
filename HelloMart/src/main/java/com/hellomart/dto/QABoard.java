@@ -1,6 +1,10 @@
 package com.hellomart.dto;
 
 import java.util.Date;
+ 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

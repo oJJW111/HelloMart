@@ -2,30 +2,29 @@ package com.hellomart.dao;
 
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.hellomart.dto.ReView;
 
 public interface ReViewDAO {
-
+	/* 해당 상품의 리뷰 목록을 가져오는 메소드 */
+	Vector<ReView> listReView(int startRow, int pageSize, int no);
 	
-	/* 게시글을 가져오는 메소드 */
-	Vector<ReView> listReView(int startRow, int pageSize);
-	
-	/* 게시글을 삽입하는 메소드 */
+	/* 리뷰를 삽입하는 메소드 */
 	void reWrite(ReView reView);
 	
-	/* 게시글 뷰화면 메소드 */
-	ReView ReView(int idx);
-	
-	/* 게시글을 삭제하는 메소드 */
-	void deleteReView(int idx);
-
-	/* 게시글의 전체 개수 불러오는 메소드 */
-	int getReCount();
-	
-	/* 글 수정 하는 메소드 */
+	/* 리뷰를 수정 하는 메소드 */
 	void remodify(ReView reView);
 
-	/* 글 삭제 하는 메소드 */
-	void Redelete(int idx);
+	/* 리뷰를 삭제 하는 메소드 */
+	void redelete(int idx);
+
+	/* 리뷰 하나의 정보를 가져오는 메소드 */
+	ReView getReView(int idx);	
 	
+	/* 상품 리스트 테이블의 리뷰 갯수를 증가시키는 메소드 */
+	void updatereviewCount(int no);
+
+	/* 페이징 처리를 위해, 해당 상품의 리뷰 갯수를 가져옴 */
+	int getReCount(int no);
 }

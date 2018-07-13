@@ -38,17 +38,12 @@ public class TodayViewController {
 			
 			if(!plList.isEmpty()) {
 			
-				for(String s : no) {
-					logger.debug(s);
-				}
-				
 				int size = plList.size();
 				int maxIndex = size - 1;
 				
 				ProductList[] todayView = new ProductList[plList.size()];
 				for(int i = 0; i < size; i++) {
 					int index = no.indexOf("" + plList.get(i).getNo());
-					logger.debug("index : " + index);
 					todayView[maxIndex - index] = plList.get(i);
 				}
 				

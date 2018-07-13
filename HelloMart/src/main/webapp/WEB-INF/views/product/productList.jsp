@@ -55,10 +55,22 @@ function createURL(mainCategory, smallCategory, page) {
 	return url;
 }
 $(document).ready(function(){
-	$.submitForm = function() {
-		$("#detailForm").submit(function() {
-		    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
-		});
+	$.submitForm = function(f) {
+		if( ($("#price2").val() != null) && ($("#price2").val() != "")){
+			if($("#price1").val() > $("#price2").val()){
+				alert("최저 가격은 최고 가격보다 적어야 합니다");
+			}
+			else{
+				f.submit(function() {
+				    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+				});
+			}			
+		}
+		else{
+			f.submit(function() {
+			    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+			});
+		}
 	}
 	$.appendPage = function(page) {
 		$("#detailForm").append("<input type='hidden' name='page' value='" + page + "'>");
@@ -73,14 +85,44 @@ $(document).ready(function(){
 			$("input[value=" + value + "]").remove();
 		}
 	});
+	$('#addCart').on({
+		"submit" : function(){ 
+			var d = $(this).serialize();
+		
+			$.ajax({
+				url : "/addCart",
+				type : "get",
+				data : d,
+				success : function(result){
+					alert("해당 상품이 장바구니에 1개 추가되었습니다");
+				}
+			});
+			
+			return false; // action 페이지로 전환되는 것을 차단
+		}
+	});
 });
-
-function fnCart(no){
-		location.href = "/addCart?no=" + no + "&orderCount=1"; 	
-}
+$(function(){	
+	$('.addCart').on({
+		"submit" : function(){ 
+			var d = $(this).serialize();
+		
+			$.ajax({
+				url : "/addCart",
+				type : "get",
+				data : d,
+				success : function(result){
+					alert("해당 상품이 장바구니에 1개 추가되었습니다");
+				}
+			});
+			
+			return false; // action 페이지로 전환되는 것을 차단
+		}
+	});
+});
 </script>
-
 </head>
+
 <body>
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
@@ -98,11 +140,11 @@ function fnCart(no){
 	<div class="category_detail noselect" style="height: 48px;"> 
 		<div class="category_detail_down" style="height: 48px;">	
 			<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
-			<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+			<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
 			<div class="range">~</div>
-			<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 			<div class="currency">원</div>
-			<button id="submit-form" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
+			<button id="submit-form" type="button" onclick="$.submitForm(this.form)"><i class="fa fa-search"></i></button>
 		</div>
 	</div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory == '액세서리'} -->
@@ -154,11 +196,11 @@ function fnCart(no){
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
-		<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+		<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
 		<div class="range">~</div>
-		<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm()"
+		<button id="submit-form" onclick="$.submitForm(this.form)" type="button"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
@@ -193,10 +235,16 @@ function fnCart(no){
 						<div class="additional_info">
 							<span class="satisfaction">만족도 : ${board.score}</span>
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
-							<span class="review">상품평 : ${board.no}</span>
+							<span class="review">상품평 : ${board.reviewCount} 개</span>
 						</div>
-						<sec:authorize access="isAuthenticated()">
-						<button class="add_to_cart btn_yellow" onclick="fnCart(${board.no}, '${param.smallCategory}')"></button>
+						<sec:authentication property="principal" var="userId" />
+						<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+							<form method="get" class="addCart">
+							<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
+							<input type="hidden" name="no" value="${board.no}">	
+							<input type="hidden" name="orderCount" value="1">
+							<input type="hidden" name="id" value="${userId}">
+						</form>	
 						</sec:authorize>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
@@ -208,8 +256,6 @@ function fnCart(no){
 	</c:otherwise>
 </c:choose>
 </div> <!-- 상품리스트 -->
-
-<!-- <div class="BLOCK50"></div> -->
 
 </div> <!-- article_wrap 끝 -->
 

@@ -17,12 +17,12 @@
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(no, smallCategory){
+	function fnCart(no, smallCategory, id){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
 		if(isMove){
 			var orderCount = document.getElementById("orderCount").value;
-			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount; 	
+			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
 		}
 		else{
 			var orderCount = document.getElementById("orderCount").value;
@@ -46,7 +46,7 @@
 	<br>
 	<table>
 		<c:if test="${detail == null}">
-	<tr>
+		<tr>
 			<td rowspan="9">
 				<img src="${product.imagePath}" width="400px">
 			</td>
@@ -150,14 +150,34 @@
 				<option value="${i}">${i}</option>
 			</c:forEach>
 		</select> 
-		&nbsp;&nbsp;<input type="button" value="구매"
-				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-		&nbsp;&nbsp;<input type="button" value="장바구니 담기"
-				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
+
+		<c:if test="${detail == null}">
+			&nbsp;&nbsp;<input type="button" value="구매"
+				onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${product.no}, '${product.smallCategory}','${id}')">
+		</c:if>
+		<c:if test="${detail != null}">
+			&nbsp;&nbsp;<input type="button" value="구매"				
+			onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
+				onclick="fnCart(${detail.No}, '${detail.SmallCategory}','${id}')">
+		</c:if>
 	</sec:authorize>
 </div>
 <br><br><br>
+<c:if test="${detail != null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${detail.No}"/> 
+	</div>
+</c:if>
+<c:if test="${detail == null}">
+	<div> 
+		<jsp:include page="/review?pageNum=1&no=${product.no}"/> 
+	</div> 
+</c:if>
 
+	
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

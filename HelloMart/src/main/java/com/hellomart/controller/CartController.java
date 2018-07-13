@@ -35,8 +35,7 @@ public class CartController {
 	
 	// 1-1. 장바구니 추가(페이지 이동)
 	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
-	public String addCart(@ModelAttribute Cart cart, Principal principal){
-		String id = principal.getName();
+	public String addCart(@ModelAttribute Cart cart, String id){
 		cart.setId(id);
 		// 장바구니에 기존 상품이 있는지 검사
 		int count = service.countCart(cart.getNo(), id);
@@ -74,6 +73,7 @@ public class CartController {
     @RequestMapping(value = "mypage/cartlist", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView mav, Principal principal){
     	String id = principal.getName();
+    	/* 쿼리 조인 결과를 받을 커스텀 맵 */
     	ProductList productList = new ProductList();
     	Cart cart = new Cart();
     	Map<String, Object> dtomap = new HashMap<String, Object>();

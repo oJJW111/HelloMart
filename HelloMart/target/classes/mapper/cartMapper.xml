@@ -11,7 +11,7 @@
     </insert>
     
     <!-- 2. 장바구니 목록 -->
-    <select id="listCart" parameterType="String" resultType="java.util.HashMap">
+    <select id="listCart" resultType="HashMap">
         SELECT c.idx, c.id, c.orderCount, c.date,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, cartlist c

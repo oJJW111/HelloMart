@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -18,7 +17,6 @@
 <style type="text/css">
    
    .msg{font-size: 10pt;  color: red;}
-
 </style>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
@@ -30,7 +28,6 @@ function delchk(){
         return false;
     }
 }
-
 function cmtdelchk(cmtidx,idx){
     if(confirm("코멘트를 삭제하시겠습니까?")){
         location.href = "/qaboard/cmtdelete?cmtidx="+cmtidx+"&idx="+idx;
@@ -39,7 +36,6 @@ function cmtdelchk(cmtidx,idx){
         return false;
     }
 }
-
 </script>
 </head>
 
@@ -71,12 +67,9 @@ function cmtdelchk(cmtidx,idx){
 
       <section id="bo_v_atc">
          <h2 id="bo_v_atc_title">본문</h2>
-
-
-
+        
          <!-- 본문 내용 시작 { -->
          <div id="bo_v_con">${view.content }</div>
-
          <!-- } 본문 내용 끝 -->
 
          <!-- 게시물 하단 버튼 시작 { -->
@@ -86,8 +79,6 @@ function cmtdelchk(cmtidx,idx){
                <li><a href="#" class="btn_b01" onclick="delchk();">삭제</a></li>
                <li><a href="/qaboard/qaboardList" class="btn_b01">목록</a></li>
             </ul>
-            
-
          </div>
          <!-- } 게시물 하단 버튼 끝 -->
          
@@ -142,22 +133,10 @@ function cmtdelchk(cmtidx,idx){
          </div>
       </c:if>
       </section>
-
       <!-- 코멘트영역 끝 -->
       
       <!-- } 게시판 읽기 끝 -->
-   <table>
-      <tr>
-         <td>
-      </tr>
-      
-      
-   
-   </table>
-
-
    </div>
-
 
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />

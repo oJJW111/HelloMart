@@ -40,13 +40,13 @@
 </head>
 <body>
 <!-- 헤더 -->
-<jsp:include page="/WEB-INF/views/inc/header_nomenu.jsp"/>
+<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
-<hr>
-
-<div class="BLOCK60"></div>
-
+<div class="titbox">
+	<div class="title">
+		<span class="name">MY PAGE</span>
+	</div>
+</div>
 <div class="myshopMain">
 	<div class="shopMain">
 		<a href="/mypage/info"> 
@@ -70,7 +70,7 @@
 	</div>
 	<div class="shopMain">
 		<a href="/todayView">
-		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+			<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
 		</a>
 	</div>
 	<div class="shopMain">

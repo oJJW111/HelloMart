@@ -1,8 +1,11 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -10,21 +13,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
+import com.hellomart.dto.OrderList;
+import com.hellomart.dto.ReView;
 import com.hellomart.service.AccountService;
+import com.hellomart.service.HistoryService;
 import com.hellomart.service.PointService;
 import com.hellomart.validator.DeleteAccountValidator;
-import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
 import com.hellomart.validator.ModifyPasswordValidator;
 
@@ -40,6 +41,9 @@ public class MypageController {
 	
 	@Autowired
 	private PointService pointService;
+	
+	@Autowired
+	private HistoryService historyservice;
 
 	@Autowired
 	private DeleteAccountValidator deleteAccountValidator;
@@ -186,12 +190,46 @@ public class MypageController {
 		return "mypage/info/page"; 
 	}
 	
-	@RequestMapping("/history")
-	public void history() {
+	@RequestMapping(value = "/history", method=RequestMethod.GET)
+	public ModelAndView History(ModelAndView mav, Principal principal){
+		String id = principal.getName();
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+		List<OrderList> list = historyservice.historylist(id);
+        map.put("list", list);               
+        map.put("count", list.size());        
+        mav.setViewName("mypage/history");    
+        mav.addObject("map", map);            
+        
+        return mav;
 	}
 	
-	@RequestMapping("/todayView")
-	public void todayView() {
+	@RequestMapping("/history/period")
+	public String historyPeriod(Model model, String id, String startDate, String endDate) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<OrderList> list = historyservice.historyDatelist(id, startDate, endDate + " 24:00:00");
+        map.put("list", list);               
+        map.put("count", list.size());        
+        model.addAttribute("map", map);
+        
+		return "mypage/history"; 
 	}
 	
+	@RequestMapping("/historyButton")
+	public ModelAndView historyButton(ModelAndView mav,Principal principal, HttpServletRequest request ) {
+		String id = principal.getName();
+		String no = request.getParameter("no");
+		ReView review = historyservice.reviewCheck(no, id);
+		boolean check = false;
+		if(review != null){
+			check = true;
+			mav.addObject("idx", review.getIdx());
+			
+		}
+		mav.addObject("no", no);
+		mav.addObject("check", check);
+		mav.setViewName("mypage/historyButton");
+		
+		return mav;
+	}	
 }

@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>ÁÖ¹® ÆäÀÌÁö</title>
+<title>ì£¼ë¬¸ í˜ì´ì§€</title>
 <script type="text/javascript">
 	$(function(){
 		$('#usePoint').on({
@@ -29,66 +28,90 @@
 </head>
 <body>
 
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 
 	<center>
-		<h2>ÁÖ¹® ÆäÀÌÁö</h2>
+		<h2>ì£¼ë¬¸ í˜ì´ì§€</h2>
 		
 		<form action="/buyOk" method="post">
 		<table> 
-			<tr>
-				<td rowspan="5">
-					<img src="${detail.ImagePath}" width="400px">
-				</td>
-				<td>»óÇ°¸í</td>
-				<td>${detail.ProductName}</td>
-			</tr>
-			<tr> 
-				<td>»óÇ°°¡°İ</td>
-				<td>${detail.Price}</td>
-			</tr>	
-			<tr>
-				<td>»óÇ°¼ö·®</td>
-				<td>${orderCount}</td>
-			</tr>
-			<tr>
-				<td>»óÇ° ÃÑ ±İ¾×</td>
-				<td>${detail.Price * orderCount}</td>
-			</tr>
+			<c:if test="${detail == null}">
+				<tr>
+					<td rowspan="5">
+						<img src="${product.imagePath}" width="400px">
+					</td>
+					<td>ìƒí’ˆëª…</td>
+					<td>${product.productName}</td>
+				</tr>
+				<tr> 
+					<td>ìƒí’ˆê°€ê²©</td>
+					<td>${product.price}</td>
+				</tr>	
+				<tr>
+					<td>ìƒí’ˆìˆ˜ëŸ‰</td>
+					<td>${orderCount}</td>
+				</tr>
+				<tr>
+					<td>ìƒí’ˆ ì´ ê¸ˆì•¡</td>
+					<td>${product.price * orderCount}</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${detail != null}">
+				<tr>
+					<td rowspan="5">
+						<img src="${detail.ImagePath}" width="400px">
+					</td>
+					<td>ìƒí’ˆëª…</td>
+					<td>${detail.ProductName}</td>
+				</tr>
+				<tr> 
+					<td>ìƒí’ˆê°€ê²©</td>
+					<td>${detail.Price}</td>
+				</tr>	
+				<tr>
+					<td>ìƒí’ˆìˆ˜ëŸ‰</td>
+					<td>${orderCount}</td>
+				</tr>
+				<tr>
+					<td>ìƒí’ˆ ì´ ê¸ˆì•¡</td>
+					<td>${detail.Price * orderCount}</td>
+				</tr>
+			</c:if>	
 			<tr>
 				<td colspan="3">
 					<table>
 						<tr>
-							<td>¹ŞÀ» »ç¶÷ ÀÌ¸§</td>
+							<td>ë°›ì„ ì‚¬ëŒ ì´ë¦„</td>
 							<td>
 								<input type="text" name="receiverName" value="${account.name}">
 							</td>
 						</tr>
 						<tr>
-							<td>¹ŞÀ» »ç¶÷ ¿¬¶ôÃ³</td>
+							<td>ë°›ì„ ì‚¬ëŒ ì—°ë½ì²˜</td>
 							<td>
 								<input type="text" name="receiverPhone" value="${account.phone}">
 							</td>
 						</tr>
 						<tr>
-							<td>¿ìÆí¹øÈ£</td>
+							<td>ìš°í¸ë²ˆí˜¸</td>
 							<td>
 								<input type="text" name="receiverPostCode" value="${account.postCode}"
 										id="sample6_postcode" readonly="readonly">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="¿ìÆí¹øÈ£ Ã£±â">
+								<input type="button" onclick="sample6_execDaumPostcode()" value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°">
 							</td>
 						</tr>
 						<tr>
-							<td>µµ·Î¸í ÁÖ¼Ò</td>
+							<td>ë„ë¡œëª… ì£¼ì†Œ</td>
 							<td>
 								<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
 										id="sample6_address" readonly="readonly">
 							</td>
 						</tr>
 						<tr>
-							<td>»ó¼¼ÁÖ¼Ò</td>
+							<td>ìƒì„¸ì£¼ì†Œ</td>
 							<td>
 								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
 										id="sample6_address2">
@@ -99,35 +122,45 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="3">
-					Æ÷ÀÎÆ®¸¦ »ç¿ëÇÏ½Ã°Ú½À´Ï±î?
+					í¬ì¸íŠ¸ë¥¼ ì‚¬ìš©í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="usePoint" value="-">¿¹
+					<input type="radio" name="incDec" id="usePoint" value="-">ì˜ˆ
 					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">¾Æ´Ï¿À
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">ì•„ë‹ˆì˜¤
 					<div id="divPoint"></div>
 				</td>
 			</tr>
 			<tr>
 				<td align="center" colspan="3">
 					<br><br>
-					<input type="submit" value="ÁÖ¹®ÇÏ±â">
+					<input type="submit" value="ì£¼ë¬¸í•˜ê¸°">
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Ãë¼ÒÇÏ±â" onclick="location.href='/'">
+					<input type="button" value="ì·¨ì†Œí•˜ê¸°" onclick="location.href='/'">
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
-		<input type="hidden" name="prodNo" value="${detail.No}">
-		<input type="hidden" name="prodName" value="${detail.ProductName}">
-		<input type="hidden" name="orderCount" value="${orderCount}">
-		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
-		<input type="hidden" name="orderStatus" value="PAY_OK">
+	
+		<c:if test="${detail != null}">
+			<input type="hidden" name="prodNo" value="${detail.No}">
+			<input type="hidden" name="prodName" value="${detail.ProductName}">
+			<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
+		</c:if>
+		
+		<c:if test="${detail == null}">
+ 			<input type="hidden" name="prodNo" value="${product.no}"> 
+ 			<input type="hidden" name="prodName" value="${product.productName}"> 
+ 			<input type="hidden" name="orderPrice" value="${product.price * orderCount}"> 
+		</c:if> 
+		
+			<input type="hidden" name="orderCount" value="${orderCount}">
+			<input type="hidden" name="orderStatus" value="PAY_OK">	
+			<input type="hidden" name="orderId" value="${account.id}">
 		</form>
 	</center>
 
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 
 </body>
 </html>

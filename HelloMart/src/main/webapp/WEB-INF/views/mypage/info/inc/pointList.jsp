@@ -34,9 +34,10 @@
 </head>
 <body>
 <sec:authentication property="principal" var="id"/>
+	<br><br>
 	<table border="1" align="center" width="100%">
 		<tr>
-			<td colspan="4">
+			<td colspan="4" align="center">
 				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~부터 &nbsp;&nbsp;
 				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~까지 &nbsp;&nbsp;
 				<input type="button" value="검색" onclick="search('${id}')">
@@ -68,5 +69,6 @@
 		</tr>
 	</c:forEach>
 	</table>
+	<br><br><br><br>
 </body>
 </html>

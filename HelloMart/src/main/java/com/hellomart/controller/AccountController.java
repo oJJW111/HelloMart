@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
@@ -56,6 +57,25 @@ public class AccountController {
 		
 		service.insertAccount(account);
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/idpw_search", method=RequestMethod.GET)
+	public String idpw_search() {
+		return "account/idpw_search";
+	}
+		
+	@RequestMapping(value="/idpw_search", method=RequestMethod.POST)
+	public ModelAndView idpw_search_do(@RequestParam("email") String email) {
+		ModelAndView mav = new ModelAndView(); 
+		StringBuilder sb = new StringBuilder();
+		
+		service.searchIDPW(email);
+	
+		sb.append("redirect:/idpw_search");
+		sb.append("?submit=1");
+			
+		mav.setViewName(sb.toString());
+		return mav;
 	}
 	
 }
