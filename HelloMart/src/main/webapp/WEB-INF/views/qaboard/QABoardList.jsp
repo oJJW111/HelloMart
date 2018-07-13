@@ -11,10 +11,7 @@
 <title>HelloMart</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-<link rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
@@ -22,9 +19,12 @@
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
-
+	<div class="titbox">
+		<div class="title">
+			<span class="name">Q&A 게시판</span>
+		</div>
+	</div>
    <div class="article_wrap">
-      <h2 align="center">QA게시판</h2>
       <div id="bo_list">
          <div id="bo_list_total">
             전체<span>${qacount }</span>건

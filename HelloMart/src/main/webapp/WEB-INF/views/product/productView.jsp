@@ -31,19 +31,18 @@
 		}
 	}
 </script>
-
 </head>
 <body>
-
 <sec:authentication property="principal" var="id" />
-
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
+<div class="titbox">
+	<div class="title">
+		<span class="name">PRODUCT VIEW</span>
+	</div>
+</div>
 <div align="center">
-	<h2>상품 정보 보기</h2>
-	<br>
 	<table>
 		<c:if test="${detail == null}">
 		<tr>
@@ -151,16 +150,12 @@
 			</c:forEach>
 		</select> 
 		<c:if test="${detail == null}">
-			&nbsp;&nbsp;<input type="button" value="구매"
-				onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
-			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
-				onclick="fnCart(${product.no}, '${product.smallCategory}')">
+			<input type="button" value="구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+			<input type="button" value="장바구니 담기" onclick="fnCart(${product.no}, '${product.smallCategory}')">
 		</c:if>
 		<c:if test="${detail != null}">
-			&nbsp;&nbsp;<input type="button" value="구매"
-				onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
-				onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
+			<input type="button" value="구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+			<input type="button" value="장바구니 담기" onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 		</c:if>
 	</sec:authorize>
 </div>

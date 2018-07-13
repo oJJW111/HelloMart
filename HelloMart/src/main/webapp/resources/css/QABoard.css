@@ -1,10 +1,10 @@
 .article_wrap{
-	width: 1026px;
+	width: 840px;
 	margin: auto;
 }
-
 #cart_stn{
-	padding: 0 8px;
+	padding: 0 15px;
+	margin:  0 10px;
 	height: 30px;
 	border: 1px solid #5a94de;
 	background: #5a94de;
@@ -32,8 +32,7 @@
 
 .cart_sub{
 	text-align: right;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 85px;
 }
 
 /* 게시판 버튼 */
@@ -101,6 +100,7 @@ a.btn_admin:focus, a.btn_admin:hover {
     height: 24px;
     letter-spacing: -0.1em;
     vertical-align: middle;
+    
 }
 
 

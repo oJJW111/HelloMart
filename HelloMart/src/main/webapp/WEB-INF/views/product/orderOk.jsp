@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 	a{
@@ -19,29 +19,27 @@
 </style>
 <script type="text/javascript">
 	function buy(){
-		location.href = "/productList?mainCategory=" + encodeURIComponent("°¡ÀüÁ¦Ç°");	
+		location.href = "/productList?mainCategory=" + encodeURIComponent("ê°€ì „ì œí’ˆ");	
 	}
 </script>
 </head>
 <body>
 
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 
 	<div align="center">
-		<h1>±¸¸Å°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù</h1>
-		
+		<h1>êµ¬ë§¤ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤</h1>
 		<br><br>
-		
-		<a href="#" onclick="buy(); return false;">°è¼ÓÇØ¼­ ±¸¸ÅÇÏ±â</a>
+		<a href="#" onclick="buy(); return false;">ê³„ì†í•´ì„œ êµ¬ë§¤í•˜ê¸°</a>
 		&nbsp;&nbsp; / &nbsp;&nbsp; 
-		<a href="/mypage/history">±¸¸Å ³»¿ª º¸±â</a>
+		<a href="/mypage/history">êµ¬ë§¤ ë‚´ì—­ ë³´ê¸°</a>
 	</div>
 
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 
 </body>
 </html>

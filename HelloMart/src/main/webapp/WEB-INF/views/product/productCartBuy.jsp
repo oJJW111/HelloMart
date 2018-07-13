@@ -1,166 +1,127 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>ÁÖ¹® ÆäÀÌÁö</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ì£¼ë¬¸ í˜ì´ì§€</title>
 <script type="text/javascript">
-	$(function(){
-		$('#usePoint').on({
-			"click" : function(){ 
-				$('#divPoint').load("/pointView?id=${account.id}");
-			}
-		});
-		
-		$('#noUsePoint').on({
-			"click" : function(){ 
-				$('#divPoint').empty();
-			}
-		});
+$(function(){
+	$('#usePoint').on({
+		"click" : function(){ 
+			$('#divPoint').load("/pointView?id=${account.id}");
+		}
 	});
+	
+	$('#noUsePoint').on({
+		"click" : function(){ 
+			$('#divPoint').empty();
+		}
+	});
+});
 </script>
 </head>
 <body>
-
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
-<!-- Çì´õ -->
-
-	<div class="article_wrap" style="width:1026px; margin: auto;">
-		<h2 align="center">ÁÖ¹® ÆäÀÌÁö</h2>
-		<c:set var="totalPrice" value="0" />
-		<c:set var="size" value="0"/> 
-		<form action="/cartBuyOk" method="post">
-			<div id="order_page">
-			<table style="width: 100%"> 
-			<!-- Àå¹Ù±¸´Ï¿¡ ´ã°ÜÀÖ´ø »óÇ° ¸®½ºÆ® -->
-               <tr>
-                  <th width="10%">ÀÌ¹ÌÁö</th>
-                  <th width="65%">»óÇ°¸í</th>
-                  <th width="10%">°¡°İ</th>
-                  <th width="5%">¼ö·®</th>
-                  <th width="10%">±İ¾×ÇÕ°è</th>
-               </tr>
-               <c:forEach items="${productList}" varStatus="status">
-				<tr>
-					<td>
-						<img src="${productList[status.index].imagePath}" width="100" height="100">
-					</td>
-					<td>
-						${productList[status.index].productName}
-					</td>
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${productList[status.index].price}"/> ¿ø
-					</td>
-					<td>
-						${orderCountList[status.index]} °³
-					</td>
-							<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
-							<c:set var="totalPrice" value="${totalPrice + orderPrice}"  />
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${orderPrice}"/> ¿ø
-					</td>
-				</tr>
-						<!-- ÁÖ¹®¸®½ºÆ® Å×ÀÌºí¿¡ µé¾î°¥ °ªµé -->
-						<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
-						<input type="hidden" name="orderCount${status.index}" value="${orderCountList[status.index]}">
-						<input type="hidden" name="orderPrice${status.index}" value="${orderPrice}">
-						<c:if test="${status.first}">
-						<!-- Æ÷ÀÎÆ® ÀÌ·Â Å×ÀÌºí¿¡ Ç¥½ÃÇÒ ´ëÇ¥ »óÇ° ÀÌ¸§ -->
-						<input type="hidden" name="prodName0" value="${productList[status.index].productName}">			
-						</c:if>
-						<c:if test="${status.last}">
-							<c:set var="size" value="${status.index}" />
-						</c:if> 	
-			</c:forEach> 
-				<tr>
-					<td colspan="5" align="right">
-						ÃÑ ±İ¾× ÇÕ°è : <fmt:formatNumber pattern="###,###,###" value="${totalPrice }"/> ¿ø
-					</td>
-				</tr>
-				<tr>
-					<td colspan="5" align="center">
-					<table>
-						<tr>
-							<td>¹ŞÀ» »ç¶÷ ÀÌ¸§</td>
-							<td>
-								<input type="text" name="receiverName" value="${account.name}">
-							</td>
-						</tr>
-						<tr>
-							<td>¹ŞÀ» »ç¶÷ ¿¬¶ôÃ³</td>
-							<td>
-								<input type="text" name="receiverPhone" value="${account.phone}">
-							</td>
-						</tr>
-						<tr>
-							<td>¿ìÆí¹øÈ£</td>
-							<td>
-								<input type="text" name="receiverPostCode" value="${account.postCode}"
-										id="sample6_postcode" readonly="readonly">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="¿ìÆí¹øÈ£ Ã£±â">
-							</td>
-						</tr>
-						<tr>
-							<td>µµ·Î¸í ÁÖ¼Ò</td>
-							<td>
-								<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
-										id="sample6_address" readonly="readonly">
-							</td>
-						</tr>
-						<tr>
-							<td>»ó¼¼ÁÖ¼Ò</td>
-							<td>
-								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
-										id="sample6_address2">
-							</td>
-						</tr>						
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="5" >
-					Æ÷ÀÎÆ®¸¦ »ç¿ëÇÏ½Ã°Ú½À´Ï±î?
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="usePoint" value="-">¿¹
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">¾Æ´Ï¿À
-					<div id="divPoint"></div>
-				</td>
-			</tr>	
-			<tr>
-				<td align="center" colspan="5">
-					<br><br>
-					<input type="submit" value="ÁÖ¹®ÇÏ±â">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Ãë¼ÒÇÏ±â" onclick="location.href='index.do'">
-				</td>
-			</tr>
-			</table>
-			</div>
-			<!-- »óÇ° ¼ö·ÉÀÎ Á¤º¸ -->
-
-		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
-		<!-- Àå¹Ù±¸´Ï¿¡ ¸î Á¾·ùÀÇ »óÇ°ÀÌ µé¾îÀÖ¾ú´ÂÁö -->
-		<input type="hidden" name="size" value="${size}">
-		<input type="hidden" name="orderStatus" value="PAY_OK">
-		<!-- Æ÷ÀÎÆ® Àû¸³À» À§ÇÑ ÃÑ ÇÕ°è ±İ¾× --> 
-		<input type="hidden" name="totalPrice" value="${totalPrice}">
-		</form>
+<!-- í—¤ë” -->
+<div class="titbox">
+	<div class="title">
+		<span class="name">ORDER LIST</span>
+	</div>
 </div>
-
-<div style="padding-top: 100px"></div>
-<!-- ÇªÅÍ -->
+	<c:set var="totalPrice" value="0" />
+	<c:set var="size" value="0"/> 
+	<div class="article_wrap" style="width: 900px;">
+		<form action="/cartBuyOk" method="post">
+			<table id="cartBuy"> 
+				<!-- ì¥ë°”êµ¬ë‹ˆì— ë‹´ê²¨ìˆë˜ ìƒí’ˆ ë¦¬ìŠ¤íŠ¸ -->
+				<tr>
+					<th width="180">ìƒí’ˆì´ë¯¸ì§€</th>
+					<th>ìƒí’ˆì •ë³´</th>
+					<th>ìƒí’ˆê¸ˆì•¡ x ìˆ˜ëŸ‰</th>
+					<th>ì´ê¸ˆì•¡</th>
+				</tr>
+				<c:forEach items="${productList}" varStatus="status">
+					<tr>
+						<td><img src="${productList[status.index].imagePath}" width="100"></td>				
+						<td style="text-align: left;">[ ${productList[status.index].productName} ] </td>
+						<td>ï¿¦&nbsp; ${productList[status.index].price} x ${orderCountList[status.index]}</td>
+						<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
+						<c:set var="totalPrice" value="${totalPrice + orderPrice}" />
+						<td>ï¿¦&nbsp; ${totalPrice}</td>
+					</tr>
+					<!-- ì£¼ë¬¸ë¦¬ìŠ¤íŠ¸ í…Œì´ë¸”ì— ë“¤ì–´ê°ˆ ê°’ë“¤ -->
+					<input type="hidden" name="prodNo${status.index}" value="${productList[status.index].no}">
+					<input type="hidden" name="orderCount${status.index}" value="${orderCountList[status.index]}">
+					<input type="hidden" name="orderPrice${status.index}" value="${orderPrice}">
+					
+					<c:if test="${status.first}">
+						<!-- í¬ì¸íŠ¸ ì´ë ¥ í…Œì´ë¸”ì— í‘œì‹œí•  ëŒ€í‘œ ìƒí’ˆ ì´ë¦„ -->
+						<input type="hidden" name="prodName0" value="${productList[status.index].productName}">			
+					</c:if>
+					<c:if test="${status.last}">
+						<c:set var="size" value="${status.index}" />
+					</c:if> 
+				</c:forEach> 
+			</table>
+			<div id="total">
+				<h4><b>ì´ ê¸ˆì•¡ í•©ê³„ : </b>ï¿¦&nbsp;<fmt:formatNumber pattern="###,###,###" value="${totalPrice}" /></h4>
+				<div class="new-btn-area">
+					<input type="submit" value="ê²°ì œí•˜ê¸°" class="btn01">
+				</div>
+				<div class="new-btn-area">
+					<input type="button" value="ì·¨ì†Œí•˜ê¸°" class="btn01" onclick="location.href='/mypage/cartlist'" style="margin: 0;" >
+				</div>
+			</div>	
+		
+			<!-- ìƒí’ˆ ìˆ˜ë ¹ì¸ ì •ë³´ -->
+			<ul class="join-form">
+				<li>
+					<label>ì£¼ë¬¸ìëª…</label> 
+					<input type="text" name="receiverName" id="hname" value="${account.name}" size="15" maxlength="30" style="margin-left: 47px;"/>
+				</li>
+				<li>
+					<label>íœ´ëŒ€í°ë²ˆí˜¸</label>
+						<input type="text" name="receiverPhone" id="etcphone" size="15" maxlength="30" value="${account.phone}" style="margin-left: 34px;"/>
+				</li>
+				<li>
+					<label>ìš°í¸ë²ˆí˜¸</label>
+					<input type="text" name="receiverPostCode" id="sample6_postcode" value="${account.postCode}" readonly="readonly" style="margin-left: 48px;">
+					<input type="button" onclick="sample6_execDaumPostcode()" value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°"><br>
+				</li>
+				<li>
+					<label>ë„ë¡œëª…ì£¼ì†Œ</label>
+					<input type="text" name="receiverRoadAddress" id="sample6_address" value="${account.roadAddress}" readonly="readonly" style="margin-left: 35px;"> 
+					<input type="text" name="receiverDetailAddress" id="sample6_address2" value="${account.detailAddress}">
+				</li>
+				<li>
+					<label>í¬ì¸íŠ¸ ì‚¬ìš©</label>
+					<input type="radio" name="incDec" id="usePoint" value="-" style="margin-left: 32px;">&nbsp;YES&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">&nbsp;NO
+					<span id="divPoint"></span>
+				</li>
+			</ul>
+			<input type="hidden" name="orderId" id="orderId" value="${account.id}">
+			<!-- ì¥ë°”êµ¬ë‹ˆì— ëª‡ ì¢…ë¥˜ì˜ ìƒí’ˆì´ ë“¤ì–´ìˆì—ˆëŠ”ì§€ -->
+			<input type="hidden" name="size" value="${size}">
+			<input type="hidden" name="orderStatus" value="PAY_OK">
+			<!-- í¬ì¸íŠ¸ ì ë¦½ì„ ìœ„í•œ ì´ í•©ê³„ ê¸ˆì•¡ --> 
+			<input type="hidden" name="totalPrice" value="${totalPrice}">
+		</form>
+	</div>
+<div class=BLOCK60></div>	
+<!-- í‘¸í„° -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 
 </body>
 </html>

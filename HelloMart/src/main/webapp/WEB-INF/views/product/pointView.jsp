@@ -8,7 +8,8 @@
 </head>
 <body>
 
-남은 포인트 ${point}중  <input type="number" name="point" id="point" max="${point}">을 사용하겠습니다
+&nbsp;▶ &nbsp;<font color="red"><b>${point}</b></font>P 중 &nbsp;
+	<input type="number" name="point" id="point" max="${point}" style="width: 100px;">&nbsp;&nbsp;사용
 
 </body>
 </html>

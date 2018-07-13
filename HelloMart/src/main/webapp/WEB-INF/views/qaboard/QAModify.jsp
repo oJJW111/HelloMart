@@ -10,7 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <style type="text/css">

@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>»óÇ° Àå¹Ù±¸´Ï ¸ñ·Ï</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
+<title>ìƒí’ˆ ì¥ë°”êµ¬ë‹ˆ ëª©ë¡</title>
 <script type="text/javascript">
 	
 	function fnRv(no) {
@@ -21,93 +23,89 @@
 		if( (startDate != null) && (startDate != "")){
 			if((endDate != null) && (endDate != "")){
 				if(startDate > endDate){
-					alert("Á¾·á³¯Â¥´Â ½ÃÀÛ³¯Â¥ ÀÌÀüÀÌ µÉ ¼ö ¾ø½À´Ï´Ù");
+					alert("ì¢…ë£Œë‚ ì§œëŠ” ì‹œì‘ë‚ ì§œ ì´ì „ì´ ë  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
 				}
 				else{
 					location.href = "/mypage/history/period?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate;
 				}
 			}
 			else{
-				alert("Á¾·á³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");	
+				alert("ì¢…ë£Œë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");	
 			}			
 		}
 		else{
-			alert("½ÃÀÛ³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");
+			alert("ì‹œì‘ë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");
 		}
 	}
 </script>
 </head>
 <body>
 <sec:authentication property="principal" var="id"/>
-   <!-- Çì´õ -->
+   <!-- í—¤ë” -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
-   <!-- Çì´õ -->
-
-    <div class="article_wrap" style="width: 1026px; margin: auto;'">
-	<h2 align="center">±¸¸Å¸ñ·Ï È®ÀÎ</h2>
-			<table style="width: 100%">
-				<tr>
-				<td colspan="4">
-				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~ºÎÅÍ &nbsp;&nbsp;
-				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~±îÁö &nbsp;&nbsp;
-				<input type="button" value="°Ë»ö" onclick="search('${id}')">
+   <!-- í—¤ë” -->
+	<div class="titbox">
+		<div class="title">
+			<span class="name">ORDER LIST</span>
+		</div>
+	</div>
+    <div class="article_wrap" style="width: 900px;">
+    	<input type="date" name="startDate" id="startDate" min="2010-01-01" style="height: 30px">&nbsp;&nbsp;<b>~</b>&nbsp;&nbsp;
+		<input type="date" name="endDate" id="endDate" min="2010-01-01" style="height: 30px"> &nbsp;&nbsp;
+		<input type="button" value="ì¡°íšŒí•˜ê¸°" class="board_btn01" onclick="search('${id}')">
+		<div class="BLOCK30"></div>
+		<table id="cartBuy">
+			<tr>
+				<th width="100">êµ¬ë§¤ë‚ ì§œ</th>
+				<th width="120">ì´ë¯¸ì§€</th>
+				<th width="130">ìƒí’ˆëª…</th>
+				<th width="100">ìƒí’ˆê¸ˆì•¡</th>
+				<th width="70">ìˆ˜ëŸ‰</th>
+				<th width="110">ì´ê¸ˆì•¡</th>
+				<th width="80">ìƒí’ˆë¦¬ë·°</th>
+			</tr>
+		<c:choose>
+		<c:when test="${map.count == 0}">
+			<tr>
+				<td colspan="7">êµ¬ë§¤ë‚´ì—­ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+       		</tr>
+       	</c:when>
+		<c:otherwise>
+		<c:forEach var="row" items="${map.list}" varStatus="i">
+			<tr>
+				<td>
+					<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				</tr>
-				<tr><td><br><br></td></tr>
-				<tr>
-					<th align="center">ÀÌ¹ÌÁö</th>
-					<th align="center">»óÇ°¸í</th>
-					<th align="center">±¸¸Å³¯Â¥</th>
-					<th align="center">»óÇ°±İ¾×</th>
-					<th align="center">¼ö·®</th>
-					<th align="center">ÃÑ±İ¾×</th>
-					<th align="center">¸®ºäÀÛ¼º</th>
-				</tr>
-				<c:choose>
-				<c:when test="${map.count == 0}">
-				<tr>
-				<td colspan="7">
-        			±¸¸Å³»¿ªÀÌ ¾ø½À´Ï´Ù.
-        		</td>
-        		</tr>
-        		</c:when>
-				<c:otherwise>
-				<c:forEach var="row" items="${map.list}" varStatus="i">
-				<tr>
-					<td>
-						<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}">
-							<img src="${row.imagepath}" width="150" height="150">
-						</a>
-					</td>
-					<td>
-						<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}"
-						style="color: black;"> 
-						${row.productname}</a>
-					</td>
-					<td>
-						<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> ¿ø
-					</td>
-					<td>
-						${row.orderCount} °³
-					</td>
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> ¿ø
-					</td>
-					<td>
-						<jsp:include page="/mypage/historyButton?no=${row.prodNo}" />
-					</td>
-				</tr>
-				</c:forEach>
-			</c:otherwise>
+				<td>
+					<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}">
+						<img src="${row.imagepath}" width="120" height="120">
+					</a>
+				</td>
+				<td style="text-align: left;">
+					<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}" style="color: black;"> 
+					${row.productname}</a>
+				</td>
+				<td>
+					<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> ì›
+				</td>
+				<td>
+					${row.orderCount} ê°œ
+				</td>
+				<td>
+					<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> ì›
+				</td>
+				<td>
+					<jsp:include page="/mypage/historyButton?no=${row.prodNo}" />
+				</td>
+			</tr>
+		</c:forEach>
+		</c:otherwise>
 		</c:choose>
 	</table>
 	</div>
-	
-   <!-- ÇªÅÍ -->
+	<div class="BLOCK20"></div>
+   <!-- í‘¸í„° -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
-   <!-- ÇªÅÍ -->
+   <!-- í‘¸í„° -->
 </body>
 </html>

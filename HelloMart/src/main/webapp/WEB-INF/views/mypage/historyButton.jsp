@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <title>Insert title here</title>
 <script type="text/javascript">
 	function fnRv(no) {
@@ -14,13 +15,12 @@
 </head>
 <body>
 	<c:if test="${check == false}">
-		<input type="button" value="府轰 累己" onclick="fnRv('${no}')">
+		<input type="button" class="board_btn01" value="鞛戩劚" onclick="fnRv('${no}')">
 	</c:if>
 	
 	<c:if test="${check == true}">
-		<input type="button" value="府轰 荐沥" onclick="location.href='/remodify?idx=${idx}'">
-		&nbsp;&nbsp;&nbsp;
-		<input type="button" value="府轰 昏力" onclick="location.href='/redelete?idx=${idx}'">	
+		<input type="button" class="board_btn01" value="靾橃爼" onclick="location.href='/remodify?idx=${idx}'" style="margin: 2px 5px;">
+		<input type="button" class="board_btn01" value="靷牅" onclick="location.href='/redelete?idx=${idx}'" style="margin: 2px 5px;">	
 	</c:if>
 </body>
 </html>

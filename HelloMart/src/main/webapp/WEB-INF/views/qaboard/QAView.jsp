@@ -12,7 +12,6 @@
 
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <style type="text/css">
    
@@ -43,7 +42,11 @@ function cmtdelchk(cmtidx,idx){
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
-
+	<div class="titbox">
+		<div class="title">
+			<span class="name">Q&A VIEW</span>
+		</div>
+	</div>
    <div class="article_wrap">
 
       <!-- 게시물 읽기 시작 { -->
