@@ -101,7 +101,7 @@ public class ProductListServiceImpl implements ProductListService{
 				page = Integer.parseInt(request.getParameter(param));
 				break;
 			case "checkedId":
-				checkedId = request.getParameterValues("checkedId");
+				checkedId = request.getParameterValues(param);
 				break;
 				default:
 					String[] value = request.getParameterValues(param);

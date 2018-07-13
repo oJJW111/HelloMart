@@ -5,31 +5,46 @@
 
 <mapper namespace="com.hellomart.dao.QABoardDAO">
 
-	
-	<select id="listQABoardSub" resultType="QABoard">
-	
-		select * from qaboard where subject like #{param1} order by 1 desc limit #{param2},#{param3}
-			
+	<select id="getCount" resultType="int">
+		SELECT count(*) FROM QABoard
+		<where>
+			<if test="searchOption != null">
+			<choose>
+				<when test="searchOption == 'subject'">
+					subject
+				</when>
+				<when test="searchOption == 'content'">
+					content
+				</when>
+				<when test="searchOption == 'id'">
+					id
+				</when>
+			</choose>
+				like '%#{keyword}%'
+			</if>
+		</where>
 	</select>
 	
-	<select id="listQABoardCon" resultType="QABoard">
-	
-		select * from qaboard where content like #{param1} order by 1 desc limit #{param2},#{param3}
-			
+	<select id="list" resultType="QABoard">
+		select * from qaboard 
+		<where>
+			<if test="searchOption != null">
+			<choose>
+				<when test="searchOption == 'subject'">
+					subject
+				</when>
+				<when test="searchOption == 'content'">
+					content
+				</when>
+				<when test="searchOption == 'id'">
+					id
+				</when>
+			</choose>
+				like '%#{keyword}%'
+			</if>
+		</where>
+		order by 1 desc limit #{offset}, #{limit}
 	</select>
-	
-	<select id="listQABoardId" resultType="QABoard">
-	
-		select * from qaboard where id like #{param1} order by 1 desc limit #{param2},#{param3}
-
-	</select>
-	
-	<select id="listQABoard" resultType="QABoard">
-	
-		select * from qaboard order by 1 desc limit #{param1},#{param2}
-			
-	</select>
-
 	
 	<insert id="insertQABoard">
 		INSERT INTO
@@ -37,7 +52,6 @@
 		QABoard (subject, content, id,  count)
 		
 		VALUES (#{subject}, #{content}, #{id}, 0);
-		
 	</insert>
 	
 	<update id="cmtinc" parameterType="Integer">
@@ -53,41 +67,19 @@
 	</update>
 	
 	<select id="viewQABoard" resultType="QABoard">
-		
 		SELECT * FROM QABoard WHERE idx = #{idx}
-		
 	</select>
 	
 	<!-- 글 수정 쿼리 -->
 	<update id="modify">
-		
 		UPDATE QABoard SET 
 		subject=#{subject}, content=#{content}, modate=sysdate() 
 		WHERE idx=#{idx}
-		
 	</update>
 	
 	<!-- 글 삭제 쿼리 -->
 	<delete id="delete">
 		DELETE FROM QABoard WHERE idx = #{idx}
 	</delete>
-	
-	
-	<select id="getCount" resultType="int">
-		SELECT count(*) FROM QABoard
-	</select>
-	
-	<select id="subjectCount" resultType="int">
-		SELECT count(*) FROM QABoard where subject like #{param1}
-	</select>
-	
-	<select id="contentCount" resultType="int">
-		SELECT count(*) FROM QABoard where content like #{param1}
-	</select>
-	
-	<select id="idCount" resultType="int">
-		SELECT count(*) FROM QABoard where id like #{param1}
-	</select>
-	
 	
 </mapper>
