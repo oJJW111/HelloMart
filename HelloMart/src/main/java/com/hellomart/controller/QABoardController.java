@@ -53,23 +53,21 @@ public class QABoardController {
    		return mav;
    	}
 
-   @PreAuthorize("isAuthenticated()")
-   @RequestMapping(value = "/qawrite", method = RequestMethod.GET)
-   public ModelAndView write() {
-		  return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
-   }
+   	@PreAuthorize("isAuthenticated()")
+   	@RequestMapping(value = "/qawrite", method = RequestMethod.GET)
+   	public ModelAndView write() {
+	    return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
+   	}
 
    @RequestMapping(value = "/qawrite", method = RequestMethod.POST)
    public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-      
-      //오류여부 확인
-      if(bindingResult.hasErrors()){
-         return "qaboard/QAWrite";
-      }else{
-      
-      service.insertQABoard(qaboard);
-      return "redirect:/qaboard/qaboardList";
-      }
+       //오류여부 확인
+	   if(bindingResult.hasErrors()){
+    	   return "qaboard/QAWrite";
+	   }else{
+		   service.insertQABoard(qaboard);
+	       return "redirect:/qaboard/qaboardList";
+	   }
    }
 
    @RequestMapping(value = "/qaview", method = RequestMethod.GET)

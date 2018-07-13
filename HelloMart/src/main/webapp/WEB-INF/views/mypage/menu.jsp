@@ -47,27 +47,6 @@
 
 <div class="BLOCK60"></div>
 
-<script>
-$(document).ready(function(){
-	var mypage = "/mypage";
-	$("#info").click(function() {
-		location.href= mypage + "/info";
-	});
-	$("#cartlist").click(function() {
-		location.href= mypage + "/cartlist";
-	});
-	$("#point").click(function() {
-		location.href= mypage + "/point";
-	});
-	$("#history").click(function() {
-		location.href= mypage + "/history";
-	});
-	$("#history").click(function() {
-		location.href= mypage + "/todayView";
-	});
-});
-</script>
-
 <div class="myshopMain">
 	<div class="shopMain">
 		<a href="/mypage/info"> 
@@ -90,7 +69,9 @@ $(document).ready(function(){
 		</a>
 	</div>
 	<div class="shopMain">
+		<a href="/todayView">
 		<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+		</a>
 	</div>
 	<div class="shopMain">
 		<a href="/mypage/info/delete"> 
