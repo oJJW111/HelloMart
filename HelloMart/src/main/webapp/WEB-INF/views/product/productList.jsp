@@ -85,22 +85,6 @@ $(document).ready(function(){
 			$("input[value=" + value + "]").remove();
 		}
 	});
-	$('#addCart').on({
-		"submit" : function(){ 
-			var d = $(this).serialize();
-		
-			$.ajax({
-				url : "/addCart",
-				type : "get",
-				data : d,
-				success : function(result){
-					alert("해당 상품이 장바구니에 1개 추가되었습니다");
-				}
-			});
-			
-			return false; // action 페이지로 전환되는 것을 차단
-		}
-	});
 });
 $(function(){	
 	$('.addCart').on({
