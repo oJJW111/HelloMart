@@ -107,7 +107,7 @@
 
 		<!-- 게시판 검색 시작 { -->
 		<div align="center">
-			<form action="qasearch" method="get">
+			<form action="/qaboard/qaboardList" method="get">
 				<label for="sfl" class="sound_only">검색대상</label> <select
 					name="searchOption" id="searchOption">
 					<option value="subject">제목</option>

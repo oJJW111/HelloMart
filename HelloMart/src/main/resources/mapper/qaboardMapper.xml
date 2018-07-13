@@ -20,12 +20,12 @@
 					id
 				</when>
 			</choose>
-				like '%#{keyword}%'
+				like '%${keyword}%'
 			</if>
 		</where>
 	</select>
 	
-	<select id="list" resultType="QABoard">
+	<select id="list" parameterType="hashmap" resultType="QABoard">
 		select * from qaboard 
 		<where>
 			<if test="searchOption != null">
@@ -40,7 +40,7 @@
 					id
 				</when>
 			</choose>
-				like '%#{keyword}%'
+				like '%${keyword}%'
 			</if>
 		</where>
 		order by 1 desc limit #{offset}, #{limit}

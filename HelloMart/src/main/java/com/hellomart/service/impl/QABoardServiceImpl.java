@@ -54,8 +54,11 @@ public class QABoardServiceImpl implements QABoardService{
 		modelMap.put("paging", paging);
 		
 		int offset = paging.getOffset();
-		int limit = paging.getMaxResult();
-		Vector<QABoard> list = list(offset, limit, searchOption, keyword);
+		Vector<QABoard> list = null;
+		if(offset != -1) {
+			int limit = paging.getMaxResult();
+			list = list(offset, limit, searchOption, keyword);
+		}
 		modelMap.put("list", list);
 		
 		return modelMap;
