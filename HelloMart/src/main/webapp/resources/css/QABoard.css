@@ -1,11 +1,7 @@
 .article_wrap{
-	width: 1026px;
+	width: 840px;
 	margin: auto;
 }
-
-/* �Խ��� ��ư */
-/* ��� ��ư */
-
 #cart_stn{
 	padding: 0 15px;
 	margin:  0 10px;
@@ -36,12 +32,11 @@
 
 .cart_sub{
 	text-align: right;
-	padding-top: 80px;
-	padding-bottom: 10px;
+	padding-top: 85px;
 }
 
-
-
+/* �Խ��� ��ư */
+/* ��� ��ư */
 a.btn_b01 {
 	display: inline-block;
 	padding: 0 5px;
@@ -84,7 +79,6 @@ a.btn_admin {
 	text-decoration: none;
 	line-height: 2.15em;
 	vertical-align: middle
-	
 } /* ������ ���� ��ư */
 a.btn_admin:focus, a.btn_admin:hover {
 	text-decoration: none
@@ -101,14 +95,16 @@ a.btn_admin:focus, a.btn_admin:hover {
     padding-bottom: 15px;
 } 
 
-
-
 #bo_w .btn_cancel {
     padding: 0 10px;
     height: 24px;
     letter-spacing: -0.1em;
     vertical-align: middle;
+    
 }
+
+
+/* �⺻ ���̺� */
 
 /* ��� ����¡ */
 #page a:focus, #page a:hover, #page a:active {

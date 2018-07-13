@@ -65,13 +65,11 @@ function closeNav() {
 </head>
 <body>
 <!-- 헤더 -->
-<jsp:include page="/WEB-INF/views/inc/header_nomenu.jsp"/>
+<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 
-<hr>
 
-<div class="BLOCK20"></div>
-
+<div class="BLOCK40"></div>
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/mypage/info">회원정보 보기</a>
@@ -82,10 +80,10 @@ function closeNav() {
 
 <div class="wrap">
 	<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+	<div class="BLOCK20"></div>
 	<jsp:include page="/WEB-INF/views/mypage/info/inc/${viewPage}.jsp"/> 
 </div>
-
-<div class="BLOCK50"></div>
+<div class="BLOCK60"></div>
 
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>

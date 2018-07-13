@@ -35,7 +35,9 @@ $(document).ready(function(){
 	$('#bar_menu7').on('click', function(){
 		location.href="/admin/page";
 	});
-	
+	$('#bar_menu8').on('click', function(){
+		location.href="/mypage/cartlist";
+	});
 });
 </script>
 <div class="header_bar_wrap">
@@ -50,6 +52,8 @@ $(document).ready(function(){
 		</sec:authorize>
 		
 		<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+			<div class="F_right haeder_bar_menu" id="bar_menu8">장바구니</div>
+			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu4">로그아웃</div>
 			<div class="F_right haeder_bar_menu_line"></div>
 			<div class="F_right haeder_bar_menu" id="bar_menu5">My Page</div>

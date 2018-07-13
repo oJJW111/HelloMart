@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,9 +31,7 @@
 
 	<div align="center">
 		<h1>구매가 완료되었습니다</h1>
-		
 		<br><br>
-		
 		<a href="#" onclick="buy(); return false;">계속해서 구매하기</a>
 		&nbsp;&nbsp; / &nbsp;&nbsp; 
 		<a href="/mypage/history">구매 내역 보기</a>

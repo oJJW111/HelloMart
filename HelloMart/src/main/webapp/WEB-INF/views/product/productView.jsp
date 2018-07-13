@@ -17,12 +17,12 @@
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(no, smallCategory, id){
+	function fnCart(no, smallCategory){
 		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
 		
 		if(isMove){
 			var orderCount = document.getElementById("orderCount").value;
-			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
+			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount; 	
 		}
 		else{
 			var orderCount = document.getElementById("orderCount").value;
@@ -31,19 +31,18 @@
 		}
 	}
 </script>
-
 </head>
 <body>
-
 <sec:authentication property="principal" var="id" />
-
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
+<div class="titbox">
+	<div class="title">
+		<span class="name">PRODUCT VIEW</span>
+	</div>
+</div>
 <div align="center">
-	<h2>상품 정보 보기</h2>
-	<br>
 	<table>
 		<c:if test="${detail == null}">
 		<tr>
@@ -96,8 +95,9 @@
 			<td>${detail.OrderCount}</td>
 		</tr>
 		<tr>
-			<td>만족도</td>
-			<td>${detail.Score}점</td> 
+			<td>상품평</td>
+			<!-- 점수에 따라서 별 이미지로 처리? -->
+			<td>${detail.Score}</td> 
 		</tr>
 		<tr>
 			<td>제작년도</td>
@@ -149,27 +149,24 @@
 				<option value="${i}">${i}</option>
 			</c:forEach>
 		</select> 
-
 		<c:if test="${detail == null}">
-			&nbsp;&nbsp;<input type="button" value="구매"
-				onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
-			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
-				onclick="fnCart(${product.no}, '${product.smallCategory}','${id}')">
+			<input type="button" value="구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+			<input type="button" value="장바구니 담기" onclick="fnCart(${product.no}, '${product.smallCategory}')">
 		</c:if>
 		<c:if test="${detail != null}">
-			&nbsp;&nbsp;<input type="button" value="구매"				
-			onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-			&nbsp;&nbsp;<input type="button" value="장바구니 담기"
-				onclick="fnCart(${detail.No}, '${detail.SmallCategory}','${id}')">
+			<input type="button" value="구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+			<input type="button" value="장바구니 담기" onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
 		</c:if>
 	</sec:authorize>
 </div>
 <br><br><br>
+		
 <c:if test="${detail != null}">
 	<div> 
 		<jsp:include page="/review?pageNum=1&no=${detail.No}"/> 
-	</div>
+	</div> 
 </c:if>
+
 <c:if test="${detail == null}">
 	<div> 
 		<jsp:include page="/review?pageNum=1&no=${product.no}"/> 

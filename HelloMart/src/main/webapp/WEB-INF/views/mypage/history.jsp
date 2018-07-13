@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -6,6 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <title>상품 장바구니 목록</title>
 <script type="text/javascript">
 	
@@ -41,70 +44,66 @@
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
-
-    <div class="article_wrap" style="width: 1026px; margin: auto;'">
-	<h2 align="center">구매목록 확인</h2>
-			<table style="width: 100%">
-				<tr>
-				<td colspan="4">
-				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~부터 &nbsp;&nbsp;
-				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~까지 &nbsp;&nbsp;
-				<input type="button" value="검색" onclick="search('${id}')">
+	<div class="titbox">
+		<div class="title">
+			<span class="name">ORDER LIST</span>
+		</div>
+	</div>
+    <div class="article_wrap" style="width: 900px;">
+    	<input type="date" name="startDate" id="startDate" min="2010-01-01" style="height: 30px">&nbsp;&nbsp;<b>~</b>&nbsp;&nbsp;
+		<input type="date" name="endDate" id="endDate" min="2010-01-01" style="height: 30px"> &nbsp;&nbsp;
+		<input type="button" value="조회하기" class="board_btn01" onclick="search('${id}')">
+		<div class="BLOCK30"></div>
+		<table id="cartBuy">
+			<tr>
+				<th width="100">구매날짜</th>
+				<th width="120">이미지</th>
+				<th width="130">상품명</th>
+				<th width="100">상품금액</th>
+				<th width="70">수량</th>
+				<th width="110">총금액</th>
+				<th width="80">상품리뷰</th>
+			</tr>
+		<c:choose>
+		<c:when test="${map.count == 0}">
+			<tr>
+				<td colspan="7">구매내역이 없습니다.</td>
+       		</tr>
+       	</c:when>
+		<c:otherwise>
+		<c:forEach var="row" items="${map.list}" varStatus="i">
+			<tr>
+				<td>
+					<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				</tr>
-				<tr><td><br><br></td></tr>
-				<tr>
-					<th align="center">이미지</th>
-					<th align="center">상품명</th>
-					<th align="center">구매날짜</th>
-					<th align="center">상품금액</th>
-					<th align="center">수량</th>
-					<th align="center">총금액</th>
-					<th align="center">리뷰작성</th>
-				</tr>
-				<c:choose>
-				<c:when test="${map.count == 0}">
-				<tr>
-				<td colspan="7">
-        			구매내역이 없습니다.
-        		</td>
-        		</tr>
-        		</c:when>
-				<c:otherwise>
-				<c:forEach var="row" items="${map.list}" varStatus="i">
-				<tr>
-					<td>
-						<a href="/productView?no=${row.prodNo}&smallCategory=${row.smallcategory}">
-							<img src="${row.imagepath}" width="150" height="150">
-						</a>
-					</td>
-					<td>
-						<a href="/productView?no=${row.prodNo}&smallCategory=${row.smallcategory}"
-						style="color: black;"> 
-						${row.productname}</a>
-					</td>
-					<td>
-						<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> 원
-					</td>
-					<td>
-						${row.orderCount} 개
-					</td>
-					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> 원
-					</td>
-					<td>
-						<jsp:include page="/mypage/historyButton?no=${row.prodNo}" />
-					</td>
-				</tr>
-				</c:forEach>
-			</c:otherwise>
+				<td>
+					<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}">
+						<img src="${row.imagepath}" width="120" height="120">
+					</a>
+				</td>
+				<td style="text-align: left;">
+					<a href="/productView?no=${row.no}&smallCategory=${row.smallcategory}" style="color: black;"> 
+					${row.productname}</a>
+				</td>
+				<td>
+					<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> 원
+				</td>
+				<td>
+					${row.orderCount} 개
+				</td>
+				<td>
+					<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> 원
+				</td>
+				<td>
+					<jsp:include page="/mypage/historyButton?no=${row.prodNo}" />
+				</td>
+			</tr>
+		</c:forEach>
+		</c:otherwise>
 		</c:choose>
 	</table>
 	</div>
-	
+	<div class="BLOCK20"></div>
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
    <!-- 푸터 -->

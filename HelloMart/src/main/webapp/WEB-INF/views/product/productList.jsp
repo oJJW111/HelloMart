@@ -9,7 +9,6 @@
 <title>HelloMart</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
@@ -113,9 +112,7 @@ $(function(){
 <!-- 헤더 -->
 
 <div class="article_wrap">
-
 <div class=BLOCK70></div>
-
 <form action="/productList" method="get" id="detailForm"> 
 <input type="hidden" name="mainCategory" value="${param.mainCategory}">
 <input type="hidden" name="smallCategory" value="${param.smallCategory}">
@@ -190,7 +187,7 @@ $(function(){
 </div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory != '액세서리'} -->
 </form>
-
+<div class=BLOCK20></div>
 <!-- 상품리스트 -->
 <div class="product_list">
 <c:choose>

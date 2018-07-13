@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +10,9 @@
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- 다음 api js 파일 추가 -->
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <title>주문 페이지</title>
 <script type="text/javascript">
 	$(function(){
@@ -27,137 +31,79 @@
 </script>
 </head>
 <body>
-
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
-	<center>
-		<h2>주문 페이지</h2>
-		
+<div class="titbox">
+	<div class="title">
+		<span class="name">ORDER LIST</span>
+	</div>
+</div>
+	<div class="article_wrap">
 		<form action="/buyOk" method="post">
-		<table> 
-			<c:if test="${detail == null}">
+			<table id="cartBuy">
+				<!-- 장바구니에 담겨있던 상품 리스트 -->
 				<tr>
-					<td rowspan="5">
-						<img src="${product.imagePath}" width="400px">
-					</td>
-					<td>상품명</td>
-					<td>${product.productName}</td>
+					<th width="180">상품이미지</th>
+					<th>상품정보</th>
+					<th>상품금액 x 수량</th>
+					<th>총금액</th>
 				</tr>
-				<tr> 
-					<td>상품가격</td>
-					<td>${product.price}</td>
-				</tr>	
-				<tr>
-					<td>상품수량</td>
-					<td>${orderCount}</td>
-				</tr>
-				<tr>
-					<td>상품 총 금액</td>
-					<td>${product.price * orderCount}</td>
-				</tr>
-			</c:if>
-			
-			<c:if test="${detail != null}">
-				<tr>
-					<td rowspan="5">
-						<img src="${detail.ImagePath}" width="400px">
-					</td>
-					<td>상품명</td>
-					<td>${detail.ProductName}</td>
-				</tr>
-				<tr> 
-					<td>상품가격</td>
-					<td>${detail.Price}</td>
-				</tr>	
-				<tr>
-					<td>상품수량</td>
-					<td>${orderCount}</td>
-				</tr>
-				<tr>
-					<td>상품 총 금액</td>
-					<td>${detail.Price * orderCount}</td>
-				</tr>
-			</c:if>	
-			<tr>
-				<td colspan="3">
-					<table>
-						<tr>
-							<td>받을 사람 이름</td>
-							<td>
-								<input type="text" name="receiverName" value="${account.name}">
-							</td>
-						</tr>
-						<tr>
-							<td>받을 사람 연락처</td>
-							<td>
-								<input type="text" name="receiverPhone" value="${account.phone}">
-							</td>
-						</tr>
-						<tr>
-							<td>우편번호</td>
-							<td>
-								<input type="text" name="receiverPostCode" value="${account.postCode}"
-										id="sample6_postcode" readonly="readonly">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-							</td>
-						</tr>
-						<tr>
-							<td>도로명 주소</td>
-							<td>
-								<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
-										id="sample6_address" readonly="readonly">
-							</td>
-						</tr>
-						<tr>
-							<td>상세주소</td>
-							<td>
-								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
-										id="sample6_address2">
-							</td>
-						</tr>						
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3">
-					포인트를 사용하시겠습니까?
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="usePoint" value="-">예
-					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">아니오
-					<div id="divPoint"></div>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3">
-					<br><br>
-					<input type="submit" value="주문하기">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="취소하기" onclick="location.href='/'">
-				</td>
-			</tr>
-		</table>
-	
-		<c:if test="${detail != null}">
-			<input type="hidden" name="prodNo" value="${detail.No}">
-			<input type="hidden" name="prodName" value="${detail.ProductName}">
-			<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
-		</c:if>
+					<tr>
+						<td><img src="${detail.ImagePath}" width="100"></td>				
+						<td style="text-align: left;">[ ${detail.ProductName} ] </td>
+						<td>￦&nbsp; ${detail.Price} x ${orderCount}</td>
+						<c:set var="orderPrice" value="${productList[status.index].price * orderCountList[status.index]}" />
+						<c:set var="totalPrice" value="${detail.Price * orderCount}" />
+						<td>￦&nbsp; ${totalPrice}</td>
+					</tr>
+			</table>
+			<div id="total">
+				<h4><b>총 금액 합계 : </b>￦&nbsp;<fmt:formatNumber pattern="###,###,###" value="${totalPrice}" /></h4>
+				<div class="new-btn-area">
+					<input type="submit" value="결제하기" class="btn01">
+				</div>
+				<div class="new-btn-area">
+					<input type="button" value="취소하기" class="btn01" onclick="history.back();" style="margin: 0;" >
+				</div>
+			</div>	
 		
-		<c:if test="${detail == null}">
- 			<input type="hidden" name="prodNo" value="${product.no}"> 
- 			<input type="hidden" name="prodName" value="${product.productName}"> 
- 			<input type="hidden" name="orderPrice" value="${product.price * orderCount}"> 
-		</c:if> 
-		
-			<input type="hidden" name="orderCount" value="${orderCount}">
-			<input type="hidden" name="orderStatus" value="PAY_OK">	
-			<input type="hidden" name="orderId" value="${account.id}">
+			<!-- 상품 수령인 정보 -->
+			<ul class="join-form">
+				<li>
+					<label>주문자명</label> 
+					<input type="text" name="receiverName" id="hname" value="${account.name}" size="15" maxlength="30" style="margin-left: 47px;"/>
+				</li>
+				<li>
+					<label>휴대폰번호</label>
+						<input type="text" name="receiverPhone" id="etcphone" size="15" maxlength="30" value="${account.phone}" style="margin-left: 34px;"/>
+				</li>
+				<li>
+					<label>우편번호</label>
+					<input type="text" name="receiverPostCode" id="sample6_postcode" value="${account.postCode}" readonly="readonly" style="margin-left: 48px;">
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+				</li>
+				<li>
+					<label>도로명주소</label>
+					<input type="text" name="receiverRoadAddress" id="sample6_address" value="${account.roadAddress}" readonly="readonly" style="margin-left: 35px;"> 
+					<input type="text" name="receiverDetailAddress" id="sample6_address2" value="${account.detailAddress}">
+				</li>
+				<li>
+					<label>포인트 사용</label>
+					<input type="radio" name="incDec" id="usePoint" value="-" style="margin-left: 32px;">&nbsp;YES&nbsp;&nbsp;
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">&nbsp;NO
+					<span id="divPoint"></span>
+				</li>
+			</ul>
+		<input type="hidden" name="orderId" id="orderId" value="${account.id}">
+		<input type="hidden" name="prodNo" value="${detail.No}">
+		<input type="hidden" name="prodName" value="${detail.ProductName}">
+		<input type="hidden" name="orderCount" value="${orderCount}">
+		<input type="hidden" name="orderPrice" value="${detail.Price * orderCount}">
+		<input type="hidden" name="orderStatus" value="PAY_OK">
 		</form>
-	</center>
-
+	</div>
+<div class=BLOCK60></div>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

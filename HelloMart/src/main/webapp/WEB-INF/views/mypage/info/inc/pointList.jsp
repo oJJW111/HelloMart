@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Æ÷ÀÎÆ® ÀÌ·Â º¸±â</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>í¬ì¸íŠ¸ ì´ë ¥ ë³´ê¸°</title>
 <script type="text/javascript">
 	function search(id){
 		var startDate = document.getElementById("startDate").value;
@@ -16,18 +16,18 @@
 		if( (startDate != null) && (startDate != "")){
 			if((endDate != null) && (endDate != "")){
 				if(startDate > endDate){
-					alert("Á¾·á³¯Â¥´Â ½ÃÀÛ³¯Â¥ ÀÌÀüÀÌ µÉ ¼ö ¾ø½À´Ï´Ù");
+					alert("ì¢…ë£Œë‚ ì§œëŠ” ì‹œì‘ë‚ ì§œ ì´ì „ì´ ë  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
 				}
 				else{
 					location.href = "/mypage/point/period?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate;
 				}
 			}
 			else{
-				alert("Á¾·á³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");	
+				alert("ì¢…ë£Œë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");	
 			}			
 		}
 		else{
-			alert("½ÃÀÛ³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");
+			alert("ì‹œì‘ë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");
 		}
 	}
 </script>
@@ -38,20 +38,21 @@
 	<table border="1" align="center" width="100%">
 		<tr>
 			<td colspan="4" align="center">
-				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~ºÎÅÍ &nbsp;&nbsp;
-				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~±îÁö &nbsp;&nbsp;
-				<input type="button" value="°Ë»ö" onclick="search('${id}')">
+				<input type="date" name="startDate" id="startDate" min="2010-01-01">&nbsp;~&nbsp;
+				<input type="date" name="endDate" id="endDate" min="2010-01-01">&nbsp;&nbsp;
+				<input type="button" value="ê²€ìƒ‰" onclick="search('${id}')">
 			</td>
 		</tr>
 		<tr>
 			<td colspan="4"><br><br><br></td>
 		</tr>
 		<tr>
-			<td align="center" width="15%">³¯Â¥</td>
-			<td align="center" width="15%">Áõ°¡</td>
-			<td align="center" width="15%">°¨¼Ò</td>
-			<td align="center" width="55%">³»¿ë</td>
+			<td align="center" width="15%">ë‚ ì§œ</td>
+			<td align="center" width="15%">ì¦ê°€</td>
+			<td align="center" width="15%">ê°ì†Œ</td>
+			<td align="center" width="55%">ë‚´ìš©</td>
 		</tr>
+		
 	<c:forEach var="point" items="${pointList}">
 		<tr>
 			<td align="center">
@@ -68,6 +69,7 @@
 			<td align="center">${point.content}</td>	
 		</tr>
 	</c:forEach>
+	
 	</table>
 	<br><br><br><br>
 </body>

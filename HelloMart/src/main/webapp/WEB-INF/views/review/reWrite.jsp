@@ -20,11 +20,13 @@
 	<!-- 헤더 -->
 	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
 	<!-- 헤더 -->
-
-	<div class="article_wrap" style="width: 1064px; margin: auto;'">
+	<div class="titbox">
+		<div class="title">
+			<span class="name">WRITE REVIEW</span>
+		</div>
+	</div>
+	<div class="article_wrap">
 		<section id="bo_w">
-
-			<h2 id="container_title">리뷰작성</h2>
 			<form action="/reWrite" method="post">
 				<div class="tbl_frm01 tbl_wrap">
 					<table>
@@ -32,22 +34,20 @@
 							<tr>
 								<td>
 									<span>평점</span>
-									<select name="star">
+									<select name="star" style="display: inline-block;">
 										<option value="1">★</option>
 										<option value="2">★★</option>
 										<option value="3">★★★</option>
 										<option value="4">★★★★</option>
 										<option value="5">★★★★★</option>
 									</select>
-								</td>
-							<tr>
-								<td><input type="text" name="Id" class="frm_input required"
-									size="10" maxlength="20" value="${id}" readonly="readonly">
+									<input type="text" name="Id" size="10" maxlength="20" value="${id}" readonly="readonly">
 								</td>
 							</tr>
 							<tr>
-								<td><textarea name="content" rows="10" cols="82"
-										placeholder="5자 이상 입력 하세요."></textarea></td>
+								<td>
+									<textarea name="content" rows="10" cols="82" placeholder="5자 이상 입력 하세요."></textarea>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -57,11 +57,10 @@
 					<input type="submit" value="글쓰기" id="btn_submit" class="btn_submit"> 
 					<input type="reset" value="취소"	class="btn_cancel">
 				</div>
-
 			</form>
-
 		</section>
 	</div>
+	<div class="BLOCK80"></div>
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />
 	<!-- 푸터 -->

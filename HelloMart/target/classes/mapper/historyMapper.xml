@@ -7,13 +7,13 @@
 	<!-- 상품 구매 목록 -->
 	<select id="historylist" parameterType="String" resultType="java.util.HashMap">
 		SELECT o.prodNo, o.orderCount, o.orderDate,o.idx,
-		p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
+		p.smallcategory, p.imagepath, p.productname, p.registerid, p.price, p.no
 		FROM productList p, orderlist o
 		WHERE p.no = o.prodNo AND o.orderId = #{param1}
 		ORDER BY o.orderDate
 	</select>
 	
-	<select id="historyDatelist" resultType="java.util.HashMap"> 
+	<select id="historyDatelist" resultType="java.util.HashMap">
 	 	SELECT o.prodNo,o.orderCount, o.orderDate,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, orderlist o
