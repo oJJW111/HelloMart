@@ -12,13 +12,10 @@ $(document).ready(function(){
       locationEncode("/productList?mainCategory=IT");
    });
    $("#main_menu_3").on('click', function(){
-      locationEncode("/productList?mainCategory모바일");
-   });
+	      locationEncode("/productList?mainCategory=모바일");
+	   });
    $("#main_menu_4").on('click', function(){
       locationEncode("/productList?mainCategory=액세서리");
-   });
-   $("#main_menu_5").on('click', function(){
-      locationEncode("/productList?mainCategory=퍼스널케어");
    });
    $("#main_menu_6").on('click', function(){
       locationEncode("/qaboard/qaboardList");

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -10,8 +10,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>»óÇ° Àå¹Ù±¸´Ï ¸ñ·Ï</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ìƒí’ˆ ìž¥ë°”êµ¬ë‹ˆ ëª©ë¡</title>
 <script type="text/javascript">
 
 	function search(id){
@@ -21,53 +21,53 @@
 		if( (startDate != null) && (startDate != "")){
 			if((endDate != null) && (endDate != "")){
 				if(startDate > endDate){
-					alert("Á¾·á³¯Â¥´Â ½ÃÀÛ³¯Â¥ ÀÌÀüÀÌ µÉ ¼ö ¾ø½À´Ï´Ù");
+					alert("ì¢…ë£Œë‚ ì§œëŠ” ì‹œìž‘ë‚ ì§œ ì´ì „ì´ ë  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
 				}
 				else{
 					location.href = "/mypage/history/period?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate;
 				}
 			}
 			else{
-				alert("Á¾·á³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");	
+				alert("ì¢…ë£Œë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");	
 			}			
 		}
 		else{
-			alert("½ÃÀÛ³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä");
+			alert("ì‹œìž‘ë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”");
 		}
 	}
 </script>
 </head>
 <body>
 <sec:authentication property="principal" var="id"/>
-   <!-- Çì´õ -->
+   <!-- í—¤ë” -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
-   <!-- Çì´õ -->
+   <!-- í—¤ë” -->
 
     <div class="article_wrap" style="width: 1026px; margin: auto;'">
-	<h2 align="center">±¸¸Å¸ñ·Ï È®ÀÎ</h2>
+	<h2 align="center">êµ¬ë§¤ëª©ë¡ í™•ì¸</h2>
 			<table style="width: 100%">
 				<tr>
 				<td colspan="4">
-				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~ºÎÅÍ &nbsp;&nbsp;
-				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~±îÁö &nbsp;&nbsp;
-				<input type="button" value="°Ë»ö" onclick="search('${id}')">
+				<input type="date" name="startDate" id="startDate" min="2010-01-01"> ~ë¶€í„° &nbsp;&nbsp;
+				<input type="date" name="endDate" id="endDate" min="2010-01-01"> ~ê¹Œì§€ &nbsp;&nbsp;
+				<input type="button" value="ê²€ìƒ‰" onclick="search('${id}')">
 				</td>
 				</tr>
 				<tr><td><br><br></td></tr>
 				<tr>
-					<th align="center">ÀÌ¹ÌÁö</th>
-					<th align="center">»óÇ°¸í</th>
-					<th align="center">±¸¸Å³¯Â¥</th>
-					<th align="center">»óÇ°±Ý¾×</th>
-					<th align="center">¼ö·®</th>
-					<th align="center">ÃÑ±Ý¾×</th>
-					<th align="center">¸®ºäÀÛ¼º</th>
+					<th align="center">ì´ë¯¸ì§€</th>
+					<th align="center">ìƒí’ˆëª…</th>
+					<th align="center">êµ¬ë§¤ë‚ ì§œ</th>
+					<th align="center">ìƒí’ˆê¸ˆì•¡</th>
+					<th align="center">ìˆ˜ëŸ‰</th>
+					<th align="center">ì´ê¸ˆì•¡</th>
+					<th align="center">ë¦¬ë·°ìž‘ì„±</th>
 				</tr>
 				<c:choose>
 				<c:when test="${map.count == 0}">
 				<tr>
 				<td colspan="7">
-        			±¸¸Å³»¿ªÀÌ ¾ø½À´Ï´Ù.
+        			êµ¬ë§¤ë‚´ì—­ì´ ì—†ìŠµë‹ˆë‹¤.
         		</td>
         		</tr>
         		</c:when>
@@ -88,22 +88,22 @@
 						<fmt:formatDate value="${row.orderDate}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> ¿ø
+						<fmt:formatNumber pattern="###,###,###" value="${row.price}"/> ì›
 					</td>
 					<td>
-						${row.orderCount} °³
+						${row.orderCount} ê°œ
 					</td>
 					<td>
-						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> ¿ø
+						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> ì›
 					</td>
 					<td>
 
 						<%-- <c:choose>
 							<c:when test="${map.check == 0}">
-								<input type="button" value="¸®ºäÀÛ¼º" onclick="fnRv('${row.no}')">
+								<input type="button" value="ë¦¬ë·°ìž‘ì„±" onclick="fnRv('${row.no}')">
 							</c:when>
 							<c:otherwise>
-								<input type="button" value="¼öÁ¤" onclick="location.href='/remodify?idx=${row.idx}'">
+								<input type="button" value="ìˆ˜ì •" onclick="location.href='/remodify?idx=${row.idx}'">
 							</c:otherwise>
 						</c:choose> --%>
 
@@ -116,8 +116,8 @@
 	</table>
 	</div>
 	
-   <!-- ÇªÅÍ -->
+   <!-- í‘¸í„° -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
-   <!-- ÇªÅÍ -->
+   <!-- í‘¸í„° -->
 </body>
 </html>

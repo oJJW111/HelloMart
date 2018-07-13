@@ -1,16 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/resources/js/daum_postcode_v6.js"></script>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-<!-- ´ÙÀ½ api js ÆÄÀÏ Ãß°¡ -->
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>ÁÖ¹® ÆäÀÌÁö</title>
+<!-- ë‹¤ìŒ api js íŒŒì¼ ì¶”ê°€ -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ì£¼ë¬¸ íŽ˜ì´ì§€</title>
 <script type="text/javascript">
 	$(function(){
 		$('#usePoint').on({
@@ -29,12 +29,12 @@
 </head>
 <body>
 
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
-<!-- Çì´õ -->
+<!-- í—¤ë” -->
 
 	<center>
-		<h2>ÁÖ¹® ÆäÀÌÁö</h2>
+		<h2>ì£¼ë¬¸ íŽ˜ì´ì§€</h2>
 		
 		<form action="/buyOk" method="post">
 		<table> 
@@ -43,19 +43,19 @@
 					<td rowspan="5">
 						<img src="${product.imagePath}" width="400px">
 					</td>
-					<td>»óÇ°¸í</td>
+					<td>ìƒí’ˆëª…</td>
 					<td>${product.productName}</td>
 				</tr>
 				<tr> 
-					<td>»óÇ°°¡°Ý</td>
+					<td>ìƒí’ˆê°€ê²©</td>
 					<td>${product.price}</td>
 				</tr>	
 				<tr>
-					<td>»óÇ°¼ö·®</td>
+					<td>ìƒí’ˆìˆ˜ëŸ‰</td>
 					<td>${orderCount}</td>
 				</tr>
 				<tr>
-					<td>»óÇ° ÃÑ ±Ý¾×</td>
+					<td>ìƒí’ˆ ì´ ê¸ˆì•¡</td>
 					<td>${product.price * orderCount}</td>
 				</tr>
 			</c:if>
@@ -65,19 +65,19 @@
 					<td rowspan="5">
 						<img src="${detail.ImagePath}" width="400px">
 					</td>
-					<td>»óÇ°¸í</td>
+					<td>ìƒí’ˆëª…</td>
 					<td>${detail.ProductName}</td>
 				</tr>
 				<tr> 
-					<td>»óÇ°°¡°Ý</td>
+					<td>ìƒí’ˆê°€ê²©</td>
 					<td>${detail.Price}</td>
 				</tr>	
 				<tr>
-					<td>»óÇ°¼ö·®</td>
+					<td>ìƒí’ˆìˆ˜ëŸ‰</td>
 					<td>${orderCount}</td>
 				</tr>
 				<tr>
-					<td>»óÇ° ÃÑ ±Ý¾×</td>
+					<td>ìƒí’ˆ ì´ ê¸ˆì•¡</td>
 					<td>${detail.Price * orderCount}</td>
 				</tr>
 			</c:if>	
@@ -85,34 +85,34 @@
 				<td colspan="3">
 					<table>
 						<tr>
-							<td>¹ÞÀ» »ç¶÷ ÀÌ¸§</td>
+							<td>ë°›ì„ ì‚¬ëžŒ ì´ë¦„</td>
 							<td>
 								<input type="text" name="receiverName" value="${account.name}">
 							</td>
 						</tr>
 						<tr>
-							<td>¹ÞÀ» »ç¶÷ ¿¬¶ôÃ³</td>
+							<td>ë°›ì„ ì‚¬ëžŒ ì—°ë½ì²˜</td>
 							<td>
 								<input type="text" name="receiverPhone" value="${account.phone}">
 							</td>
 						</tr>
 						<tr>
-							<td>¿ìÆí¹øÈ£</td>
+							<td>ìš°íŽ¸ë²ˆí˜¸</td>
 							<td>
 								<input type="text" name="receiverPostCode" value="${account.postCode}"
 										id="sample6_postcode" readonly="readonly">
-								<input type="button" onclick="sample6_execDaumPostcode()" value="¿ìÆí¹øÈ£ Ã£±â">
+								<input type="button" onclick="sample6_execDaumPostcode()" value="ìš°íŽ¸ë²ˆí˜¸ ì°¾ê¸°">
 							</td>
 						</tr>
 						<tr>
-							<td>µµ·Î¸í ÁÖ¼Ò</td>
+							<td>ë„ë¡œëª… ì£¼ì†Œ</td>
 							<td>
 								<input type="text" name="receiverRoadAddress" value="${account.roadAddress}"
 										id="sample6_address" readonly="readonly">
 							</td>
 						</tr>
 						<tr>
-							<td>»ó¼¼ÁÖ¼Ò</td>
+							<td>ìƒì„¸ì£¼ì†Œ</td>
 							<td>
 								<input type="text" name="receiverDetailAddress" value="${account.detailAddress}"
 										id="sample6_address2">
@@ -123,20 +123,20 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="3">
-					Æ÷ÀÎÆ®¸¦ »ç¿ëÇÏ½Ã°Ú½À´Ï±î?
+					í¬ì¸íŠ¸ë¥¼ ì‚¬ìš©í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="usePoint" value="-">¿¹
+					<input type="radio" name="incDec" id="usePoint" value="-">ì˜ˆ
 					&nbsp;&nbsp;
-					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">¾Æ´Ï¿À
+					<input type="radio" name="incDec" id="noUsePoint" value="+" checked="checked">ì•„ë‹ˆì˜¤
 					<div id="divPoint"></div>
 				</td>
 			</tr>
 			<tr>
 				<td align="center" colspan="3">
 					<br><br>
-					<input type="submit" value="ÁÖ¹®ÇÏ±â">
+					<input type="submit" value="ì£¼ë¬¸í•˜ê¸°">
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Ãë¼ÒÇÏ±â" onclick="location.href='index.do'">
+					<input type="button" value="ì·¨ì†Œí•˜ê¸°" onclick="location.href='index.do'">
 				</td>
 			</tr>
 		</table>
@@ -159,9 +159,9 @@
 		</form>
 	</center>
 
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
-<!-- ÇªÅÍ -->
+<!-- í‘¸í„° -->
 
 </body>
 </html>
