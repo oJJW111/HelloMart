@@ -27,7 +27,7 @@ public class ProductListServiceImpl implements ProductListService{
 	private static final Logger logger = LoggerFactory.getLogger(ProductListServiceImpl.class);
 	
 	@Autowired
-	ProductListDAO dao;
+	ProductListDAO dao; 
 	
 	private final XMLParser xmlParser = new XMLParser("category.xml");
 	
