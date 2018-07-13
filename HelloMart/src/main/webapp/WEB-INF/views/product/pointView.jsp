@@ -12,4 +12,4 @@
 	<input type="number" name="point" id="point" max="${point}" style="width: 100px;">&nbsp;&nbsp;사용
 
 </body>
-</html>
+</html> 
