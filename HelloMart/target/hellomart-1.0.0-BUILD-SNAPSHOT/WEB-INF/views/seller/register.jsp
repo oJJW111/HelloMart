@@ -127,7 +127,7 @@ $(document).ready(function(){
 						<dd>
 							<label for="prodDateLabel">제조 날짜</label>
 						</dd>
-						<dd>
+						<%-- <dd>
 							<form:select path="prodYear" id="year">
 							</form:select>
 						</dd>
@@ -138,9 +138,12 @@ $(document).ready(function(){
 						<dd>
 							<form:select path="prodDay" id="day">
 							</form:select>
+						</dd> --%>
+						<dd>
+							<input type="date">
 						</dd>
 					</dl>
-					<form:errors path="prodYear" class="errors"/>
+					<%-- <form:errors path="prodYear" class="errors"/> --%>
 				</li>
 				<li>
 					<form:input path="price" class="txt-input joinTooltip" maxlength="30" placeholder="물품 가격" />

@@ -1,9 +1,7 @@
 package com.hellomart.controller;
 
 import java.security.Principal;
-
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,16 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.Account;
-
-import com.hellomart.dto.Cart;
-
 import com.hellomart.dto.OrderList;
-import com.hellomart.dto.ProductList;
 import com.hellomart.dto.ReView;
 import com.hellomart.service.AccountService;
 import com.hellomart.service.HistoryService;
 import com.hellomart.service.PointService;
-
 import com.hellomart.validator.DeleteAccountValidator;
 import com.hellomart.validator.JoinFormValidator;
 import com.hellomart.validator.ModifyAccountInfoValidator;
@@ -49,62 +42,63 @@ public class MypageController {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
-
-	@Autowired
+	
+	@Autowired 
 	private AccountService service;
-
+	
 	@Autowired
 	private PointService pointService;
-
-	@Autowired
-	private DeleteAccountValidator deleteAccountValidator;
-
-	@Autowired
-	private ModifyPasswordValidator modifyPasswordValidator;
-
+	
 	@Autowired
 	private HistoryService historyservice;
 
+	@Autowired
+	private DeleteAccountValidator deleteAccountValidator;
+	
+	@Autowired
+	private ModifyPasswordValidator modifyPasswordValidator;
+	
 	@RequestMapping("/menu")
 	public String main() {
 		return "mypage/menu";
 	}
-
+	
 	@RequestMapping("/info")
 	public ModelAndView info(Principal principal) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		String id = principal.getName();
 		Account account = service.getInfo(id);
-
+		
 		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
 		mav.addObject("viewPage", "info");
 		return mav;
 	}
-
-	@RequestMapping(value = "/info/modify", method = RequestMethod.GET)
+	
+	
+	@RequestMapping(value="/info/modify",method=RequestMethod.GET)
 	public ModelAndView infoModify(Principal principal) {
-
+		
 		ModelAndView mav = new ModelAndView();
-
+		
 		String id = principal.getName();
 		Account account = service.getInfo(id);
 		account.setId(id);
-
+		
 		mav.addObject("account", account);
 		mav.setViewName("mypage/info/page");
 		mav.addObject("viewPage", "modify");
 		return mav;
 	}
-
-	@RequestMapping(value = "/info/modify", method = RequestMethod.POST)
+	
+	@RequestMapping(value="/info/modify",method=RequestMethod.POST)
 	public ModelAndView Modify(@ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		new ModifyAccountInfoValidator().validate(account, bindingResult);
-
-		if (bindingResult.hasErrors()) {
+		
+		if(bindingResult.hasErrors()) {
 			mav.setViewName("mypage/info/page");
 			mav.addObject("viewPage", "modify");
 			return mav;
@@ -113,8 +107,8 @@ public class MypageController {
 		mav.setViewName("redirect:/mypage/info");
 		return mav;
 	}
-
-	@RequestMapping(value = "/info/modifyPwd", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.GET)
 	public ModelAndView infoModifyPwd() {
 		ModelAndView mav = new ModelAndView();
 		Account account = new Account();
@@ -123,32 +117,33 @@ public class MypageController {
 		mav.addObject("viewPage", "modifyPwd");
 		return mav;
 	}
-
-	@RequestMapping(value = "/info/modifyPwd", method = RequestMethod.POST)
-	public ModelAndView ModifyPwd(@ModelAttribute("account") Account account, Principal principal,
-			BindingResult bindingResult) {
+	
+	@RequestMapping(value="/info/modifyPwd",method=RequestMethod.POST)
+	public ModelAndView ModifyPwd(@ModelAttribute("account") Account account,
+						  			Principal principal, 
+						  			BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
 		String id = principal.getName();
 		account.setId(id);
 		String new_pw = account.getNew_password();
-
+		
 		modifyPasswordValidator.validate(account, bindingResult);
-
-		if (bindingResult.hasErrors()) {
+		
+		if(bindingResult.hasErrors()) {
 			mav.setViewName("mypage/info/page");
 			mav.addObject("viewPage", "modifyPwd");
-
+			
 			return mav;
 		}
-
+		
 		service.modifyPw(id, new_pw);
-
+		
 		mav.setViewName("redirect:/mypage/info");
 		return mav;
-
+		
 	}
-
-	@RequestMapping(value = "/info/delete", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/info/delete",method=RequestMethod.GET)
 	public ModelAndView infoDelete() {
 		ModelAndView mav = new ModelAndView();
 		Account account = new Account();
@@ -157,28 +152,27 @@ public class MypageController {
 		mav.addObject("viewPage", "delete");
 		return mav;
 	}
-
-	@RequestMapping(value = "/info/delete", method = RequestMethod.POST)
-	public ModelAndView delete(@ModelAttribute("account") Account account, Principal principal,
-			BindingResult bindingResult) {
+	
+	@RequestMapping(value="/info/delete", method=RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute("account") Account account, Principal principal, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
 		String id = principal.getName();
 		account.setId(id);
-
+		
 		deleteAccountValidator.validate(account, bindingResult);
-
-		if (bindingResult.hasErrors()) {
+		
+		if(bindingResult.hasErrors()) {
 			mav.setViewName("mypage/info/page");
 			mav.addObject("viewPage", "delete");
 			return mav;
 		}
-
+		
 		service.deleteAccount(id);
-
+		
 		mav.setViewName("redirect:/logout");
 		return mav;
 	}
-
+	
 	@RequestMapping("/shoppingcart")
 	public void shoppingcart() {
 	}
@@ -186,35 +180,35 @@ public class MypageController {
 	@RequestMapping("/point")
 	public String point(Model model, Principal principal) {
 		String id = principal.getName();
-
+		
 		model.addAttribute("pointList", pointService.getAllPointLog(id));
 		model.addAttribute("viewPage", "pointList");
-
-		return "mypage/info/page";
+		
+		return "mypage/info/page"; 
 	}
-
+	
 	@RequestMapping("/point/period")
 	public String pointPeriod(Model model, Principal principal, String startDate, String endDate) {
 		String id = principal.getName();
-
+		
 		model.addAttribute("pointList", pointService.getPeriodPointLog(id, startDate, endDate + " 24:00:00"));
 		model.addAttribute("viewPage", "pointList");
-
-		return "mypage/info/page";
+		
+		return "mypage/info/page"; 
 	}
-
-	@RequestMapping(value = "/history", method = RequestMethod.GET)
-	public ModelAndView History(ModelAndView mav, Principal principal) {
+	
+	@RequestMapping(value = "/history", method=RequestMethod.GET)
+	public ModelAndView History(ModelAndView mav, Principal principal){
 		String id = principal.getName();
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<HashMap<String, String>> list = historyservice.historylist(id);
-		map.put("list", list);
-		map.put("count", list.size());
-		mav.setViewName("mypage/history");
-		mav.addObject("map", map);
-
-		return mav;
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+		List<OrderList> list = historyservice.historylist(id);
+        map.put("list", list);               
+        map.put("count", list.size());        
+        mav.setViewName("mypage/history");    
+        mav.addObject("map", map);            
+        
+        return mav;
 	}
 	
 	@RequestMapping("/history/period")
@@ -227,11 +221,12 @@ public class MypageController {
         
 		return "mypage/history"; 
 	}
-
+	
 	@RequestMapping("/historyButton")
 	public ModelAndView historyButton(ModelAndView mav,Principal principal, HttpServletRequest request ) {
 		String id = principal.getName();
 		String no = request.getParameter("no");
+		String star = request.getParameter("star");
 		ReView review = historyservice.reviewCheck(no, id);
 		boolean check = false;
 		if(review != null){
@@ -239,15 +234,11 @@ public class MypageController {
 			mav.addObject("idx", review.getIdx());
 			
 		}
+		mav.addObject("star", star);
 		mav.addObject("no", no);
 		mav.addObject("check", check);
 		mav.setViewName("mypage/historyButton");
 		
 		return mav;
-	}
-
-	@RequestMapping("/todayView")
-	public void todayView() {
-	}
-
+	}	
 }

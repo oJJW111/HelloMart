@@ -4,21 +4,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hellomart.dao.ProductListDAO">
-	<select id="getTotal" 
-			parameterType="HashMap"
-			resultType="Integer">
-			${sql}
+	<select id="getTotal" parameterType="HashMap" resultType="Integer">
+		${sql}
 	</select>
-	
-	<select id="list"
-			parameterType="HashMap"
-			resultType="ProductList">
-			${sql}
+
+	<select id="list" parameterType="HashMap" resultType="ProductList">
+		${sql}
 	</select>
-	
+
 	<update id="updateOrderCount">
-   		update productlist 
-   		set orderCount = orderCount + 1
-   		where no = #{param1}
+		update productlist
+		set orderCount = orderCount + 1
+		where no = #{param1}
 	</update>
+
+	<update id="updatereviewCount">
+		update productlist
+		set reviewCount = reviewCount + 1
+		where no = #{param1}
+	</update>
+	
+	<select id="score" resultType="int">
+	select score from productlist where no = ${no};
+	</select>
+	
+	<update id="total">
+		update productlist set score = (reviewCount * score + #{param1})/ (reviewCount + 1) where no = ${param2};
+	</update>
+	
+	<!-- 상품상세보기  -->
+	<select id="countreview" resultType="int">
+	select * from review where no = #{param1}
+	</select>
+	
 </mapper> 

@@ -1,11 +1,13 @@
 package com.hellomart.dto;
 
 import java.sql.Timestamp;
+
+import javax.servlet.http.HttpServletRequest;
+
 import lombok.Data;
 
 @Data
 public class ReView {
-
 	 private int Idx;
 	 private int No;
 	 private String content;

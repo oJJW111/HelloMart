@@ -1,6 +1,5 @@
 package com.hellomart.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,13 +21,8 @@ public class HistoryServiceImpl implements HistoryService{
 	private HistoryDAO dao;
 
 	@Override
-	public List<HashMap<String, String>> historylist(String id) {
+	public List<OrderList> historylist(String id) {
 		return dao.historylist(id);
-	}
-
-	@Override
-	public ReView reviewCheck(String no, String id) {
-		return dao.reviewCheck(no, id);
 	}
 
 	@Override
@@ -36,7 +30,8 @@ public class HistoryServiceImpl implements HistoryService{
 		return dao.historyDatelist(id, startDate, endDate);
 	} 	
 	
-
+	@Override
+	public ReView reviewCheck(String no, String id) {
+ 		return dao.reviewCheck(no, id);
+ 	}
 }
-
-

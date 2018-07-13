@@ -6,15 +6,28 @@
 
 <mapper namespace="com.hellomart.dao.HistoryDAO">
 
-	<!-- 장바구니 목록 -->
-
-	<select id="History" resultType="HashMap">
-        SELECT o.orderid, o.ordercount, o.orderdate,
+	<select id="historyDatelist" resultType="java.util.HashMap">
+	 	SELECT o.prodNo,o.orderCount, o.orderDate,
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, orderlist o
-        WHERE p.no = o.no AND o.id = #{id}
-        ORDER BY o.date
-    </select>
+        WHERE p.no = o.prodNo AND o.orderId = #{param1}
+        and #{param2} &lt;= o.orderDate and o.orderDate &lt;= #{param3}
+        ORDER BY o.orderDate
+	</select>
 
-	
-</mapper>
+	<!-- 장바구니 목록 -->
+
+	<select id="historylist" parameterType="String" resultType="java.util.HashMap">
+		SELECT o.prodNo,o.orderCount, o.orderDate,o.idx,
+		p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
+		FROM productList p, orderlist o
+		WHERE p.no = o.prodNo AND o.orderId = #{param1}
+		ORDER BY o.orderDate
+	</select>
+
+	<select id="reviewCheck" resultType="ReView">
+		select * from review where no = #{param1} and id = #{param2}
+	</select>
+
+
+</mapper>	

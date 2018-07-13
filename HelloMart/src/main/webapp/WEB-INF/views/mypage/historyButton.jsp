@@ -12,6 +12,7 @@
 	}
 </script>
 
+
 </head>
 <body>
 
@@ -24,6 +25,7 @@
 				<input type="button" value="»èÁ¦"
 					onclick="location.href='/redelete?idx=${idx}'">	
 			</c:if>
+
 
 </body>
 </html>

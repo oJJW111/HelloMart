@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -50,13 +50,25 @@ function createURL(mainCategory, smallCategory, page) {
 		url += "page=" + page + "&";
 	}
 	helper.removeLast();
-	return encodeURI(url);
+	return url;
 }
 $(document).ready(function(){
-	$.submitForm = function() {
-		$("#detailForm").submit(function() {
-		    $("#detailForm").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
-		});
+	$.submitForm = function(f) {
+		if( ($("#price2").val() != null) && ($("#price2").val() != "")){
+			if($("#price1").val() > $("#price2").val()){
+				alert("최저 가격은 최고 가격보다 적어야 합니다");
+			}
+			else{
+				f.submit(function() {
+				    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+				});
+			}			
+		}
+		else{
+			f.submit(function() {
+			    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+			});
+		}
 	}
 	$.appendPage = function(page) {
 		$("#detailForm").append("<input type='hidden' name='page' value='" + page + "'>");
@@ -87,6 +99,21 @@ $(document).ready(function(){
 <form action="/productList" method="get" id="detailForm"> 
 <input type="hidden" name="mainCategory" value="${param.mainCategory}">
 <input type="hidden" name="smallCategory" value="${param.smallCategory}">
+
+<c:if test="${param.mainCategory == '액세서리'}"> 
+	<div class="category_detail noselect" style="height: 48px;"> 
+		<div class="category_detail_down" style="height: 48px;">	
+			<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
+			<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
+			<div class="range">~</div>
+			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
+			<div class="currency">원</div>
+			<button id="submit-form" type="button" onclick="$.submitForm(this.form)"><i class="fa fa-search"></i></button>
+		</div>
+	</div> <!-- <div class="category_detail noselect"> -->
+</c:if> <!-- test="${mainCategory == '액세서리'} -->
+
+<c:if test="${param.mainCategory != '액세서리'}"> 
 <div class="category_detail noselect">
 	<div class="category_detail_up">
 		<div class="category_major">
@@ -112,12 +139,11 @@ $(document).ready(function(){
 								<c:set var="checkedId" value="${columnListEng[status.index]}${innerStatus.index}"/>
 								<c:set var="id" value="${columnListEng[status.index]}${innerStatus.index}"/>
 								<input type="checkbox" name="${columnListEng[status.index]}"
-								id="${id}" value="javascript:encodeURI(${fn:trim(value)})"
+								id="${id}" value="${fn:trim(value)}"
 								
 									<c:if test="${checked ne null and checked[checkedId] ne null}">
 										checked
 									</c:if>
-								
 								>
 								<c:if test="${checked ne null and checked[checkedId] ne null}">
 									<input type="hidden" name="checkedId" value="${id}">
@@ -134,14 +160,15 @@ $(document).ready(function(){
 	</div> <!-- <div class="category_detail_up"> -->
 	<div class="category_detail_down">
 		<input type="text" placeholder="제품명 검색" name="search" value="${param.search}">
-		<input type="text" placeholder="0원" name="price1" value="${param.price1}">
+		<input type="text" placeholder="0원" id="price1" name="price1" value="${param.price1}">
 		<div class="range">~</div>
-		<input type="text" placeholder="999,999,999원" name="price2" value="${param.price2}">
+		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm()"
+		<button id="submit-form" onclick="$.submitForm(this.form)" type="button"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
+</c:if> <!-- test="${mainCategory != '액세서리'} -->
 </form>
 
 <!-- 상품리스트 -->
@@ -151,21 +178,17 @@ $(document).ready(function(){
 		<c:forEach var="board" items="${list}">
 				<div class="product_list_content">
 					<div class="product_img">
-						<a href="javascript:void(0)"
-							onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${param.smallCategory}')">
+						<a href="/productView?no=${board.no}&smallCategory=${board.smallCategory}">
 							<img src="${board.imagePath}">
 						</a>
 					</div>
 					<div class="product_info">
-						<a class="title" href="javascript:void(0)"
-						onclick="javascript:location.href=encodeURI('/productView?no=${board.no}&smallCategory=${param.smallCategory}')">${board.productName}</a>
+						<a class="title" href="/productView?no=${board.no}&smallCategory=${board.smallCategory}">${board.productName}</a>
 						<div class="additional_info">
 							<span class="brand">${board.mfCompany}</span>
 							<span class="category">
-								<a href="javascript:void(0)"
-								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${param.mainCategory}')">${param.mainCategory}</a> > 
-								<a href="javascript:void(0)"
-								onclick="javascript:location.href=encodeURI('/productList?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}')">${param.smallCategory}</a>
+								<a href="/productList/main?mainCategory=${param.mainCategory}">${param.mainCategory}</a> > 
+								<a href="/productList/small?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}">${param.smallCategory}</a>
 							</span>
 						</div>
 					</div>
@@ -176,7 +199,7 @@ $(document).ready(function(){
 						<div class="additional_info">
 							<span class="satisfaction">만족도 : ${board.score}</span>
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
-							<span class="review">상품평 : ${board.no}</span>
+							<span class="review">상품평 : ${board.reviewCount} 개</span>
 						</div>
 						<button class="add_to_cart btn_yellow"></button>
 					</div>

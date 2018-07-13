@@ -2,18 +2,18 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>상품 장바구니 목록</title>
 <script type="text/javascript">
-	
-	function fnRv(no) {
-		location.href = "/reWrite?no=" + no;
-	}
-	
+
 	function search(id){
 		var startDate = document.getElementById("startDate").value;
 		var endDate = document.getElementById("endDate").value;
@@ -43,7 +43,7 @@
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
 
-   <div class="article_wrap" style="width: 1026px; margin: auto;'">
+    <div class="article_wrap" style="width: 1026px; margin: auto;'">
 	<h2 align="center">구매목록 확인</h2>
 			<table style="width: 100%">
 				<tr>
@@ -97,6 +97,7 @@
 						<fmt:formatNumber pattern="###,###,###" value="${row.price*row.orderCount}"/> 원
 					</td>
 					<td>
+
 						<%-- <c:choose>
 							<c:when test="${map.check == 0}">
 								<input type="button" value="리뷰작성" onclick="fnRv('${row.no}')">
@@ -105,8 +106,8 @@
 								<input type="button" value="수정" onclick="location.href='/remodify?idx=${row.idx}'">
 							</c:otherwise>
 						</c:choose> --%>
-						<jsp:include page="/mypage/historyButton?no=${row.prodNo}"></jsp:include>
-						
+
+						<jsp:include page="/mypage/historyButton?no=${row.prodNo}&star=${row.star}" />
 					</td>
 				</tr>
 				</c:forEach>

@@ -1,4 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: com.hellomart.util.XMLPaserTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in com.hellomart.util.XMLPaserTest
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.228 sec <<< FAILURE! - in com.hellomart.util.XMLPaserTest
+getValueTest(com.hellomart.util.XMLPaserTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:src/main/webapp/WEB-INF/spring/root-context.xml]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.hellomart.dao.HistoryDAO
+Caused by: java.lang.NoClassDefFoundError: Could not initialize class com.hellomart.dao.HistoryDAO
+
+getChildrenTest(com.hellomart.util.XMLPaserTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:src/main/webapp/WEB-INF/spring/root-context.xml]: Invocation of init method failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.hellomart.dao.HistoryDAO
+Caused by: java.lang.NoClassDefFoundError: Could not initialize class com.hellomart.dao.HistoryDAO
+

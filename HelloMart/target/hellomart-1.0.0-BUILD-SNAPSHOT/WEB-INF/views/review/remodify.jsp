@@ -16,19 +16,21 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
-
+	<!-- 헤더 -->
+	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
+	<!-- 헤더 -->
 	<div class="article_wrap">
 		<section id="bo_w">
 			<h2 id="container_title">글 수정</h2>
 
-			<form action="remodify" method="post">
-				<sec:authentication var="id" property="principal" />
-				<input type="hidden" name="idx" value="${reView.idx}">
+			<form action="/remodify" method="post">
+				<sec:authentication var="Id" property="principal" />
+				<input type="hidden" name="Idx" value="${reView.idx}">
 				<div class="tbl_frm01 tbl_wrap">
 					<table>
 						<tbody>
 							<tr>
-								<td><input type="text" name="id" class="frm_input required"
+								<td><input type="text" name="Id" class="frm_input required"
 									size="10" maxlength="20" value="${reView.id }"
 									readonly="readonly"></td>
 							</tr>
@@ -41,13 +43,14 @@
 				</div>
 
 				<div class="btn_confirm">
-					<input type="submit" value="글수정" id="btn_submit" accesskey="s"
-						class="btn_submit"> <input type="reset" value="취소"
-						class="btn_cancel">
+					<input type="submit" value="글수정" id="btn_submit" class="btn_submit">
+					<input type="reset" value="취소" class="btn_cancel">
 				</div>
 			</form>
 		</section>
 	</div>
-
+	<!-- 푸터 -->
+	<jsp:include page="/WEB-INF/views/inc/footer.jsp" />
+	<!-- 푸터 -->
 </body>
 </html>

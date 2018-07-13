@@ -18,6 +18,5 @@
 		<typeAlias type="com.hellomart.dto.Cart" alias="Cart"/>
 		<typeAlias type="com.hellomart.dto.OrderList" alias="OrderList"/>	
 		<typeAlias type="com.hellomart.dto.Point" alias="Point"/>		
-		<typeAlias type="com.hellomart.dto.History" alias="History"/>
     </typeAliases>		
 </configuration>

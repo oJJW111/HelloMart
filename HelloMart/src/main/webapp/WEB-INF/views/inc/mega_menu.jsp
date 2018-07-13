@@ -1,90 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="/resources/js/dropdown.js" type="text/javascript"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
-	
-	$("#main_menu_1").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("가전제품");
-	});
-	$("#main_menu_2").on('click', function(){
-		location.href="/productList?mainCategory=IT";
-	});
-	$("#main_menu_3").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("모바일");
-	});
-	$("#main_menu_4").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
-	});
-	$("#main_menu_5").on('click', function(){
-		location.href="/productList?mainCategory=퍼스널케어";
-	});
-	$("#main_menu_6").on('click', function(){
-		location.href="/qaboard";
-	});
-	$("#refrigerator").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=냉장고";
-	});
-	
-	$("#microwave").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=오븐_전자레인지";
-	});
-	
-	$("#cleaner").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=청소기";
-	});
-	
-	$("#airConditioner").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=에어컨";
-	});
-	
-	$("#washer").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=세탁기";
-	});
-	
-	$("#airPurifier").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기";
-	});
-	
-	$("#notebook").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=노트북";
-	});
-	
-	$("#desktop").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=데스크탑";
-	});
-	
-	$("#monitor").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=모니터";
-	});
-	
-	$("#printer").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=프린터";
-	});
-	
-	$("#smartphone").on('click', function(){
-		location.href="/productList?mainCategory=모바일&smallCategory=스마트폰";
-	});
-	
-	$("#tablet").on('click', function(){
-		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
-	});
-	
-	$("#acc").on('click', function(){
-		location.href="/productList?mainCategory=액세서리&smallCategory=PC 액세서리";
-	});
-	
-	$("#mobileAcc").on('click', function(){
-		location.href="/productList?mainCategory=액세서리&smallCategory=모바일 액세서리";
-	});
-	
-	$("#qaboard").on('click', function(){
-		location.href="/qaboard";
-	});
-	
+   function locationEncode(uri) {
+      location.href=encodeURI(uri);
+   }
+   $("#main_menu_1").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품");
+   });
+   $("#main_menu_2").on('click', function(){
+      locationEncode("/productList?mainCategory=IT");
+   });
+   $("#main_menu_3").on('click', function(){
+      locationEncode("/productList?mainCategory모바일");
+   });
+   $("#main_menu_4").on('click', function(){
+      locationEncode("/productList?mainCategory=액세서리");
+   });
+   $("#main_menu_5").on('click', function(){
+      locationEncode("/productList?mainCategory=퍼스널케어");
+   });
+   $("#main_menu_6").on('click', function(){
+      locationEncode("/qaboard/qaboardList");
+   });
+   
+   $("#refrigerator").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=냉장고");
+   });
+   
+   $("#microwave").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=오븐_전자레인지");
+   });
+   
+   $("#cleaner").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=청소기");
+   });
+   
+   $("#airConditioner").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=에어컨");
+   });
+   
+   $("#washer").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=세탁기");
+   });
+   
+   $("#airPurifier").on('click', function(){
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기");
+   });
+   
+   $("#notebook").on('click', function(){
+      locationEncode("/productList?mainCategory=IT&smallCategory=노트북");
+   });
+   
+   $("#monitor").on('click', function(){
+      locationEncode("/productList?mainCategory=IT&smallCategory=모니터");
+   });
+   
+   $("#printer").on('click', function(){
+      locationEncode("/productList?mainCategory=IT&smallCategory=프린터");
+   });
+   
+   $("#smartphone").on('click', function(){
+      locationEncode("/productList?mainCategory=모바일&smallCategory=스마트폰");
+   });
+   
+   $("#tablet").on('click', function(){
+      locationEncode("/productList?mainCategory=모바일&smallCategory=태블릿");
+   });
+   
+   $("#qaboard").on('click', function(){
+      locationEncode("/qaboard/qaboardList");
+   });
 });
 </script>
-
 <div class="header_menu_wrap">
 		
 	<div class="header_menu">
