@@ -42,6 +42,7 @@
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
+<div class="BLOCK20"></div>
 <div class="titbox">
 	<div class="title">
 		<span class="name">MY PAGE</span>
@@ -79,9 +80,7 @@
 		</a>
 	</div>
 </div>
-
-<div class="BLOCK80"></div>
-
+<div class="BLOCK60"></div>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

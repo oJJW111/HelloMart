@@ -7,7 +7,10 @@
 <script src="/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href='/resources/bootstrap/css/bootstrap.min.css' rel="stylesheet" type="text/css">
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
-
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+.header_bar_wrap div{ font-family: 'Jeju Gothic', sans-serif; }
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	

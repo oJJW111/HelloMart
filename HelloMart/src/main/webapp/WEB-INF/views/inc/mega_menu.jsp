@@ -51,6 +51,10 @@ $(document).ready(function(){
       locationEncode("/productList?mainCategory=IT&smallCategory=노트북");
    });
    
+   $("#desktop").on('click', function(){
+	  locationEncode("/productList?mainCategory=IT&smallCategory=데스크탑");
+   });
+   
    $("#monitor").on('click', function(){
       locationEncode("/productList?mainCategory=IT&smallCategory=모니터");
    });
@@ -130,7 +134,7 @@ $(document).ready(function(){
 				</div>
 
 				<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
-					<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
+					<div class="F_right megamenu_menu_title2" id="qaboard">Q&A 게시판</div>
 				</div>
 			</div>
 		</div>

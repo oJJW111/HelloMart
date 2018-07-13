@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-
 <script type="text/javascript">
 function createURL(mainCategory, smallCategory, page) {
 	var helper = (function() {
@@ -84,9 +83,7 @@ $(document).ready(function(){
 			$("input[value=" + value + "]").remove();
 		}
 	});
-});
-
-$(function(){	
+	
 	$('#addCart').on({
 		"submit" : function(){ 
 			var d = $(this).serialize();
@@ -102,8 +99,10 @@ $(function(){
 				
 				return false; // action 페이지로 전환되는 것을 차단
 			}
-		});
+	});
+	
 });
+
 </script>
 </head>
 

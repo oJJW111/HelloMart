@@ -16,7 +16,6 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
-
 	<div class="article_wrap">
 		<section id="bo_w">
 			<h2 id="container_title">글 수정</h2>
