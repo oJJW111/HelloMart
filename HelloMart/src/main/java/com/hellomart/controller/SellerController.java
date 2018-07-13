@@ -62,7 +62,7 @@ public class SellerController {
 		String servletPath = request.getServletPath();
 		String id = principal.getName();
 		sellerService.getSellerProductList(pageNum, model, id, servletPath);
-		return "seller/page";
+		return "seller/sellerProductList";
 	}
 	
 	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.POST)
@@ -72,7 +72,7 @@ public class SellerController {
 		String id = principal.getName();
 		String servletPath = request.getServletPath();
 		sellerService.getSellerProductList(pageNum, model, id, servletPath);
-		return "seller/page";
+		return "seller/sellerProductList";
 	}
 	
 	@RequestMapping(value = "/display/{productNo}", method = RequestMethod.GET)
@@ -116,7 +116,7 @@ public class SellerController {
 										Model model){
 		sellerService.productPartSpec(model, mainCategoryInput, smallCategoryInput);
 		model.addAttribute("ProductList", new ProductList());
-		return "seller/register";
+		return "seller/productRegister";
 	}
 	
 	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
@@ -128,12 +128,12 @@ public class SellerController {
 			model.addAttribute("ProductList", new ProductList());
 			sellerService.PartProductValidCheck(mRequest, model,
 				productList.getMainCategory(), productList.getSmallCategory());
-			return "seller/register";
+			return "seller/productRegister";
 		}
 
 		if(!sellerService.PartProductValidCheck(mRequest,model,
 				productList.getMainCategory(), productList.getSmallCategory())){
-			uri = "seller/register";
+			uri = "seller/productRegister";
 		}else{
 			productList.setRegisterID(principal.getName());
 			sellerService.sellerProductRegister(mRequest, productList);

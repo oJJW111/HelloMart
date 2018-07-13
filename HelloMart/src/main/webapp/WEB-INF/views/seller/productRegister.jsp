@@ -46,42 +46,140 @@ $(document).ready(function(){
 		var productImageFile = $("#productImageFile").val();
 		var flag = 0;
 		
+		var regInputText = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣 ]*$/;//영어대소문자숫자한글만입력 공백 포함
+		
 		if(productName == ''){
 			$("#productNameError").html("필수 입력란입니다.");
+			flag = 1;
+		}else if(!regInputText.test(productName)){
+			$("#productNameError").html("영어대소문자숫자한글만 입력하세요.");
+			flag = 1;
+		}else if(!((1 <= productName.length) && (productName.length <= 50))){
+			$("#productNameError").html("이름길이가 맞지 않습니다.");
 			flag = 1;
 		}else{
 			$("#productNameError").html("");
 		}
+		
 		if(mfCompany == ''){
 			$("#mfCompanyError").html("필수 입력란입니다.");
+			flag = 1;
+		}else if(!regInputText.test(mfCompany)){
+			$("#mfCompanyError").html("영어대소문자숫자한글만 입력하세요.");
+			flag = 1;
+		}else if(!((1 <= mfCompany.length) && (mfCompany.length <= 30))){
+			$("#mfCompanyError").html("이름길이가 맞지 않습니다.");
 			flag = 1;
 		}else{
 			$("#mfCompanyError").html("");
 		}
+		
+		var regDate = /^\d{4}-\d{2}-\d{2}$/;//1998-10-12
+		
+		var dayOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		
+		var isLeafYear = function(y) {
+			var b = false;
+			if((y % 400) == 0) {
+				b = true;
+			} else if((y % 4) == 0 && (y % 100) != 0) {
+				b = true;
+			}
+			return b;
+		}
+		
+		var today = new Date();
+		var presentDay = today.getDate();
+		var presentMonth = today.getMonth()+1; //January is 0!
+		var presentYear = today.getFullYear();
+		
+		var prodDateflag = 0;
+		
 		if(prodDate == ''){
 			$("#prodDateError").html("필수 입력란입니다.");
-			flag = 1;
+			flag = 1; prodDateflag = 1;
 		}else{
+			if(!regDate.test(prodDate)){
+				$("#prodDateError").html("날짜 형식이 맞지 않습니다.");
+				flag = 1; prodDateflag = 1;
+			}else{
+				var prodDate = prodDate.split('-');
+				var prodYear = Number(prodDate[0]);
+				var prodMonth = Number(prodDate[1]);
+				var prodDay = Number(prodDate[2]);
+				var min = Math.min.apply(null, dayOfMonth);
+				var max = Math.max.apply(null, dayOfMonth);
+				if(isLeafYear(prodYear)){
+					dayOfMonth[1] = dayOfMonth[1] + 1;
+				}
+				if((!(prodYear <= presentYear)) 
+					|| (!(prodMonth <= presentMonth)) 
+					|| (!(prodDay <= presentDay))){
+					$("#prodDateError").html("현재 날짜를 넘었습니다.");
+					flag = 1; prodDateflag = 1;
+				}else if(!((1930 <= prodYear) && (prodYear <= presentYear))){
+					$("#prodDateError").html("1930년도 이상으로 입력해주세요.");
+					flag = 1; prodDateflag = 1;
+				}else if(!((1 <= prodMonth) && (prodMonth <= 12))){
+					$("#prodDateError").html("월 범위가 맞지 않습니다.");
+					flag = 1; prodDateflag = 1;
+				}else if(!((1 <= prodDay) && (prodDay <= max))){
+					$("#prodDateError").html("일 범위가 맞지 않습니다.");
+					flag = 1; prodDateflag = 1;
+				}else{
+					for(var i = 0 ; i < dayOfMonth.length ; i++){
+						if(prodMonth == i + 1){
+							if(!(prodDay <= dayOfMonth[i])){
+								$("#prodDateError").html("월에 해당하는 일이 아닙니다.");
+								flag = 1; prodDateflag = 1;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(prodDateflag == 0){
 			$("#prodDateError").html("");
 		}
+		
+		var regNumber = /^[0-9]*$/; //숫자만 입력
+		
 		if(price == '' || price == '0'){
 			$("#priceError").html("필수 입력란입니다.");
+			flag = 1;
+		}else if(!regNumber.test(price)){
+			$("#priceError").html("값 형식이 맞지 않습니다.");
+			flag = 1;
+		}else if(!((3 <= price.length) && (price.length <= 20))){
+			$("#priceError").html("자리수가 맞지 않습니다.");
 			flag = 1;
 		}else{
 			$("#priceError").html("");
 		}
+		
+		var regDouble = /^(\d{1,7}([.]\d{0,2})?)?$/; //9자리 중 자연수 7자리 소수점 뒷자리 2자리만
+		
 		if(weight == '' || weight == '0.0'){
 			$("#weightError").html("필수 입력란입니다.");
 			flag = 1;
+		}else if(!regDouble.test(weight)){
+			$("#weightError").html("값 형식 맞지 않습니다.");
 		}else{
 			$("#weightError").html("");
 		}
+		
 		if(comment == ''){
 			$("#commentError").html("필수 입력란입니다.");
+			flag = 1;
+		}else if(!((1 <= comment.length) && (comment.length <= 100))){
+			$("#commentError").html("글자 수가 100자 넘었습니다.");
 			flag = 1;
 		}else{
 			$("#commentError").html("");
 		}
+		
 		if(productImageFile == ''){
 			$("#fileError").html("필수 입력란입니다.");
 			flag = 1;
@@ -163,7 +261,7 @@ $(document).ready(function(){
 				</li>
 				<li>
 					<label for="prodDate" class="control-label">제조 날짜</label>
-					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="12" placeholder="제조 날짜"/>
+					<form:input path="prodDate" id="prodDate"  class="txt-input joinTooltip" maxlength="10" placeholder="제조 날짜"/>
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.prodDate"/></span>
 					<span class="errors" id="prodDateError"></span>
 					<form:errors path="prodDate" class="errors"/>
@@ -171,7 +269,7 @@ $(document).ready(function(){
 				<li>
 					<label for="price" class="control-label">물품 가격</label>
 					<form:input path="price" id="price" class="txt-input joinTooltip"
-						onkeyup="inputNumberFormat()" maxlength="30" placeholder="물품 가격" />
+						onkeyup="inputNumberFormat()" maxlength="20" placeholder="물품 가격" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.price"/></span>
 						<span class="unit">원</span>
 					<span class="errors" id="priceError"></span>	
@@ -179,7 +277,7 @@ $(document).ready(function(){
 				</li>
 				<li>
 					<label for="weight" class="control-label">물품 무게</label>
-					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="7" placeholder="물품 무게" />
+					<form:input path="weight" id="weight" class="txt-input joinTooltip" maxlength="10" placeholder="물품 무게" />
 						<span class="tooltiptext"><spring:message code="form.tooltip.validation.weight"/></span>
 						<span class="unit">Kg</span>
 					<span class="errors" id="weightError"></span>

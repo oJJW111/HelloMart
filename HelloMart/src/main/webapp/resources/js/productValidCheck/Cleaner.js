@@ -20,6 +20,10 @@ function productValidCheck(specEngNameList, specKorNameList){
 			result = 1;
 			$("#" + specEngNameList[1] + "Errors").html("숫자값만 입력하세요.");
 			$("#"+specEngNameList[1]).val("");
+		}else if(!(ChargingTime.length == 1)){
+			result = 1;
+			$("#" + specEngNameList[1] + "Errors").html("자리수가 맞지 않습니다.");
+			$("#"+specEngNameList[1]).val("");
 		}else{
 			var number = ChargingTime.substring(0,1);
 			if(number == '0'){

@@ -32,7 +32,7 @@ public class AdminController {
 		int pageNum = Integer.parseInt(pageNumString);
 		String servletPath = request.getServletPath();
 		accountService.accountList(pageNum, model, searchData, servletPath);
-		return "admin/page";
+		return "admin/accountList";
 	}
 	
 	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.POST)
@@ -49,7 +49,7 @@ public class AdminController {
 		searchData.put("sellerApply", sellerApply);
 		String servletPath = request.getServletPath();
 		accountService.accountList(pageNum, model, searchData, servletPath);
-		return "admin/page";
+		return "admin/accountList";
 	}
 	
 	@RequestMapping(value="/deleteAccount", method=RequestMethod.POST)

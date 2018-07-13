@@ -1,75 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="/resources/js/dropdown.js" type="text/javascript"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
+	function locationEncode(uri) {
+		location.href=encodeURI(uri);
+	}
 	
 	$("#main_menu_1").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("가전제품");
+		locationEncode("/productList?mainCategory=가전제품");
 	});
 	$("#main_menu_2").on('click', function(){
-		location.href="/productList?mainCategory=IT";
+		locationEncode("/productList?mainCategory=IT");
 	});
 	$("#main_menu_3").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("모바일");
+		locationEncode("/productList?mainCategory모바일");
 	});
 	$("#main_menu_4").on('click', function(){
-		location.href="/productList?mainCategory=" + encodeURIComponent("액세서리");
+		locationEncode("/productList?mainCategory=액세서리");
 	});
 	$("#main_menu_5").on('click', function(){
-		location.href="/productList?mainCategory=퍼스널케어";
+		locationEncode("/productList?mainCategory=퍼스널케어");
 	});
 	$("#main_menu_6").on('click', function(){
-		location.href="/qaboard";
+		locationEncode("/qaboard/qaboardList");
 	});
+	
 	$("#refrigerator").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=냉장고";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=냉장고");
 	});
 	
 	$("#microwave").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=오븐_전자레인지";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=오븐_전자레인지");
 	});
 	
 	$("#cleaner").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=청소기";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=청소기");
 	});
 	
 	$("#airConditioner").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=에어컨";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=에어컨");
 	});
 	
 	$("#washer").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=세탁기";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=세탁기");
 	});
 	
 	$("#airPurifier").on('click', function(){
-		location.href="/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기";
+		locationEncode("/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기");
 	});
 	
 	$("#notebook").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=노트북";
+		locationEncode("/productList?mainCategory=IT&smallCategory=노트북");
 	});
 	
 	$("#monitor").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=모니터";
+		locationEncode("/productList?mainCategory=IT&smallCategory=모니터");
 	});
 	
 	$("#printer").on('click', function(){
-		location.href="/productList?mainCategory=IT&smallCategory=프린터";
+		locationEncode("/productList?mainCategory=IT&smallCategory=프린터");
 	});
 	
 	$("#smartphone").on('click', function(){
-		location.href="/productList?mainCategory=모바일&smallCategory=스마트폰";
+		locationEncode("/productList?mainCategory=모바일&smallCategory=스마트폰");
 	});
 	
 	$("#tablet").on('click', function(){
-		location.href="/productList?mainCategory=모바일&smallCategory=태블릿";
+		locationEncode("/productList?mainCategory=모바일&smallCategory=태블릿");
 	});
+	
+	$("#acc").on('click', function(){
+		locationEncode("/productList?mainCategory=액세서리&smallCategory=PC 액세서리");
+	});
+	
+	$("#mobileAcc").on('click', function(){
+		locationEncode("/productList?mainCategory=액세서리&smallCategory=모바일 액세서리");
+	}); 
 	
 	$("#qaboard").on('click', function(){
-		location.href="/qaboard";
+		locationEncode("/qaboard/qaboardList");
 	});
-	
 });
 </script>
 
@@ -107,7 +117,7 @@ $(document).ready(function(){
 
 					<div class="mega_menu_inner_menu mega_ct_002" style="display: none;">
 							<div class="F_left megamenu_menu_title2" id="notebook" style="margin-left: 230px">노트북</div>
-							<div class="F_left megamenu_menu_title2">데스크탑</div>
+							<div class="F_left megamenu_menu_title2" id="desktop">데스크탑</div>
 							<div class="F_left megamenu_menu_title2" id="monitor">모니터</div>
 							<div class="F_left megamenu_menu_title2" id="printer">프린터</div>
 					</div>
@@ -119,16 +129,12 @@ $(document).ready(function(){
 					</div>
 
 					<div class="mega_menu_inner_menu mega_ct_004" style="display: none;">
-							<div class="F_right megamenu_menu_title2" style="margin-right: 160px">모바일 액세서리</div>
-							<div class="F_right megamenu_menu_title2">PC 액세서리</div>
+							<div class="F_right megamenu_menu_title2" style="margin-right: 160px" id="mobileAcc">모바일 액세서리</div>
+							<div class="F_right megamenu_menu_title2" id="acc">PC 액세서리</div>
 					</div>
 
-					<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
-							<div class="F_right megamenu_menu_title2">???</div>
-					</div>
 					<div class="mega_menu_inner_menu mega_ct_006" style="display: none;">
-							<div class="F_right megamenu_menu_title2">문의하기</div>
-							<div class="F_right megamenu_menu_title2">Q&A게시판</div>
+							<div class="F_right megamenu_menu_title2" id="qaboard">Q&A게시판</div>
 					</div>
 			</div>
 		</div>

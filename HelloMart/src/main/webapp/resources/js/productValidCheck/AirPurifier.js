@@ -21,6 +21,10 @@ function productValidCheck(specEngNameList, specKorNameList){
 		result = 1;
 		$("#" + specEngNameList[1] + "Errors").html("숫자값만 입력하세요.");
 		$("#"+specEngNameList[1]).val("");
+	}else if(!(UsableArea.length == 2)){
+		result = 1;
+		$("#" + specEngNameList[1] + "Errors").html("자리수가 맞지 않습니다.");
+		$("#"+specEngNameList[1]).val("");
 	}else if((UsableArea != '17') && (UsableArea != '33')
 			&& (UsableArea != '50') && (UsableArea !=  '66')
 			&& (UsableArea != '99')){
@@ -46,6 +50,10 @@ function productValidCheck(specEngNameList, specKorNameList){
 		if(!regNumber.test(PowerConsumption)) {
 			result = 1;
 			$("#" + specEngNameList[3] + "Errors").html("숫자값만 입력하세요.");
+			$("#"+specEngNameList[3]).val("");
+		}else if(!(PowerConsumption.length <= 4)){
+			result = 1;
+			$("#" + specEngNameList[3] + "Errors").html("자리수가 맞지 않습니다.");
 			$("#"+specEngNameList[3]).val("");
 		}else{
 			var number = PowerConsumption.substring(0,1);

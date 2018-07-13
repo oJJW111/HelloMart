@@ -10,6 +10,10 @@ function productValidCheck(specEngNameList, specKorNameList){
 	if(SquareMeasure == '' || SquareMeasure == '0.0'){
 		result = 1;
 		$("#" + specEngNameList[0] + "Errors").html(specKorNameList[0] +"를 입력하시지 않았습니다.");
+	}else if(!(SquareMeasure.length <= 4)){
+		result = 1;
+		$("#" + specEngNameList[0] + "Errors").html("자리수가 맞지 않습니다.");
+		$("#"+specEngNameList[0]).val("");
 	}else if((SquareMeasure != '22.8') && (SquareMeasure != '32.5')
 			&& (SquareMeasure != '48.8') && (SquareMeasure !=  '52.8')
 			&& (SquareMeasure != '65.9') && (SquareMeasure != '75.5')){
@@ -24,6 +28,10 @@ function productValidCheck(specEngNameList, specKorNameList){
 	if(Cooling == '' || Cooling == '0.0'){
 		result = 1;
 		$("#" + specEngNameList[1] + "Errors").html(specKorNameList[1] +"를 입력하시지 않았습니다.");
+	}else if(!(Cooling.length == 3)){
+		result = 1;
+		$("#" + specEngNameList[1] + "Errors").html("자리수가 맞지 않습니다.");
+		$("#"+specEngNameList[1]).val("");
 	}else if((Cooling != '7.5') && (Cooling != '7.7') && (Cooling != '7.8')
 			&& (Cooling !=  '7.9') && (Cooling != '8.0') && (Cooling != '8.2')
 			&& (Cooling != '8.5')){
