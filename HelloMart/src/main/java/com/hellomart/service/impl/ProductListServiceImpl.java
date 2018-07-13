@@ -28,7 +28,7 @@ public class ProductListServiceImpl implements ProductListService{
 	
 	@Autowired
 	ProductListDAO dao; 
-	
+	 
 	private final XMLParser xmlParser = new XMLParser("category.xml");
 	
 	public ProductListServiceImpl() {
