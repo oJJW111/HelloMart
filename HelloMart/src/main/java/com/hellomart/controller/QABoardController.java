@@ -59,24 +59,25 @@ public class QABoardController {
 	    return new ModelAndView("qaboard/QAWrite", "qaboard", new QABoard());
    	}
 
-   @RequestMapping(value = "/qawrite", method = RequestMethod.POST)
-   public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
-       //오류여부 확인
-	   if(bindingResult.hasErrors()){
-    	   return "qaboard/QAWrite";
-	   }else{
-		   service.insertQABoard(qaboard);
-	       return "redirect:/qaboard/qaboardList";
-	   }
-   }
+   	@PreAuthorize("isAuthenticated()")
+   	@RequestMapping(value = "/qawrite", method = RequestMethod.POST)
+   	public String writeProcess(@ModelAttribute("qaboard") @Valid QABoard qaboard, BindingResult bindingResult) {
+   		//오류여부 확인
+   		if(bindingResult.hasErrors()){
+   			return "qaboard/QAWrite";
+   		} else{
+   			service.insertQABoard(qaboard);
+   			return "redirect:/qaboard/qaboardList";
+   		}
+   	}
 
-   @RequestMapping(value = "/qaview", method = RequestMethod.GET)
-   public ModelAndView qaview(int idx, String cmtnum) {
-      ModelAndView mav = new ModelAndView();
+   	@RequestMapping(value = "/qaview", method = RequestMethod.GET)
+   	public ModelAndView qaview(int idx, String cmtnum) {
+   		ModelAndView mav = new ModelAndView();
       
-      CmtBoard cmtboard = new CmtBoard();
-      service.viewCount(idx);
-      QABoard view = service.viewQABoard(idx);
+   		CmtBoard cmtboard = new CmtBoard();
+   		service.viewCount(idx);
+   		QABoard view = service.viewQABoard(idx);
 
       // 화면에 보여질 게시글의갯수를 지정
       int pageSize = 5;

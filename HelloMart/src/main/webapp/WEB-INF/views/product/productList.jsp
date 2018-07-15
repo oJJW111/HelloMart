@@ -15,65 +15,24 @@
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <script type="text/javascript">
-function createURL(mainCategory, smallCategory, page) {
-	var helper = (function() {
-		var isFirst = true;
-		var isLastAmp = function() {
-			return url.lastIndexOf("&") != -1;
-		}
-		var addFirst = function() {
-			if(isFirst) {
-				url += "?";
-				isFirst = false;
-			}
-		}
-		var removeLast = function() {
-			if(isLastAmp) {
-				url = url.substr(0, url.length - 1);
-			}
-		}
-		return {
-			addFirst : addFirst,
-			removeLast : removeLast
-		}
-	})();
-	var url = "/productList";
-	if(mainCategory != '' && mainCategory != undefined) {
-		helper.addFirst();
-		url += "mainCategory=" + mainCategory + "&";
-	}
-	if(smallCategory != '' && smallCategory != undefined) {
-		helper.addFirst();
-		url += "smallCategory=" + smallCategory + "&";
-	}
-	if(page != '' && page != undefined) {
-		helper.addFirst();
-		url += "page=" + page + "&";
-	}
-	helper.removeLast();
-	return url;
-}
 $(document).ready(function(){
-	$.submitForm = function(f) {
-		if( ($("#price2").val() != null) && ($("#price2").val() != "")){
-			if($("#price1").val() > $("#price2").val()){
-				alert("최저 가격은 최고 가격보다 적어야 합니다");
-			}
-			else{
-				f.submit(function() {
-				    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
-				});
-			}			
+	
+	$.submitForm = function() {
+		if($("#price2").val() != '' && $("#price1").val() > $("#price2").val()){
+			alert("최저 가격은 최고 가격보다 적어야 합니다");
+			return false;
 		}
-		else{
-			f.submit(function() {
-			    f.find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
-			});
-		}
+		
 	}
+	
+	$("form").submit(function() {
+		$("form").find(":input").filter(function(){return !this.value;}).attr("disabled", "disabled");
+	});
+	
 	$.appendPage = function(page) {
 		$("#detailForm").append("<input type='hidden' name='page' value='" + page + "'>");
 	}
+	
 	$(".category_small :checkbox").on("change", function() {
 		var value = $(this).attr("id");
 		if($(this).is(":checked")) {
@@ -84,6 +43,7 @@ $(document).ready(function(){
 			$("input[value=" + value + "]").remove();
 		}
 	});
+	
 });
 $(function(){	
 	$('.addCart').on({
@@ -125,7 +85,7 @@ $(function(){
 			<div class="range">~</div>
 			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 			<div class="currency">원</div>
-			<button id="submit-form" type="button" onclick="$.submitForm(this.form)"><i class="fa fa-search"></i></button>
+			<button id="submit-form" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
 		</div>
 	</div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory == '액세서리'} -->
@@ -138,7 +98,7 @@ $(function(){
 			<ul>
 			<c:if test="${smallCategoryList ne null}">
 				<c:forEach var="smallCategory" items="${smallCategoryList}">
-					<li onclick="javascript:location.href = createURL('${param.mainCategory}', '${smallCategory}'); return false;">
+					<li onclick="javascript:location.href = '/productList?mainCategory=${param.mainCategory}&smallCategory=${smallCategory}'">
 					<c:out value="${smallCategory}"/>
 					</li>
 				</c:forEach>
@@ -181,7 +141,7 @@ $(function(){
 		<div class="range">~</div>
 		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm(this.form)" type="button"
+		<button id="submit-form" onclick="$.submitForm()"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->
