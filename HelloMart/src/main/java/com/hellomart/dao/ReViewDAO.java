@@ -2,8 +2,6 @@ package com.hellomart.dao;
 
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.hellomart.dto.ReView;
 
 public interface ReViewDAO {

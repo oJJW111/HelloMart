@@ -1,30 +1,18 @@
 package com.hellomart.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.hellomart.dao.CartDAO;
-import com.hellomart.dao.ProductListDAO;
 import com.hellomart.dto.Cart;
-import com.hellomart.dto.ProductList;
 import com.hellomart.service.CartService;
-import com.hellomart.service.ProductListService;
-import com.hellomart.util.Paging;
-import com.hellomart.util.XMLParser;
 
 
 

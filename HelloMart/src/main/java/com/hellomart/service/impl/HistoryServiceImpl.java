@@ -15,6 +15,7 @@ import com.hellomart.service.HistoryService;
 @Service
 public class HistoryServiceImpl implements HistoryService{
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(HistoryService.class);
 	
 	@Autowired

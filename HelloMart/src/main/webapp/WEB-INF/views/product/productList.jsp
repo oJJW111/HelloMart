@@ -244,8 +244,7 @@ $(function(){
 <div align="center">
 	<c:if test="${paging.totalRecord gt 0}">
 		<c:if test="${paging.nowBlock gt 0}">
-			<a href="javascript:void(0);" 
-			onclick="javascript:location.href = createURL('${param.mainCategory}', '${param.smallCategory}', '${paging.beginPage - 1}');">[이전]</a>
+			<label for="submit-form" tabindex="0" onclick="$.appendPage(${paging.beginPage - 1})">[이전]</label>
 		</c:if>
 		<c:forEach 	var="i"
 					begin="${paging.beginPage}"
@@ -253,8 +252,7 @@ $(function(){
 		<label for="submit-form" tabindex="0" onclick="$.appendPage(${i})">[${i}]</label>
 		</c:forEach>
 		<c:if test="${paging.nowBlock lt paging.totalBlock}">
-			<a href="javascript:void(0);" 
-			onclick="javascript:location.href = createURL('${param.mainCategory}', '${param.smallCategory}', '${paging.endPage + 1}');">[다음]</a>
+			<label for="submit-form" tabindex="0" onclick="$.appendPage(${paging.endPage + 1})">[다음]</label>
 		</c:if>
 	</c:if>
 </div>

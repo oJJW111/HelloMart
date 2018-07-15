@@ -14,7 +14,8 @@ import com.hellomart.service.CmtBoardService;
 @Service
 public class CmtBoardServiceImpl implements CmtBoardService{
    
-   private static final Logger logger = LoggerFactory.getLogger(CmtBoardService.class);
+   @SuppressWarnings("unused")
+private static final Logger logger = LoggerFactory.getLogger(CmtBoardService.class);
    
    @Autowired
    private CmtBoardDAO dao;

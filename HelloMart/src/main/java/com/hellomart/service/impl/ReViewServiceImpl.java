@@ -16,6 +16,7 @@ import com.hellomart.service.ReViewService;
 @Service
 public class ReViewServiceImpl implements ReViewService{
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(ReViewService.class);
 	
 	@Autowired

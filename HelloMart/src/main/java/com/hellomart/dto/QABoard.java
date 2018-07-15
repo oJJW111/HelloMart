@@ -6,10 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
-
 import lombok.Data;
 
 

@@ -3,7 +3,6 @@ package com.hellomart.dao;
 import java.util.List;
 
 import com.hellomart.dto.OrderList;
-import com.hellomart.dto.Point;
 import com.hellomart.dto.ReView;
 
 public interface HistoryDAO {

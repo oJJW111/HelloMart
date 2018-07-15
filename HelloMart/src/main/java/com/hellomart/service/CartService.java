@@ -2,8 +2,6 @@ package com.hellomart.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.hellomart.dto.Cart;
 
 public interface CartService {
