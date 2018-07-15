@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <style type="text/css">
 	a{
 		text-decoration: none;
@@ -30,11 +31,15 @@
 <!-- 헤더 -->
 
 	<div align="center">
-		<h1>구매가 완료되었습니다</h1>
-		<br><br>
-		<a href="#" onclick="buy(); return false;">계속해서 구매하기</a>
-		&nbsp;&nbsp; / &nbsp;&nbsp; 
-		<a href="/mypage/history">구매 내역 보기</a>
+		<div class="BLOCK100"></div>
+		<h1>구매가 완료되었습니다.</h1>
+		<div class="BLOCK40"></div>
+		<h3>
+			<a href="#" onclick="buy(); return false;">계속해서 구매하기</a>
+			&nbsp;&nbsp; / &nbsp;&nbsp; 
+			<a href="/mypage/history">구매 내역 보기</a>
+		</h3>
+		<div class="BLOCK100"></div>
 	</div>
 
 <!-- 푸터 -->

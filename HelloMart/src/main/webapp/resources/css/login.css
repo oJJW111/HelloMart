@@ -21,11 +21,11 @@
 /* member login */
 #loginWrap { margin-bottom: 0px;}
 #loginWrap .mlog-sign .mlog { position: relative; width: 350px;}
-#loginWrap .mlog-sign .frm-list { position: absolute; padding: 0; left: 0px; top: 0px; width: 350px; color: #3F3F3F; text-decoration:none; font-size:10pt; font-family: 'Nanum Gothic',돋움;  }
+#loginWrap .mlog-sign .frm-list { position: absolute; padding: 0; left: 0px; top: 0px; width: 350px; color: #3F3F3F; text-decoration:none; font-size:10pt; }
 #loginWrap .mlog-sign .frm-list li,
 #loginWrap .mlog-sign .frm-list .id { overflow:hidden;display:block;width:300px;margin:0 0 2px; line-height:32px; }
 #loginWrap .mlog-sign .frm-list .pwd { overflow:hidden;display:block;width:300px;margin:0 0 2px; line-height:32px; }
-#loginWrap .mlog-sign .frm-list input { width:270px;height:30px;padding:2px 0 2px 0;line-height:23px; border:1px solid #d9d9d9;  float: left; border:none; background-color:#f2f2f2;}
+#loginWrap .mlog-sign .frm-list input { width:270px;height:30px;padding:2px 0 2px 0;line-height:23px; border:1px solid #d9d9d9;  float: left; border:none; background-color:#f2f2f2; }
 #loginWrap .mlog-sign .frm-list li label,
 #loginWrap .mlog-sign .frm-list li .txt-frm { float: left; }
 #loginWrap .mlog-sign .frm-list li { width: 100%; margin-bottom: 5px; }

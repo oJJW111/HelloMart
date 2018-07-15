@@ -11,4 +11,6 @@ public interface ProductListDAO {
 	void updateOrderCount(int no);
 	void updateScore(int star, int no); 
 	void updateReviewCount(int no);
+	ProductList mainlist(int no);
+
 }

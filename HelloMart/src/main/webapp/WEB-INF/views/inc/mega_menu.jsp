@@ -84,7 +84,12 @@ $(document).ready(function(){
    });
 });
 </script>
-
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+.header_menu_wrap .header_menu div { font-family: 'Hanna', serif; }
+.mega_menu_wrap .mega_menu .mega_menu_contents div { font-family: 'Jeju Gothic', sans-serif; }
+</style>
 <div class="header_menu_wrap">
 
 	<div class="header_menu">
@@ -102,7 +107,7 @@ $(document).ready(function(){
 				<div class="F_left mega_menu_contents_part2">
 					<div class="mega_menu_inner_menu mega_ct_001"
 						style="display: none;">
-						<div class="F_left megamenu_menu_title1" id="refrigerator">냉장고</div>
+						<div class="F_left megamenu_menu_title1" id="refrigerator" style="margin-left: 50px">냉장고</div>
 						<div class="F_left megamenu_menu_title1" id="microwave">오븐/전자레인지</div>
 						<div class="F_left megamenu_menu_title1" id="cleaner">청소기</div>
 						<div class="F_left megamenu_menu_title1" id="airConditioner">에어컨</div>
@@ -127,10 +132,9 @@ $(document).ready(function(){
 				</div>
 
 				<div class="mega_menu_inner_menu mega_ct_004" style="display: none;">
-					<div class="F_right megamenu_menu_title2" id="mobileAcc">모바일
-						액세서리</div>
+					<div class="F_right megamenu_menu_title2" id="mobileAcc">모바일 액세서리</div>
 					<div class="F_right megamenu_menu_title2" id="acc"
-						style="margin-right: 5px;">PC 액세서리</div>
+						style="margin-right: 10px;">PC 액세서리</div>
 				</div>
 
 				<div class="mega_menu_inner_menu mega_ct_005" style="display: none;">
