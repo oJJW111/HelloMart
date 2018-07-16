@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +33,7 @@ public class CartController {
 	ProductService service2;
 	
 	// 1-1. 장바구니 추가(페이지 이동)
+	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
 	public String addCart(@ModelAttribute Cart cart, Principal principal){
 		String id = principal.getName(); 
 			

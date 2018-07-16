@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-* { font-family:'Nanum Gothic', serif; }
+* { font-family: 'Gothic', 'Nanum Gothic', serif; }
 html, body { height: 100% }
 body, div, span, table, tr, td, ul, li, p, img {
 	margin: 0px;

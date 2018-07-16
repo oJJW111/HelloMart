@@ -43,7 +43,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#addCart').on({
+	$('.addCart').on({
 		"submit" : function(){ 
 			var d = $(this).serialize();
 		
@@ -162,8 +162,8 @@ $(document).ready(function(){
 						<div class="additional_info">
 							<span class="brand">${board.mfCompany}</span>
 							<span class="category">
-								<a href="/productList/main?mainCategory=${param.mainCategory}">${param.mainCategory}</a> > 
-								<a href="/productList/small?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}">${param.smallCategory}</a>
+								<a href="/productList?mainCategory=${param.mainCategory}">${param.mainCategory}</a> > 
+								<a href="/productList?mainCategory=${param.mainCategory}&smallCategory=${param.smallCategory}">${param.smallCategory}</a>
 							</span>
 						</div>
 					</div>
