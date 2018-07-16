@@ -67,9 +67,11 @@ function closeNav() {
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-
-
-<div class="BLOCK40"></div>
+<div class="titbox" style="margin-bottom: 10px;">
+	<div class="title">
+		<span class="name">MY PAGE</span>
+	</div>
+</div>
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/mypage/info">회원정보 보기</a>

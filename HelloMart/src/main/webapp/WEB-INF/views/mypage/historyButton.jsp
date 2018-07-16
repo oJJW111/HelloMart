@@ -15,12 +15,12 @@
 </head>
 <body>
 	<c:if test="${check == false}">
-		<input type="button" class="board_btn01" value="작성" onclick="fnRv('${no}')">
+		<input type="button" class="board_btn01" value="리뷰 작성" onclick="fnRv('${no}')">
 	</c:if>
 	
 	<c:if test="${check == true}">
-		<input type="button" class="board_btn01" value="수정" onclick="location.href='/remodify?idx=${idx}'" style="margin: 2px 5px;">
-		<input type="button" class="board_btn01" value="삭제" onclick="location.href='/redelete?idx=${idx}'" style="margin: 2px 5px;">	
+		<input type="button" class="board_btn01" value="리뷰 수정" onclick="location.href='/remodify?idx=${idx}'" style="margin: 2px 5px;">
+		<input type="button" class="board_btn01" value="리뷰 삭제" onclick="location.href='/redelete?idx=${idx}'" style="margin: 2px 5px;">	
 	</c:if>
 </body>
 </html>

@@ -24,12 +24,6 @@
 
 	<delete id="redelete"> DELETE FROM ReView WHERE Idx = #{Idx} </delete>
 	
-	<update id="updatereviewCount">
-   		update productlist 
-   		set reviewCount = reviewCount + 1
-   		where no = #{param1}
-	</update>
-	
 	<select id="getReCount" resultType="int"> 
 		SELECT count(*) FROM ReView where no = #{param1}
 	</select>

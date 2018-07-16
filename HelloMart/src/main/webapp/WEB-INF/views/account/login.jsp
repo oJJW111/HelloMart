@@ -125,7 +125,12 @@
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-<div class="BLOCK80"></div>
+<div class="BLOCK20"></div>
+<div class="titbox">
+	<div class="title">
+		<span class="name">MEMBER LOGIN</span>
+	</div>
+</div>
 <div id="loginWrap">
 	<div class="page-body">
 		<div class="mlog-sign">

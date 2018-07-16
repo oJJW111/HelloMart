@@ -10,10 +10,17 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <title>오늘 본 상품</title>
 <script type="text/javascript">
-function fnCart(no, id){
+function fnCart(no, smallCategory, id){
 	var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
+	
 	if(isMove){
-		location.href ="/addCart?no=" + no + "&orderCount=1&id=" + id; 	
+		var orderCount = document.getElementById("orderCount").value;
+		location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
+	}
+	else{
+		var orderCount = document.getElementById("orderCount").value;
+		location.href = "/addCartNo?no=" + no + "&orderCount=" + orderCount 
+								+ "&smallCategory=" + smallCategory; 		
 	}
 }
 </script>
@@ -21,6 +28,7 @@ function fnCart(no, id){
 <body>
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
+<sec:authentication property="principal" var="id" />
 <!-- 헤더 -->
 <div class="titbox">
 	<div class="title">
@@ -53,7 +61,7 @@ function fnCart(no, id){
 				<td style="text-align: left;">${board.productName}</td>
 				<td>￦&nbsp;<fmt:formatNumber pattern="###,###,###" value="${board.price}" /></td>
 				<td>
-					<input type="button" value="담기" class="board_btn01" onclick="fnCart(${detail.No}, '${id}')">
+					<input type="button" value="담기" class="board_btn01" onclick="fnCart(${board.no}, '${board.smallCategory}','${id}')">
 				</td>
 			</tr>
 		</c:forEach>

@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
-@font-face{ font-family:'Gothic'; } 
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
+* { font-family:'Nanum Gothic', serif; }
 html, body { height: 100% }
 body, div, span, table, tr, td, ul, li, p, img {
 	margin: 0px;
@@ -12,8 +13,9 @@ body {
 	overflow-y: scroll;
 	font-size: 12px;
 }
-div{ position: relative; }
-a,a:HOVER{ text-decoration: none;}
+div { position: relative; }
+a { text-decoration: none; }
+a:HOVER{ text-decoration: none; }
 
 ::selection {
 	background: #e8e8e8;
@@ -34,6 +36,7 @@ a,a:HOVER{ text-decoration: none;}
 .BLOCK20{width: 100%; height: 20px;}
 .BLOCK30{width: 100%; height: 30px;}
 .BLOCK40{width: 100%; height: 40px;}
+.BLOCK50{width: 100%; height: 50px;}
 .BLOCK60{width: 100%; height: 60px;}
 .BLOCK70{width: 100%; height: 70px;}
 .BLOCK80{width: 100%; height: 80px;}

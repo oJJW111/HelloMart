@@ -15,9 +15,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
 <script type="text/javascript">
-function send(){
-	document.f.submit();
-}
 $(document).ready(function(){
 	/* 생년월일 option 태그를 자동으로 생성해준다. */
 	BIRTHDATEMAKER.make({
@@ -59,8 +56,11 @@ $(document).ready(function(){
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
-<div class="BLOCK80"></div>
-
+<div class="titbox">
+	<div class="title">
+		<span class="name">MEMBER JOIN</span>
+	</div>
+</div>
 <div id="join_test">
 	<form:form action="join" name="f" method="post" modelAttribute="account" id="join_form">
 		<div class="box-wrap">
@@ -128,11 +128,9 @@ $(document).ready(function(){
 					<form:errors path="roadAddress" class="errors"/>
 					<form:errors path="detailAddress" class="errors"/>
 				</li>
-			</ul><br>
+			</ul>
 			<div class="new-btn-area">
-				<a href="javascript:send();"> 
-					<span class="btnlogin">가입 완료</span>
-				</a>
+				<input type="submit" value="가입완료" class="btn01">
 			</div>
 		</div>
 	</form:form>

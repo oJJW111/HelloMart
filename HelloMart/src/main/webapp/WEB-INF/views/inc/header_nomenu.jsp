@@ -2,12 +2,10 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css"/>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
 <script src="/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href='/resources/bootstrap/css/bootstrap.min.css' rel="stylesheet" type="text/css">
 <!-- 부트스트랩 추가로 기존의 css 파일이 뒤틀려져 보이기 때문에 모든 페이지에 부트스트랩을 추가시켜 똑같이 보이도록 하였다. -->
-
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -40,6 +38,10 @@ $(document).ready(function(){
 	});
 });
 </script>
+<style>
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+.header_bar_wrap .header_bar div{ font-family: 'Hanna', serif;}
+</style>
 <div class="header_bar_wrap">
 	<div class="header_bar">
 		<div class="F_right haeder_bar_menu" id="bar_menu1">오늘 본 상품</div>

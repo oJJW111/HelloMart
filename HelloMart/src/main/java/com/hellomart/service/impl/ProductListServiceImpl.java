@@ -286,5 +286,11 @@ public class ProductListServiceImpl implements ProductListService{
 	@Override
 	public void updateReviewCount(int no) {
 		dao.updateReviewCount(no); 
-	}	
+	}
+
+	@Override
+	public ProductList mainlist(int no) {
+		return dao.mainlist(no);
+    }
+	
 }

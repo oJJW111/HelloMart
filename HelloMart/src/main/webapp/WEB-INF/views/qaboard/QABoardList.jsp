@@ -8,7 +8,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>HelloMart</title>
+<title>Q&A 게시판</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +19,7 @@
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
    <!-- 헤더 -->
-	<div class="titbox">
+	<div class="titbox" style="margin-bottom: 20px;">
 		<div class="title">
 			<span class="name">Q&A 게시판</span>
 		</div>
@@ -48,7 +48,7 @@
                            <td class="td_num">${list.idx }</td>
                            <td class="td_subject">
                            <sec:authorize access="isAnonymous()">
-                               글을 볼수 없습니다.
+                          		     회원만 접근이 가능합니다.
                            </sec:authorize>
                            <sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
                            <c:choose>
@@ -56,7 +56,7 @@
                                <a href="/qaboard/qaview?idx=${list.idx }&id=${list.id}">${list.subject }</a> [${list.cmt }]
                               </c:when>
                               <c:otherwise>
-                               글을 볼수 없습니다.
+                              		회원만 접근이 가능합니다.
                                </c:otherwise>
                            </c:choose>
                            </sec:authorize>

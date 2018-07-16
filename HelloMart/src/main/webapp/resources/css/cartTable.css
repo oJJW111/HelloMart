@@ -59,6 +59,7 @@
 }
 #cartBuy tr td{ 
 	text-align: center;
+	height: 50px;
 }
 #total{
 	width: 28%; 

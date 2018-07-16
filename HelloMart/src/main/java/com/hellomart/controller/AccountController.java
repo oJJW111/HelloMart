@@ -57,7 +57,7 @@ public class AccountController {
 		}
 		
 		service.insertAccount(account);
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 	@RequestMapping(value="/idpw_search", method=RequestMethod.GET)

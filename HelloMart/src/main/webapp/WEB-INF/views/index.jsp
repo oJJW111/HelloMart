@@ -16,6 +16,10 @@
 <jsp:include page="/WEB-INF/views/inc/carousel.jsp"/>
 <!-- 캐러셀 -->
 
+<!-- 본문 -->
+<jsp:include page="/WEB-INF/views/inc/main.jsp"/>
+<!-- 본문 -->
+
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

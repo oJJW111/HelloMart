@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -44,9 +43,7 @@ $(document).ready(function(){
 		}
 	});
 	
-});
-$(function(){	
-	$('.addCart').on({
+	$('#addCart').on({
 		"submit" : function(){ 
 			var d = $(this).serialize();
 		
@@ -55,13 +52,14 @@ $(function(){
 				type : "get",
 				data : d,
 				success : function(result){
-					alert("해당 상품이 장바구니에 1개 추가되었습니다");
-				}
-			});
-			
-			return false; // action 페이지로 전환되는 것을 차단
-		}
+						alert("해당 상품이 장바구니에 1개 추가되었습니다");
+					}
+				});
+				
+				return false; // action 페이지로 전환되는 것을 차단
+			}
 	});
+	
 });
 </script>
 </head>
@@ -179,6 +177,7 @@ $(function(){
 							<span class="review">상품평 : ${board.reviewCount}개</span>
 						</div>
 						<sec:authentication property="principal" var="userId" />
+<<<<<<< HEAD
 						<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 							<form method="get" class="addCart">
 							<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
@@ -187,6 +186,16 @@ $(function(){
 							<input type="hidden" name="id" value="${userId}">
 						</form>	
 						</sec:authorize>
+=======
+							<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+								<form action="#" method="get" id="addCart">
+									<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
+									<input type="hidden" name="no" value="${board.no}">	
+									<input type="hidden" name="orderCount" value="1"> 	
+									<input type="hidden" name="id" value="${userId}"> 
+								</form>	
+							</sec:authorize>
+>>>>>>> refs/remotes/origin/bjb
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
 				<hr class="style14">

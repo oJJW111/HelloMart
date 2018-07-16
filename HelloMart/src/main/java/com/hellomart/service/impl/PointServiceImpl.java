@@ -44,11 +44,11 @@ public class PointServiceImpl implements PointService {
 			else{
 				qty = totalPrice * 0.01;   
 			}
-			content += "의 구매로" + qty + "만큼 " +"증가";	
+			content += " 구매로 " + (int)qty + " point 적립";
 		}
 		if(incDec.equals("-")){
 			qty = Double.parseDouble(request.getParameter("point"));
-			content += "의 구매에 " + qty + "만큼 사용해서 " + "감소";
+			content += " 구매에 " + (int)qty + " point 사용";
 		}
 		
 		point.setId(orderList.getOrderId());
@@ -80,11 +80,11 @@ public class PointServiceImpl implements PointService {
 			else{
 				qty = totalPrice * 0.01;   
 			}
-			content += "외 " + size + "개의 상품의 구매로" + qty + "만큼 " + "증가";
+			content += " 외 " + size + "개 상품 구매로 " + (int)qty + " point 적립";
 		}
 		if (incDec.equals("-")) {
 			qty = Double.parseDouble(request.getParameter("point"));
-			content += "외 " + size + "개의 상품의 구매에 " + qty + "만큼 사용해서 " + "감소";
+			content += " 외 " + size + "개 상품 구매에 " + (int)qty + " point 사용";
 		}
 
 		point.setId(id);
