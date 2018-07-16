@@ -1,5 +1,6 @@
 package com.hellomart.service;
 
+import java.util.Map;
 import java.util.Vector;
 
 import com.hellomart.dto.CmtBoard;
@@ -7,7 +8,7 @@ import com.hellomart.dto.CmtBoard;
 public interface CmtBoardService {
 
 	/* 코멘트를 가져오는 메소드 */
-	Vector<CmtBoard> cmtlist(int idx, int startRow, int pageSize);
+	Map<String, Object> cmtlist(Integer idx, Integer page, int maxResult, int pagePerBlock);
 	
 	/* 코멘트를 삽입하는 메소드 */
 	void cmtinsert(CmtBoard cmtboard);

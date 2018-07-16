@@ -27,14 +27,12 @@ function delchk(){
         return false;
     }
 }
-function cmtdelchk(cmtidx,idx){
-    if(confirm("코멘트를 삭제하시겠습니까?")){
-        location.href = "/qaboard/cmtdelete?cmtidx="+cmtidx+"&idx="+idx;
-        return true;
-    } else {
-        return false;
-    }
-}
+
+$(function(){
+			$('#cmtlist').load("/qaboard/CMTBoardList?idx=${view.idx}");
+});
+
+
 </script>
 </head>
 
@@ -86,57 +84,16 @@ function cmtdelchk(cmtidx,idx){
          <!-- } 게시물 하단 버튼 끝 -->
          
          <!-- 코멘트 영역 -->
-         <sec:authentication property="principal" var="id"/>
-         <hr>
-         <h4>코멘트</h4>
-         <table style="width: 840px">
-         <c:if test="${pageCount!=0 }">
-            <c:forEach var="cmtlist" items="${cmtlist}"> 
-            <tr height="70px">	
-               <td>${cmtlist.id }</td>
-               <td style="width: 500px">${cmtlist.content }</td>
-               <td align="right">
-                  <fmt:formatDate value="${cmtlist.date}" pattern="yyyy.MM.dd HH:mm:ss"/>
-                  <a href="#" class="btn_b01" onclick="cmtdelchk('${cmtlist.cmtidx}','${view.idx }');">삭제</a>
-               </td>
-            </tr>
-            </c:forEach>
-         </c:if>
-         <tr>
-         <td colspan="3"><hr></td>
-         </tr>
-         <form:form action="cmtinsert" modelAttribute="cmtboard" method="post" id="cmt_form">
-         <tr height="70px">
-            <form:hidden path="cmtpar" value="${view.idx }" />
-            <td>
-               <form:input path="id" value="${id}" readonly="true" size="13"/>
-            </td>
-            <td style="width: 500px">
-               <form:textarea path="content" rows="2" cols="80" placeholder="5자이상 입력주세요"/>
-               <form:errors path="content" cssClass="msg"/>
-            </td>
-            <td align="right">
-               <input type="submit" value="글쓰기">
-            </td>
-         </tr>
-         </form:form>      
-         </table>
-         
-         <c:if test="${pageCount>1 }">
-         <div align="center" id="page">
-            <c:if test="${startPage > pageBlock}">
-               <a href="/qaboard/qaview?idx=${view.idx }&cmtnum=${startPage-1 }">[이전]</a>
-            </c:if>         
-            <c:forEach var="i" begin="${startPage }" end="${endPage }">
-               <a href="/qaboard/qaview?idx=${view.idx }&cmtnum=${i }">[${i }]</a>
-            </c:forEach>
-            <c:if test="${endPage < pageCount }">
-               <a href="/qaboard/qaview?idx=${view.idx }&cmtnum=${startPage+pageBlock }">[다음]</a>
-            </c:if>
-         </div>
-      </c:if>
+   
       </section>
       <!-- 코멘트영역 끝 -->
+      
+      
+      <span id="cmtlist">
+      
+      
+      
+      </span>
       
       <!-- } 게시판 읽기 끝 -->
    </div>
