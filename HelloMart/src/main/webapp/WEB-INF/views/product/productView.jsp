@@ -17,19 +17,32 @@
 								+ "&orderCount=" + orderCount + "&id=" + id; 
 	} 
 	
-	function fnCart(no, smallCategory){
-		var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
-		
-		if(isMove){
-			var orderCount = document.getElementById("orderCount").value;
-			location.href = "/addCart?no=" + no + "&orderCount=" + orderCount; 	
-		}
-		else{
-			var orderCount = document.getElementById("orderCount").value;
-			location.href = "/addCartNo?no=" + no + "&orderCount=" + orderCount 
-									+ "&smallCategory=" + smallCategory; 		
-		}
-	}
+	$(function(){	
+		$('.addCart').on({
+			"submit" : function(){ 
+				var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
+
+				if(isMove){
+					document.addCart.action = "/addCart";
+					document.addCart.submit();
+				}
+				else{
+					var d = $(this).serialize();
+					
+					$.ajax({
+						url : "/addCartNo",
+						type : "get",
+						data : d,
+						success : function(result){
+							alert("해당 상품이 장바구니에 추가되었습니다");
+						}
+					});
+					
+					return false; // action 페이지로 전환되는 것을 차단
+				}
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -141,22 +154,26 @@
        	 비회원은 구매와 장바구니를 이용할 수 없습니다. 
        	 <a href="/login">로그인</a> 해주세요
     </sec:authorize>
-
+    
 	<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
-     	수량 &nbsp;&nbsp;
-		<select name="orderCount" id="orderCount">
-			<c:forEach begin="1" end="10" var="i">
-				<option value="${i}">${i}</option>
-			</c:forEach>
-		</select> 
-		<c:if test="${detail == null}">
-			<input type="button" value="구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
-			<input type="button" value="장바구니 담기" onclick="fnCart(${product.no}, '${product.smallCategory}')">
-		</c:if>
-		<c:if test="${detail != null}">
-			<input type="button" value="구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
-			<input type="button" value="장바구니 담기" onclick="fnCart(${detail.No}, '${detail.SmallCategory}')">
-		</c:if>
+		<form method="get" class="addCart" name="addCart">
+			수량 &nbsp;&nbsp;
+			<select name="orderCount" id="orderCount">
+				<c:forEach begin="1" end="10" var="i">
+					<option value="${i}">${i}</option>
+				</c:forEach>
+			</select> 
+			<c:if test="${detail == null}">
+				<input type="button" value="구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+				<input type="hidden" name="no" value="${product.no}">	
+				<input type="submit" value="장바구니 담기">
+			</c:if>
+			<c:if test="${detail != null}">
+				<input type="button" value="구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+				<input type="hidden" name="no" value="${detail.No}">	
+				<input type="submit" value="장바구니 담기">
+			</c:if>
+		</form>	
 	</sec:authorize>
 </div>
 <br><br><br>

@@ -51,7 +51,7 @@ $(function(){
 			var d = $(this).serialize();
 		
 			$.ajax({
-				url : "/addCart",
+				url : "/addCartNo",
 				type : "get",
 				data : d,
 				success : function(result){
@@ -178,14 +178,12 @@ $(function(){
 							<span class="buy">구  &nbsp;&nbsp;매 : ${board.orderCount}</span>  
 							<span class="review">상품평 : ${board.reviewCount}개</span>
 						</div>
-						<sec:authentication property="principal" var="userId" />
 						<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 							<form method="get" class="addCart">
-							<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
-							<input type="hidden" name="no" value="${board.no}">	
-							<input type="hidden" name="orderCount" value="1">
-							<input type="hidden" name="id" value="${userId}">
-						</form>	
+								<input type="submit" class="add_to_cart btn_yellow" value="장바구니 담기">	 
+								<input type="hidden" name="no" value="${board.no}">	
+								<input type="hidden" name="orderCount" value="1">
+							</form>	
 						</sec:authorize>
 					</div>
 				</div> <!-- <div class="product_list_content"> -->
