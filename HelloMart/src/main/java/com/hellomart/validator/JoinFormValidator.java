@@ -2,16 +2,23 @@ package com.hellomart.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.hellomart.dto.Account;
+import com.hellomart.service.AccountService;
 
+@Component
 public class JoinFormValidator implements Validator {
 	
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(JoinFormValidator.class);
+	
+	@Autowired
+	private AccountService service;
 	
 	@Override
 	public void validate(Object target, Errors errors) {
@@ -19,11 +26,18 @@ public class JoinFormValidator implements Validator {
 		
 		this.rejectIfEmptyOrWhitespace(errors, account);
 		this.rejectIfNotMatch(errors, account);
+		this.rejectIfDuplicate(errors, account);
 	}
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Account.class.isAssignableFrom(clazz); 
+	}
+	
+	private void rejectIfDuplicate(Errors errors, Account account) {
+		logger.debug("service : " + service);
+		ValidationTools.rejectIfTrue(errors, "form.error.duplicate.id", "id", service.countId(account.getId()) == 1);
+		ValidationTools.rejectIfTrue(errors, "form.error.duplicate.email", "email", service.countEmail(account.getEmail()) == 1);
 	}
 	
 	private void rejectIfEmptyOrWhitespace(Errors errors, Account account) {

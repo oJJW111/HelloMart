@@ -32,10 +32,8 @@ public class AccountController {
 	@Autowired
 	private AccountService service;
 	
-	@InitBinder
-	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(new JoinFormValidator());
-	}
+	@Autowired
+	private JoinFormValidator validator;
 	
 	@RequestMapping(value = "/join", method=RequestMethod.GET)
 	public ModelAndView join() {
@@ -45,6 +43,9 @@ public class AccountController {
 	@RequestMapping(value = "/join", method=RequestMethod.POST)
 	public String joinProcess(Model model,
 			@ModelAttribute("account") @Valid Account account, BindingResult bindingResult) {
+		
+		validator.validate(account, bindingResult);
+		
 		if(bindingResult.hasErrors()) {
 			Map<String, String> map = new HashMap<>();
 			map.put("selectedYear", account.getBirthYear());

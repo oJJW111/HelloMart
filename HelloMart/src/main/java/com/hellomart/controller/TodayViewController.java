@@ -31,7 +31,8 @@ public class TodayViewController {
 			
 		ModelAndView mav = new ModelAndView();
 			
-		Vector<String> no = todayViewUtils.getAllValueWithKeyWord();
+		Vector<String> no = todayViewUtils.getAllValue(10);
+
 		if(!no.isEmpty()) {
 			
 			Vector<ProductList> plList = dao.list(no.toArray(new String[no.size()]));

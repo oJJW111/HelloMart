@@ -39,9 +39,19 @@ public class ValidationTools {
 		rejectIfNotEquals(errors, errorCode, errorField, errorField, str1, str2);
 	}
 	
-	public static void rejectIfHasNotErrors(Errors errors, String errorCode, String field, MatcherStatement mstmt) {
+	public static void rejectIfTrue(Errors errors, String errorCode, String field, boolean result) {
+		rejectIfHasNotErrors(errors, errorCode, field, 
+				() -> {
+					if(result) {
+						errors.rejectValue(field, errorCode);
+					}
+				});
+	}
+	
+	private static void rejectIfHasNotErrors(Errors errors, String errorCode, String field, MatcherStatement mstmt) {
 		if(!errors.hasFieldErrors(field)) {
 			mstmt.rejectIfNot();
 		}
 	}
+	
 }

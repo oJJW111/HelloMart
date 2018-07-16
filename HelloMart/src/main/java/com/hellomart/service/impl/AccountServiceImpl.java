@@ -38,6 +38,16 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	public int countId(String id) {
+		return dao.countId(id);
+	}
+	
+	@Override
+	public int countEmail(String email) {
+		return dao.countEmail(email);
+	}
+	
+	@Override
 	public Account findAccount(String id) {
 		return dao.findAccount(id);
 	}

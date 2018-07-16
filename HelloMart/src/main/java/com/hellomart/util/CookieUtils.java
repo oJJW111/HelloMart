@@ -72,6 +72,23 @@ public class CookieUtils {
 	    }
 	}
 
+	public void remove(int size, String keyword) {
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			int count = 0;
+			for(int i = 0; i < cookies.length || count < size; i++) {
+				Cookie cookie = cookies[i];
+				String name = cookie.getName();
+				if(name.indexOf(keyword) == -1) {
+					continue;
+				}
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+				count++;
+			}
+		}
+	}
+	
 	public void remove(String name){
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null){
@@ -83,6 +100,21 @@ public class CookieUtils {
 	    		}
 	        }
 	    }
+	}
+	
+	public int length(String keyword) {
+		Cookie[] cookies = request.getCookies();
+		int length = 0;
+		if(cookies != null) {
+			for(int i = 0; i < cookies.length; i++) {
+				Cookie cookie = cookies[i];
+				String name = cookie.getName();
+				if(name.indexOf(keyword) != -1) {
+					length++;
+				}
+			}
+		}
+		return length;
 	}
 
 }

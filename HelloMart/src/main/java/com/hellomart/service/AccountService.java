@@ -9,6 +9,22 @@ import com.hellomart.dto.Account;
 
 public interface AccountService {
 	
+	/**
+	 * 아이디 존재 여부를 확인하기 위해 id 컬럼을 조건으로 카운트한다. 
+	 * 
+	 * @param id 유저 아이디
+	 * @return 아이디가 이미 존재하면 1, 아니면 0
+	 */
+	int countId(String id);
+	
+	/**
+	 * 이메일 존재 여부를 확인하기 위해 email 컬럼을 조건으로 카운트한다. 
+	 * 
+	 * @param email 유저 이메일
+	 * @return 이메일이 이미 존재하면 1, 아니면 0
+	 */
+	int countEmail(String email);
+	
 	String getPasswd(String id);
 	
 	void modifyPw(String id,String new_pw);

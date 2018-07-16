@@ -20,11 +20,16 @@ public class TodayViewUtils {
 		cookieUtils.creatCookie(KEYWORD + no, no, ONEDAY);
 	}
 	
-	public String[] getAllValue() {
-		return cookieUtils.getAllValue();
+	public Vector<String> getAllValue() {
+		return cookieUtils.getAllValueWithKeyWord(KEYWORD);
 	}
 	
-	public Vector<String> getAllValueWithKeyWord() {
+	public Vector<String> getAllValue(int size) {
+		int over = cookieUtils.length(KEYWORD) - size;
+		System.out.println("cookie length : " + over);
+		if(over > 0) {
+			cookieUtils.remove(over, KEYWORD);
+		}
 		return cookieUtils.getAllValueWithKeyWord(KEYWORD);
 	}
 	

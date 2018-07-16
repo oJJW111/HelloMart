@@ -21,8 +21,6 @@
 		<intercept-url pattern="/authenticated/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/**" access="permitAll" />
 		
-		
-		
 		<form-login
 			login-page="/login"
 			username-parameter="id"

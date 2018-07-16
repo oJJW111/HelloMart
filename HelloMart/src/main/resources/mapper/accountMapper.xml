@@ -5,6 +5,14 @@
 
 <mapper namespace="com.hellomart.dao.AccountDAO">
 	
+	<select id="countId" resultType="Integer">
+		SELECT COUNT(*) FROM Account WHERE id=#{param1}
+	</select>
+	
+	<select id="countEmail" resultType="Integer">
+		SELECT COUNT(*) FROM Account WHERE Email=#{param1}
+	</select>
+	
 	<select id="getPasswd" resultType="String">
 		SELECT password FROM Account WHERE id=#{param1}
 	</select>
