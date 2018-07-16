@@ -35,6 +35,14 @@
 </script>
 </head>
 <body>
+<!-- 헤더 -->
+<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
+<!-- 헤더 -->
+<div class="titbox">
+	<div class="title">
+		<span class="name">MY POINT</span>
+	</div>
+</div>
 <sec:authentication property="principal" var="id"/>
 	<div class="article_wrap" style="width: 900px;">
 		<input type="date" name="startDate" id="startDate" min="2010-01-01" style="height: 30px">&nbsp;~&nbsp;
@@ -66,5 +74,9 @@
 		</c:forEach>
 		</table>
 	</div>
+<div class="BLOCK60"></div>
+<!-- 푸터 -->
+<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
+<!-- 푸터 -->
 </body>
 </html>

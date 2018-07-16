@@ -175,9 +175,8 @@ public class MypageController {
 		String id = principal.getName();
 		
 		model.addAttribute("pointList", pointService.getAllPointLog(id));
-		model.addAttribute("viewPage", "pointList");
 		
-		return "mypage/info/page"; 
+		return "mypage/pointList"; 
 	}
 	
 	@RequestMapping("/point/period")
@@ -187,7 +186,7 @@ public class MypageController {
 		model.addAttribute("pointList", pointService.getPeriodPointLog(id, startDate, endDate + " 24:00:00"));
 		model.addAttribute("viewPage", "pointList");
 		
-		return "mypage/info/page"; 
+		return "mypage/pointList"; 
 	}
 	
 	@RequestMapping(value = "/history", method=RequestMethod.GET)
