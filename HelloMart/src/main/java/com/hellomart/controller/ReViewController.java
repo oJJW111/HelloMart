@@ -109,6 +109,6 @@ public class ReViewController {
 	@RequestMapping(value = "/redelete", method = RequestMethod.GET)
 	public String redeleteProcess(int idx) {
 		service.redelete(idx);
-		return "redirect:/";
+		return "redirect:/mypage/history";
 	}
 }
