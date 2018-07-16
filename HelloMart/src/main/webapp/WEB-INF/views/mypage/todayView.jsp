@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <title>오늘 본 상품</title>
+<script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
 function fnCart(no, smallCategory, id){
 	var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
@@ -23,6 +24,24 @@ function fnCart(no, smallCategory, id){
 								+ "&smallCategory=" + smallCategory; 		
 	}
 }
+$(function(){	
+	$('.addCart').on({
+		"submit" : function(){ 
+			var d = $(this).serialize();
+		
+			$.ajax({
+				url : "/addCartNo",
+				type : "get",
+				data : d,
+				success : function(result){
+					alert("해당 상품이 장바구니에 1개 추가되었습니다");
+				}
+			});
+			
+			return false; // action 페이지로 전환되는 것을 차단
+		}
+	});
+});
 </script>
 </head>
 <body>
@@ -61,7 +80,13 @@ function fnCart(no, smallCategory, id){
 				<td style="text-align: left;">${board.productName}</td>
 				<td>￦&nbsp;<fmt:formatNumber pattern="###,###,###" value="${board.price}" /></td>
 				<td>
-					<input type="button" value="담기" class="board_btn01" onclick="fnCart(${board.no}, '${board.smallCategory}','${id}')">
+						<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
+						<form method="get" class="addCart">
+							<input type="submit" class="board_btn01" value="장바구니 담기">	 
+							<input type="hidden" name="no" value="${board.no}">	
+							<input type="hidden" name="orderCount" value="1">
+						</form>	
+						</sec:authorize>
 				</td>
 			</tr>
 		</c:forEach>

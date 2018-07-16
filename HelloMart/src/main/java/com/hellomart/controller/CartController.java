@@ -34,8 +34,9 @@ public class CartController {
 	ProductService service2;
 	
 	// 1-1. 장바구니 추가(페이지 이동)
-	@RequestMapping(value = "/addCart", method=RequestMethod.GET)
-	public String addCart(@ModelAttribute Cart cart, String id){
+	public String addCart(@ModelAttribute Cart cart, Principal principal){
+		String id = principal.getName(); 
+			
 		cart.setId(id);
 		// 장바구니에 기존 상품이 있는지 검사
 		int count = service.countCart(cart.getNo(), id);
@@ -51,7 +52,7 @@ public class CartController {
 	
 	// 1-2. 장바구니 추가 - 페이지유지
 	@RequestMapping(value = "/addCartNo", method=RequestMethod.GET)
-	public String addCartNo(@ModelAttribute Cart cart, Principal principal, String smallCategory, Model model){
+	public void addCartNo(@ModelAttribute Cart cart, Principal principal){
 		String id = principal.getName();
 		cart.setId(id);
 		// 장바구니에 기존 상품이 있는지 검사
@@ -63,8 +64,6 @@ public class CartController {
 			// 있으면 update
 			service.updateCart(cart);
 		}
-		service2.getDetailInfo(String.valueOf(cart.getNo()), smallCategory, model);
-		return "product/productView";
 	}
 	
 
