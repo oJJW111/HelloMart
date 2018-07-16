@@ -54,7 +54,7 @@ function cmtdelchk(cmtidx,idx){
          <h1 id="bo_v_title">${view.subject }</h1>
       </header>
 
-      <section id="bo_v_info">
+      <section id="bo_v_info" style="width:840px;">
          <h2>페이지 정보</h2>
          작성자 <strong>${view.id }</strong> 
          &nbsp;&nbsp;&nbsp; <span class="sound_only">작성일</span>
@@ -68,7 +68,7 @@ function cmtdelchk(cmtidx,idx){
          </strong>
       </section>
 
-      <section id="bo_v_atc">
+      <section id="bo_v_atc" style="width:840px;">
          <h2 id="bo_v_atc_title">본문</h2>
         
          <!-- 본문 내용 시작 { -->
@@ -89,10 +89,10 @@ function cmtdelchk(cmtidx,idx){
          <sec:authentication property="principal" var="id"/>
          <hr>
          <h4>코멘트</h4>
-         <table style="width: 1026px">
+         <table style="width: 840px">
          <c:if test="${pageCount!=0 }">
             <c:forEach var="cmtlist" items="${cmtlist}"> 
-            <tr height="70px">
+            <tr height="70px">	
                <td>${cmtlist.id }</td>
                <td style="width: 500px">${cmtlist.content }</td>
                <td align="right">
@@ -109,10 +109,10 @@ function cmtdelchk(cmtidx,idx){
          <tr height="70px">
             <form:hidden path="cmtpar" value="${view.idx }" />
             <td>
-               <form:input path="id" value="${id}" readonly="true" size="11"/>
+               <form:input path="id" value="${id}" readonly="true" size="13"/>
             </td>
             <td style="width: 500px">
-               <form:textarea path="content" rows="2" cols="100" placeholder="5자이상 입력주세요"/>
+               <form:textarea path="content" rows="2" cols="80" placeholder="5자이상 입력주세요"/>
                <form:errors path="content" cssClass="msg"/>
             </td>
             <td align="right">
