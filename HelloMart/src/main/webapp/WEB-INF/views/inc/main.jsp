@@ -18,21 +18,21 @@ table td img:HOVER {
 <body>
 <div align="center"> 
 	<div class="BLOCK70"></div>
-      <table align="center" width="80%">
+      <table align="center" width="80%" style="margin-left: 150px;">
          <c:forEach items="${list}" var="mainlist" varStatus="status">
             <c:if test="${(status.index % 3) == 0 }">
-               <tr>
+               <tr height="350">
             </c:if>
-            <td height="350">
+            <td>
             	<a href="/productView?no=${mainlist.no}&smallCategory=${mainlist.smallCategory}">
-	               <img src="${mainlist.imagePath}" width="300" height="300"><br>
+	               <img src="${mainlist.imagePath}" width="300" height="300" al><br>
 	               [${mainlist.mainCategory}] ${mainlist.productName }<br>
 	               ₩ <fmt:formatNumber pattern="###,###,###" value="${mainlist.price}" />
                </a>
             </td>
          </c:forEach>
       </table>
-   </div>
+</div>
    <div class="BLOCK70"></div>
 </body>
 </html>
