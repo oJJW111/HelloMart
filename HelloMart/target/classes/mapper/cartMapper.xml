@@ -16,7 +16,7 @@
         	   p.no, p.smallcategory, p.imagepath, p.productname, p.registerid, p.price
         FROM productList p, cartlist c
         WHERE p.no = c.no AND c.id = #{id}
-        ORDER BY c.date
+        ORDER BY c.date DESC
     </select>
     
     <!-- 3. 장바구니 전체 금액 -->
