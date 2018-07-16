@@ -36,7 +36,7 @@ public class TodayViewController {
 			
 			Vector<ProductList> plList = dao.list(no.toArray(new String[no.size()]));
 			
-			if(!plList.isEmpty()) {
+			if(!plList.isEmpty()) { 
 			
 				int size = plList.size();
 				int maxIndex = size - 1;
