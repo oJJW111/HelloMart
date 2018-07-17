@@ -11,19 +11,6 @@
 <title>오늘 본 상품</title>
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <script type="text/javascript">
-function fnCart(no, smallCategory, id){
-	var isMove = window.confirm("장바구니 페이지로 이동하시겠습니까?");
-	
-	if(isMove){
-		var orderCount = document.getElementById("orderCount").value;
-		location.href = "/addCart?no=" + no + "&orderCount=" + orderCount + "&id=" + id; 	
-	}
-	else{
-		var orderCount = document.getElementById("orderCount").value;
-		location.href = "/addCartNo?no=" + no + "&orderCount=" + orderCount 
-								+ "&smallCategory=" + smallCategory; 		
-	}
-}
 $(function(){	
 	$('.addCart').on({
 		"submit" : function(){ 
