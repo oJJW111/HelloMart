@@ -10,8 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<link rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <style type="text/css">
    
@@ -37,7 +37,6 @@ function cmtdelchk(cmtidx,idx){
 }
 </script>
 </head>
-
 <body>
    <!-- 헤더 -->
    <jsp:include page="/WEB-INF/views/inc/header.jsp" />
@@ -88,12 +87,12 @@ function cmtdelchk(cmtidx,idx){
          <!-- 코멘트 영역 -->
          <sec:authentication property="principal" var="id"/>
          <hr>
-         <h4>코멘트</h4>
-         <table style="width: 1026px">
+         <h4>댓글</h4>
+         <table>
          <c:if test="${pageCount!=0 }">
             <c:forEach var="cmtlist" items="${cmtlist}"> 
             <tr height="70px">
-               <td>${cmtlist.id }</td>
+               <td>${cmtlist.id}&nbsp;&nbsp;&nbsp;</td>
                <td style="width: 500px">${cmtlist.content }</td>
                <td align="right">
                   <fmt:formatDate value="${cmtlist.date}" pattern="yyyy.MM.dd HH:mm:ss"/>
@@ -109,10 +108,10 @@ function cmtdelchk(cmtidx,idx){
          <tr height="70px">
             <form:hidden path="cmtpar" value="${view.idx }" />
             <td>
-               <form:input path="id" value="${id}" readonly="true" size="11"/>
+               <form:input path="id" value="${id}" readonly="true" size="11" style="border:none;"/>
             </td>
             <td style="width: 500px">
-               <form:textarea path="content" rows="2" cols="100" placeholder="5자이상 입력주세요"/>
+               <form:textarea path="content" rows="2" cols="90" placeholder="5자 이상 입력주세요"/>
                <form:errors path="content" cssClass="msg"/>
             </td>
             <td align="right">
@@ -140,7 +139,7 @@ function cmtdelchk(cmtidx,idx){
       
       <!-- } 게시판 읽기 끝 -->
    </div>
-
+   <div class="BLOCK50"></div>
    <!-- 푸터 -->
    <jsp:include page="/WEB-INF/views/inc/footer.jsp" />
    <!-- 푸터 -->
