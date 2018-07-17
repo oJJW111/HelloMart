@@ -10,22 +10,23 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/pigeon.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 </head>
 <body>
 	<div class="article_wrap">
-		<h4 align="left">리뷰</h4>
+		<h4 align="left"><b>▒ Review ▒</b></h4>
 		<div id="bo_list">
 			<div class="tbl_head01 tbl_wrap">
 				<table>
 					<c:forEach var="review" items="${list}">
 						<tr class="bo_notice">
-							<td>
+							<td width="15%" style="text-align: left; padding-left: 10px;">
 								<c:forEach begin="1" end="${review.star}">★</c:forEach><c:forEach begin="${review.star + 1}" end="5">☆</c:forEach>
 							</td>
-							<td>${review.content}</td>
+							<td width="50%" style="text-align: left;">${review.content}</td>
 							<td class="td_name sv_use">${review.id}</td>
 							<td class="td_date">
 								<fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd"/>
@@ -33,6 +34,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<div class=BLOCK60></div>
 			</div>
 		</div>
 		<c:if test="${pageCount>1 }">
