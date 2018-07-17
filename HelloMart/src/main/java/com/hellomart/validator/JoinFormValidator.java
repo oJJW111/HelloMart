@@ -35,7 +35,6 @@ public class JoinFormValidator implements Validator {
 	}
 	
 	private void rejectIfDuplicate(Errors errors, Account account) {
-		logger.debug("service : " + service);
 		ValidationTools.rejectIfTrue(errors, "form.error.duplicate.id", "id", service.countId(account.getId()) == 1);
 		ValidationTools.rejectIfTrue(errors, "form.error.duplicate.email", "email", service.countEmail(account.getEmail()) == 1);
 	}

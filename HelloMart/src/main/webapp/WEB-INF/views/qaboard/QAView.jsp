@@ -88,6 +88,7 @@ function cmtdelchk(cmtidx,idx){
          <!-- 코멘트 영역 -->
          <sec:authentication property="principal" var="id"/>
          <hr>
+         
          <h4>코멘트</h4>
          <table style="width: 1026px">
          <c:if test="${pageCount!=0 }">
