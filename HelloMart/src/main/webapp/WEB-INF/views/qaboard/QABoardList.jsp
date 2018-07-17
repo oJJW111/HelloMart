@@ -21,12 +21,15 @@
 	<!-- 헤더 -->
 	<jsp:include page="/WEB-INF/views/inc/header.jsp" />
 	<!-- 헤더 -->
-
+	<div class="titbox">
+		<div class="title">
+			<span class="name">Q&A 게시판</span>
+		</div>
+	</div>
 	<div class="article_wrap">
-		<h2 align="center">QA게시판</h2>
 		<div id="bo_list">
 			<div id="bo_list_total">
-				전체<span>${qacount }</span>건
+				전체 <span>${paging.totalRecord}</span>건
 			</div>
 			<div class="tbl_head01 tbl_wrap">
 				<table>
@@ -47,7 +50,7 @@
 									<td class="td_num">${board.idx}</td>
 									<td class="td_subject"><sec:authorize
 											access="isAnonymous()">
-                               글을 볼수 없습니다.
+                               회원만 접근 가능합니다.
                            </sec:authorize> <sec:authorize
 											access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')">
 											<c:choose>
@@ -55,7 +58,7 @@
 													<a href="/qaboard/qaview?idx=${board.idx }&id=${board.id}">${board.subject }</a> [${board.cmt }]
                               </c:when>
 												<c:otherwise>
-                               글을 볼수 없습니다.
+                               회원만 접근 가능합니다.
                                </c:otherwise>
 											</c:choose>
 										</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
