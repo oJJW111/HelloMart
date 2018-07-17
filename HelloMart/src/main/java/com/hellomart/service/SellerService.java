@@ -15,7 +15,7 @@ public interface SellerService {
 			Model model,
 			String mainCategory, String smallCategory);
 	
-	public void sellerProductRegister(MultipartHttpServletRequest mRequest,
+	public void sellerProductRegister(Model model, MultipartHttpServletRequest mRequest,
 				ProductList productList);
 
 	public String getFileName(String productNo);
