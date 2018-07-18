@@ -27,7 +27,7 @@ public class XMLPaserTest {
 	@Test
 	public void getChildrenTest() throws Exception {
 		Vector<String> columns = parser.getChildren("냉장고");
-		
+
 		logger.debug(columns.toString());
 	}
 	

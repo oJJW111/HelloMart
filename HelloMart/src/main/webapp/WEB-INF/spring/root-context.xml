@@ -47,9 +47,6 @@
         <property name="maxInMemorySize" value="100000000" />
     </bean>
     
-    <bean id="uploadPath" class="java.lang.String">
-		<constructor-arg value="/resources/images/product/"/>
-	</bean>
 	<!-- bean 등록 -->
 	<mybatis-spring:scan base-package="com.hellomart.dao"/>
 	<context:component-scan base-package="com.hellomart.service.impl" />

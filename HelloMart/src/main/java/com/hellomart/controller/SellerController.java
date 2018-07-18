@@ -35,9 +35,6 @@ public class SellerController {
 	@Autowired
 	SellerService sellerService;
 	
-	@Resource(name="uploadPath")
-	private String uploadPath;
-	
 	@Autowired
 	ProductFormValidator productFormValidator;
 	
