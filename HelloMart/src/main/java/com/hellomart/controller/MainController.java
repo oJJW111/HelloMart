@@ -28,7 +28,7 @@ public class MainController {
 	   public String index(Model model) {
 	      
 	      List<ProductList> list = new ArrayList<ProductList>();
-	      int[] noList = new int[15];
+	      int[] noList = new int[16];
 	      
 	      for(int i=0;i<noList.length;i++){
 	         ProductList productlist = new ProductList();

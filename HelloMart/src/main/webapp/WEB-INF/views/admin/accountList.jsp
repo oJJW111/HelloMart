@@ -74,6 +74,11 @@
 	<jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 	<!-- 헤더 -->
 	<div class="container" style="margin-top: 1%;">
+	<div class="titbox">
+	   <div class="title">
+	      <span class="name">ADMIN PAGE</span>
+	   </div>
+	</div>
 	<form method="post" name="adminForm">
 		<table class="table table-striped table-responsive">
 			<colgroup>
@@ -161,6 +166,7 @@
 		<input type="hidden" name='sellerApply'>
 	</form>
 	</div>
+	<div class=BLOCK60></div>
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 	<!-- 푸터 -->

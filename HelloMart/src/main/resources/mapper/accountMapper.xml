@@ -5,6 +5,10 @@
 
 <mapper namespace="com.hellomart.dao.AccountDAO">
 	
+	<select id="getApplyStatus" resultType="String">
+		SELECT Apply FROM Account WHERE id=#{param1}
+	</select>
+	
 	<select id="countId" resultType="Integer">
 		SELECT COUNT(*) FROM Account WHERE id=#{param1}
 	</select>
@@ -130,6 +134,10 @@
 	<select id="getInfo" resultType="Account">
 		SELECT * FROM Account WHERE ID = #{id};
 	</select>
+	
+	<update id="sellerRegist">
+     	update account set apply = 'SELLER_READY' where id = #{param1}
+  	</update> 
 	
 	<delete id="truncate">
 		TRUNCATE Account

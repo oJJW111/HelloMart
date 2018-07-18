@@ -42,10 +42,10 @@ public class SellerController {
 	@Autowired
 	ProductFormValidator productFormValidator;
 	
-	@InitBinder
-	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(productFormValidator);
-	}
+//	@InitBinder
+//	private void initBinder(WebDataBinder binder) {
+//		binder.setValidator(productFormValidator);
+//	}
 	
 	@RequestMapping(value="/page/{pageNumString}", method=RequestMethod.GET)
 	public String sellerProductList(@PathVariable String pageNumString, 
@@ -71,7 +71,7 @@ public class SellerController {
 	
 	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
 	public String sellerProductRegister(MultipartHttpServletRequest mRequest, 
-			MultipartFile mFile, HttpServletRequest request,
+			HttpServletRequest request,
 			@ModelAttribute("ProductList") @Valid ProductList productList,
 			BindingResult bindingResult, Principal principal, Model model){
 		String uri = null;
@@ -88,7 +88,6 @@ public class SellerController {
 			uri = "seller/productRegister";
 		}else{
 			model.addAttribute("request", request);
-			model.addAttribute("mFile", mFile);
 			productList.setRegisterID(principal.getName());
 			sellerService.sellerProductRegister(model, mRequest, productList);
 			uri = "redirect:/seller/page/1";

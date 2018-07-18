@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/product.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/page.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/cartTable.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 
 <script type="text/javascript">
@@ -81,26 +82,27 @@ $(document).ready(function() {
    	</c:when>
 		    
     <c:otherwise>
-		<c:forEach var="map" items="${mapList }">
+		<c:forEach var="map" items="${mapList}">
 		<div class="product_list_content">
 			<div class="product_img">
-				<a href="#"><img
-					src="${map.imagePath }"></a>
+				<a href="/productView?no=${map.no}&smallCategory=${map.SmallCategory}"><img
+					src="${map.imagePath}"></a>
 			</div>
 			<div class="product_info">
-				<a class="title" href="#"> ${map.ProductName } </a>
+				<a class="title" href="/productView?no=${map.no}&smallCategory=${map.SmallCategory}"> ${map.ProductName}</a>
 				<div class="additional_info">
-					<span class="brand">[${map.MfCompany }]</span> <span class="category"> <a
-						href="#">${map.MainCategory }</a> > <a href="#">${map.SmallCategory }</a></span>
+					<span class="brand">[${map.MfCompany}]</span> <span class="category"> <a
+						href="#">${map.MainCategory}</a> > <a href="#">${map.SmallCategory}</a></span>
 				</div>
 			</div>
 			<div class="product_addition">
 				<div class="price">
-					<strong><fmt:formatNumber pattern="###,###,###" value="${map.Price }"/>원</strong>
+					<strong><fmt:formatNumber pattern="###,###,###" value="${map.Price}"/>원</strong>
 				</div>
 				<div class="additional_info">
-					<span class="satisfaction">만족도 ${map.Score }%</span> <span class="buy">구
-						&nbsp;&nbsp;매 ${map.OrderCount }</span> <span class="review">상품평 ${map.count }</span>
+					<span class="satisfaction">만족도 ${map.Score}%</span> <span class="buy">구
+						&nbsp;&nbsp;매 ${map.OrderCount}</span> <span class="review">상품평 ${map.count}</span><br>
+					<input type="button" class="board_btn01" onclick="javascript: location.href='/seller/delete?no=${map.no}'" value="상품 삭제하기">
 				</div>
 			</div>
 		</div>

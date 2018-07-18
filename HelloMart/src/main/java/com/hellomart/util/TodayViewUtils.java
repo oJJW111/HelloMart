@@ -26,7 +26,6 @@ public class TodayViewUtils {
 	
 	public Vector<String> getAllValue(int size) {
 		int over = cookieUtils.length(KEYWORD) - size;
-		System.out.println("cookie length : " + over);
 		if(over > 0) {
 			cookieUtils.remove(over, KEYWORD);
 		}

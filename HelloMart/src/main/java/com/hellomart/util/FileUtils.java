@@ -2,23 +2,40 @@ package com.hellomart.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component
 public class FileUtils {
 	
-	public boolean fileUpload(MultipartFile upload, String path) throws IllegalStateException, IOException{
-		if(upload == null) { return false; }
+	private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
+	
+	public Vector<String> fileUpload(MultipartHttpServletRequest upload, String path) throws IllegalStateException, IOException {
+		if(upload == null) { return null; }
 		
-		String originFileName = upload.getOriginalFilename();
+		Iterator<String> iter = upload.getFileNames();
+		Vector<String> v = new Vector<>();
 		
-		File file = new File(path + originFileName);
-		File file2 = rename(file);
-		upload.transferTo(file2);
+		while(iter.hasNext()) {
+			String fileName = iter.next();
+			MultipartFile mFile = upload.getFile(fileName);
+			String originFileName = mFile.getOriginalFilename();
+			
+			File file = new File(path + originFileName);
+			File file2 = rename(file);
+			
+			mFile.transferTo(file2);
+			logger.debug("rename file name: " + file2.getName());
+			v.add(file2.getName());
+		}
 		
-		return true;
+		return v;
 	}
 	
 	public File rename(File f) {             	//File f는 원본 파일

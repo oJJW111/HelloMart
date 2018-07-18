@@ -44,7 +44,7 @@ $(document).ready(function(){
    });
    
    $("#airPurifier").on('click', function(){
-      locationEncode("/productList?mainCategory=가전제품&smallCategory=공기청정기_제습기");
+      locationEncode("/productList?mainCategory=가전제품&smallCategory=공기청정기");
    });
    
    $("#notebook").on('click', function(){

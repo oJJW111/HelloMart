@@ -55,7 +55,7 @@
 				<input type="hidden" name="no" value="${review.no}">
 				<div class="btn_confirm">
 					<input type="submit" value="글쓰기" id="btn_submit" class="btn_submit"> 
-					<input type="reset" value="취소"	class="btn_cancel">
+					<input type="reset" value="다시작성"	id="btn_submit"  class="btn_cancel">
 				</div>
 			</form>
 		</section>
