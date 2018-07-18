@@ -70,6 +70,7 @@ public class SellerServiceImpl implements SellerService{
 			= new ArrayList<HashMap<String,Object>>();
 		for(ProductList i : sellerProductList){
 			sellerProductMap = new HashMap<String, Object>();
+			sellerProductMap.put("no", i.getNo());
 			sellerProductMap.put("imagePath", i.getImagePath());
 			sellerProductMap.put("ProductName", i.getProductName());
 			sellerProductMap.put("MfCompany", i.getMfCompany());
