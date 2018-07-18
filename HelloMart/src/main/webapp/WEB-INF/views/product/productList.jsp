@@ -16,12 +16,13 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	$.submitForm = function() {
+	$.submitForm = function(f) {
 		if($("#price2").val() != '' && $("#price1").val() > $("#price2").val()){
 			alert("최저 가격은 최고 가격보다 적어야 합니다");
-			return false;
+			return;
 		}
 		
+		$(f).submit()
 	}
 	
 	$("form").submit(function() {
@@ -83,7 +84,7 @@ $(document).ready(function(){
 			<div class="range">~</div>
 			<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 			<div class="currency">원</div>
-			<button id="submit-form" onclick="$.submitForm()"><i class="fa fa-search"></i></button>
+			<button id="submit-form" onclick="$.submitForm(this.form)" type="button"><i class="fa fa-search"></i></button>
 		</div>
 	</div> <!-- <div class="category_detail noselect"> -->
 </c:if> <!-- test="${mainCategory == '액세서리'} -->
@@ -139,7 +140,7 @@ $(document).ready(function(){
 		<div class="range">~</div>
 		<input type="text" placeholder="999,999,999원" id="price2" name="price2" value="${param.price2}">
 		<div class="currency">원</div>
-		<button id="submit-form" onclick="$.submitForm()"
+		<button id="submit-form" onclick="$.submitForm(this.form)" type="button"
 		><i class="fa fa-search"></i></button>
 	</div>
 </div> <!-- <div class="category_detail noselect"> -->

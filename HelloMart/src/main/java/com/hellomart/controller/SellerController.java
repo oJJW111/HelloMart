@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hellomart.dto.ProductList;
@@ -57,7 +58,6 @@ public class SellerController {
 		return "seller/sellerProductList";
 	}
 	
-	
 	@RequestMapping(value="/productRegister", method=RequestMethod.GET)
 	public String sellerProductRegister(@RequestParam("mainCategoryInput") 
 										String mainCategoryInput,
@@ -71,9 +71,11 @@ public class SellerController {
 	
 	@RequestMapping(value="/productRegister" ,method=RequestMethod.POST)
 	public String sellerProductRegister(MultipartHttpServletRequest mRequest, 
+			MultipartFile mFile, HttpServletRequest request,
 			@ModelAttribute("ProductList") @Valid ProductList productList,
-				BindingResult bindingResult, Principal principal, Model model){
+			BindingResult bindingResult, Principal principal, Model model){
 		String uri = null;
+		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("ProductList", new ProductList());
 			sellerService.PartProductValidCheck(mRequest, model,
@@ -85,8 +87,10 @@ public class SellerController {
 				productList.getMainCategory(), productList.getSmallCategory())){
 			uri = "seller/productRegister";
 		}else{
+			model.addAttribute("request", request);
+			model.addAttribute("mFile", mFile);
 			productList.setRegisterID(principal.getName());
-			sellerService.sellerProductRegister(mRequest, productList);
+			sellerService.sellerProductRegister(model, mRequest, productList);
 			uri = "redirect:/seller/page/1";
 		}
 		return uri;

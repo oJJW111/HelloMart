@@ -69,7 +69,7 @@ function closeNav() {
 <!-- 헤더 -->
 <div class="titbox" style="margin-bottom: 10px;">
 	<div class="title">
-		<span class="name">MY PAGE</span>
+		<span class="name">MEMBER</span>
 	</div>
 </div>
 <div id="mySidenav" class="sidenav">

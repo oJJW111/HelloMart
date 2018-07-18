@@ -9,17 +9,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hellomart.dao.SellerDAO;
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
 import com.hellomart.util.Page;
-import com.hellomart.util.Upload;
+import com.hellomart.util.FileUtils;
 import com.hellomart.util.XMLParser;
 
 @Service
@@ -32,7 +34,7 @@ public class SellerServiceImpl implements SellerService{
 	private Page page;
 	
 	@Autowired
-	private Upload upload;
+	private FileUtils upload;
 	
 	private List<TableInformation> tableList;
 	
@@ -152,14 +154,13 @@ public class SellerServiceImpl implements SellerService{
 	}
 
 	@Override
-	public void sellerProductRegister(MultipartHttpServletRequest mRequest, ProductList productList) {
-		Map<String, Object> fileResultMap = upload.fileUpload(mRequest);
-		if((Boolean)fileResultMap.get("isUpload")){
-			String imagePath = (String)fileResultMap.get("imagePath");
-			productList.setImagePath(imagePath);
-		}else{
-			return;
-		}
+	public void sellerProductRegister(Model model, MultipartHttpServletRequest mRequest, ProductList productList) {
+		Map<String, Object> modelMap = model.asMap();
+		HttpServletRequest request = (HttpServletRequest) modelMap.get("request");
+		MultipartFile mFile = (MultipartFile) modelMap.get("mFile");
+		
+		
+		
 		dao.insertProductInfo(productList);
 		
 		TableInformation tableInfo = null;

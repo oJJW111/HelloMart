@@ -1,18 +1,13 @@
 package com.hellomart.dao;
 
-import java.util.Map;
 import java.util.Vector;
 
 import com.hellomart.dto.CmtBoard;
-import com.hellomart.dto.QABoard;
 
 public interface CmtBoardDAO {
    
-	/* 코멘트의 전체 개수 불러오는 메소드 */
-	int getCount(int cmtpar);
-   
-	/* 코멘트를 가져오는 메소드 */
-	Vector<CmtBoard> cmtlist(Map<String, Object> map);
+   /* 코멘트를 가져오는 메소드 */
+   Vector<CmtBoard> cmtlist(int idx, int startRow, int pageSize);
    
    /* 코멘트를 삽입하는 메소드 */
    void cmtinsert(CmtBoard cmtboard);

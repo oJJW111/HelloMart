@@ -32,8 +32,8 @@
 	<insert id="insertProductInfo" parameterType="productList">
 		INSERT INTO ProductList(ProductName, MainCategory, SmallCategory, ImagePath, ProdDate,
 		MfCompany, Price, Weight, RegisterID, Comment) 
-		VALUES (#{productName}, #{mainCategory}, #{smallCategory}, #{imagePath},#{prodDate}, 
-		#{mfCompany}, #{price}, #{weight}, #{registerID}, #{comment}) 
+		VALUES (#{productName}, #{mainCategory}, #{smallCategory}, #{imagePath}, #{prodDate}, 
+		#{mfCompany}, #{price}, #{weight}, #{registerID}, #{comment})
 	</insert>
 	
 	<select id="getNoProductList" resultType="Integer">

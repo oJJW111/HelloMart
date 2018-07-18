@@ -31,13 +31,13 @@ public class XMLPaserTest {
 		logger.debug(columns.toString());
 	}
 	
-//	@Test
-//	public void getAttributeValueTest() {
-//		String table = parser.getAttributeValue("가전제품", "냉장고", "table");
-//		String column = parser.getAttributeValue("냉장고", "소비전력", "column");
-//		logger.debug("table : " + table);
-//		logger.debug("column : " + column);
-//	}
+	@Test
+	public void getAttributeValueTest() {
+		String table = parser.getAttributeValue("가전제품", "냉장고", "table");
+		String column = parser.getAttributeValue("냉장고", "소비전력", "column");
+		logger.debug("table : " + table);
+		logger.debug("column : " + column);
+	}
 	
 	@Test
 	public void getValueTest() {

@@ -1,9 +1,5 @@
 package com.hellomart.service.impl;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import org.slf4j.Logger;
@@ -13,13 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.hellomart.dao.CmtBoardDAO;
 import com.hellomart.dto.CmtBoard;
-import com.hellomart.dto.QABoard;
 import com.hellomart.service.CmtBoardService;
-import com.hellomart.util.Paging;
 
 @Service
 public class CmtBoardServiceImpl implements CmtBoardService{
-	
    
    @SuppressWarnings("unused")
 private static final Logger logger = LoggerFactory.getLogger(CmtBoardService.class);
@@ -27,43 +20,16 @@ private static final Logger logger = LoggerFactory.getLogger(CmtBoardService.cla
    @Autowired
    private CmtBoardDAO dao;
    
-   
-	private Paging paging(Integer page, int maxResult, int pagePerBlock, int idx) {
-		page = page == null ? 1 : page;
-		
-		
-		int total = dao.getCount(idx);
-		
-		return new Paging(total, page, maxResult, pagePerBlock);
-	}
-   
-	private Vector<CmtBoard> cmtlist(int idx, int offset, int limit) {
-		Map<String, Object> paramMap = new HashMap<>();
-		
-		paramMap.put("offset", offset);
-		paramMap.put("limit", limit);
-		paramMap.put("cmtpar", idx);
-		
-		return dao.cmtlist(paramMap);
-	}
+   public CmtBoardServiceImpl() {
+      
+   }
 
-	@Override
-	public Map<String, Object> cmtlist(Integer idx, Integer page, int maxResult, int pagePerBlock) {
-		Map<String, Object> modelMap = new HashMap<>();
 
-		Paging paging = paging(page, maxResult, pagePerBlock, idx);
-		modelMap.put("paging", paging);
-		
-		int offset = paging.getOffset();
-		Vector<CmtBoard> cmtlist = null;
-		if(offset != -1) {
-			int limit = paging.getMaxResult();
-			cmtlist = cmtlist(idx, offset, limit);
-		}
-		modelMap.put("cmtlist", cmtlist);
-		
-		return modelMap;
-	}
+
+   @Override
+   public Vector<CmtBoard> cmtlist(int idx, int startRow, int pageSize) {
+      return dao.cmtlist(idx, startRow, pageSize);
+   }
 
 
    @Override

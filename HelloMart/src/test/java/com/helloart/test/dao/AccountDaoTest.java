@@ -51,7 +51,7 @@ public class AccountDaoTest {
 	
 	@After
 	public  void after() {
-//		dao.truncate();
+		dao.truncate();
 	}
 	
 	/*

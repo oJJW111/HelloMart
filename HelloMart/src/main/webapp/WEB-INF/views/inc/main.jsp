@@ -18,14 +18,14 @@ table td img:HOVER {
 <body>
 <div align="center"> 
 	<div class="BLOCK70"></div>
-      <table align="center" width="80%" style="margin-left: 150px;">
+      <table align="center" width="80%" style="margin-left: 130px;">
          <c:forEach items="${list}" var="mainlist" varStatus="status">
-            <c:if test="${(status.index % 3) == 0 }">
+            <c:if test="${(status.index % 4) == 0 }">
                <tr height="350">
             </c:if>
             <td>
             	<a href="/productView?no=${mainlist.no}&smallCategory=${mainlist.smallCategory}">
-	               <img src="${mainlist.imagePath}" width="300" height="300" al><br>
+	               <img src="${mainlist.imagePath}" width="300" height="300" ><br>
 	               [${mainlist.mainCategory}] ${mainlist.productName }<br>
 	               ₩ <fmt:formatNumber pattern="###,###,###" value="${mainlist.price}" />
                </a>
