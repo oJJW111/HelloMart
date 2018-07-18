@@ -131,6 +131,10 @@
 		SELECT * FROM Account WHERE ID = #{id};
 	</select>
 	
+	<update id="sellerRegist">
+     	update account set apply = 'SELLER_READY' where id = #{param1}
+  	</update> 
+	
 	<delete id="truncate">
 		TRUNCATE Account
 	</delete>

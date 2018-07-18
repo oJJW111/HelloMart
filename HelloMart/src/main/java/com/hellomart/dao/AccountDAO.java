@@ -106,4 +106,6 @@ public interface AccountDAO {
 	void modifyPw(String id, String new_pw);  
 	
 	String findIdByEmail(String email);
+
+	int sellerRegist(String id);
 }

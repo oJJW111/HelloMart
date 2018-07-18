@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,9 +37,16 @@
 	text-decoration: none;
 }
 </style>
-
+<script>
+function seller_reg() {
+	if('${param.success}' == 1) {
+		alert('판매자 신청이 완료되었습니다.');
+	}
+}
+</script>
 </head>
-<body>
+<body onload="seller_reg()">
+<sec:authentication var="id" property="principal"/>
 <!-- 헤더 -->
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
@@ -71,14 +79,15 @@
 	</div>
 	<div class="shopMain">
 		<a href="/todayView">
-			<span class="tit">TODAY VIEW<br>(오늘 본 상품)</span>
+			<span class="tit">TODAY VIEW<br>(오늘 본 상품)${account}</span>
 		</a>
 	</div>
 	<div class="shopMain">
-		<a href="/mypage/info/delete"> 
-			<span class="tit">USER EXIT<br>(회원탈퇴)</span>
+		<a href="/mypage/sellerRegist"> 
+			<span class="tit">SELLER REG<br>(판매자 신청)</span>
 		</a>
 	</div>
+	
 </div>
 <div class="BLOCK60"></div>
 <!-- 푸터 -->

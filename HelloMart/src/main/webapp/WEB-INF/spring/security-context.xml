@@ -14,7 +14,6 @@
 		
 		<!-- 로그인 페이지는 로그인 되지 않은 유저만 접근 가능하다. -->
 		<intercept-url pattern="/login" access="isAnonymous()"/>
-		
 		<intercept-url pattern="/mypage/**" access="hasAnyRole('ROLE_MEMBER', 'ROLE_SELLER')" />
 		<intercept-url pattern="/seller/**" access="hasRole('ROLE_SELLER')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />

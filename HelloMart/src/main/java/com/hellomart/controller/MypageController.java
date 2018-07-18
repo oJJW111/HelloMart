@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -231,4 +232,14 @@ public class MypageController {
 		
 		return mav;
 	}	
+	
+	@PreAuthorize(value = "hasRole('ROLE_MEMBER')")
+	@RequestMapping("/sellerRegist")
+    public String sellerRegist(Principal principal){
+		String id = principal.getName();
+		int result = service.sellerRegist(id);
+		
+		return "redirect:/mypage/menu?success="+result;
+   }
+	
 }

@@ -160,4 +160,9 @@ public class AccountServiceImpl implements AccountService {
 		}).start();
 	}
 
+	@Override
+	public int sellerRegist(String id){
+	    return dao.sellerRegist(id);
+	}
+
 }
