@@ -133,7 +133,7 @@ public class QABoardController {
 
       //오류여부 확인
       if(bindingResult.hasErrors()){
-         return "qaview?idx=" + idx;
+         return "redirect:/qaboard/qaview?idx=" + idx;
       }else{
          service2.cmtinsert(cmtboard);
          service.cmtinc(idx);
