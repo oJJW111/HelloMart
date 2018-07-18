@@ -1,16 +1,21 @@
 package com.hellomart.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -26,6 +31,8 @@ import com.hellomart.util.XMLParser;
 
 @Service
 public class SellerServiceImpl implements SellerService{
+	
+	private static final Logger logger = LoggerFactory.getLogger(SellerServiceImpl.class);
 	
 	@Autowired
 	SellerDAO dao;
@@ -157,10 +164,22 @@ public class SellerServiceImpl implements SellerService{
 	public void sellerProductRegister(Model model, MultipartHttpServletRequest mRequest, ProductList productList) {
 		Map<String, Object> modelMap = model.asMap();
 		HttpServletRequest request = (HttpServletRequest) modelMap.get("request");
-		MultipartFile mFile = (MultipartFile) modelMap.get("mFile");
+		HttpSession session = request.getSession();
+		String rootPath = session.getServletContext().getRealPath("/");
+		String attachPath = "resources/images/product/";
+		String realPath = rootPath + attachPath;
 		
+		logger.debug("이미지 업로드 주소 : " + realPath);
 		
+		Vector<String> filenames = null;
 		
+		try {
+			filenames = upload.fileUpload(mRequest, realPath);
+		} catch (IllegalStateException | IOException e) {
+			return;
+		}
+		
+		productList.setImagePath("/" + attachPath + filenames.get(0));
 		dao.insertProductInfo(productList);
 		
 		TableInformation tableInfo = null;
