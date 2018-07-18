@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/QABoard.css" />
 <script src="/resources/jQuery/jQuery-2.1.3.min.js"></script>
 <style type="text/css">
-   
    .msg{font-size: 10pt;  color: red;}
 </style>
 </head>
@@ -22,8 +21,12 @@
 <jsp:include page="/WEB-INF/views/inc/header.jsp"/>
 <!-- 헤더 -->
 <div class="article_wrap">
+<div class="titbox">
+	<div class="title">
+		<span class="name">Q&amp;A MODIFY</span>
+	</div>
+</div>
 <section id="bo_w">
-    <h2 id="container_title">글 수정</h2>
     <c:if test="${check == 1 }">
        <script type="text/javascript">
         (function(){
@@ -60,13 +63,13 @@
     </div>
 
     <div class="btn_confirm">
-        <input type="submit" value="글수정" id="btn_submit" accesskey="s" class="btn_submit">
-        <input type="reset" value="취소" class="btn_cancel">
+        <input type="submit" value="수정" id="btn_submit" accesskey="s" class="btn_submit">
+        <input type="reset" value="다시쓰기" class="btn_cancel">
     </div>
     </form:form>
 </section>
 </div>
-
+<div class="BLOCK40"></div>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/inc/footer.jsp"/>
 <!-- 푸터 -->

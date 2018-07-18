@@ -7,6 +7,8 @@ import com.hellomart.dto.Account;
 
 public interface AccountDAO {
 	
+	String getApplyStatus(String id);
+	
 	/**
 	 * 아이디 존재 여부를 확인하기 위해 id 컬럼을 조건으로 카운트한다. 
 	 * 
@@ -106,4 +108,6 @@ public interface AccountDAO {
 	void modifyPw(String id, String new_pw);  
 	
 	String findIdByEmail(String email);
+
+	int sellerRegist(String id);
 }

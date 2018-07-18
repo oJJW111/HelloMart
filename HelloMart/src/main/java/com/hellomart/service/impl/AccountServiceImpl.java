@@ -38,6 +38,11 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	public String getApplyStatus(String id) {
+		return dao.getApplyStatus(id);
+	}
+	
+	@Override
 	public int countId(String id) {
 		return dao.countId(id);
 	}
@@ -158,6 +163,11 @@ public class AccountServiceImpl implements AccountService {
 			}
 			dao.modifyPw(id, password);
 		}).start();
+	}
+
+	@Override
+	public int sellerRegist(String id){
+	    return dao.sellerRegist(id);
 	}
 
 }

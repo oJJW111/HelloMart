@@ -103,7 +103,7 @@ public class ReViewController {
 	@RequestMapping(value = "/remodify", method = RequestMethod.POST)
 	public String remodifyProcess(ReView reView) {
 		service.remodify(reView);
-		return "redirect:/";
+		return "redirect:/mypage/history";
 	}
 
 	@RequestMapping(value = "/redelete", method = RequestMethod.GET)

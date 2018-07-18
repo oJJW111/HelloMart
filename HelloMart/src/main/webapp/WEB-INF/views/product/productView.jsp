@@ -162,14 +162,14 @@
 		</c:forEach>
 	</select> 
 	<c:if test="${detail == null}">
-		<input type="button" value="구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
+		<input type="button" id="cart_stn" value="바로 구매" onclick="fnBuy(${product.no}, '${product.smallCategory}','${id}')">
 		<input type="hidden" name="no" value="${product.no}">	
-		<input type="submit" value="장바구니 담기">
+		<input type="submit" id="cart_stn" value="장바구니 담기">
 	</c:if>
 	<c:if test="${detail != null}">
-		<input type="button" value="구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
+		<input type="button" id="cart_stn" value="바로 구매" onclick="fnBuy(${detail.No}, '${detail.SmallCategory}','${id}')">
 		<input type="hidden" name="no" value="${detail.No}">	
-		<input type="submit" value="장바구니 담기">
+		<input type="submit" id="cart_stn" value="장바구니 담기">
 	</c:if>
 </form>
 </sec:authorize>
