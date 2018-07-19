@@ -112,9 +112,10 @@ $(document).ready(function(){
 				if(isLeafYear(prodYear)){
 					dayOfMonth[1] = dayOfMonth[1] + 1;
 				}
-				if((!(prodYear <= presentYear)) 
-					|| (!(prodMonth <= presentMonth)) 
-					|| (!(prodDay <= presentDay))){
+				if(
+					(prodYear > presentYear)
+					|| ((prodYear == presentYear) && (prodMonth > presentMonth))
+					|| ((prodYear == presentYear) && (prodMonth == presentMonth) && (prodDay > presentDay))) {
 					$("#prodDateError").html("현재 날짜를 넘었습니다.");
 					flag = 1; prodDateflag = 1;
 				}else if(!((1930 <= prodYear) && (prodYear <= presentYear))){

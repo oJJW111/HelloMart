@@ -60,6 +60,11 @@ public class OrderController {
 		return "product/productBuy";
 	}
 	
+	@RequestMapping("/orderOk")
+	public String orderOk() {
+		return "product/orderOk";
+	}
+	
 	// 단일 상품 구매 페이지에서 결제하기 버튼 눌렀을 때
 	@RequestMapping("/buyOk")
 	public String buyOk(OrderList orderList, HttpServletRequest request){
@@ -69,7 +74,7 @@ public class OrderController {
 		
 		productListService.updateOrderCount(request);
 		
-		return "product/orderOk";
+		return "redirect:/orderOk";
 	}
 	
 	// 장바구니에서 구매 버튼을 눌렀을 때
@@ -100,6 +105,6 @@ public class OrderController {
 		
 		cartService.deleteCartList(principal.getName());
 		
-		return "product/orderOk";
+		return "redirect:/orderOk";
 	}
 }

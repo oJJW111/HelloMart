@@ -70,7 +70,7 @@
 			<세탁용량 column="WashingCapacity" type="Integer">
 				14kg,15kg,16kg,17kg,19kg
 			</세탁용량>
-			<에너지효율 column="EnergyEffciency" type="Enum">
+			<에너지효율 column="EnergyEfficiency" type="Enum">
 				1등급, 2등급, 3등급, 4등급, 5등급
 			</에너지효율>
 			<세탁방식 column="WashingType" type="Enum">
