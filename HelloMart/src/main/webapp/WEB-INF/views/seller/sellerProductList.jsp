@@ -102,7 +102,14 @@ $(document).ready(function() {
 				<div class="additional_info">
 					<span class="satisfaction">만족도 ${map.Score}%</span> <span class="buy">구
 						&nbsp;&nbsp;매 ${map.OrderCount}</span> <span class="review">상품평 ${map.count}</span><br>
-					<input type="button" class="board_btn01" onclick="javascript: location.href='/seller/delete?no=${map.no}'" value="상품 삭제하기">
+					<script>
+						function confirmDelete(no) {
+							if(confirm('물품을 삭제하시겠습니까?')) {
+								location.href='/seller/delete?no=' + no;
+							}
+						}
+					</script>
+					<input type="button" class="board_btn01" onclick="confirmDelete(${map.no})" value="상품 삭제하기">
 				</div>
 			</div>
 		</div>

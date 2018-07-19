@@ -5,6 +5,10 @@
 
 <mapper namespace="com.hellomart.dao.SellerDAO">
 
+	<delete id="delete">
+		delete from productlist where No = #{param1} and RegisterID = #{param2}
+	</delete>
+
 	<select id="getSellerProductList" resultType="productList" parameterType="HashMap">
 		SELECT U.*
 		FROM

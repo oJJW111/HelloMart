@@ -13,4 +13,5 @@ public interface SellerDAO {
 	public int getNoProductList();
 	public void insertPartProductInfo(Map<String, Object> sqlMap);
 	public String getFilePath(int no);
+	public int delete(int no, String id);
 }

@@ -20,4 +20,5 @@ public interface SellerService {
 
 	public String getFileName(String productNo);
 
+	public void delete(Model model, int no, String id);
 }

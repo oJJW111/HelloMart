@@ -16,6 +16,14 @@ public class FileUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 	
+	public static void delete(String path) {
+        File file = new File(path);
+        
+        if( file.exists() ){
+            file.delete();
+        }
+	}
+	
 	public Vector<String> fileUpload(MultipartHttpServletRequest upload, String path) throws IllegalStateException, IOException {
 		if(upload == null) { return null; }
 		

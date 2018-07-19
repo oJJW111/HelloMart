@@ -49,6 +49,21 @@ public class SellerServiceImpl implements SellerService{
 	}
 	
 	@Override
+	public void delete(Model model, int no, String id) {
+		Map<String, Object> modelMap = model.asMap();
+		HttpServletRequest request = (HttpServletRequest) modelMap.get("request");
+		HttpSession session = request.getSession();
+		
+		String path = dao.getFilePath(no);
+		String rootPath = session.getServletContext().getRealPath(path);
+		
+		int result = dao.delete(no, id);
+		if(result == 1) {
+			FileUtils.delete(rootPath);
+		}
+	}
+	
+	@Override
 	public void getSellerProductList(int pageNum, Model model, 
 				String id, String servletPath) {
 		int totalCount = 0;

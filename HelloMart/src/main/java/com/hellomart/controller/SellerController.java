@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hellomart.dto.ProductList;
 import com.hellomart.service.SellerService;
@@ -76,6 +78,18 @@ public class SellerController {
 			uri = "redirect:/seller/page/1";
 		}
 		return uri;
+	}
+	
+	@RequestMapping(value = "/delete")
+	public String delete(Model model, HttpServletRequest request,
+			@RequestParam("no") int no,
+			Principal principal) {
+		String id = principal.getName();
+		
+		model.addAttribute("request", request);
+		sellerService.delete(model, no, id);
+		
+		return "redirect:/seller/page/1";
 	}
 	
 }
